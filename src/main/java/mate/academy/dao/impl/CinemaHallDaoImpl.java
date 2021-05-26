@@ -9,7 +9,6 @@ import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
@@ -47,9 +46,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<CinemaHall> getAllHallsQuery = session.createQuery("from CinemaHall",
-                    CinemaHall.class);
-            return getAllHallsQuery.getResultList();
+            return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get cinema halls from DB", e);
         }
