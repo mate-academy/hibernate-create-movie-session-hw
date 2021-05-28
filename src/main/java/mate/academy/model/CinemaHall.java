@@ -15,7 +15,7 @@ public class CinemaHall {
     private int capacity;
     private String description;
 
-    protected CinemaHall() {
+    public CinemaHall() {
     }
 
     public CinemaHall(int capacity) {
@@ -24,6 +24,22 @@ public class CinemaHall {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {

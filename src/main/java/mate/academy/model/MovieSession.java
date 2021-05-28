@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,13 +14,13 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
     private Movie movie;
-    @OneToOne
+    @ManyToOne
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
-    protected MovieSession() {
+    public MovieSession() {
     }
 
     public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
@@ -31,6 +31,34 @@ public class MovieSession {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public CinemaHall getCinemaHall() {
+        return cinemaHall;
+    }
+
+    public void setCinemaHall(CinemaHall cinemaHall) {
+        this.cinemaHall = cinemaHall;
+    }
+
+    public LocalDateTime getShowTime() {
+        return showTime;
+    }
+
+    public void setShowTime(LocalDateTime showTime) {
+        this.showTime = showTime;
     }
 
     @Override
