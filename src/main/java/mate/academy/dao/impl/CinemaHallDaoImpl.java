@@ -8,6 +8,7 @@ import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 @Dao
@@ -19,7 +20,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
@@ -38,7 +39,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a cinema hall by id: " + id, e);
@@ -47,7 +48,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all cinema halls.", e);
