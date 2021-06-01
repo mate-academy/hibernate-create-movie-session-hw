@@ -1,11 +1,16 @@
 package mate.academy.model;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "movie_session")
+@Table(name = "sessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +71,8 @@ public class MovieSession {
         }
         MovieSession that = (MovieSession) o;
         return Objects.equals(id, that.id) && Objects.equals(movie, that.movie)
-                && Objects.equals(cinemaHall, that.cinemaHall) && Objects.equals(showTime, that.showTime);
+                && Objects.equals(cinemaHall, that.cinemaHall)
+                && Objects.equals(showTime, that.showTime);
     }
 
     @Override
