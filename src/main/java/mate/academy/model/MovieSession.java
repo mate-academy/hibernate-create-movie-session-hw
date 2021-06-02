@@ -1,7 +1,12 @@
 package mate.academy.model;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "movieSessions")
@@ -54,5 +59,15 @@ public class MovieSession {
 
     public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie session{"
+                + "id=" + id
+                + ", movie='" + movie + '\''
+                + ", cinema hall='" + cinemaHall + '\''
+                + ", show time='" + showTime + '\''
+                + '}';
     }
 }

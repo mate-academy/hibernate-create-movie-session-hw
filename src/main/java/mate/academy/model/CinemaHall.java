@@ -1,6 +1,10 @@
 package mate.academy.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "cinemaHalls")
@@ -41,5 +45,14 @@ public class CinemaHall {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Cinema hall{"
+                + "id=" + id
+                + ", capacity='" + capacity + '\''
+                + ", description='" + description + '\''
+                + '}';
     }
 }
