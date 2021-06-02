@@ -8,10 +8,13 @@ import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
+    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -45,6 +48,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("FROM Movie", Movie.class).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't take list of all movies", e);
+        }
     }
 }
