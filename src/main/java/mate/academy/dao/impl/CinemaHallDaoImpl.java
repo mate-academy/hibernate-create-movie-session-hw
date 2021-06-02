@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Dao
-public class CinemaHallImpl implements CinemaHallDao {
+public class CinemaHallDaoImpl implements CinemaHallDao {
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
