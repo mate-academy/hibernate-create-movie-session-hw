@@ -44,7 +44,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getByIdQuery = session
+                    .createQuery("FROM MovieSession ms left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall WHERE ms.id = :id", MovieSession.class);
+            getByIdQuery.setParameter("id", id);
+            return Optional.ofNullable(getByIdQuery.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't take movie session by current ID: " + id, e);
         }
@@ -54,9 +58,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> findAllMovieSessionQuery = session
-                    .createQuery("FROM MovieSession ms "
-                            + "WHERE ms.movie.id = :id "
-                            + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay",
+                    .createQuery("FROM MovieSession ms left join fetch "
+                                    + "ms.movie left join fetch ms.cinemaHall "
+                                    + "WHERE ms.movie.id = :id "
+                                    + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay",
                             MovieSession.class);
             findAllMovieSessionQuery.setParameter("id", movieId);
             findAllMovieSessionQuery.setParameter("startOfDay", date.atTime(LocalTime.MIDNIGHT));
