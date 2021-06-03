@@ -20,7 +20,7 @@ public class MovieSessionServiceImp implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id);
+        return movieSessionDao.get(id).get();
     }
 
     @Override
