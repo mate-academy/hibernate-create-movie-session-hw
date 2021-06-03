@@ -38,12 +38,11 @@ public class Main {
         MovieSession lateSession = new MovieSession(movie, uncommonHall,
                 LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT));
         movieSessionService.add(lateSession);
-        System.out.println(movieSessionService.get(lateSession.getId()));
         MovieSession earlySession = new MovieSession(movie, commonHall,
                 LocalDateTime.of(LocalDate.now(), LocalTime.MIN));
         movieSessionService.add(earlySession);
         MovieSession tomorrowSession = new MovieSession(movie, uncommonHall,
-                LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.NOON));
+                LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.MIN));
         movieSessionService.add(tomorrowSession);
         movieSessionService.findAvailableSessions(movie.getId(), LocalDate.now())
                 .forEach(System.out::println);
