@@ -49,7 +49,7 @@ public class Main {
         System.out.println(movieSessionService.get(secondSession.getId()));
 
         List<MovieSession> availableSessions
-                = movieSessionService.findAvailableSessions(1L, LocalDate.now());
+                = movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
         availableSessions.forEach(System.out::println);
     }
 }
