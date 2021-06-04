@@ -46,8 +46,10 @@ public class Main {
         movieSessionTwo.setShowTime(localDateTime);
         movieSessionService.add(movieSessionTwo);
 
-        System.out.println(movieSessionService.findAvailableSessions(fastAndFuriousEight.getId(),
-                localDateTime.toLocalDate()));
+        System.out.println(movieSessionService.get(movieSessionOne.getId()));
+
+        movieSessionService.findAvailableSessions(fastAndFuriousEight.getId(),
+                localDateTime.toLocalDate()).forEach(System.out::println);
 
     }
 }
