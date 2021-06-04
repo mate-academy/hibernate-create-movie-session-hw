@@ -54,9 +54,9 @@ public class Main {
         System.out.println(".....Get movie session by id.....");
         System.out.println(movieSessionService.get(fastAndFuriousSessionInMultiplex.getId()));
 
-        MovieSession fastAndFuriousSessionInCinemaPlanet = new MovieSession(fastAndFurious,
-                cinemaPlanet, LocalDateTime.of(2021, 6,
-                5,2,15));
+        MovieSession fastAndFuriousSessionInCinemaPlanet =
+                new MovieSession(fastAndFurious, cinemaPlanet,
+                LocalDateTime.of(2021, 6, 5,2,15));
         System.out.println(".....Insert movie session to DB.....");
         movieSessionService.add(fastAndFuriousSessionInCinemaPlanet);
         System.out.println(".....Get movie session by id.....");
