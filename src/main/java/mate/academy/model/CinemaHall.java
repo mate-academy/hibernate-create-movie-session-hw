@@ -18,8 +18,12 @@ public class CinemaHall {
     public CinemaHall() {
     }
 
-    public CinemaHall(int capacity, String description) {
+    public CinemaHall(int capacity) {
         this.capacity = capacity;
+    }
+
+    public CinemaHall(int capacity, String description) {
+        this(capacity);
         this.description = description;
     }
 

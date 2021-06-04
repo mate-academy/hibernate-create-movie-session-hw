@@ -1,21 +1,36 @@
 package mate.academy;
 
 import mate.academy.lib.Injector;
+import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
+import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
+    private static final MovieService movieService =
+            (MovieService) injector.getInstance(MovieService.class);
+    private static final CinemaHallService cinemaHallService =
+            (CinemaHallService) injector.getInstance(CinemaHallService.class);
 
     public static void main(String[] args) {
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
+        System.out.println(".....Insert movie to DB.....");
         movieService.add(fastAndFurious);
+        System.out.println(".....Get movie by id.....");
         System.out.println(movieService.get(fastAndFurious.getId()));
+        System.out.println(".....Get all movies.....");
         movieService.getAll().forEach(System.out::println);
 
-
+        CinemaHall multiplex = new CinemaHall(500);
+        multiplex.setDescription("A multiplex is a cinema with several, "
+                + "usually three or more screens; a complex of cinemas.");
+        System.out.println(".....Insert cinema hall to DB.....");
+        cinemaHallService.add(multiplex);
+        System.out.println(".....Get cinema hall by id.....");
+        System.out.println(cinemaHallService.get(multiplex.getId()));
+        System.out.println(".....Get all cinema halls.....");
+        cinemaHallService.getAll().forEach(System.out::println);
     }
 }
