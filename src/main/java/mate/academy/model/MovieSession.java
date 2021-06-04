@@ -21,8 +21,8 @@ public class MovieSession {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @JoinColumn(name = "cinema_hall_id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
 
     private LocalDateTime showTime;
