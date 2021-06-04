@@ -36,17 +36,33 @@ public class Main {
         cinemaHallService.add(multiplex);
         System.out.println(".....Get cinema hall by id.....");
         System.out.println(cinemaHallService.get(multiplex.getId()));
+
+        CinemaHall cinemaPlanet = new CinemaHall(1000);
+        cinemaPlanet.setDescription("Cinema planet IMAX cinema in Kiev");
+        System.out.println(".....Insert cinema hall to DB.....");
+        cinemaHallService.add(cinemaPlanet);
+        System.out.println(".....Get cinema hall by id.....");
+        System.out.println(cinemaHallService.get(cinemaPlanet.getId()));
+
         System.out.println(".....Get all cinema halls.....");
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSession fastAndFuriousSession = new MovieSession(fastAndFurious, multiplex,
+        MovieSession fastAndFuriousSessionInMultiplex = new MovieSession(fastAndFurious, multiplex,
                 LocalDateTime.of(2021, 6, 4,2,30));
-        System.out.println(".....Insert cinema hall to DB.....");
-        movieSessionService.add(fastAndFuriousSession);
+        System.out.println(".....Insert movie session to DB.....");
+        movieSessionService.add(fastAndFuriousSessionInMultiplex);
         System.out.println(".....Get movie session by id.....");
-        System.out.println(movieSessionService.get(fastAndFuriousSession.getId()));
+        System.out.println(movieSessionService.get(fastAndFuriousSessionInMultiplex.getId()));
+
+        MovieSession fastAndFuriousSessionInCinemaPlanet = new MovieSession(fastAndFurious, cinemaPlanet,
+                LocalDateTime.of(2021, 6, 5,2,15));
+        System.out.println(".....Insert movie session to DB.....");
+        movieSessionService.add(fastAndFuriousSessionInCinemaPlanet);
+        System.out.println(".....Get movie session by id.....");
+        System.out.println(movieSessionService.get(fastAndFuriousSessionInCinemaPlanet.getId()));
+
         System.out.println(".....Get all movie session from DB.....");
-        movieSessionService.findAvailableSessions(fastAndFuriousSession.getId(),
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.of(2021, 6, 4))
                 .forEach(System.out::println);
     }
