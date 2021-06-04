@@ -69,7 +69,7 @@ public class Main {
         movieSessionService.add(latelateShow);
         System.out.println(movieSessionService.get(latelateShow.getId()));
 
-        System.out.println("------sessions by demand result------");
+        System.out.println("-----sessions by demand result-----");
         List<MovieSession> list = movieSessionService
                 .findAvailableSessions(dieHard.getId(), LocalDate.parse("2021-06-10"));
         System.out.println(list.size());
