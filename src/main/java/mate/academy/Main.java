@@ -1,10 +1,14 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
+import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
+import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
@@ -12,6 +16,8 @@ public class Main {
             (MovieService) injector.getInstance(MovieService.class);
     private static final CinemaHallService cinemaHallService =
             (CinemaHallService) injector.getInstance(CinemaHallService.class);
+    private static final MovieSessionService movieSessionService =
+            (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
@@ -32,5 +38,16 @@ public class Main {
         System.out.println(cinemaHallService.get(multiplex.getId()));
         System.out.println(".....Get all cinema halls.....");
         cinemaHallService.getAll().forEach(System.out::println);
+
+        MovieSession fastAndFuriousSession = new MovieSession(fastAndFurious, multiplex,
+                LocalDateTime.of(2021, 6, 4,2,30));
+        System.out.println(".....Insert cinema hall to DB.....");
+        movieSessionService.add(fastAndFuriousSession);
+        System.out.println(".....Get movie session by id.....");
+        System.out.println(movieSessionService.get(fastAndFuriousSession.getId()));
+        System.out.println(".....Get all movie session from DB.....");
+        movieSessionService.findAvailableSessions(fastAndFuriousSession.getId(),
+                LocalDate.of(2021, 6, 4))
+                .forEach(System.out::println);
     }
 }
