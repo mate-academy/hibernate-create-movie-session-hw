@@ -28,7 +28,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         List<MovieSession> availableSessions = movieSessionDao.findAvailableSessions(movieId, date);
         if (availableSessions.isEmpty()) {
-            throw new DataProcessingException("Available movie sessions by id = "
+            System.out.println("Available movie sessions by id = "
                     + movieId + " and date: " + date + " are not exist!");
         }
         return availableSessions;
