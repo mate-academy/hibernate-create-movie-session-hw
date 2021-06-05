@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -39,7 +40,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> query = session.createQuery("FROM MovieSession AS ms "
+                    + "LEFT JOIN FETCH ms.movie "
+                    + "LEFT JOIN FETCH ms.cinemaHall "
+                    + "WHERE ms.id = :sessionId",
+                    MovieSession.class);
+            query.setParameter("sessionId", id);
+            return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -50,12 +57,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("FROM MovieSession AS ms "
                     + "LEFT JOIN FETCH ms.movie AS m "
-                    + "LEFT JOIN FETCH ms.cinemaHall AS c "
+                    + "LEFT JOIN FETCH ms.cinemaHall "
                     + "WHERE m.id = :movieId AND ms.showTime BETWEEN :startDay AND :endDay",
                     MovieSession.class);
             query.setParameter("movieId", movieId);
-            query.setParameter("startDay", date.atTime(0, 0, 0));
-            query.setParameter("endDay", date.atTime(23, 59, 59));
+            query.setParameter("startDay", date.atStartOfDay());
+            query.setParameter("endDay", date.atTime(LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available movie sessions by id = "
