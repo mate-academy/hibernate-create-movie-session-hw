@@ -67,5 +67,7 @@ public class Main {
         System.out.println(movieSessionService.get(session3.getId()));
         movieSessionService.findAvailableSessions(trolls.getId(), LocalDate.now())
                 .forEach(System.out::println);
+        movieSessionService.findAvailableSessions(8L, LocalDate.now())
+                .forEach(System.out::println);
     }
 }
