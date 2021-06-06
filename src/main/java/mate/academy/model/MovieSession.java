@@ -21,11 +21,11 @@ public class MovieSession {
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
-    public MovieSession() {
-    }
-
     public MovieSession(LocalDateTime showTime) {
         this.showTime = showTime;
+    }
+
+    public MovieSession() {
     }
 
     public Long getId() {
