@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -52,7 +53,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "AND showTime BETWEEN :start AND :end", MovieSession.class)
                     .setParameter("movieId", movieId)
                     .setParameter("start", date.atStartOfDay())
-                    .setParameter("end", date.atStartOfDay().plusDays(1L))
+                    .setParameter("end", date.atTime(LocalTime.MAX))
                     .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: "

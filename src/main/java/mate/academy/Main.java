@@ -24,7 +24,9 @@ public class Main {
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
+        System.out.println(movieService.getAll());
 
+        System.out.println("------CinemaHall-------");
         CinemaHall greenHall = new CinemaHall(100,"Green Hall");
         cinemaHallService.add(greenHall);
         System.out.println(cinemaHallService.get(greenHall.getId()));
@@ -36,6 +38,5 @@ public class Main {
         System.out.println(movieSessionService.get(session.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.now()).forEach(System.out::println);
-
     }
 }
