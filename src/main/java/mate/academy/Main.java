@@ -33,14 +33,14 @@ public class Main {
         cinemaHallService.add(cinemaHall);
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSession movieSession1 = new MovieSession();
-        movieSession1.setShowTime(LocalDateTime
+        MovieSession firstMovieSession = new MovieSession();
+        firstMovieSession.setShowTime(LocalDateTime
                 .of(2018, 5, 12, 16, 25));
-        movieSession1.setMovie(fastAndFurious);
-        movieSession1.setCinemaHall(cinemaHall);
-        movieSessionService.add(movieSession1);
+        firstMovieSession.setMovie(fastAndFurious);
+        firstMovieSession.setCinemaHall(cinemaHall);
+        movieSessionService.add(firstMovieSession);
         movieSessionService
-                .findAvailableSession(movieSession1.getId(),
+                .findAvailableSession(firstMovieSession.getId(),
                         LocalDate.of(2018, 5, 12))
                 .forEach(System.out::println);
 

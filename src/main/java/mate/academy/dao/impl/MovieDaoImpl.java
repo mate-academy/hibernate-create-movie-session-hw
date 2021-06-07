@@ -30,7 +30,8 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException("An error occurred while "
+                    + "processing query to add new movie = " + movie, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -43,7 +44,8 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = factory.openSession()) {
             return Optional.ofNullable(session.get(Movie.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException("An error occurred while "
+                    + "processing query to get movie by id = " + id, e);
         }
     }
 
@@ -53,7 +55,8 @@ public class MovieDaoImpl implements MovieDao {
             return session.createQuery("FROM Movie ",
                     Movie.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movies", e);
+            throw new DataProcessingException("An error occurred while "
+                    + "processing query to get all movies", e);
         }
     }
 }
