@@ -42,9 +42,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = factory.openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can`t get Cinema Hall from DB " + id, e);
+            throw new DataProcessingException("Can`t get Cinema Hall from DB with id: " + id, e);
         }
-
     }
 
     @Override
@@ -52,7 +51,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = factory.openSession()) {
             return session.createQuery("FROM CinemaHall", CinemaHall.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can`t get List of Cinema Halls from DB", e);
+            throw new DataProcessingException("Can`t get all Cinema Halls from DB", e);
         }
     }
 }
