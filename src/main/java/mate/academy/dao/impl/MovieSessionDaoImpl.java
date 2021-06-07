@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -59,7 +58,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     MovieSession.class);
             findAvailableSessionsQuery.setParameter("id", movieId);
             findAvailableSessionsQuery.setParameter("date", Date.valueOf(date));
-            return findAvailableSessionsQuery.getResultStream().collect(Collectors.toList());
+            return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movieSessions by movie id = "
                     + movieId + " and date " + date, e);
