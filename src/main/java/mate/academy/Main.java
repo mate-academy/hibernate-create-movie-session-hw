@@ -19,6 +19,7 @@ public class Main {
             (CinemaHallService) injector.getInstance(CinemaHallService.class);
     private static final MovieSessionService movieSessionService =
             (MovieSessionService) injector.getInstance(MovieSessionService.class);
+
     public static void main(String[] args) {
         Movie shadows = new Movie("Shadows of Forgotten Ancestors");
         shadows.setDescription("OST - You Have Already Gone to the Other World");
