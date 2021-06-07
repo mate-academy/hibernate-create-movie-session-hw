@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -16,9 +17,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    private static final int HOUR = 23;
-    private static final int MINUTES = 59;
-    private static final int SECONDS = 59;
     private static SessionFactory factory = HibernateUtil.getSessionFactory();
 
     @Override
@@ -61,15 +59,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = factory.openSession()) {
-            LocalDateTime start = date.atStartOfDay();
-            LocalDateTime end = date.atTime(HOUR, MINUTES, SECONDS);
+            LocalDateTime startDate = date.atStartOfDay();
+            LocalDateTime endDate = date.atTime(LocalTime.MAX);
             Query<MovieSession> findAvailableSessionsQuery
                     = session.createQuery("FROM MovieSession ms"
                     + " left join fetch ms.movie m left join fetch ms.cinemaHall where m.id = :id"
-                    + " and ms.showTime between :start and :end", MovieSession.class);
+                    + " and ms.showTime between :startDate and :endDate", MovieSession.class);
             findAvailableSessionsQuery.setParameter("id", movieId);
-            findAvailableSessionsQuery.setParameter("start", start);
-            findAvailableSessionsQuery.setParameter("end", end);
+            findAvailableSessionsQuery.setParameter("startDate", startDate);
+            findAvailableSessionsQuery.setParameter("endDate", endDate);
             List<MovieSession> resultList = findAvailableSessionsQuery.getResultList();
             return resultList;
         } catch (Exception e) {
