@@ -30,14 +30,12 @@ public class Main {
         System.out.println(movieService.get(fastAndFurious.getId()));
         System.out.println(movieService.get(avengers.getId()));
         movieService.getAll().forEach(System.out::println);
-
         CinemaHall redHall = new CinemaHall();
         redHall.setCapacity(150);
         redHall.setDescription("Newly equipped cinema hall with capacity 150 persons");
         cinemaHallService.add(redHall);
         System.out.println(cinemaHallService.get(redHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
-
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(redHall);
