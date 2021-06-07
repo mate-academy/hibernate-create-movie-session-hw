@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -51,14 +52,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getMovieSessionQuery = session
                     .createQuery("from MovieSession ms "
                                     + "where ms.movie.id = :movieId "
-                                    + "and day(ms.showTime) = :date "
+                                    + "and ms.showTime between :startDay AND :endDay "
                                     + "order by ms.showTime", MovieSession.class);
             getMovieSessionQuery.setParameter("movieId", movieId);
-            getMovieSessionQuery.setParameter("date", date.getDayOfMonth());
+            getMovieSessionQuery.setParameter("startDay", date.atStartOfDay());
+            getMovieSessionQuery.setParameter("endDay", date.atTime(LocalTime.MAX));
             return getMovieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available session by movie id: "
-                    + movieId, e);
+                    + movieId + " on requested date: " + date.toString(), e);
         }
     }
 }
