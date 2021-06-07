@@ -17,8 +17,8 @@ import org.hibernate.query.Query;
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     private static final int HOUR = 23;
-    private static final int MIN = 59;
-    private static final int SEC = 59;
+    private static final int MINUTES = 59;
+    private static final int SECONDS = 59;
     private static SessionFactory factory = HibernateUtil.getSessionFactory();
 
     @Override
@@ -62,7 +62,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = factory.openSession()) {
             LocalDateTime start = date.atStartOfDay();
-            LocalDateTime end = date.atTime(HOUR, MIN, SEC);
+            LocalDateTime end = date.atTime(HOUR, MINUTES, SECONDS);
             Query<MovieSession> findAvailableSessionsQuery
                     = session.createQuery("FROM MovieSession ms"
                     + " left join fetch ms.movie m left join fetch ms.cinemaHall where m.id = :id"
