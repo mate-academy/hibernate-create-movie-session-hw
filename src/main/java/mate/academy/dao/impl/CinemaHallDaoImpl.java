@@ -1,6 +1,5 @@
 package mate.academy.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
@@ -48,14 +47,11 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        List<CinemaHall> cinemaHalls = new ArrayList<>();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            cinemaHalls.addAll(session
-                    .createQuery("FROM CinemaHall", CinemaHall.class)
-                    .getResultList());
+            return session.createQuery("FROM CinemaHall", CinemaHall.class)
+                    .getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get cinema halls from DB", e);
         }
-        return cinemaHalls;
     }
 }
