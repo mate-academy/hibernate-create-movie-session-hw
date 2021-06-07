@@ -1,17 +1,17 @@
 package mate.academy.dao.impl;
 
-import mate.academy.dao.MovieSessionDao;
-import mate.academy.exception.DataProcessingException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
+import mate.academy.dao.MovieSessionDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import java.time.LocalTime;
 import org.hibernate.Transaction;
-import java.util.Optional;
-import java.util.List;
 import org.hibernate.query.Query;
 
 @Dao
@@ -43,7 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieQuery = session.createQuery("from MovieSession m "
                             + "left join fetch m.movie "
-                            + "left join fetch m.cinemaHall"
+                            + "left join fetch m.cinemaHall "
                             + "where m.id = :id", MovieSession.class);
             getMovieQuery.setParameter("id", id);
             return Optional.ofNullable(getMovieQuery.getSingleResult());

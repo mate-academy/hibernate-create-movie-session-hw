@@ -1,10 +1,10 @@
 package mate.academy.service.impl;
 
+import java.time.LocalDate;
+import java.util.List;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
-import java.time.LocalDate;
 import mate.academy.lib.Service;
-import java.util.List;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
 

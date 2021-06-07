@@ -1,11 +1,12 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
-import java.time.LocalDateTime;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
@@ -60,9 +61,9 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
         System.out.println("Test.....movieSession");
         System.out.println(movieSessionService.get(firstMovieSession.getId()));
-        //System.out.println(movieSessionService.get(secondMovieSession.getId()));
-//        movieSessionService.findAvailableSessions(avatar.getId(),
-//                LocalDate.of(2021,06,15)).forEach(System.out::println);
+        System.out.println(movieSessionService.get(secondMovieSession.getId()));
+        movieSessionService.findAvailableSessions(avatar.getId(),
+                LocalDate.of(2021,06,15)).forEach(System.out::println);
 
     }
 }
