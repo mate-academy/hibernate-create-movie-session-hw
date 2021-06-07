@@ -43,7 +43,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getByIdQuery = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall "
+                    + "where ms.movie.id = :id ", MovieSession.class);
+            getByIdQuery.setParameter("id", id);
+            return Optional.ofNullable(getByIdQuery.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -53,6 +58,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAvailableQuery = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall "
                     + "where ms.movie.id = :id "
                     + "and ms.showTime between :startOfDay and :endOfDay ", MovieSession.class);
             getAvailableQuery.setParameter("id", movieId);
