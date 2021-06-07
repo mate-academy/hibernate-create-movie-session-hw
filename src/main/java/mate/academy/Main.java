@@ -64,6 +64,5 @@ public class Main {
         System.out.println(movieSessionService.get(secondMovieSession.getId()));
         movieSessionService.findAvailableSessions(avatar.getId(),
                 LocalDate.of(2021,06,15)).forEach(System.out::println);
-
     }
 }
