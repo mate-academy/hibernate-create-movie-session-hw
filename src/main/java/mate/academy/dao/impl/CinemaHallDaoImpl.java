@@ -19,7 +19,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
         Transaction transaction = null;
-
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();

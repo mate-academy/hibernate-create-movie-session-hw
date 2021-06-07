@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -54,17 +55,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> findAvailableSessionQuery = session
                     .createQuery("FROM MovieSession ms "
                             + "WHERE movie.id =: movieId "
-                            + "AND YEAR (ms.showTime) =: year "
-                            + "AND MONTH (ms.showTime) =: month "
-                            + "AND DAY (ms.showTime) =: day", MovieSession.class);
-
+                            + "AND DATE(ms.showTime) =: date", MovieSession.class);
             findAvailableSessionQuery.setParameter("movieId", movieId);
-            findAvailableSessionQuery.setParameter("year", date.getYear());
-            findAvailableSessionQuery.setParameter("month", date.getMonthValue());
-            findAvailableSessionQuery.setParameter("day", date.getDayOfMonth());
+            findAvailableSessionQuery.setParameter("date", Date.valueOf(date));
+
             return findAvailableSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get available session from DB", e);
+            throw new RuntimeException("Can't get available session from DB, date: " + date, e);
         }
     }
 }
