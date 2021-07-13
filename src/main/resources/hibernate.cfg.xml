@@ -7,9 +7,9 @@
         <property name="hibernate.connection.password">junior</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">create-drop</property>
-        <mapping class ="mate.academy.hibernate.relations.model.Movie"/>
-        <mapping class ="mate.academy.hibernate.relations.model.Actor"/>
-        <mapping class ="mate.academy.hibernate.relations.model.Country"/>
+        <mapping class ="mate.academy.model.Movie"/>
+        <mapping class ="mate.academy.model.CinemaHall"/>
+        <mapping class ="mate.academy.model.MovieSession"/>
     </session-factory>
 </hibernate-configuration>
 
