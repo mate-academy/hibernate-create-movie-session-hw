@@ -39,5 +39,7 @@ public class Main {
 
         System.out.println(movieSessionService.get(1L));
         System.out.println(movieSessionService.findAvailableSessions(1L, LocalDate.now()));
+        System.out.println(movieSession.getMovie());
+        System.out.println(movieSession.getCinemaHall());
     }
 }
