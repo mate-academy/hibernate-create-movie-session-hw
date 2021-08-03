@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -59,10 +58,16 @@ public class MovieSession {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         MovieSession that = (MovieSession) o;
-        return Objects.equals(id, that.id) && Objects.equals(movie, that.movie) && Objects.equals(cinemaHall, that.cinemaHall) && Objects.equals(showTime, that.showTime);
+        return Objects.equals(id, that.id) && Objects.equals(movie, that.movie)
+                && Objects.equals(cinemaHall, that.cinemaHall)
+                && Objects.equals(showTime, that.showTime);
     }
 
     @Override
