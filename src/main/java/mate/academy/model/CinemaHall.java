@@ -11,11 +11,16 @@ import javax.persistence.Table;
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    int capacity;
-    String description;
+    private Long id;
+    private int capacity;
+    private String description;
 
     public CinemaHall() {
+    }
+
+    public CinemaHall(int capacity, String description) {
+        this.capacity = capacity;
+        this.description = description;
     }
 
     public Long getId() {
