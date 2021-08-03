@@ -11,6 +11,7 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -39,7 +40,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> query = session.createQuery("FROM MovieSession p "
+                    + "LEFT JOIN FETCH p.movie "
+                    + " LEFT JOIN FETCH p.cinemaHall "
+                    + "WHERE p.id =  :id", MovieSession.class);
+            query.setParameter("id", id);
+            return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie session by id: " + id
                     + " from DB!", e);
@@ -51,11 +57,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(23, 59, 59);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM MovieSession p WHERE p.localDateTime "
-                    + "BETWEEN :startOfDay AND :endOfDay", MovieSession.class)
-                    .setParameter("startOfDay", startOfDay)
-                    .setParameter("endOfDay", endOfDay)
-                    .getResultList();
+            Query<MovieSession> query = session.createQuery("FROM MovieSession p "
+                    + "LEFT JOIN FETCH p.cinemaHall "
+                    + "LEFT JOIN FETCH p.movie "
+                    + "WHERE p.movie.id = :movieId "
+                    + "AND p.localDateTime BETWEEN :startOfDay AND :endOfDay", MovieSession.class);
+            query.setParameter("movieId", movieId);
+            query.setParameter("startOfDay", startOfDay);
+            query.setParameter("endOfDay", endOfDay);
+            return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available sessions by date: " + date
                     + " from DB!", e);
