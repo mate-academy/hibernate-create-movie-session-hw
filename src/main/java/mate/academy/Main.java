@@ -39,7 +39,6 @@ public class Main {
         System.out.println(cinemaHallService.get(redHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
-
         MovieSession movieSession1 = new MovieSession();
         movieSession1.setMovie(shrek);
         movieSession1.setCinemaHall(redHall);
