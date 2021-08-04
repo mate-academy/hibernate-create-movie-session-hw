@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -59,8 +60,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "WHERE ms.showTime BETWEEN :startTime AND :endTime AND m.id = :movieId";
             Query<MovieSession> findAvailableSessionsQuery =
                     session.createQuery(query, MovieSession.class);
-            findAvailableSessionsQuery.setParameter("startTime", date.atTime(0, 0, 0));
-            findAvailableSessionsQuery.setParameter("endTime", date.atTime(23, 59, 59));
+            findAvailableSessionsQuery.setParameter("startTime", date.atTime(LocalTime.MIN));
+            findAvailableSessionsQuery.setParameter("endTime", date.atTime(LocalTime.MAX));
             findAvailableSessionsQuery.setParameter("movieId", movieId);
             return findAvailableSessionsQuery.list();
         } catch (Exception e) {
