@@ -16,9 +16,6 @@ public class CinemaHall {
     private int capacity;
     private String description;
 
-    public CinemaHall() {
-    }
-
     public Long getId() {
         return id;
     }
@@ -63,11 +60,9 @@ public class CinemaHall {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("CinemaHall{");
-        sb.append("id=").append(id);
-        sb.append(", capacity=").append(capacity);
-        sb.append(", description='").append(description).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "CinemaHall{" + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description + '\''
+                + '}';
     }
 }

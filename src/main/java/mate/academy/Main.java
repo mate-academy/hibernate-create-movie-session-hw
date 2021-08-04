@@ -37,8 +37,9 @@ public class Main {
         movieSession.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSession);
 
-        System.out.println(movieSessionService.get(1L));
-        System.out.println(movieSessionService.findAvailableSessions(1L, LocalDate.now()));
+        System.out.println(movieSessionService.get(movieSession.getId()));
+        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                LocalDate.now()));
         System.out.println(movieSession.getMovie());
         System.out.println(movieSession.getCinemaHall());
     }
