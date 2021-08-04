@@ -53,7 +53,7 @@ public class Main {
         movieSession2.setShowTime(LocalDateTime.now().minusDays(1));
         movieSessionService.add(movieSession2);
 
-        movieSessionService.findAvailableSessions(2L, LocalDate.now())
+        movieSessionService.findAvailableSessions(shrek.getId(), LocalDate.now())
                 .forEach(System.out::println);
     }
 }
