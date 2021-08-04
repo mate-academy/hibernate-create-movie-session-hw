@@ -21,7 +21,6 @@ public class Main {
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
-        fastAndFurious.setId(1L);
         fastAndFurious.setDescription("I don't show but give me your money!");
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
