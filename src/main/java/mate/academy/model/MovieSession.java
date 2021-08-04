@@ -1,7 +1,6 @@
 package mate.academy.model;
 
 import java.time.LocalDateTime;
-import java.util.StringJoiner;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -70,11 +69,11 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", MovieSession.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("movie=" + movie)
-                .add("cinemaHall=" + cinemaHall)
-                .add("dateTime=" + dateTime)
-                .toString();
+        return "MovieSession{"
+                + "id = " + id
+                + ", movie = " + movie
+                + ", cinemaHall = " + cinemaHall
+                + ", dateTime = " + dateTime
+                + '}';
     }
 }

@@ -1,6 +1,5 @@
 package mate.academy.model;
 
-import java.util.StringJoiner;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -50,10 +49,10 @@ public class CinemaHall {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", CinemaHall.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("capacity=" + capacity)
-                .add("description='" + description + "'")
-                .toString();
+        return "CinemaHall{"
+                + "id = " + id
+                + ", capacity = " + capacity
+                + ", description = '" + description + '\''
+                + '}';
     }
 }

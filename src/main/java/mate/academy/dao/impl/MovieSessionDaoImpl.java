@@ -41,10 +41,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessionQuery = session
-                    .createQuery("FROM MovieSession mS "
-                            + "LEFT JOIN FETCH mS.movie as m "
-                            + "LEFT JOIN FETCH mS.cinemaHall as cH "
-                            + "WHERE mS.id = :id", MovieSession.class);
+                    .createQuery("FROM MovieSession ms "
+                            + "LEFT JOIN FETCH ms.movie as m "
+                            + "LEFT JOIN FETCH ms.cinemaHall as cH "
+                            + "WHERE ms.id = :id", MovieSession.class);
             getMovieSessionQuery.setParameter("id", id);
             return Optional.ofNullable(getMovieSessionQuery.uniqueResult());
         } catch (Exception e) {
@@ -57,11 +57,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAvailableSessionsQuery = session
-                    .createQuery("FROM MovieSession mS "
-                                    + "LEFT JOIN FETCH mS.cinemaHall AS cH "
-                                    + "LEFT JOIN FETCH mS.movie AS m "
-                                    + "WHERE mS.movie.id = :movieId "
-                                    + "AND mS.dateTime BETWEEN :startDate AND  :endDate",
+                    .createQuery("FROM MovieSession ms "
+                                    + "LEFT JOIN FETCH ms.cinemaHall AS ch "
+                                    + "LEFT JOIN FETCH ms.movie AS m "
+                                    + "WHERE ms.movie.id = :movieId "
+                                    + "AND ms.dateTime BETWEEN :startDate AND  :endDate",
                             MovieSession.class);
             getAvailableSessionsQuery.setParameter("movieId", movieId);
             getAvailableSessionsQuery.setParameter("startDate", date.atStartOfDay());

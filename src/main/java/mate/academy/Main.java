@@ -1,5 +1,6 @@
 package mate.academy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import mate.academy.lib.Injector;
@@ -25,20 +26,20 @@ public class Main {
 
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
-        Movie movieFromDb = movieService.add(fastAndFurious);
+        movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
-        MovieSession movieSessionToday = new MovieSession(movieFromDb, cinemaHall,
+        MovieSession movieSessionToday = new MovieSession(fastAndFurious, cinemaHall,
                 LocalDateTime.now().minusHours(5));
         movieSessionService.add(movieSessionToday);
 
-        MovieSession movieSessionYesterday = new MovieSession(movieFromDb, cinemaHall,
+        MovieSession movieSessionYesterday = new MovieSession(fastAndFurious, cinemaHall,
                 LocalDateTime.now().minusDays(1));
         movieSessionService.add(movieSessionYesterday);
 
         List<MovieSession> availableSessions = movieSessionService
-                .findAvailableSessions(movieFromDb.getId(), LocalDateTime.now().toLocalDate());
+                .findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
         availableSessions.forEach(System.out::println);
     }
 }

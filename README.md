@@ -14,9 +14,9 @@ Your task is to implement the following steps:
 ```java
     CinemaHall add(CinemaHall cinemaHall);
 
-    CinemaHall get(Long id);
+        CinemaHall get(Long id);
 
-    List<CinemaHall> getAll();
+        List<CinemaHall> getAll();
 ```
 
 - create `MovieSessionDaoImpl` and `MovieSessionServiceImpl`. The service layer should have the
@@ -25,9 +25,9 @@ Your task is to implement the following steps:
 ```java
     MovieSession add(MovieSession movieSession);
 
-    MovieSession get(Long id);
+        MovieSession get(Long id);
 
-    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+        List<MovieSession> findAvailableSessions(Long movieId,LocalDate date);
 ```
 
 Keep in mind that method `findAvailableSessions()` expects a `LocalDate` that represents the day
