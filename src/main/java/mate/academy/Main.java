@@ -12,36 +12,58 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static Injector injector = Injector.getInstance("mate");
+    private static MovieService movieService =
+            (MovieService) injector.getInstance(MovieService.class);
+    private static CinemaHallService cinemaHallService =
+            (CinemaHallService) injector.getInstance(CinemaHallService.class);
+    private static MovieSessionService sessionService =
+            (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
-
-        MovieService movieService =
-                (MovieService) injector.getInstance(MovieService.class);
-
         Movie fastAndFurious = new Movie("Fast and Furious");
+        Movie shrek = new Movie("Shrek 1");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
+        shrek.setDescription("First shrek movie");
         movieService.add(fastAndFurious);
+        movieService.add(shrek);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
-        CinemaHallService cinemaHallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        CinemaHall blueHall = new CinemaHall();
+        blueHall.setCapacity(100);
+        blueHall.setDescription("Blue hall");
+        cinemaHallService.add(blueHall);
+        System.out.println(cinemaHallService.get(blueHall.getId()));
+        cinemaHallService.getAll().forEach(System.out::println);
 
-        CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setCapacity(10);
-        cinemaHall.setDescription("Red cinemaHall");
-        cinemaHallService.add(cinemaHall);
+        MovieSession januarySession = new MovieSession();
+        januarySession.setMovie(fastAndFurious);
+        januarySession.setCinemaHall(blueHall);
+        januarySession.setShowTime(LocalDateTime.parse("2021-01-10T10:15:00"));
 
-        MovieSession movieSession = new MovieSession();
-        movieSession.setMovie(fastAndFurious);
-        movieSession.setCinemaHall(cinemaHall);
-        movieSession.setShowTime(LocalDateTime.now());
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        movieSessionService.add(movieSession);
+        MovieSession shrekJanuarySession = new MovieSession();
+        shrekJanuarySession.setMovie(shrek);
+        shrekJanuarySession.setCinemaHall(blueHall);
+        shrekJanuarySession.setShowTime(LocalDateTime.parse("2021-01-10T14:15:00"));
+        sessionService.add(shrekJanuarySession);
+        MovieSession anotherShrekJanuarySession = new MovieSession();
+        anotherShrekJanuarySession.setMovie(shrek);
+        anotherShrekJanuarySession.setCinemaHall(blueHall);
+        anotherShrekJanuarySession.setShowTime(LocalDateTime.parse("2021-01-10T10:15:00"));
+        sessionService.add(anotherShrekJanuarySession);
+        System.out.println(sessionService.get(anotherShrekJanuarySession.getId()));
 
-        System.out.println(LocalDateTime.now());
-        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
-                LocalDate.now()));
+        MovieSession marchSession = new MovieSession();
+        marchSession.setMovie(fastAndFurious);
+        marchSession.setCinemaHall(blueHall);
+        marchSession.setShowTime(LocalDateTime.parse("2021-03-10T10:15:00"));
+        sessionService.add(marchSession);
+
+        sessionService
+                .findAvailableSessions(fastAndFurious.getId(), LocalDate.parse("2021-01-10"))
+                .forEach(System.out::println);
+        sessionService
+                .findAvailableSessions(shrek.getId(), LocalDate.parse("2021-01-10"))
+                .forEach(System.out::println);
     }
 }

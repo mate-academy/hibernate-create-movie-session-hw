@@ -19,12 +19,8 @@ public class MovieSession {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    //@JoinTable(name = "movie_session_movie",
-    //        joinColumns = @JoinColumn(name = "movie_id"),
-    //        inverseJoinColumns = @JoinColumn(name = "movie_session_id")
-    //)
     private Movie movie;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
     @Column(name = "show_time")
