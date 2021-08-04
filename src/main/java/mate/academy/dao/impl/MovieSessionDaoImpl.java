@@ -44,7 +44,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "left join fetch ms.cinemaHall "
                     + "where ms.id = :id ", MovieSession.class);
             query.setParameter("id", id);
-            return Optional.ofNullable(query.getSingleResult());
+            return query.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Couldn't get movie session by id: " + id, e);
         }
@@ -67,7 +67,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "left join fetch ms.cinemaHall ch "
                     + "where ms.movie.id = :movieId "
                     + "and ms.showTime between :from and :to", MovieSession.class);
-
             query.setParameter("movieId", movieId);
             query.setParameter("from", date.atTime(0, 0, 0));
             query.setParameter("to", date.atTime(23, 59, 59));
