@@ -40,6 +40,7 @@ public class Main {
         movieSessionService.add(fastAndFuriousSession);
         System.out.println("Our today's movie session: "
                 + movieSessionService.get(fastAndFuriousSession.getId()));
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now()).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                LocalDate.now()).forEach(System.out::println);
     }
 }
