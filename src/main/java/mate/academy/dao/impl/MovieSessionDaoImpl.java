@@ -41,10 +41,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("FROM MovieSession p "
-                    + "LEFT JOIN FETCH p.movie "
-                    + " LEFT JOIN FETCH p.cinemaHall "
-                    + "WHERE p.id =  :id", MovieSession.class);
+            Query<MovieSession> query = session.createQuery("FROM MovieSession m "
+                    + "LEFT JOIN FETCH m.movie "
+                    + " LEFT JOIN FETCH m.cinemaHall "
+                    + "WHERE m.id = :id", MovieSession.class);
             query.setParameter("id", id);
             return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
@@ -58,11 +58,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("FROM MovieSession p "
-                    + "LEFT JOIN FETCH p.cinemaHall "
-                    + "LEFT JOIN FETCH p.movie "
-                    + "WHERE p.movie.id = :movieId "
-                    + "AND p.localDateTime BETWEEN :startOfDay AND :endOfDay", MovieSession.class);
+            Query<MovieSession> query = session.createQuery("FROM MovieSession m "
+                    + "LEFT JOIN FETCH m.cinemaHall "
+                    + "LEFT JOIN FETCH m.movie "
+                    + "WHERE m.movie.id = :movieId "
+                    + "AND m.localDateTime BETWEEN :startOfDay AND :endOfDay", MovieSession.class);
             query.setParameter("movieId", movieId);
             query.setParameter("startOfDay", startOfDay);
             query.setParameter("endOfDay", endOfDay);
