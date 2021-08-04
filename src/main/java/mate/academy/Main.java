@@ -41,7 +41,7 @@ public class Main {
                 testCinemaHall2, LocalDateTime.now().plusDays(1));
         movieSessionService.add(testMovieSession2);
 
-        System.out.println("Sessions today" + movieSessionService
+        System.out.println("Sessions today: " + movieSessionService
                 .findAvailableSessions(testMovie1.getId(), LocalDate.now()));
     }
 }
