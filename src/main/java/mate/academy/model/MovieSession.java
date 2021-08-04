@@ -2,6 +2,7 @@ package mate.academy.model;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class MovieSession {
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
-    private LocalDateTime time;
+    private LocalDateTime showTime;
 
     public MovieSession() {
     }
@@ -29,7 +30,7 @@ public class MovieSession {
     public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime time) {
         this.movie = movie;
         this.cinemaHall = cinemaHall;
-        this.time = time;
+        this.showTime = time;
     }
 
     public Long getId() {
@@ -56,12 +57,12 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getTime() {
-        return time;
+    public LocalDateTime getShowTime() {
+        return showTime;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    public void setShowTime(LocalDateTime time) {
+        this.showTime = time;
     }
 
     @Override
@@ -70,7 +71,7 @@ public class MovieSession {
                 + "id=" + id
                 + ", movie=" + movie
                 + ", cinemaHall=" + cinemaHall
-                + ", time=" + time
+                + ", showTime=" + showTime
                 + '}';
     }
 }
