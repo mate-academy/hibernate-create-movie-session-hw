@@ -40,8 +40,8 @@ public class Main {
         movieSessionService.add(session);
         System.out.println(movieSessionService.get(session.getId()));
 
-        LocalDate date = LocalDate.of(2020,10,20);
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(),date)
+        LocalDate date = LocalDate.of(2020, 10, 20);
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(), date)
                 .forEach(System.out::println);
     }
 }
