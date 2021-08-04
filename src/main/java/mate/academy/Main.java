@@ -48,6 +48,6 @@ public class Main {
         System.out.println(movieSessionService.findAvailableMovieSessions(movie1.getId(),
                 LocalDate.now()));
         System.out.println(cinemaHallService.getAll());
-        System.out.println(movieService.get(2L));
+        System.out.println(movie2.getId());
     }
 }
