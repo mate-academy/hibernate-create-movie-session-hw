@@ -16,7 +16,7 @@ public class Main {
             (MovieService) injector.getInstance(MovieService.class);
     private static final CinemaHallService cinemaHallService =
             (CinemaHallService) injector.getInstance(CinemaHallService.class);
-    private static final MovieSessionService movieSession =
+    private static final MovieSessionService movieSessionService =
             (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
@@ -45,11 +45,11 @@ public class Main {
                 fastAndFurious, planetaKino, LocalDateTime.of(
                         2021, 5, 15, 4,15));
         System.out.println("...Save movie session to DB...");
-        movieSession.add(fastAndFuriousInPlanetaKino);
+        movieSessionService.add(fastAndFuriousInPlanetaKino);
         System.out.println("...Get movie session from DB...");
-        movieSession.get(fastAndFuriousInPlanetaKino.getId());
+        movieSessionService.get(fastAndFuriousInPlanetaKino.getId());
         System.out.println("...Get all movie session from DB...");
-        movieSession.findAvailableMovieSessions(fastAndFuriousInPlanetaKino.getId(),
+        movieSessionService.findAvailableMovieSessions(fastAndFuriousInPlanetaKino.getId(),
                 LocalDate.of(2021, 5, 15))
                 .forEach(System.out::println);
     }
