@@ -58,7 +58,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getAvailableSessionsByMovieIdQuery
                     = session.createQuery("FROM MovieSession ms "
                     + "LEFT JOIN FETCH ms.cinemaHall LEFT JOIN FETCH ms.movie "
-                    + "WHERE ms.id = :movieId AND ms.showTime "
+                    + "WHERE ms.movie.id = :movieId AND ms.showTime "
                     + "BETWEEN :start AND :end", MovieSession.class);
             getAvailableSessionsByMovieIdQuery.setParameter("movieId", movieId);
             getAvailableSessionsByMovieIdQuery.setParameter("start", date.atStartOfDay());

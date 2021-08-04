@@ -38,12 +38,17 @@ public class Main {
         System.out.println();
         System.out.println();
         System.out.println();
+        System.out.println("movie service test");
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
+        System.out.println("cinema hall service test");
         System.out.println(cinemaHallService.get(aquamarine.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
+        System.out.println("movie session service test");
         System.out.println(movieSessionService.get(aquamarineFastAndFurious.getId()));
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
+        System.out.println("FIND AVAILABLE test");
+        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                LocalDate.now()));
         System.out.println();
         System.out.println();
         System.out.println();
