@@ -20,8 +20,10 @@ public class Main {
             (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
-        Movie fastAndFurious = new Movie("Fast and Furious");
-        Movie shrek = new Movie("Shrek 1");
+        Movie fastAndFurious = new Movie();
+        fastAndFurious.setTitle("Fast and Furious");
+        Movie shrek = new Movie();
+        shrek.setTitle("Shrek 1");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         shrek.setDescription("First shrek movie");
         movieService.add(fastAndFurious);
