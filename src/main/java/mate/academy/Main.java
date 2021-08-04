@@ -1,5 +1,6 @@
 package mate.academy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
@@ -37,6 +38,6 @@ public class Main {
         movieSession.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService
-                .findAvailableSessions(1L, LocalDateTime.now().toLocalDate()));
+                .findAvailableSessions(fastAndFurious.getId(), LocalDate.now()));
     }
 }
