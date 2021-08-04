@@ -12,7 +12,7 @@ public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer capacity;
+    private int capacity;
     private String description;
 
     public Long getId() {
@@ -23,11 +23,11 @@ public class CinemaHall {
         this.id = id;
     }
 
-    public Integer getCapacity() {
+    public int getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(Integer capacity) {
+    public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 

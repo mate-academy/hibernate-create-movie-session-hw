@@ -1,33 +1,36 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
-import mate.academy.model.Movie;
+import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
-import java.util.List;
-import java.util.Optional;
-
+@Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
-    public MovieSession add(MovieSession MovieSession) {
+    public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(MovieSession);
+            session.save(movieSession);
             transaction.commit();
-            return MovieSession;
+            return movieSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie session " + MovieSession, e);
+            throw new DataProcessingException("Can't insert movie session " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -45,11 +48,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> getAll() {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM MovieSession", MovieSession.class).getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movie sessions.", e);
+            Query<MovieSession> sessionQuery = session.createQuery("FROM MovieSession ms "
+                    + "LEFT JOIN FETCH ms.movie m "
+                    + "LEFT JOIN FETCH ms.cinemaHall ch "
+                    + "WHERE ms.showTime BETWEEN :startOfDay AND :endOfDay "
+                    + "AND m.id = :movieId", MovieSession.class);
+            sessionQuery.setParameter("startOfDay", date.atStartOfDay());
+            sessionQuery.setParameter("endOfDay", date.atTime(LocalTime.MAX));
+            sessionQuery.setParameter("movieId", movieId);
+            return sessionQuery.getResultList();
         }
     }
 }
