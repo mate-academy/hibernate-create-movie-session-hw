@@ -51,13 +51,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             return session
-                    .createQuery("FROM MovieSession ms where DATE(ms.showDate) = :value AND ms.movie.id = :movieId",
+                    .createQuery("FROM MovieSession ms "
+                                    + "where DATE(ms.showDate) = :value AND ms.movie.id = :movieId",
                             MovieSession.class)
                     .setParameter("movieId", movieId)
                     .setParameter("value", Date.valueOf(date))
                     .getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movie sessions, movie id : " + movieId + ", date : " + date, e);
+            throw new DataProcessingException("Can't get all movie sessions, "
+                    + "movie id : " + movieId
+                    + ", date : " + date, e);
         }
     }
 }

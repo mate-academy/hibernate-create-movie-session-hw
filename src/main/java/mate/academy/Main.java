@@ -66,7 +66,8 @@ public class Main {
         movieSessionOnePlusOne.setShowDate(fifeDate);
         movieSessionService.add(movieSessionOnePlusOne);
 
-        System.out
-                .println(movieSessionService.findAvailableSessions(ironMan.getId(), LocalDate.of(2021, 9, 15)));
+        System.out.println(movieSessionService
+                .findAvailableSessions(ironMan.getId(),
+                                LocalDate.of(2021, 9, 15)));
     }
 }
