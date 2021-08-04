@@ -67,6 +67,6 @@ public class Main {
         movieSessionService.add(movieSessionOnePlusOne);
 
         System.out
-                .println(movieSessionService.findAvailableSessions(1L, LocalDate.of(2021, 9, 15)));
+                .println(movieSessionService.findAvailableSessions(ironMan.getId(), LocalDate.of(2021, 9, 15)));
     }
 }
