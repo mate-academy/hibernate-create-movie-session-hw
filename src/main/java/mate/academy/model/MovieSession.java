@@ -2,6 +2,7 @@ package mate.academy.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ public class MovieSession {
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
+    @Column(name = "show_time")
     private LocalDateTime showTime;
 
     public MovieSession() {
