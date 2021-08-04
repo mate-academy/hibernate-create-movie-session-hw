@@ -36,6 +36,6 @@ public class Main {
                 LocalDateTime.now());
         movieSessionService.add(firstSession);
         System.out.println(movieSessionService.get(firstSession.getId()));
-        movieSessionService.findAvailableSessions(1L, LocalDate.now());
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
     }
 }
