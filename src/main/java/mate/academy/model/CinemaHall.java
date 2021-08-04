@@ -1,6 +1,10 @@
 package mate.academy.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "cinema_halls")
@@ -10,9 +14,6 @@ public class CinemaHall {
     private Long id;
     private Integer capacity;
     private String description;
-
-    public CinemaHall() {
-    }
 
     public Long getId() {
         return id;
