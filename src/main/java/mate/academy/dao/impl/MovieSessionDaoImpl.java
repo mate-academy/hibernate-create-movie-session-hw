@@ -18,19 +18,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
-    public MovieSession add(MovieSession enteti) {
+    public MovieSession add(MovieSession entity) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(enteti);
-            return enteti;
+            session.save(entity);
+            return entity;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't create movie session : " + enteti, e);
+            throw new DataProcessingException("Can't create movie session : " + entity, e);
         } finally {
             if (session != null) {
                 session.close();

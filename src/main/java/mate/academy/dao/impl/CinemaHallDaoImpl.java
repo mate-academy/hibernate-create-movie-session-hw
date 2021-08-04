@@ -16,20 +16,20 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
-    public CinemaHall add(CinemaHall enteti) {
+    public CinemaHall add(CinemaHall entity) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(enteti);
+            session.save(entity);
             transaction.commit();
-            return enteti;
+            return entity;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't create cinema hall : " + enteti, e);
+            throw new DataProcessingException("Can't create cinema hall : " + entity, e);
         } finally {
             if (session != null) {
                 session.close();
