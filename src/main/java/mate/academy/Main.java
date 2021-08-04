@@ -45,28 +45,28 @@ public class Main {
         smallHall.setDescription("This is SMALL HALL for family and small company babyes");
         cinemaHallService.add(smallHall);
 
-        LocalDateTime firstDate = LocalDateTime.of(2021,7, 10, 10, 0);
-        LocalDateTime fourDate = LocalDateTime.of(2021,9, 15, 10, 30);
-        LocalDateTime fifeDate = LocalDateTime.of(2021,9, 15, 14, 30);
-
         MovieSession movieSessionIronMan = new MovieSession();
         movieSessionIronMan.setMovie(ironMan);
         movieSessionIronMan.setCinemaHall(bigHall);
+        LocalDateTime fourDate = LocalDateTime.of(2021, 9, 15, 10, 30);
         movieSessionIronMan.setShowDate(fourDate);
         movieSessionService.add(movieSessionIronMan);
 
         MovieSession movieSessionTwo = new MovieSession();
         movieSessionTwo.setMovie(ironMan);
         movieSessionTwo.setCinemaHall(bigHall);
+        LocalDateTime firstDate = LocalDateTime.of(2021, 7, 10, 10, 0);
         movieSessionTwo.setShowDate(firstDate);
         movieSessionService.add(movieSessionTwo);
 
         MovieSession movieSessionOnePlusOne = new MovieSession();
         movieSessionOnePlusOne.setMovie(onePlusOne);
         movieSessionOnePlusOne.setCinemaHall(smallHall);
+        LocalDateTime fifeDate = LocalDateTime.of(2021, 9, 15, 14, 30);
         movieSessionOnePlusOne.setShowDate(fifeDate);
         movieSessionService.add(movieSessionOnePlusOne);
 
-        System.out.println(movieSessionService.findAvailableSessions(1L, LocalDate.of(2021,9,15)));
+        System.out
+                .println(movieSessionService.findAvailableSessions(1L, LocalDate.of(2021, 9, 15)));
     }
 }
