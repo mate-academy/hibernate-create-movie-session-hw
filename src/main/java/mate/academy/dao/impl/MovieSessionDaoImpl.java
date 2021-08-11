@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -42,7 +43,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getAvailableSessionsQuery = session
+                    .createQuery("FROM MovieSession ms "
+                            + "LEFT JOIN FETCH ms.movie "
+                            + "LEFT JOIN FETCH ms.cinemaHall "
+                            + "WHERE ms.id = :id", MovieSession.class);
+            getAvailableSessionsQuery.setParameter("id", id);
+
+            return Optional.ofNullable(getAvailableSessionsQuery.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -51,13 +59,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
-            Query<MovieSession> getAvailableSessionsQuery = session.createQuery(
-                    "SELECT ms from MovieSession as ms "
-                            + "where ms.movie.id = :id AND ms.showTime >= :beginning "
-                            + "AND ms.showTime <= :ending", MovieSession.class);
+            Query<MovieSession> getAvailableSessionsQuery = session
+                    .createQuery("FROM MovieSession ms "
+                            + "LEFT JOIN FETCH ms.movie m "
+                            + "LEFT JOIN FETCH ms.cinemaHall "
+                            + "WHERE ms.showTime BETWEEN :beginning AND :ending "
+                            + "AND m.id = :id", MovieSession.class);
             getAvailableSessionsQuery.setParameter("id", movieId);
-            getAvailableSessionsQuery.setParameter("beginning", date.atTime(0,0));
-            getAvailableSessionsQuery.setParameter("ending", date.atTime(23,59, 59));
+            getAvailableSessionsQuery.setParameter("beginning", date.atTime(LocalTime.MIN));
+            getAvailableSessionsQuery.setParameter("ending", date.atTime(LocalTime.MAX));
             return getAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Available sessions search in DB failed", e);
