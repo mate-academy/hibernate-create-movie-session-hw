@@ -1,0 +1,67 @@
+package mate.academy.dao.impl;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import mate.academy.dao.MovieSessionDao;
+import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
+import mate.academy.model.MovieSession;
+import mate.academy.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+@Dao
+public class MovieSessionDaoImpl implements MovieSessionDao {
+    @Override
+    public MovieSession add(MovieSession movieSession) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            session.persist(movieSession);
+            transaction.commit();
+            return movieSession;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can't add movie session", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public Optional<MovieSession> get(Long id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return Optional.ofNullable(session.get(MovieSession.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get movie session by id: " + id, e);
+        }
+    }
+
+    @Override
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM MovieSession ms "
+                    + "INNER JOIN FETCH ms.movie m "
+                    + "WHERE m.id = :movieId AND ms.showTime BETWEEN :fromDate AND :toDate "
+                    + "ORDER BY ms.showTime ASC";
+            Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
+            query.setParameter("movieId", movieId);
+            query.setParameter("fromDate", date.atStartOfDay());
+            query.setParameter("toDate", date.atTime(23, 59, 59));
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find movie sessions for movie with id: "
+                    + movieId + " and date " + date, e);
+        }
+    }
+}
