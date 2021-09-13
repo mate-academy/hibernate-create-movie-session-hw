@@ -52,13 +52,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessionQuery = session.createQuery("FROM MovieSession ms "
                     + "LEFT JOIN FETCH ms.cinemaHall "
+                    + "LEFT JOIN FETCH ms.movie "
                     + "WHERE ms.movie.id = :movieId AND ms.showTime BETWEEN :startDT AND :endDT",
                     MovieSession.class);
             getMovieSessionQuery.setParameter("movieId", movieId);
             getMovieSessionQuery.setParameter("startDT",
-                    LocalDateTime.of(date, LocalTime.of(0,0,0)));
+                    LocalDateTime.of(date, LocalTime.MIN));
             getMovieSessionQuery.setParameter("endDT",
-                    LocalDateTime.of(date, LocalTime.of(23,59,59)));
+                    LocalDateTime.of(date, LocalTime.MAX));
             return getMovieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Couldn't find movie sessions on " + date
