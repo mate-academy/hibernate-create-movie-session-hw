@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -7,9 +9,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class Main {
     private static final Injector inject = Injector.getInstance("mate.academy");
@@ -61,7 +60,8 @@ public class Main {
         MovieSession session7 = new MovieSession(avengersEndgame, redHall, secondTime);
         movieSessionService.add(session7);
         List<MovieSession> availableSessions
-                = movieSessionService.findAvailableSessions(avengersEndgame.getId(), secondTime.toLocalDate());
+                = movieSessionService.findAvailableSessions(
+                        avengersEndgame.getId(), secondTime.toLocalDate());
         availableSessions.forEach(System.out::println);
     }
 }
