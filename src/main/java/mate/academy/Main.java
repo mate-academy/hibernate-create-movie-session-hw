@@ -1,16 +1,57 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import mate.academy.lib.Injector;
+import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
+import mate.academy.model.MovieSession;
+import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
+import mate.academy.service.MovieSessionService;
 
 public class Main {
-    public static void main(String[] args) {
-        MovieService movieService = null;
+    private static final Injector injector = Injector.getInstance("mate.academy");
+    private static final MovieService movieService =
+            (MovieService) injector.getInstance(MovieService.class);
+    private static final CinemaHallService cinemaHallService =
+            (CinemaHallService) injector.getInstance(CinemaHallService.class);
+    private static final MovieSessionService movieSessionService =
+            (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
+    public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
+        Movie dune = new Movie("Dune");
+        dune.setDescription("Feature adaptation of Frank Herbert's science fiction novel");
+        movieService.add(dune);
         movieService.getAll().forEach(System.out::println);
+
+        CinemaHall redHall = new CinemaHall();
+        redHall.setCapacity(300);
+        redHall.setDescription("IMAX hall");
+        cinemaHallService.add(redHall);
+        System.out.println(cinemaHallService.get(redHall.getId()));
+        CinemaHall blackHall = new CinemaHall();
+        blackHall.setCapacity(100);
+        blackHall.setDescription("Retro hall");
+        cinemaHallService.add(blackHall);
+        cinemaHallService.getAll().forEach(System.out::println);
+
+        MovieSession morningSession = new MovieSession();
+        morningSession.setCinemaHall(blackHall);
+        morningSession.setMovie(fastAndFurious);
+        morningSession.setShowTime(LocalDateTime.of(2021,9,28,10, 0));
+        movieSessionService.add(morningSession);
+        MovieSession eveningSession = new MovieSession();
+        eveningSession.setCinemaHall(redHall);
+        eveningSession.setMovie(dune);
+        eveningSession.setShowTime(LocalDateTime.of(2021,11,5,20,00));
+        movieSessionService.add(eveningSession);
+        System.out.println(movieSessionService.get(morningSession.getId()));
+        System.out.println(movieSessionService
+                .findAvailableSessions(dune.getId(), LocalDate.of(2021, 11, 5)));
     }
 }
