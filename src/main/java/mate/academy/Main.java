@@ -23,8 +23,8 @@ public class Main {
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setCapacity(100);
-        cinemaHall.setDescription("Best cinema hall ever");
+        cinemaHall.setCapacity(200);
+        cinemaHall.setDescription("Cinema hall");
         cinemaHallService.add(cinemaHall);
         System.out.println(cinemaHallService.get(cinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
