@@ -23,7 +23,7 @@ public class Main {
         MovieSession fastAndFuriosSession = new MovieSession();
         fastAndFuriosSession.setMovie(fastAndFurious);
         fastAndFuriosSession.setCinemaHall(firstCinemaHall);
-        fastAndFuriosSession.setShowTime(LocalDateTime.of(2021, 9, 28, 19, 56));
+        fastAndFuriosSession.setShowTime(LocalDateTime.of(2021, 9, 29, 19, 56));
 
         Injector injector = Injector.getInstance("mate.academy");
 
