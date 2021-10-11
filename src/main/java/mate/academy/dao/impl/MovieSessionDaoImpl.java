@@ -5,7 +5,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.Query;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -13,6 +12,7 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -51,11 +51,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> get(Long movieId, LocalDate localDate) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "FROM MovieSession WHERE movie.id = :movie_id AND DATE(showTime) = :date";
-            Query query = session.createQuery(hql);
+            Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
             query.setParameter("movie_id", movieId);
             Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             query.setParameter("date", date);
-            return (List<MovieSession>) query.getResultList();
+            return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie sessions", e);
         }

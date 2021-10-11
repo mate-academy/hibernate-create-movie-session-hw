@@ -18,16 +18,23 @@ public class Main {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
+        movieService.get(fastAndFurious.getId());
+        System.out.println();
         Movie theShawshankRedemption = new Movie("The Shawshank Redemption");
         theShawshankRedemption.setDescription("It is an adaptation of the Stephen King "
                 + "novella Rita Hayworth and Shawshank Redemption.");
         movieService.add(theShawshankRedemption);
+        movieService.get(theShawshankRedemption.getId());
+        System.out.println();
         Movie theRevenant = new Movie("The Revenant");
         theRevenant.setDescription("A frontiersman on a fur trading expedition in the 1820s "
                 + "fights for survival after being mauled by a bear "
                 + "and left for dead by members of his own hunting team.");
         movieService.add(theRevenant);
+        movieService.get(theRevenant.getId());
+        System.out.println();
         movieService.getAll().forEach(System.out::println);
+        System.out.println();
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
         CinemaHall cinemaHallA = new CinemaHall(275, "IMAX cinema hall A");
@@ -67,16 +74,22 @@ public class Main {
         movieSessionService.add(movieSessionTheShawshankRedemption);
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.now().plusDays(1)).forEach(System.out::println);
+        System.out.println();
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.now().plusDays(2)).forEach(System.out::println);
+        System.out.println();
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.now()).forEach(System.out::println);
+        System.out.println();
         movieSessionService.findAvailableSessions(theRevenant.getId(),
                 LocalDate.now()).forEach(System.out::println);
+        System.out.println();
         movieSessionService.findAvailableSessions(theRevenant.getId(),
                 LocalDate.now().plusDays(1)).forEach(System.out::println);
+        System.out.println();
         movieSessionService.findAvailableSessions(theShawshankRedemption.getId(),
                 LocalDate.now().plusDays(2)).forEach(System.out::println);
+        System.out.println();
         movieSessionService.getAll().forEach(System.out::println);
     }
 }
