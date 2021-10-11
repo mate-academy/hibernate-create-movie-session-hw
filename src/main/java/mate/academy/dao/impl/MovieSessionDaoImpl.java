@@ -41,7 +41,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            String hql = "FROM MovieSession "
+                    + "LEFT JOIN FETCH MovieSession.cinemaHall "
+                    + "LEFT JOIN FETCH MovieSession.movie "
+                    + "WHERE MovieSession.id = :session_id";
+            Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
+            query.setParameter("session_id", id);
+            return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie session by id: " + id, e);
         }
@@ -50,7 +56,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> get(Long movieId, LocalDate localDate) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM MovieSession WHERE movie.id = :movie_id AND DATE(showTime) = :date";
+            String hql = "FROM MovieSession ms "
+                    + "LEFT JOIN FETCH ms.cinemaHall "
+                    + "LEFT JOIN FETCH ms.movie "
+                    + "WHERE ms.movie.id = :movie_id AND DATE(ms.showTime) = :date";
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
             query.setParameter("movie_id", movieId);
             Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -64,7 +73,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM MovieSession", MovieSession.class).getResultList();
+            String hql = "FROM MovieSession ms "
+                    + "LEFT JOIN FETCH ms.cinemaHall "
+                    + "LEFT JOIN FETCH ms.movie";
+            return session.createQuery(hql, MovieSession.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie sessions", e);
         }
