@@ -30,7 +30,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie session " + movieSession, e);
+            throw new DataProcessingException("Can't insert movie session: " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -41,42 +41,43 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM MovieSession "
+            String queryString = "FROM MovieSession "
                     + "LEFT JOIN FETCH MovieSession.cinemaHall "
                     + "LEFT JOIN FETCH MovieSession.movie "
                     + "WHERE MovieSession.id = :session_id";
-            Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
+            Query<MovieSession> query = session.createQuery(queryString, MovieSession.class);
             query.setParameter("session_id", id);
-            return Optional.ofNullable(query.getSingleResult());
+            return Optional.of(query.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie session by id: " + id, e);
         }
     }
 
     @Override
-    public List<MovieSession> get(Long movieId, LocalDate localDate) {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate localDate) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM MovieSession ms "
+            String queryString = "FROM MovieSession ms "
                     + "LEFT JOIN FETCH ms.cinemaHall "
                     + "LEFT JOIN FETCH ms.movie "
                     + "WHERE ms.movie.id = :movie_id AND DATE(ms.showTime) = :date";
-            Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
+            Query<MovieSession> query = session.createQuery(queryString, MovieSession.class);
             query.setParameter("movie_id", movieId);
             Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
             query.setParameter("date", date);
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get movie sessions", e);
+            throw new DataProcessingException("Can't get movie sessions for movie with ID: "
+                    + movieId + " and date: " + localDate, e);
         }
     }
 
     @Override
     public List<MovieSession> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM MovieSession ms "
+            String queryString = "FROM MovieSession ms "
                     + "LEFT JOIN FETCH ms.cinemaHall "
                     + "LEFT JOIN FETCH ms.movie";
-            return session.createQuery(hql, MovieSession.class).getResultList();
+            return session.createQuery(queryString, MovieSession.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie sessions", e);
         }
