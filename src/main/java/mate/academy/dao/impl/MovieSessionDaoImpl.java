@@ -1,6 +1,5 @@
 package mate.academy.dao.impl;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +31,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't save MovieSession " + movieSession + "to DB", e);
+            throw new DataProcessingException("Can't save MovieSession "
+                    + movieSession + "to DB", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -51,7 +51,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> getAll() {
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             String getAll = "FROM MovieSession";
             Query<MovieSession> getAllQuery = session.createQuery(getAll, MovieSession.class);
             return getAllQuery.getResultList();
@@ -63,7 +63,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId,
                 LocalDateTime startDate, LocalDateTime finishDate) {
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             String findAvailableSessions = "FROM MovieSession ms WHERE ms.movie.id = :movieID "
                     + "AND ms.showTime BETWEEN :startDate AND :finishDate";
             Query<MovieSession> findAvailableSessionsQuery =

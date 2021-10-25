@@ -27,11 +27,6 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     }
 
     @Override
-    public List<MovieSession> getAll() {
-        return movieSessionDao.getAll();
-    }
-
-    @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         LocalDateTime startDate = LocalDateTime.of(date, LocalTime.of(0,0,0));
         LocalDateTime finishDate = LocalDateTime.of(date, LocalTime.of(23,59,59));

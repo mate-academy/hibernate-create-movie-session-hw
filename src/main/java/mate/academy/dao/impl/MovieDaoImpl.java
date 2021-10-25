@@ -49,7 +49,7 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        try(Session session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             String hql = "FROM Movie";
             Query<Movie> query = session.createQuery(hql, Movie.class);
             return query.getResultList();
