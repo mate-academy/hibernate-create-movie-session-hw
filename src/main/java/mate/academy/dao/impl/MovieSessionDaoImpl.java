@@ -1,11 +1,12 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.CinemaHall;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
@@ -51,9 +52,26 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> getAll() {
         try(Session session = sessionFactory.openSession()) {
-            String hql = "FROM MovieSession";
-            Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
-            return query.getResultList();
+            String getAll = "FROM MovieSession";
+            Query<MovieSession> getAllQuery = session.createQuery(getAll, MovieSession.class);
+            return getAllQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get All MovieSessions from DB", e);
+        }
+    }
+
+    @Override
+    public List<MovieSession> findAvailableSessions(Long movieId,
+                LocalDateTime startDate, LocalDateTime finishDate) {
+        try(Session session = sessionFactory.openSession()) {
+            String findAvailableSessions = "FROM MovieSession ms WHERE ms.movie.id = :movieID "
+                    + "AND ms.showTime BETWEEN :startDate AND :finishDate";
+            Query<MovieSession> findAvailableSessionsQuery =
+                    session.createQuery(findAvailableSessions, MovieSession.class);
+            findAvailableSessionsQuery.setParameter("movieID", movieId);
+            findAvailableSessionsQuery.setParameter("startDate", startDate);
+            findAvailableSessionsQuery.setParameter("finishDate", finishDate);
+            return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get All MovieSessions from DB", e);
         }
