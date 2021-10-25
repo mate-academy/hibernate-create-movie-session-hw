@@ -24,10 +24,10 @@ public class Main {
         psycho.setDescription("Psychological horror thriller film.");
         movieService.add(psycho);
         System.out.println(movieService.get(psycho.getId()));
-        Movie aKnightsTale = new Movie("A Knight's Tale");
-        aKnightsTale.setDescription("Quasi-medieval adventure comedy-romance film.");
-        movieService.add(aKnightsTale);
-        System.out.println(movieService.get(aKnightsTale.getId()));
+        Movie knightsTale = new Movie("A Knight's Tale");
+        knightsTale.setDescription("Quasi-medieval adventure comedy-romance film.");
+        movieService.add(knightsTale);
+        System.out.println(movieService.get(knightsTale.getId()));
         movieService.getAll().forEach(System.out::println);
 
         CinemaHallService cinemaHallService =
@@ -48,27 +48,19 @@ public class Main {
 
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        MovieSession movieSession1 = new MovieSession();
-        movieSession1.setMovie(psycho);
-        movieSession1.setCinemaHall(smallCinemaHall);
+        MovieSession movieSession1 = new MovieSession(psycho, smallCinemaHall);
         movieSession1.setShowTime(LocalDateTime.of(2021, 10, 11, 0, 10));
         movieSessionService.add(movieSession1);
         System.out.println(movieSessionService.get(movieSession1.getId()));
-        MovieSession movieSession2 = new MovieSession();
-        movieSession2.setMovie(aKnightsTale);
-        movieSession2.setCinemaHall(largeCinemaHall);
+        MovieSession movieSession2 = new MovieSession(knightsTale, largeCinemaHall);
         movieSession2.setShowTime(LocalDateTime.of(2021, 10, 10, 19, 25));
         movieSessionService.add(movieSession2);
         System.out.println(movieSessionService.get(movieSession2.getId()));
-        MovieSession movieSession3 = new MovieSession();
-        movieSession3.setMovie(fastAndFurious);
-        movieSession3.setCinemaHall(middleCinemaHall);
+        MovieSession movieSession3 = new MovieSession(fastAndFurious, middleCinemaHall);
         movieSession3.setShowTime(LocalDateTime.of(2021, 10, 10, 21, 30));
         movieSessionService.add(movieSession3);
         System.out.println(movieSessionService.get(movieSession3.getId()));
-        MovieSession movieSession4 = new MovieSession();
-        movieSession4.setMovie(aKnightsTale);
-        movieSession4.setCinemaHall(largeCinemaHall);
+        MovieSession movieSession4 = new MovieSession(knightsTale, largeCinemaHall);
         movieSession4.setShowTime(LocalDateTime.of(2021, 10, 11, 16, 45));
         movieSessionService.add(movieSession4);
         System.out.println(movieSessionService.get(movieSession4.getId()));
