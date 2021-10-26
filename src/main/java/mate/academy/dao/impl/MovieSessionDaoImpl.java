@@ -59,8 +59,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             findMovieSessionQuery.setParameter("endDayTime", date.atTime(23,59, 59));
             return findMovieSessionQuery.list();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find movie sessions "
-                    + "with movie id " + movieId + " and show date " + date, e);
+            throw new DataProcessingException("Can't find movie sessions"
+                    + " with movie id " + movieId + " and show date " + date, e);
         }
     }
 }
