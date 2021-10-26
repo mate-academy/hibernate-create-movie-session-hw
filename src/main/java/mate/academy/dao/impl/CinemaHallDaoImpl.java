@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class CinemaHallDaoImpl implements CinemaHallDao {
+public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {

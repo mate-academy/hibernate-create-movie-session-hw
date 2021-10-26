@@ -12,7 +12,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class MovieSessionDaoImpl implements MovieSessionDao {
+public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
