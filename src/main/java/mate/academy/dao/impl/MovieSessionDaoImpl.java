@@ -1,33 +1,34 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import mate.academy.dao.MovieDao;
+import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.Movie;
+import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class MovieDaoImpl implements MovieDao {
+public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
-    public Movie add(Movie movie) {
+    public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.save(movieSession);
             transaction.commit();
-            return movie;
+            return movieSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException("Can't insert movie session " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -36,22 +37,25 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public Optional<Movie> get(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(Movie.class, id));
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
     }
 
     @Override
-    public List<Movie> getAll() {
-        String getAllMoviesQuery = "FROM Movie";
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        String findAvailableSessionsQuery = "FROM MovieSession ms "
+                + "WHERE ms.movie.id = :movieId AND DATE(ms.showTime) = DATE(:date)";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> query = session.createQuery(getAllMoviesQuery, Movie.class);
+            Query<MovieSession> query = session.createQuery(findAvailableSessionsQuery);
+            query.setParameter("movieId", movieId);
+            query.setParameter("date", date);
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movies from DB", e);
+            throw new DataProcessingException("Can't find available movie sessions from DB", e);
         }
     }
 }
