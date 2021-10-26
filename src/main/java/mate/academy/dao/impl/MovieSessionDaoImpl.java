@@ -1,6 +1,8 @@
 package mate.academy.dao.impl;
 
+import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -42,7 +44,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessionQuery = session
-                    .createQuery("FROM MovieSession m left join fetch m.cinemaHalls "
+                    .createQuery("FROM MovieSession m "
+                            + "LEFT JOIN FETCH m.movie "
+                            + "LEFT JOIN FETCH m.cinemaHall "
                             + "where m.id = :id", MovieSession.class);
             getMovieSessionQuery.setParameter("id", id);
             return Optional.ofNullable(getMovieSessionQuery.getSingleResult());
@@ -50,7 +54,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return null;
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate localDate) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<MovieSession> getMovieSessionQuery = session
+                    .createQuery("FROM MovieSession m "
+                            + "LEFT JOIN FETCH m.movie mvs "
+                            + "LEFT JOIN FETCH m.cinemaHall "
+                            + "where mvs.id = :id AND DATE(m.showTime) = :date", MovieSession.class);
+            getMovieSessionQuery.setParameter("id", movieId);
+            Date date = Date.valueOf(localDate);
+            getMovieSessionQuery.setParameter("date", date);
+            return getMovieSessionQuery.list();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get matching movie sessions from DB.", e);
+        }
     }
 }
