@@ -68,7 +68,7 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
             return query.list();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available"
-                   + " movie sessions by date: " + date, e);
+                   + " movie sessions by date: " + date + " , movie ID: " + movieId, e);
         }
     }
 }
