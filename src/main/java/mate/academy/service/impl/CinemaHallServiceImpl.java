@@ -1,7 +1,6 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
