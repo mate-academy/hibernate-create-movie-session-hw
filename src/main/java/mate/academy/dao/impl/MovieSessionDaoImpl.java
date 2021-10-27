@@ -18,6 +18,7 @@ import org.hibernate.query.Query;
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
