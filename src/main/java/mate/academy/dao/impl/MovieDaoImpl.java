@@ -51,7 +51,8 @@ public class MovieDaoImpl implements MovieDao {
         String query = "FROM Movie";
         try (Session session = factory.openSession()) {
             return session.createQuery(query).list();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movie. ", e);
         }
-
     }
 }
