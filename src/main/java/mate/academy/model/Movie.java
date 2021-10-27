@@ -15,12 +15,12 @@ public class Movie {
     private String title;
     private String description;
 
+    public Movie() {
+    }
+
     public Movie(String title, String description) {
         this.title = title;
         this.description = description;
-    }
-
-    public Movie() {
     }
 
     public Movie(String title) {
