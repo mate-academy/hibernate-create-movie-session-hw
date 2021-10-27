@@ -43,7 +43,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = factory.openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("There is no Cinema Hall with id: "
+            throw new DataProcessingException("Couldn't get cinema hall from DB with id: "
                     + id, e);
         }
     }
