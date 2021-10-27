@@ -30,7 +30,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't add movie session "
-                    + "into DB" + movieSession, e);
+                    + "into DB: " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -62,11 +62,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "where mvs.id = :id AND DATE(m.showTime) = :date",
                             MovieSession.class);
             getMovieSessionQuery.setParameter("id", movieId);
-            Date date = Date.valueOf(localDate);
-            getMovieSessionQuery.setParameter("date", date);
+            getMovieSessionQuery.setParameter("date", Date.valueOf(localDate));
             return getMovieSessionQuery.list();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get matching movie sessions from DB.", e);
+            throw new DataProcessingException("Can't get available movie sessions from DB "
+                    + "for movie id: " + movieId + " and date: " + localDate, e);
         }
     }
 }
