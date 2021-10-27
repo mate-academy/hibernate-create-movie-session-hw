@@ -17,7 +17,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    private static final SessionFactory factory = HibernateUtil.getSessionFactory();
+    private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -55,15 +55,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = factory.openSession()) {
-            String getAllMovieSessionsByMovieIdAndDate
-                    = "FROM MovieSession ms WHERE ms.showTime BETWEEN :dateFrom AND :dateTo";
+            String getAllMovieSessionsByMovieIdAndDate = "FROM MovieSession ms"
+                            + " LEFT JOIN FETCH ms.movie m"
+                            + " WHERE m.id = :movieId"
+                            + " AND ms.showTime BETWEEN :dateFrom AND :dateTo";
             Query<MovieSession> movieSessionQuery
                     = session.createQuery(getAllMovieSessionsByMovieIdAndDate, MovieSession.class);
+            movieSessionQuery.setParameter("movieId", movieId);
             movieSessionQuery.setParameter("dateFrom", LocalDateTime.of(date, LocalTime.MIN));
             movieSessionQuery.setParameter("dateTo", LocalDateTime.of(date, LocalTime.MAX));
             return movieSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't take all cinema halls from DB!", e);
+            throw new RuntimeException("Can't take available session from DB with movieId: "
+                    + movieId, e);
         }
     }
 }
