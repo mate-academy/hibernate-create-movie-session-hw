@@ -48,7 +48,7 @@ public class Main {
         fastAndFuriousPlaneta.setCinemaHall(planetaKino);
         movieSessionService.add(fastAndFuriousOscar);
         movieSessionService.add(fastAndFuriousPlaneta);
-        System.out.println("-------");
+        System.out.println("--------");
         movieSessionService
                 .findAvailableSessions(fastAndFurious.getId(), LocalDate.of(2021, 10, 27))
                 .forEach(System.out::println);
