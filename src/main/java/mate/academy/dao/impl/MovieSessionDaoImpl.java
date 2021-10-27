@@ -1,5 +1,7 @@
 package mate.academy.dao.impl;
 
+
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -50,20 +52,23 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate localDate) {
         try (Session session = sessionFactory.openSession()) {
             String hql
                     = "FROM MovieSession ms "
+                    + "LEFT JOIN FETCH ms.cinemaHall "
+                    + "LEFT JOIN FETCH ms.movie "
                     + "WHERE ms.movie.id = :id "
-                    + "AND ms.showTime = :date";
+                    + "AND DATE(ms.showTime) = :date";
             Query<MovieSession> findAvailableSessionsQuery
                     = session.createQuery(hql, MovieSession.class);
             findAvailableSessionsQuery.setParameter("id", movieId);
+            Date date = Date.valueOf(localDate);
             findAvailableSessionsQuery.setParameter("date", date);
             return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available session: "
-                    + "movieId - " + movieId + "; date -  " + date, e);
+                    + "movieId - " + movieId + "; date -  " + localDate, e);
         }
     }
 }
