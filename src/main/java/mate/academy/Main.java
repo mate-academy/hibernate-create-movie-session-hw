@@ -38,7 +38,7 @@ public class Main {
         firstSession.setCinemaHall(redHall);
         movieSessionService.add(firstSession);
         System.out.println(movieSessionService.get(firstSession.getId()));
-        movieSessionService.findAllAvailableSessions(fastAndFurious.getId(), LocalDate.now())
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now())
                 .forEach(System.out::println);
     }
 }
