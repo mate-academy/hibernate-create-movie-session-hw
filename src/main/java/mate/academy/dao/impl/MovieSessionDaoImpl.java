@@ -26,7 +26,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try {
             session = factory.openSession();
             transaction = session.beginTransaction();
-            session.save(movieSession);
+            session.persist(movieSession);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
