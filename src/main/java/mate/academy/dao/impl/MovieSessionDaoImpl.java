@@ -62,8 +62,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("maxDate", LocalDateTime.of(date,LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all movieSessions for movie with Id: "
-                    + movieId, e);
+            throw new RuntimeException("Can't get MovieSession with id = "
+                    + movieId + " and date = " + date, e);
         }
     }
 }
