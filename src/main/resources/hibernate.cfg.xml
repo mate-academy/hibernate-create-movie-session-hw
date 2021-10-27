@@ -17,7 +17,3 @@
         <mapping class="mate.academy.dao.impl.MovieSessionDaoImpl"/>
     </session-factory>
 </hibernate-configuration>
-<!--
-<mapping class="mate.academy.model.Movie"/>
-<mapping class="mate.academy.model.CinemaHall"/>
-<mapping class="mate.academy.model.MovieSession"/>-->
