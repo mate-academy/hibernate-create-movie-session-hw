@@ -67,7 +67,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return movieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't take available session from DB with movieId: "
-                    + movieId, e);
+                    + movieId + " end with date: " + date, e);
         }
     }
 }

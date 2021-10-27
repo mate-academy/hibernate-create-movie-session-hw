@@ -21,7 +21,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     @Override
     public CinemaHall get(Long id) {
         return cinemaHallDao.get(id).orElseThrow(() ->
-                new DataProcessingException("Couldn't get cinema hall from DB with id: " + id));
+                new DataProcessingException("There is no Cinema Hall with id: " + id));
     }
 
     @Override
