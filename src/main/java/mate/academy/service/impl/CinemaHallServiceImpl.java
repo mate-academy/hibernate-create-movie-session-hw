@@ -1,0 +1,28 @@
+package mate.academy.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+import mate.academy.dao.CinemaHallDao;
+import mate.academy.lib.Inject;
+import mate.academy.model.CinemaHall;
+
+public class CinemaHallServiceImpl implements CinemaHallDao {
+    @Inject
+    private CinemaHallDao cinemaHallDao;
+
+
+    @Override
+    public CinemaHall add(CinemaHall cinemaHall) {
+        return cinemaHallDao.add(cinemaHall);
+    }
+
+    @Override
+    public Optional<CinemaHall> get(Long id) {
+        return cinemaHallDao.get(id);
+    }
+
+    @Override
+    public List<CinemaHall> getAll() {
+        return cinemaHallDao.getAll();
+    }
+}

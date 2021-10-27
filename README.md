@@ -13,7 +13,7 @@ The service layer should have the following methods:
     CinemaHall add(CinemaHall cinemaHall);
 
     CinemaHall get(Long id);
-
+x
     List<CinemaHall> getAll();
 ```
 - create `MovieSessionDaoImpl` and `MovieSessionServiceImpl`.
