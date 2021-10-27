@@ -3,7 +3,6 @@ package mate.academy.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
-import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
@@ -21,8 +20,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id).orElseThrow(()
-                -> new DataProcessingException("Movie session doesn't exist with id: " + id));
+        return movieSessionDao.get(id).orElseThrow();
     }
 
     @Override

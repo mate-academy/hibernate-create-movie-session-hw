@@ -20,7 +20,6 @@ public class Main {
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
-
         CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall();
@@ -29,7 +28,6 @@ public class Main {
         cinemaHallService.add(cinemaHall);
         System.out.println(cinemaHallService.get(cinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
-
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(cinemaHall);

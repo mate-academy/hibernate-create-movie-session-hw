@@ -11,16 +11,19 @@ import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
@@ -39,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
@@ -48,14 +51,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long id, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery("from MovieSession ms "
                     + "left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall "
                     + "where ms.id = :inputId and date(ms.showTime) = :inputDate");
             query.setParameter("inputId", id);
             query.setParameter("inputDate", Date.valueOf(date));
-
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all cinema halls", e);
