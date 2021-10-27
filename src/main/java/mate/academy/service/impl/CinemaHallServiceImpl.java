@@ -1,12 +1,14 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
+import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
+import mate.academy.service.CinemaHallService;
 
-public class CinemaHallServiceImpl implements CinemaHallDao {
+@Service
+public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
     private CinemaHallDao cinemaHallDao;
 
@@ -16,8 +18,8 @@ public class CinemaHallServiceImpl implements CinemaHallDao {
     }
 
     @Override
-    public Optional<CinemaHall> get(Long id) {
-        return cinemaHallDao.get(id);
+    public CinemaHall get(Long id) {
+        return cinemaHallDao.get(id).get();
     }
 
     @Override

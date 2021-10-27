@@ -18,7 +18,7 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne
     private CinemaHall cinemaHall;
-    private LocalDateTime showTime;
+    private LocalDateTime filmTime;
 
     public long getId() {
         return id;
@@ -44,21 +44,21 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return showTime;
+    public LocalDateTime getFilmTime() {
+        return filmTime;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.showTime = localDateTime;
+    public void setFilmTime(LocalDateTime localDateTime) {
+        this.filmTime = localDateTime;
     }
-    /*private class TestMaker{
-        public boolean test(){
-            if(*//*condition*//*){
-                return true;
-            }
-            return false;
-        }
-    }*/
+
+    @Override
+    public String toString() {
+        return "MovieSession{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showTime=" + filmTime
+                + '}';
+    }
 }
-
-

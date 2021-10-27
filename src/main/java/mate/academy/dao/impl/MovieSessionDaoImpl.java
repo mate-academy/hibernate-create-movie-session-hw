@@ -23,7 +23,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.persist(movie);
             transaction.commit();
             return movie;
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
                             + "join fetch ms.movie m where m.id = :id "
-                            + "and ms.showTime between :startDate and :endDate",
+                            + "and ms.filmTime between :startDate and :endDate",
                     MovieSession.class);
             query.setParameter("id", movieId);
             query.setParameter("startDate", LocalDateTime.of(date, LocalTime.MIN));
