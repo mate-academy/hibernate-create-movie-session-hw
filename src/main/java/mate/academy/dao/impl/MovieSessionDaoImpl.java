@@ -61,6 +61,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             movieSessionQuery.setParameter("before", LocalDateTime.of(date, LocalTime.MAX));
             movieSessionQuery.setParameter("after", LocalDateTime.of(date, LocalTime.MIN));
             return movieSessionQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find available session from db", e);
         }
     }
 }
