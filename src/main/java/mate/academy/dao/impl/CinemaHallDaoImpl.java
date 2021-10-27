@@ -14,7 +14,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private final static SessionFactory sessionFactory
+    private static final SessionFactory sessionFactory
             = HibernateUtil.getSessionFactory();
 
     @Override

@@ -1,6 +1,5 @@
 package mate.academy.dao.impl;
 
-
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -17,7 +16,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    private final static SessionFactory sessionFactory
+    private static final SessionFactory sessionFactory
             = HibernateUtil.getSessionFactory();
 
     @Override
@@ -67,7 +66,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             findAvailableSessionsQuery.setParameter("date", date);
             return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get available session: "
+            throw new DataProcessingException("Can't get available movie sessions: "
                     + "movieId - " + movieId + "; date -  " + localDate, e);
         }
     }
