@@ -14,7 +14,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -45,7 +44,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Query<CinemaHall> getCinemaHallWithMovieSession = session
                     .createQuery("from CinemaHall c where c.id = :id", CinemaHall.class);
             getCinemaHallWithMovieSession.setParameter("id", id);
-            return Optional.ofNullable(getCinemaHallWithMovieSession.getSingleResult());
+            return Optional.ofNullable(getCinemaHallWithMovieSession.uniqueResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a cinemaHall by id: " + id, e);
         }
