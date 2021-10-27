@@ -21,6 +21,7 @@ public class MovieSession {
     private CinemaHall cinemaHall;
     @Column(name = "show_time")
     private LocalDateTime showTime;
+
     public MovieSession() {
     }
 
