@@ -10,18 +10,20 @@ import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
@@ -41,14 +43,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getMovieSessionQuery = session
-                    .createQuery("FROM MovieSession m "
-                            + "LEFT JOIN FETCH m.movie "
-                            + "LEFT JOIN FETCH m.cinemaHall "
-                            + "where m.id = :id", MovieSession.class);
-            getMovieSessionQuery.setParameter("id", id);
-            return Optional.ofNullable(getMovieSessionQuery.getSingleResult());
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -56,11 +52,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate localDate) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getMovieSessionQuery = session
                     .createQuery("FROM MovieSession m "
                             + "LEFT JOIN FETCH m.movie mvs "
-                            + "LEFT JOIN FETCH m.cinemaHall "
                             + "where mvs.id = :id AND DATE(m.showTime) = :date",
                             MovieSession.class);
             getMovieSessionQuery.setParameter("id", movieId);
