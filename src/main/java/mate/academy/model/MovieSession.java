@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,7 +16,7 @@ public class MovieSession {
     private Long id;
     @ManyToOne
     private Movie movie;
-    @OneToOne
+    @ManyToOne
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
