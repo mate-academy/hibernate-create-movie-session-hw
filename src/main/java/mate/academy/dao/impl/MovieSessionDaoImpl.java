@@ -53,8 +53,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        LocalDate inputDate = LocalDate.of(date.getYear(), date.getMonth(), date.getDayOfMonth());
-
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> query = session.createQuery("FROM MovieSession ms "
                     + "where ms.movie.id = :movieId and ms.showTime "
@@ -64,7 +62,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("maxDate", LocalDateTime.of(date,LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get movie list ", e);
+            throw new RuntimeException("Can't get all movieSessions for movie with Id: "
+                    + movieId, e);
         }
     }
 }
