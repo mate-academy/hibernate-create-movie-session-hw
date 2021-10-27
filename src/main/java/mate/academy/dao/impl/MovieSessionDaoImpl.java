@@ -55,8 +55,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = sessionFactory.openSession()) {
             String hql
                     = "FROM MovieSession ms "
-                    + "LEFT JOIN FETCH ms.cinemaHall "
-                    + "LEFT JOIN FETCH ms.movie "
                     + "WHERE ms.movie.id = :id "
                     + "AND DATE(ms.showTime) = :date";
             Query<MovieSession> findAvailableSessionsQuery
