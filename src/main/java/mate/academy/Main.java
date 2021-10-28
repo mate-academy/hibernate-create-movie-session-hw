@@ -21,14 +21,12 @@ public class Main {
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
-
         CinemaHallService cinemaHallService
                 = (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall(10, "description1");
         cinemaHallService.add(cinemaHall);
         System.out.println(cinemaHallService.get(cinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
-
         MovieSessionService movieSessionService
                 = (MovieSessionService) injector.getInstance(MovieSessionService.class);
         MovieSession movieSession1 = new MovieSession(LocalDateTime.now());
