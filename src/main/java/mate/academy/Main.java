@@ -28,7 +28,7 @@ public class Main {
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setCapasity(200);
+        cinemaHall.setCapacity(200);
         cinemaHall.setDescription("Supports 3d");
         cinemaHallService.add(cinemaHall);
 
