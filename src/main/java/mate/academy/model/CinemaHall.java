@@ -19,9 +19,6 @@ public class CinemaHall {
     private int capacity;
     private String description;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private List<Movie> movies;
-
     public CinemaHall() {
     }
 
