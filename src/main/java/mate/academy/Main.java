@@ -46,7 +46,7 @@ public class Main {
         movieSession1.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSession1);
 
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now())
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.of(2021,11,01))
                 .forEach(System.out::println);
         movieSessionService.findAvailableSessions(shrek.getId(), LocalDate.now().plusDays(1))
                 .forEach(System.out::println);
