@@ -1,12 +1,12 @@
 package mate.academy.service.impl;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.time.LocalDate;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 public class MovieSessionServiceImpl implements MovieSessionService {
 
