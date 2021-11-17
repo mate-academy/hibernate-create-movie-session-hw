@@ -39,13 +39,13 @@ public class Main {
 
         MovieSession session1 = new MovieSession();
         session1.setCinemaHall(cinemaHall1);
-        session1.setMovie(taxi3);
+        session1.setMovie(fastAndFurious);
         session1.setShowTime(LocalDateTime.now().plusHours(6));
         System.out.println(session1.getShowTime());
 
         MovieSession session2 = new MovieSession();
         session2.setCinemaHall(cinemaHall1);
-        session2.setMovie(taxi3);
+        session2.setMovie(fastAndFurious);
         session2.setShowTime(LocalDateTime.now().plusDays(1));
         System.out.println(session2.getShowTime());
 
@@ -60,6 +60,7 @@ public class Main {
         movieSessionService.add(session1);
         movieSessionService.add(session2);
         movieSessionService.add(session3);
-        movieSessionService.findAvailableSessions(2L, LocalDate.now()).forEach(System.out::println);
+        //System.out.println(movieSessionService.get(1L));
+        movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
     }
 }
