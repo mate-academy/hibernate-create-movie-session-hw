@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "where m.id = :id and date(m.showTime) = :date",
                     MovieSession.class);
             query.setParameter("id", movieId);
-            query.setParameter("date", date);
+            query.setParameter("date", Date.valueOf(date));
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all movie session from DB ", e);
