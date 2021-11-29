@@ -11,7 +11,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -49,15 +48,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("from MovieSession m "
+            return session.createQuery("from MovieSession m "
                             + "left join fetch m.movie "
                             + "where m.id = :id and date(m.showTime) = :date",
-                    MovieSession.class);
-            query.setParameter("id", movieId);
-            query.setParameter("date", Date.valueOf(date));
-            return query.getResultList();
+                    MovieSession.class)
+            .setParameter("id", movieId)
+            .setParameter("date", Date.valueOf(date))
+            .getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movie session from DB ", e);
+            throw new DataProcessingException("Can't get all movie session from DB by id "
+                    + movieId + "and date " + date, e);
         }
     }
 }
