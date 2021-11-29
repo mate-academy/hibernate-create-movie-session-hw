@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+@Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -47,7 +49,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession m "
-                            + "left join fetch m.movie where m.id = :id and date(m.showTime) = :date",
+                            + "left join fetch m.movie "
+                            + "where m.id = :id and date(m.showTime) = :date",
                     MovieSession.class);
             query.setParameter("id", movieId);
             query.setParameter("date", date);
