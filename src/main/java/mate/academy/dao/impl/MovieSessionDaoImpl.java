@@ -14,6 +14,13 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final int MIN_HOUR = 0;
+    private static final int MIN_MINUTE = 0;
+    private static final int MIN_SECOND = 0;
+    private static final int MAX_HOUR = 23;
+    private static final int MAX_MINUTE = 59;
+    private static final int MAX_SECOND = 59;
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
@@ -57,8 +64,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "join fetch ms.cinemaHall "
                     + "where ms.showTime BETWEEN :beginDate AND :endDate",
                     MovieSession.class);
-            movieSessionQuery.setParameter("beginDate", date.atTime(00,00,00));
-            movieSessionQuery.setParameter("endDate", date.atTime(23,59,59));
+            movieSessionQuery.setParameter("beginDate", date
+                    .atTime(MIN_HOUR, MIN_MINUTE, MIN_SECOND));
+            movieSessionQuery.setParameter("endDate", date
+                    .atTime(MAX_HOUR, MAX_MINUTE, MAX_SECOND));
             return movieSessionQuery.getResultList();
         }
     }
