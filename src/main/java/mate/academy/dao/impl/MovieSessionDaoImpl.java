@@ -41,8 +41,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessionByIdQuery
-                    = session.createQuery("from MovieSession ms left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall where ms.id = :id", MovieSession.class);
+                    = session.createQuery("from MovieSession ms join fetch ms.movie "
+                    + "join fetch ms.cinemaHall where ms.id = :id", MovieSession.class);
             getMovieSessionByIdQuery.setParameter("id", id);
             return getMovieSessionByIdQuery.uniqueResultOptional();
         } catch (Exception e) {
@@ -55,7 +55,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessionsByIdAndDateQuery
                     = session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.movie left join fetch ms.cinemaHall "
+                    + "join fetch ms.movie join fetch ms.cinemaHall "
                     + "where ms.movie.id = :movieId "
                     + "and ms.showTime between :startOfDate and :endOfDate ", MovieSession.class);
             getAllMovieSessionsByIdAndDateQuery.setParameter("movieId", movieId);
