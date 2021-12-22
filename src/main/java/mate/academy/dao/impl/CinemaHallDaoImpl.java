@@ -52,7 +52,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     "from CinemaHall", CinemaHall.class);
             return allCinemaHalls.getResultList();
         } catch (HibernateException e) {
-            throw new RuntimeException(
+            throw new DataProcessingException(
                     "Can't get all cinema halls from DB", e);
         }
     }
