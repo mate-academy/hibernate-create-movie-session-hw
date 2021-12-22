@@ -23,7 +23,7 @@ public class Movie {
     }
 
     public Movie(String title, String description) {
-        this.title = title;
+        this(title);
         this.description = description;
     }
 
