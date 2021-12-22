@@ -40,34 +40,28 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getMovieSessionByIdQuery
+                    = session.createQuery("from MovieSession ms left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall where ms.id = :id", MovieSession.class);
+            getMovieSessionByIdQuery.setParameter("id", id);
+            return getMovieSessionByIdQuery.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movieSession by id: " + id, e);
         }
     }
 
     @Override
-    public List<MovieSession> getAll() {
-        try (Session session = getSessionFactory().openSession()) {
-            Query<MovieSession> getAllMovieSessionsQuery
-                    = session.createQuery("from MovieSession", MovieSession.class);
-            return getAllMovieSessionsQuery.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movieSessions from DB", e);
-        }
-    }
-
-    @Override
     public List<MovieSession> getByMovieIdAndDate(Long movieId, LocalDate date) {
         try (Session session = getSessionFactory().openSession()) {
-            Query<MovieSession> getAllMovieSessionsQuery
+            Query<MovieSession> getAllMovieSessionsByIdAndDateQuery
                     = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie left join fetch ms.cinemaHall "
                     + "where ms.movie.id = :movieId "
                     + "and ms.showTime between :startOfDate and :endOfDate ", MovieSession.class);
-            getAllMovieSessionsQuery.setParameter("movieId", movieId);
-            getAllMovieSessionsQuery.setParameter("startOfDate", date.atStartOfDay());
-            getAllMovieSessionsQuery.setParameter("endOfDate", date.atTime(23,59,59));
-            return getAllMovieSessionsQuery.getResultList();
+            getAllMovieSessionsByIdAndDateQuery.setParameter("movieId", movieId);
+            getAllMovieSessionsByIdAndDateQuery.setParameter("startOfDate", date.atStartOfDay());
+            getAllMovieSessionsByIdAndDateQuery.setParameter("endOfDate", date.atTime(23,59,59));
+            return getAllMovieSessionsByIdAndDateQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all movieSessions by movieId = " + movieId
                     + " and date = " + date + " from DB", e);
