@@ -49,8 +49,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessionQuery = session
-                    .createQuery("from MovieSession ms"
-                                    + " left join fetch ms.movie "
+                    .createQuery("from MovieSession ms "
+                                    + "left join fetch ms.movie "
                                     + "left join fetch ms.cinemaHall "
                                     + "where ms.id= :id and ms.showTime between :after and :before",
                             MovieSession.class);
