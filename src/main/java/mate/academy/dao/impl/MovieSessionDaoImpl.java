@@ -49,14 +49,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = getSessionFactory().openSession()) {
-            Query<MovieSession> allAvailableSessions = session.createQuery(
-                    "from MovieSession where showTime between :start_time "
-                            + "and :end_time and movie.id = :movie_id",
-                    MovieSession.class);
-            allAvailableSessions.setParameter("start_time", date.atStartOfDay());
-            allAvailableSessions.setParameter("end_time", date.atTime(23, 59,59));
-            allAvailableSessions.setParameter("movie_id", movieId);
-            return allAvailableSessions.getResultList();
+            Query<MovieSession> query =
+                    session.createQuery("from MovieSession ms "
+                            + "join fetch ms.movie m "
+                            + "join fetch ms.cinemaHall ch "
+                            + "where ms.movie.id = :id "
+                            + "and ms.showTime between :start_time "
+                            + "AND :end_time", MovieSession.class);
+            query.setParameter("id", movieId);
+            query.setParameter("start_time", date.atStartOfDay());
+            query.setParameter("end_time", date.atTime(23, 59, 59));
+            return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(
                     String.format("Can't get MovieSessions by movie id (%d) and date (%s)",

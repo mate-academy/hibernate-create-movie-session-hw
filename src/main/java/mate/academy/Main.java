@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
-        Movie buried = new Movie("Fast and Furious");
+        Movie buried = new Movie("Buried");
         fastAndFurious.setDescription(
                 "After an attack by a group of Iraqis he wakes to find "
                 + "he is buried alive inside a coffin. "
