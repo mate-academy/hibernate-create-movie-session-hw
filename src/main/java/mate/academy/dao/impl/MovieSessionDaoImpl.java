@@ -1,6 +1,5 @@
 package mate.academy.dao.impl;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -50,11 +49,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getAllSessionsQuery = session.createQuery(
                     "from MovieSession ms "
                             + "join fetch ms.movie m "
-                            + "JOIN fetch ms.cinemaHall ch "
+                            + "join fetch ms.cinemaHall ch "
                             + "where m.id = :id and "
-                            + "cast(ms.showTime as date) = :date", MovieSession.class);
+                            + "ms.showTime between :startOfDay and :endOfDay", MovieSession.class);
             getAllSessionsQuery.setParameter("id", movieId);
-            getAllSessionsQuery.setParameter("date", Date.valueOf(date));
+            getAllSessionsQuery.setParameter("startOfDay", date.atStartOfDay());
+            getAllSessionsQuery.setParameter("endOfDay", date.atTime(23, 59, 59));
             return getAllSessionsQuery.getResultList();
         }
     }
