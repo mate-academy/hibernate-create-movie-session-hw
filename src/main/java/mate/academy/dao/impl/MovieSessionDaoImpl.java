@@ -52,7 +52,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .createQuery("from MovieSession ms "
                                     + "left join fetch ms.movie "
                                     + "left join fetch ms.cinemaHall "
-                                    + "where ms.id= :id and ms.showTime between :after and :before",
+                                    + "where ms.id = :id and ms.showTime between :after and :before",
                             MovieSession.class);
             movieSessionQuery.setParameter("id", movieId);
             movieSessionQuery.setParameter("before", LocalDateTime.of(date, LocalTime.MAX));
