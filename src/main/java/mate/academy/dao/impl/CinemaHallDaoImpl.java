@@ -10,7 +10,6 @@ import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
