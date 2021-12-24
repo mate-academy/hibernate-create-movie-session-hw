@@ -63,7 +63,6 @@ public class Main {
         System.out.println(movieService.get(spiderMan.getId()));
         movieService.getAll().forEach(System.out::println);
 
-
         System.out.println(movieSessionService.get(morningSession.getId()));
         System.out.println(movieSessionService.get(afternoonSession.getId()));
 
