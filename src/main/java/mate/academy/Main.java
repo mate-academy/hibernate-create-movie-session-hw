@@ -63,6 +63,9 @@ public class Main {
         System.out.println(movieService.get(spiderMan.getId()));
         movieService.getAll().forEach(System.out::println);
 
+        System.out.println(movieSessionService.get(morningSession.getId()));
+        System.out.println(movieSessionService.get(afternoonSession.getId()));
+
         List<MovieSession> availableSessions = movieSessionService
                 .findAvailableSessions(spiderMan.getId(), LocalDate.of(2021, 12, 25));
         availableSessions.forEach(System.out::println);
