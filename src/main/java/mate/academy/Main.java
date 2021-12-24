@@ -66,5 +66,6 @@ public class Main {
         List<MovieSession> availableSessions = movieSessionService
                 .findAvailableSessions(spiderMan.getId(), LocalDate.of(2021, 12, 25));
         availableSessions.forEach(System.out::println);
+
     }
 }
