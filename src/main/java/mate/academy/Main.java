@@ -12,14 +12,14 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate");
+
     public static void main(String[] args) {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
-        Movie bearAdventure= new Movie("Hungry bear adventure");
+        Movie bearAdventure = new Movie("Hungry bear adventure");
         bearAdventure.setDescription("About hungry bear. Only for children!");
         movieService.add(bearAdventure);
         System.out.println(movieService.get(bearAdventure.getId()));
@@ -27,44 +27,32 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
         System.out.println("-------------------------------------------");
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
-
         CinemaHall hall4dx = new CinemaHall();
         hall4dx.setCapacity(400);
         hall4dx.setDescription("IMax4DX");
-        System.out.println("cinema hall hall4dx before adding to db" + hall4dx);
-        System.out.println("cinema hall hall4dx after adding to db" + cinemaHallService.add(hall4dx));
-        System.out.println("cinema hall " + hall4dx + " in db is " + cinemaHallService.get(hall4dx.getId()));
+        System.out.println("cinema hall hall4dx after adding to db"
+                + cinemaHallService.add(hall4dx));
+        System.out.println("cinema hall " + hall4dx
+                + " in db is " + cinemaHallService.get(hall4dx.getId()));
         CinemaHall hall3d = new CinemaHall();
         hall3d.setCapacity(200);
         hall3d.setDescription("3Dhall");
-        System.out.println("cinema hall 3Dhall before adding to db " + hall3d);
-        System.out.println("cinema hall 3Dhall after adding to db " + cinemaHallService.add(hall3d));
-        System.out.println("cinema hall " + hall3d + " in db is " + cinemaHallService.get(hall3d.getId()));
+        System.out.println("cinema hall 3Dhall after adding to db "
+                + cinemaHallService.add(hall3d));
+        System.out.println("cinema hall " + hall3d + " in db is "
+                + cinemaHallService.get(hall3d.getId()));
         System.out.println("All cinema halls in db : ");
         cinemaHallService.getAll().forEach(System.out::println);
         System.out.println("-------------------------------------------");
-
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         MovieSession movieSession1 = new MovieSession();
         movieSession1.setMovie(fastAndFurious);
         movieSession1.setShowTime(LocalDateTime.of(2021,12,12,12,12));
         movieSession1.setCinemaHall(hall4dx);
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession1);
         MovieSession movieSession2 = new MovieSession();
         movieSession2.setMovie(bearAdventure);

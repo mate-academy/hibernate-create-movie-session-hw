@@ -29,7 +29,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie session " + movieSession, exception);
+            throw new DataProcessingException("Can't insert movie session "
+                    + movieSession, exception);
         } finally {
             if (session != null) {
                 session.close();
@@ -49,14 +50,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery(
-                    "select MovieSession from MovieSession ms inner join Movie m " +
-                            "where m.id = :movieId and " +
-                            "ms.showTime between :earlyVisitTime and :laterVisitTime " +
-                            "order by ms.showTime",
-                    MovieSession.class);
+            Query<MovieSession> query = session
+                    .createQuery("from MovieSession ms "
+                                    + "left join fetch ms.movie "
+                                    + "left join fetch ms.cinemaHall "
+                                    + "where ms.movie.id = :movieId "
+                                    + "and ms.showTime between :earlyVisitTime "
+                                    + "and :laterVisitTime",
+                            MovieSession.class);
             query.setParameter("movieId", movieId);
-            query.setParameter("earlyVisitTime", date.atTime(LocalTime.MIDNIGHT));
+            query.setParameter("earlyVisitTime", date.atTime(LocalTime.MIN));
             query.setParameter("laterVisitTime", date.atTime(LocalTime.MAX));
             return query.list();
         } catch (Exception exception) {

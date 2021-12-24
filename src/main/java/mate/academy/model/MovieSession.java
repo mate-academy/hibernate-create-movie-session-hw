@@ -53,11 +53,11 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        return "MovieSessionDao{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", showTime=" + showTime +
-                '}';
+        return "MovieSessionDao{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showTime=" + showTime
+                + '}';
     }
 }
