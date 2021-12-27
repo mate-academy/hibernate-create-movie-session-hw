@@ -52,13 +52,13 @@ public class Main {
         movieSessionTwo.setCinemaHall(cinemaHallTwo);
         movieSessionService.add(movieSessionTwo);
 
-        System.out.println(movieService.get(1L));
+        System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
-        System.out.println(cinemaHallService.get(1L));
+        System.out.println(cinemaHallService.get(cinemaHallOne.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
-        System.out.println(movieSessionService.get(1L));
+        System.out.println(movieSessionService.get(movieSessionOne.getId()));
         movieSessionService.findAvailableSessions(2L, LocalDate.of(
                 2021, 12, 27)).forEach(System.out::println);
     }
