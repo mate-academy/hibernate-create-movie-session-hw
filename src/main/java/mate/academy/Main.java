@@ -59,7 +59,7 @@ public class Main {
         cinemaHallService.getAll().forEach(System.out::println);
 
         System.out.println(movieSessionService.get(movieSessionOne.getId()));
-        movieSessionService.findAvailableSessions(2L, LocalDate.of(
+        movieSessionService.findAvailableSessions(dunkirk.getId(), LocalDate.of(
                 2021, 12, 27)).forEach(System.out::println);
     }
 }
