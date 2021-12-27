@@ -51,7 +51,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHalls.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movies from DB", e);
+            throw new DataProcessingException("Can't get all cinema halls from DB", e);
         }
     }
 }
