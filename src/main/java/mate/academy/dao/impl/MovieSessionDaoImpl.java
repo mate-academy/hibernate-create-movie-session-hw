@@ -40,6 +40,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
     }
 
@@ -48,14 +50,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllAvailableSessionsQuery =
                     session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.cinemaHall "
-                    + "left join fetch ms.movie m "
+                    + "join fetch ms.cinemaHall "
+                    + "join fetch ms.movie m "
                     + "where m.id = :id and day(ms.showTime) = day(:date) "
                     + "and month(ms.showTime) = month(:date) "
                     + "and year(ms.showTime) = year(:date)", MovieSession.class);
             getAllAvailableSessionsQuery.setParameter("id", movieId);
             getAllAvailableSessionsQuery.setParameter("date", date);
             return getAllAvailableSessionsQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get movie sessions by id: "
+                    + movieId + " and date: " + date, e);
         }
     }
 }
