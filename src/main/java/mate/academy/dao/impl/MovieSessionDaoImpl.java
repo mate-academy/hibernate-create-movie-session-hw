@@ -1,5 +1,10 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,11 +13,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -50,8 +50,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> allAvailableSessionsQuery = session.createQuery("from MovieSession ms "
-                    + "where ms.id = :id AND ms.showTime between :after and :before");
+            Query<MovieSession> allAvailableSessionsQuery = session
+                    .createQuery("from MovieSession ms where ms.id = :id "
+                           + "AND ms.showTime between :after and :before");
             allAvailableSessionsQuery.setParameter("id", movieId);
             allAvailableSessionsQuery.setParameter("before", LocalDateTime.of(date, LocalTime.MAX));
             allAvailableSessionsQuery.setParameter("after", LocalDateTime.of(date, LocalTime.MIN));
