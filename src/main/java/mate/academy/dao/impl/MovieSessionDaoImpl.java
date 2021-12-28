@@ -62,7 +62,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     LocalDateTime.of(date, LocalTime.MAX));
             return getAllAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all available movie sessions from DB by id "
+            throw new DataProcessingException("Can't get all available sessions from DB by id "
                     + movieId + "on date " + date, e);
         }
     }
