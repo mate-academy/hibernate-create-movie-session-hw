@@ -38,7 +38,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (HibernateError error) {
             throw new RuntimeException("Can't get movieSession by id" + id, error);
@@ -55,7 +55,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("id", movieId);
             return query.getResultList();
         } catch (HibernateError error) {
-            throw new RuntimeException("Can't get all movieSessions by id - " + movieId + "and date - " + date, error);
+            throw new RuntimeException("Can't get all movieSessions by id - "
+                    + movieId + "and date - " + date, error);
         }
     }
 }

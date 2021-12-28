@@ -36,7 +36,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (HibernateError error) {
             throw new RuntimeException("Can't get cinemaHall by id - " + id, error);
@@ -46,8 +46,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-           return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
-       } catch (HibernateError error) {
+            return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
+        } catch (HibernateError error) {
             throw new RuntimeException("Can't get all cinemaHalls from DB", error);
         }
     }
