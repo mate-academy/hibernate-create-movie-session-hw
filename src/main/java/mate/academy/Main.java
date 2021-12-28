@@ -2,7 +2,6 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -18,7 +17,8 @@ public class Main {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         Movie machoAndNerd = new Movie("Macho and nerd");
-        machoAndNerd.setDescription("Film about two cops who infiltrated a school to prevent drug trafficking");
+        machoAndNerd.setDescription("Film about two cops who infiltrated a school to prevent "
+                + "drug trafficking");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         movieService.add(fastAndFurious);
         movieService.add(machoAndNerd);
@@ -29,7 +29,8 @@ public class Main {
         CinemaHall smallHall = new CinemaHall();
         smallHall.setDescription("Small cinema hall");
         smallHall.setCapacity(50);
-        CinemaHallService cinemaHallService = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         cinemaHallService.add(bigHall);
         cinemaHallService.add(smallHall);
 
@@ -41,7 +42,8 @@ public class Main {
         comedy.setMovie(machoAndNerd);
         comedy.setCinemaHall(smallHall);
         comedy.setShowTime(LocalDateTime.of(2021, 12, 28, 15, 0));
-        MovieSessionService movieSessionService = (MovieSessionService) injector.getInstance(MovieSessionService.class);
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(action);
         movieSessionService.add(comedy);
 
