@@ -55,14 +55,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "join fetch ms.cinemaHall "
                             + "where m.id = :id and ms.showTime between :start_time "
                             + "and :end_time", MovieSession.class);
-            getAllAvailableSessionsQuery.setParameter("id",movieId);
+            getAllAvailableSessionsQuery.setParameter("id", movieId);
             getAllAvailableSessionsQuery.setParameter("start_time",
                     LocalDateTime.of(date, LocalTime.MIN));
             getAllAvailableSessionsQuery.setParameter("end_time",
                     LocalDateTime.of(date, LocalTime.MAX));
             return getAllAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all available movies from DB by id "
+            throw new DataProcessingException("Can't get all available movie sessions from DB by id "
                     + movieId + "on date " + date, e);
         }
     }
