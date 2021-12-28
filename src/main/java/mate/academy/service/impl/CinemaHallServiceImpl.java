@@ -20,7 +20,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     @Override
     public CinemaHall get(Long id) {
         return cinemaHallDao.get(id).orElseThrow(() ->
-                new RuntimeException("Option with CinemaHall id:" + id + " is empty"));
+                new RuntimeException("Optional with CinemaHall by id:" + id + " is empty"));
     }
 
     @Override
