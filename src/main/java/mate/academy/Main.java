@@ -40,7 +40,7 @@ public class Main {
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         movieSessionService.add(movieSession);
-        movieSessionService.findAvailableSessions(movieSession.getId(),
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.now().plusDays(1L)).forEach(System.out::println);
     }
 }
