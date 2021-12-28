@@ -1,6 +1,7 @@
 package mate.academy.model;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movies_sessions")
+@Table(name = "movie_sessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,7 @@ public class MovieSession {
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
+    @Column(name = "show_time")
     private LocalDateTime showTime;
 
     public Long getId() {
