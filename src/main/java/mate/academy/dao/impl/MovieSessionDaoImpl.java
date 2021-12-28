@@ -57,7 +57,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "JOIN FETCH ms.cinemaHall ch "
                     + "WHERE ms.movie.id = :id "
                     + "AND ms.showTime BETWEEN :start AND :end", MovieSession.class);
-            query.setParameter("id", movieId);
+            query.setParameter("movieId", movieId);
             query.setParameter("start", LocalDateTime.of(date, LocalTime.MIN));
             query.setParameter("end", LocalDateTime.of(date, LocalTime.MAX));
             return query.getResultList();
