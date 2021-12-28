@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -27,7 +28,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movieSession " + movieSession, e);
+            throw new DataProcessingException("Can't insert movie session " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -36,9 +37,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession get(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(MovieSession.class, id);
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -48,9 +49,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                    + "where ms.movie.id = :id and cast(ms.time as LocalDate) = :date",
+                    + "where ms.movie.id = :movieId and cast(ms.showTime as LocalDate) = :date",
                     MovieSession.class);
-            query.setParameter("id", movieId);
+            query.setParameter("movieId", movieId);
             query.setParameter("date", date);
             return query.getResultList();
         } catch (Exception e) {

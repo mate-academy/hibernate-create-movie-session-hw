@@ -44,12 +44,12 @@ public class Cinema {
         MovieSession premiere = new MovieSession();
         premiere.setMovie(fastAndFurious);
         premiere.setCinemaHall(blue);
-        premiere.setTime(LocalDateTime.now());
+        premiere.setShowTime(LocalDateTime.now());
 
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(hulk);
         movieSession.setCinemaHall(red);
-        movieSession.setTime(LocalDateTime.now());
+        movieSession.setShowTime(LocalDateTime.now());
 
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);

@@ -22,11 +22,8 @@ public class MovieSession {
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
-    @Column(name = "date")
-    private LocalDateTime time;
-
-    public MovieSession() {
-    }
+    @Column(name = "show_time")
+    private LocalDateTime showTime;
 
     public Long getId() {
         return id;
@@ -52,12 +49,12 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getTime() {
-        return time;
+    public LocalDateTime getShowTime() {
+        return showTime;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    public void setShowTime(LocalDateTime time) {
+        this.showTime = time;
     }
 
     @Override
@@ -66,7 +63,7 @@ public class MovieSession {
                 + "id=" + id
                 + ", movie=" + movie
                 + ", cinemaHall=" + cinemaHall
-                + ", localDate=" + time
+                + ", localDate=" + showTime
                 + '}';
     }
 }
