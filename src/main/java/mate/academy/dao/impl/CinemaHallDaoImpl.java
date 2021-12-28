@@ -40,6 +40,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
+        } catch (Exception exception) {
+            throw new DataProcessingException("Can't get a CinemaHall by id: " + id, exception);
         }
     }
 
