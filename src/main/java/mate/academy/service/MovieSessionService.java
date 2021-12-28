@@ -5,9 +5,9 @@ import java.util.List;
 import mate.academy.model.MovieSession;
 
 public interface MovieSessionService {
-    public MovieSession add(MovieSession movieSession);
+    MovieSession add(MovieSession movieSession);
 
-    public MovieSession get(Long id);
+    MovieSession get(Long id);
 
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
 }
