@@ -24,6 +24,9 @@ public class MovieSession {
     @Column(name = "show_time")
     private LocalDateTime showTime;
 
+    public MovieSession() {
+    }
+
     public MovieSession(Movie movie, CinemaHall cinemaHall) {
         this.movie = movie;
         this.cinemaHall = cinemaHall;
