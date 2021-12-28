@@ -7,7 +7,6 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
-import org.hibernate.HibernateError;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -22,11 +21,11 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
-        } catch (HibernateError error) {
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Cant add cinemaHall - " + cinemaHall, error);
+            throw new DataProcessingException("Cant add cinema hall - " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -39,8 +38,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
-        } catch (HibernateError error) {
-            throw new DataProcessingException("Can't get cinemaHall by id - " + id, error);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get cinema hall by id - " + id, e);
         }
     }
 
@@ -48,8 +47,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
-        } catch (HibernateError error) {
-            throw new DataProcessingException("Can't get all cinemaHalls from DB", error);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all cinema halls from DB", e);
         }
     }
 }
