@@ -55,7 +55,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllAvailableSessionsQuery.setParameter("date", date);
             return getAllAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can`t get all available sessions from DB. ", e);
+            throw new DataProcessingException("Can`t get all available sessions for movieId: "
+                    + movieId + "and date: " + date + " from DB. ", e);
         }
     }
 }
