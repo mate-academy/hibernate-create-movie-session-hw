@@ -26,7 +26,10 @@ public class MovieSession {
     @Column(name = "show_time")
     private LocalDate showTime;
 
-    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime of) {
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
+        this.movie = movie;
+        this.cinemaHall = cinemaHall;
+        this.showTime = LocalDate.from(showTime);
     }
 
     public MovieSession() {
