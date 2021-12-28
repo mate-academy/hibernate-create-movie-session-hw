@@ -22,12 +22,8 @@ public class MovieSession {
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
-    @Column(name = "show_date")
+    @Column(name = "show_time")
     private LocalDateTime showTime;
-
-    public MovieSession() {
-
-    }
 
     public Long getId() {
         return id;
