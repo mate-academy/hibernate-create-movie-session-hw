@@ -16,7 +16,7 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "date")
+    @Column(name = "show_time")
     private LocalDateTime showTime;
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")

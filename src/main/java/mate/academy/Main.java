@@ -41,21 +41,21 @@ public class Main {
         cinemaHallService.get(good.getId());
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSession movieSession1 = new MovieSession();
-        movieSession1.setMovie(fastAndFurious);
-        movieSession1.setCinemaHall(good);
-        movieSession1.setShowTime(LocalDateTime.of(2021, 2, 14, 15, 30));
+        MovieSession fastAndFuriousSession = new MovieSession();
+        fastAndFuriousSession.setMovie(fastAndFurious);
+        fastAndFuriousSession.setCinemaHall(good);
+        fastAndFuriousSession.setShowTime(LocalDateTime.of(2021, 2, 14, 15, 30));
 
-        MovieSession movieSession2 = new MovieSession();
-        movieSession2.setMovie(spiderMan);
-        movieSession2.setCinemaHall(bad);
-        movieSession2.setShowTime(LocalDateTime.of(2019, 5, 21, 22, 0));
+        MovieSession spiderManSession = new MovieSession();
+        spiderManSession.setMovie(spiderMan);
+        spiderManSession.setCinemaHall(bad);
+        spiderManSession.setShowTime(LocalDateTime.of(2019, 5, 21, 22, 0));
 
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        movieSessionService.add(movieSession1);
-        movieSessionService.add(movieSession2);
-        movieSessionService.get(movieSession1.getId());
+        movieSessionService.add(fastAndFuriousSession);
+        movieSessionService.add(spiderManSession);
+        movieSessionService.get(fastAndFuriousSession.getId());
         movieSessionService.findAvailableSessions(spiderMan.getId(),
                 LocalDate.of(2019, 5, 21)).forEach(System.out::println);
     }
