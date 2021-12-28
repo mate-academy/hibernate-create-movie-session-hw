@@ -55,13 +55,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "where ms.movie.id = :movieId "
                             + "and date(ms.showTime) = :day ",
                     MovieSession.class);
-            findAvailableSessionsQuery.setParameter("day",
-                    Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+            findAvailableSessionsQuery.setParameter("day", Date.valueOf(date));
             findAvailableSessionsQuery.setParameter("movieId", movieId);
             return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available sessions by movie id: "
-                    + movieId, e);
+                    + movieId + ", on date: " + date, e);
         }
     }
 }
