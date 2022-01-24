@@ -15,6 +15,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;

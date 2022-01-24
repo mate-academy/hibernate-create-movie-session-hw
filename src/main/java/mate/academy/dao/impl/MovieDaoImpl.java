@@ -14,6 +14,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
