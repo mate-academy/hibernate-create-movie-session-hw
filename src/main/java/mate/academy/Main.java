@@ -83,9 +83,14 @@ public class Main {
         System.out.println(movieSessionService
                 .findAvailableSessions(1L, localDateTimes[2].toLocalDate()));
 
-        secondMovieSessionRed.setShowTime(LocalDateTime.of(2022,Month.JANUARY,22,11,0));
+        MovieSession testingMovieSessionRed = new MovieSession(
+                movieService.get(2L), cinemaHallService.get(1L),
+                LocalDateTime.of(2022,Month.JANUARY,22,11,0));
+        movieSessionService.add(testingMovieSessionRed);
+
+        testingMovieSessionRed.setShowTime(LocalDateTime.of(2022,Month.JANUARY,22,11,0));
         localDateTimes[2] = LocalDateTime.of(2022,Month.JANUARY,22,11,0);
-        System.out.println("2 "
-                + movieSessionService.findAvailableSessions(2L, localDateTimes[2].toLocalDate()));
+        System.out.println(
+                movieSessionService.findAvailableSessions(2L, localDateTimes[2].toLocalDate()));
     }
 }
