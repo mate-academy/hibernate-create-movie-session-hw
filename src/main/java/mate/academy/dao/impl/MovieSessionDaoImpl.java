@@ -28,7 +28,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert CinemaHall.", e);
+            throw new DataProcessingException("Can't insert MovieSession to DB "
+                    + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
