@@ -61,7 +61,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllMovieSessionQuery.setParameter("dayEnd", date.atTime(LocalTime.MAX));
             return getAllMovieSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all MovieSessions.", e);
+            throw new DataProcessingException("Can't get all MovieSessions for MovieID: "
+                    + movieId + " and date: " + date, e);
         }
     }
 }
