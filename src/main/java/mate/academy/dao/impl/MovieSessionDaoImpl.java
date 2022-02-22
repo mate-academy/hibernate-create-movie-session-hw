@@ -1,5 +1,9 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,12 +12,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -44,8 +42,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory()
                 .openSession()) {
-            Query<MovieSession> getMovieSessionByIdQuery = session.createQuery("from MovieSession ms " +
-                    "left join fetch ms.cinemaHall "
+            Query<MovieSession> getMovieSessionByIdQuery = session
+                    .createQuery("from MovieSession ms "
+                    + "left join fetch ms.cinemaHall "
                     + "left join fetch ms.movie "
                     + "where ms.id = :id", MovieSession.class);
             getMovieSessionByIdQuery.setParameter("id", id);
@@ -63,8 +62,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .createQuery("from MovieSession ms "
                             + "left join fetch ms.movie movie "
                             + "left join fetch ms.cinemaHall "
-                            + "where movie.id = :id " +
-                            "and ms.showTime between :startDay and :endDay", MovieSession.class);
+                            + "where movie.id = :id "
+                            + "and ms.showTime between :startDay and :endDay", MovieSession.class);
             findMovieSessionQuery.setParameter("id", movieId);
             findMovieSessionQuery.setParameter("startDay", date.atTime(LocalTime.MIN));
             findMovieSessionQuery.setParameter("endDay", date.atTime(LocalTime.MAX));
