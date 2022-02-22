@@ -32,7 +32,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert a movieSession "
+            throw new DataProcessingException("Can't insert movieSession "
                     + movieSession, e);
         } finally {
             if (session != null) {
@@ -46,7 +46,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movieSession by id: " + id, e);
+            throw new DataProcessingException("Can't get movieSession by id: " + id, e);
         }
     }
 
