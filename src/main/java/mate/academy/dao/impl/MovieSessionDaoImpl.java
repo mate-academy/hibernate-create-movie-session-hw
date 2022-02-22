@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -33,7 +32,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movieSession "
+            throw new DataProcessingException("Can't insert a movieSession "
                     + movieSession, e);
         } finally {
             if (session != null) {
@@ -63,7 +62,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getMovieSessionQuery.setParameter("date", Date.valueOf(date));
             return getMovieSessionQuery.list();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get available movie sessions from DB "
+            throw new DataProcessingException("Can't get available a movieSessions from DB "
                     + "for movie id: " + movieId + " and date: " + date, e);
         }
     }
