@@ -55,12 +55,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime endDate = LocalDateTime.of(date, endOfDay);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessionsByDate =
-                    session.createQuery("from MovieSession ms where ms.showTime > :fromTime and ms.showTime < :toTime", MovieSession.class);
+                    session.createQuery("from MovieSession ms where ms.showTime > :fromTime"
+                            + " and ms.showTime < :toTime", MovieSession.class);
             getAllMovieSessionsByDate.setParameter("fromTime", startDate);
             getAllMovieSessionsByDate.setParameter("toTime", endDate);
             return getAllMovieSessionsByDate.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movie sessions in this day: " + date, e);
+            throw new DataProcessingException("Can't get all movie sessions"
+                    + " by this day: " + date, e);
         }
     }
 }
