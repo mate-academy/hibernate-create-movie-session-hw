@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,10 +27,13 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NonNull
     @ManyToOne
     private Movie movie;
+    @NonNull
     @ManyToOne
     private CinemaHall cinemaHall;
+    @NonNull
     private LocalDateTime showTime;
 
     @Override
