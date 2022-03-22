@@ -1,15 +1,14 @@
 package mate.academy.model;
 
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "movie_sessions")
@@ -18,13 +17,9 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne()
-    @JoinTable(name = "movie_sessions_movies",
-            joinColumns = @JoinColumn(name = "movies_session_id"))
     private Movie movie;
     @ManyToOne
-    @JoinTable(name = "movie_sessions_cinema_halls",
-            joinColumns = @JoinColumn(name = "movies_session_id"),
-            inverseJoinColumns = @JoinColumn(name = "cinema_hall_id"))
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
     @Column(name = "show_time")
     private LocalDateTime showTime;
@@ -63,11 +58,10 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", showTime=" + showTime +
-                '}';
+        return "MovieSession{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showTime=" + showTime + '}';
     }
 }
