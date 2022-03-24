@@ -58,7 +58,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             availableSessionsQuery.setParameter("endShow", date.atTime(23,59,59));
             return availableSessionsQuery.getResultList();
         } catch (HibernateException e) {
-            throw new RuntimeException("Can`t get movie sessions of movie by id = "
+            throw new DataProcessingException("Can`t get movie sessions of movie by id = "
                     + movieId + " at " + date, e);
         }
     }
