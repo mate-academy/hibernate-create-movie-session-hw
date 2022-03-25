@@ -44,7 +44,8 @@ public class Main {
         MovieSession movieSession3 = movieSessionService.add(new MovieSession(
                 fastAndFurious, blue, LocalDateTime.parse("06 05 2022 14:00", dateTimeFormatter)));
         MovieSession movieSession4 = movieSessionService.add(new MovieSession(
-                fastAndFurious, yellow, LocalDateTime.parse("06 05 2022 16:00", dateTimeFormatter)));
+                fastAndFurious, yellow,
+                LocalDateTime.parse("06 05 2022 16:00", dateTimeFormatter)));
         System.out.println(movieSessionService.get(1L));
 
         movieSessionService.findAvailableSessions(1L, LocalDate.of(2022, 5, 6))
