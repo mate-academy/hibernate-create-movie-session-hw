@@ -1,6 +1,10 @@
 package mate.academy.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "cinemahalls")
@@ -37,10 +41,10 @@ public class CinemaHall {
 
     @Override
     public String toString() {
-        return "CinemaHall{" +
-                "id=" + id +
-                ", capacity=" + capacity +
-                ", description='" + description + '\'' +
-                '}';
+        return "CinemaHall{"
+                + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description + '\''
+                + '}';
     }
 }

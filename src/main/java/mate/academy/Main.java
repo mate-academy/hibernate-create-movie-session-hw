@@ -1,5 +1,8 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -8,21 +11,11 @@ import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 public class Main {
-    private final static Injector injector = Injector.getInstance("mate.academy");
+    private static final Injector injector = Injector.getInstance("mate.academy");
 
     public static void main(String[] args) {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-        CinemaHallService cinemaHallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
-
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
@@ -35,6 +28,8 @@ public class Main {
         CinemaHall yellowCinemaHall = new CinemaHall();
         yellowCinemaHall.setDescription("Yellow");
         yellowCinemaHall.setCapacity(1000);
+        CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         cinemaHallService.add(yellowCinemaHall);
         System.out.println(cinemaHallService.get(yellowCinemaHall.getId()));
         CinemaHall blueCinemaHall = new CinemaHall();
@@ -44,6 +39,8 @@ public class Main {
         System.out.println(cinemaHallService.get(blueCinemaHall.getId()));
         System.out.println(cinemaHallService.getAll());
         LocalDateTime showTime = LocalDate.now().atStartOfDay();
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(genMovieSession(fastAndFurious, yellowCinemaHall,
                 showTime.plusHours(9)));
         movieSessionService.add(genMovieSession(fastAndFurious, blueCinemaHall,
