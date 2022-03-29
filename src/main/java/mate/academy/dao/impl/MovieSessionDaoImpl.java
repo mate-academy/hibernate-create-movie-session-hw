@@ -53,7 +53,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAvailSessionsQuery = session.createQuery("FROM MovieSession"
                     + " WHERE movie.id = :movieId"
-                    + " AND showTime => :begTime AND showTime < endTime"
+                    + " AND showTime >= :begTime AND showTime < :endTime"
                     + " ORDER BY showTime", MovieSession.class);
             getAvailSessionsQuery.setParameter("movieId", movieId);
             getAvailSessionsQuery.setParameter("begTime", begTime);
