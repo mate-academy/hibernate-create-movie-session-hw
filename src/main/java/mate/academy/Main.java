@@ -11,6 +11,7 @@ import mate.academy.service.MovieSessionService;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
     private final static Injector injector = Injector.getInstance("mate.academy");
@@ -76,15 +77,21 @@ public class Main {
                 showTime.plusHours(18)));
         movieSessionService.add(genMovieSession(fastAndFurious, blueCinemaHall,
                 showTime.plusHours(19)));
-        System.out.println(movieSessionService.findAvailableSessions(snatch.getId(),
-                showTime.toLocalDate()));
-        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
-                showTime.toLocalDate()));
+        System.out.println(("*********SCHEDULE*********"));
+        System.out.println("*********" + showTime.format(DateTimeFormatter.ofPattern("MM/dd/YYYY"))
+                + "*********");
+        movieSessionService.findAvailableSessions(snatch.getId(),
+                showTime.toLocalDate()).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                showTime.toLocalDate()).forEach(System.out::println);
         showTime = showTime.minusDays(1);
-        System.out.println(movieSessionService.findAvailableSessions(snatch.getId(),
-                showTime.toLocalDate()));
-        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
-                showTime.toLocalDate()));
+        System.out.println(("*********SCHEDULE*********"));
+        System.out.println("*********" + showTime.format(DateTimeFormatter.ofPattern("MM/dd/YYYY"))
+                + "*********");
+        movieSessionService.findAvailableSessions(snatch.getId(),
+                showTime.toLocalDate()).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                showTime.toLocalDate()).forEach(System.out::println);
     }
 
     private static MovieSession genMovieSession(Movie movie, CinemaHall hall,
