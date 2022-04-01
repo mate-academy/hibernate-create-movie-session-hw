@@ -56,9 +56,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + " where ms.movie.id = :pmovieId"
                             + " and ms.showTime > :pdtStart and ms.showTime < :pdtEnd",
                             MovieSession.class);
-            getAllMovieSessionsQuery.setParameter("pmovieId", movieId);
-            getAllMovieSessionsQuery.setParameter("pdtStart", dtBegin);
-            getAllMovieSessionsQuery.setParameter("pdtEnd", dtEnd);
+            getAllMovieSessionsQuery.setParameter("movieId", movieId);
+            getAllMovieSessionsQuery.setParameter("dtStart", dtBegin);
+            getAllMovieSessionsQuery.setParameter("dtEnd", dtEnd);
             return getAllMovieSessionsQuery.list();
         }
     }
