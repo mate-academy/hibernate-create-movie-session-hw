@@ -53,8 +53,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> findAvailableSessionsQuery =
                     session.createQuery("from MovieSession ms "
                             + "where ms.movie.id = :movieId "
-                            + "and ms.showTime > :fromTime "
-                            + "and ms.showTime < :toTime", MovieSession.class);
+                            + "and ms.showTime >= :fromTime "
+                            + "and ms.showTime <= :toTime", MovieSession.class);
             findAvailableSessionsQuery.setParameter("movieId", movieId);
             findAvailableSessionsQuery.setParameter("fromTime", date.atStartOfDay());
             findAvailableSessionsQuery.setParameter("toTime",
