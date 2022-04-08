@@ -32,8 +32,7 @@ public class Main {
 
         MovieSessionService movieSessionService = (MovieSessionService)
                 injector.getInstance(MovieSessionService.class);
-        LocalDateTime dateTime = LocalDateTime.of(2022, 04, 8, 19, 0);
-        MovieSession firstSession = new MovieSession(fastAndFurious, smallHall, dateTime);
+        MovieSession firstSession = new MovieSession(fastAndFurious, smallHall, LocalDateTime.now());
         movieSessionService.add(firstSession);
         System.out.println(movieSessionService.get(firstSession.getId()));
         System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now()));

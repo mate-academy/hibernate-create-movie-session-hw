@@ -52,10 +52,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessionsQuery
                     = session.createQuery("from MovieSession ms " +
-                    "join fetch ms.movie " +
-                    "where ms.id = :id and ms.showTime = :date", MovieSession.class);
+                    "where ms.id = :id and ms.showTime between :startDate " +
+                    "and :endDate", MovieSession.class);
             getAllMovieSessionsQuery.setParameter("id", movieId);
-            getAllMovieSessionsQuery.setParameter("date", date);
+            getAllMovieSessionsQuery.setParameter("startDate", date.atTime(0, 0));
+            getAllMovieSessionsQuery.setParameter("endDate", date.atTime(23, 59));
             return getAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can`t get all movies", e);
