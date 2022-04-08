@@ -24,9 +24,7 @@ public class Main {
         CinemaHallService cinemaHallService = (CinemaHallService)
                 injector.getInstance(CinemaHallService.class);
         CinemaHall smallHall = new CinemaHall(30, "small hall");
-        CinemaHall mediumHall = new CinemaHall(60, "medium hall");
         cinemaHallService.add(smallHall);
-        cinemaHallService.add(mediumHall);
         System.out.println(cinemaHallService.get(smallHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 

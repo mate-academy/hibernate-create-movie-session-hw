@@ -59,7 +59,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllMovieSessionsQuery.setParameter("endDate", date.atTime(23, 59));
             return getAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can`t get all movies", e);
+            throw new DataProcessingException("Can`t get all movies", e);
         }
     }
 }
