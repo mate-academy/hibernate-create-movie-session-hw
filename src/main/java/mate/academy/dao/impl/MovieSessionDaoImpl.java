@@ -59,7 +59,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllMovieSessions.setParameter("endOfTheDay", endOfTheDay);
             return getAllMovieSessions.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movie sessions halls", e);
+            throw new DataProcessingException("Can't get necessary movie sessions ", e);
         }
     }
 }
