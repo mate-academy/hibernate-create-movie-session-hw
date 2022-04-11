@@ -10,20 +10,20 @@ Your task is to implement the following steps:
 - create `CinemaHallDaoImpl` and `CinemaHallServiceImpl`.
 The service layer should have the following methods:
 ```java
-    CinemaHall add(CinemaHall cinemaHall);
+    /*CinemaHall add(CinemaHall cinemaHall);
 
     CinemaHall get(Long id);
 
-    List<CinemaHall> getAll();
+    List<CinemaHall> getAll();*/
 ```
 - create `MovieSessionDaoImpl` and `MovieSessionServiceImpl`.
 The service layer should have the following methods:
 ```java
-    MovieSession add(MovieSession movieSession);
+    /*MovieSession add(MovieSession movieSession);
 
     MovieSession get(Long id);
 
-    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);*/
 ```
 Keep in mind that method `findAvailableSessions()` expects a `LocalDate` that represents the day 
 chosen by a customer to visit our cinema, so your task here is to return all MovieSessions 
