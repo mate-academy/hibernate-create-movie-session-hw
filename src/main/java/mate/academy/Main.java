@@ -37,14 +37,14 @@ public class Main {
 
         final MovieSessionService movieSessionService = (MovieSessionService) injector
                  .getInstance(MovieSessionService.class);
-        LocalDateTime timeHardNutSession = LocalDateTime.of(2022, 4, 12, 21,35);
+        LocalDateTime timeHardNutSession = LocalDateTime.of(2022, 4, 12, 21, 35);
         MovieSession movieSessionHardNut = new MovieSession();
         movieSessionHardNut.setMovie(hardNut);
         movieSessionHardNut.setShowTime(timeHardNutSession);
         movieSessionHardNut.setCinemaHall(hallNumberOne);
         movieSessionService.add(movieSessionHardNut);
         System.out.println(movieSessionService.get(movieSessionHardNut.getId()));
-        LocalDate localDate = LocalDate.of(2022, 4,11);
+        LocalDate localDate = LocalDate.of(2022, 4, 11);
         System.out.println(movieSessionService.findAvailableSessions(hardNut.getId(), localDate));
     }
 }
