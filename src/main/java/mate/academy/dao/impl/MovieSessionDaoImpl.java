@@ -58,11 +58,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "and :endOfDate", MovieSession.class);
             getAllMovieSessionsQuery.setParameter("id", movieId);
             getAllMovieSessionsQuery.setParameter("startOfDate", date.atStartOfDay());
-            getAllMovieSessionsQuery.setParameter("endOfDate", LocalDateTime.of(date, LocalTime.MAX));
+            getAllMovieSessionsQuery.setParameter("endOfDate", LocalDateTime.of(date,
+                    LocalTime.MAX));
             return getAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can`t get all movie sessions by movie id: "
-                    + movieId + " and date " +  date, e);
+            throw new DataProcessingException("Can`t get all movie sessions by"
+                    + " movie id: " + movieId
+                    + " and date " + date, e);
         }
     }
 }
