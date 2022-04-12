@@ -1,7 +1,6 @@
 package mate.academy.service.impl;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
@@ -26,7 +25,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public List<MovieSession> getAll() {
-        return Collections.emptyList();
+        return movieSessionDao.getAll();
     }
 
     @Override

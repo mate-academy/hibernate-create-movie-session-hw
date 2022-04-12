@@ -3,7 +3,6 @@ package mate.academy.dao.impl;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -53,7 +52,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> getAll() {
-        return Collections.emptyList();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            Query<MovieSession> getAllMovieSessionQuery = session
+                    .createQuery("FROM MovieSession", MovieSession.class);
+            return getAllMovieSessionQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movieSession: ", e);
+        }
     }
 
     @Override
