@@ -52,17 +52,17 @@ public class Main {
         MovieSession firstMovieSession = new MovieSession();
         firstMovieSession.setMovie(fastAndFurious);
         firstMovieSession.setCinemaHall(blueCinemaHall);
-        firstMovieSession.setLocalDateTime(LocalDateTime.of(2022, Month.APRIL, 12, 16, 15));
+        firstMovieSession.setShowTime(LocalDateTime.of(2022, Month.APRIL, 12, 16, 15));
         // Second MovieSession
         MovieSession secondMovieSession = new MovieSession();
         secondMovieSession.setMovie(fastAndFuriousSecondPart);
         secondMovieSession.setCinemaHall(redCinemaHall);
-        secondMovieSession.setLocalDateTime(LocalDateTime.of(2022, Month.APRIL, 12, 20, 15));
+        secondMovieSession.setShowTime(LocalDateTime.of(2022, Month.APRIL, 12, 20, 15));
         // Third MovieSession
         MovieSession thirdMovieSession = new MovieSession();
         thirdMovieSession.setMovie(fastAndFurious);
         thirdMovieSession.setCinemaHall(blueCinemaHall);
-        thirdMovieSession.setLocalDateTime(LocalDateTime.of(2022, Month.APRIL, 12, 20, 15));
+        thirdMovieSession.setShowTime(LocalDateTime.of(2022, Month.APRIL, 12, 20, 15));
         // Checking methods
         MovieSessionService movieSessionService
                 = (MovieSessionService) injector.getInstance(MovieSessionService.class);
