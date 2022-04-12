@@ -13,8 +13,8 @@ public class MovieServiceImpl implements MovieService {
     private MovieDao movieDao;
 
     @Override
-    public Movie add(Movie element) {
-        return movieDao.add(element);
+    public Movie add(Movie movie) {
+        return movieDao.add(movie);
     }
 
     @Override

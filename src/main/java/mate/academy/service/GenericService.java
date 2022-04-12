@@ -8,5 +8,4 @@ public interface GenericService<T> {
     T get(Long id);
 
     List<T> getAll();
-
 }
