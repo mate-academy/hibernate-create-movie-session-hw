@@ -40,8 +40,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session
-                     = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             MovieSession movieSession = session.get(MovieSession.class, id);
             return Optional.ofNullable(movieSession);
         } catch (Exception e) {
@@ -54,11 +53,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         LocalDateTime startSessions = LocalDateTime.of(date, LocalTime.MIN);
         LocalDateTime endSession = LocalDateTime.of(date,LocalTime.MAX);
-        try (Session session
-                     = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM MovieSession ms "
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from MovieSession ms "
                             + "WHERE ms.id = :id AND ms.showTime "
-                            + "BETWEEN :openSession AND :closeSession")
+                            + "BETWEEN :openSession AND :closeSession", MovieSession.class)
                             .setParameter("id", movieId)
                             .setParameter("openSession", startSessions)
                             .setParameter("closeSession", endSession)
