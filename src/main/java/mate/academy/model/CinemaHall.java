@@ -22,11 +22,6 @@ public class CinemaHall {
         this.id = id;
     }
 
-    public CinemaHall(int capacity, String description) {
-        this.capacity = capacity;
-        this.description = description;
-    }
-
     public Long getId() {
         return id;
     }
