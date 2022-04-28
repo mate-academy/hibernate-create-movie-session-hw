@@ -18,10 +18,6 @@ public class CinemaHall {
     public CinemaHall() {
     }
 
-    public CinemaHall(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
     }
