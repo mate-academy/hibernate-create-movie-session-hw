@@ -57,4 +57,3 @@ public class CinemaHall {
                + ", description='" + description + '\'' + '}';
     }
 }
-
