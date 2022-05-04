@@ -30,11 +30,13 @@ public class Main {
         cinemaHallService.add(twoDimensional);
         System.out.println(cinemaHallService.getAll());
         MovieSession firstSession
-                = new MovieSession(movieService.get(1L),cinemaHallService.get(1L),
+                = new MovieSession(movieService.get(fastAndFurious.getId()),
+                cinemaHallService.get(imax.getId()),
                 LocalDateTime.of(2022,05,10,12,30));
         movieSessionService.add(firstSession);
         MovieSession secondSession
-                = new MovieSession(movieService.get(1L),cinemaHallService.get(2L),
+                = new MovieSession(movieService.get(fastAndFurious.getId()),
+                cinemaHallService.get(twoDimensional.getId()),
                 LocalDateTime.of(2022,05,11,18,15));
         movieSessionService.add(secondSession);
         System.out.println(movieSessionService.findAvailableSessions(1L,
