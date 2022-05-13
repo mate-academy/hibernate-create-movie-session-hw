@@ -32,7 +32,7 @@ public class Main {
         smallBlueHallWithABigPinkDoors.setDescription("This is a small blue hall with a big "
                 + "pink doors");
         cinemaHallService.add(smallBlueHallWithABigPinkDoors);
-        System.err.println(cinemaHallService.get(smallBlueHallWithABigPinkDoors.getId()));
+        System.out.println(cinemaHallService.get(smallBlueHallWithABigPinkDoors.getId()));
 
         MovieSession firstOctoberSession = new MovieSession();
         firstOctoberSession.setMovie(fastAndFurious);
@@ -44,11 +44,11 @@ public class Main {
         secondOctoberSession.setCinemaHall(smallBlueHallWithABigPinkDoors);
         secondOctoberSession.setShowTime(LocalDateTime.of(2022,
                 Month.OCTOBER, 2, 17, 30, 0));
-        System.err.println("F&F id " + fastAndFurious.getId());
+        System.out.println("F&F id " + fastAndFurious.getId());
         movieSessionService.add(firstOctoberSession);
         movieSessionService.add(secondOctoberSession);
-        System.err.println("Available 1 October sessions:");
-        System.err.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+        System.out.println("Available 1 October sessions:");
+        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.of(2022, Month.OCTOBER, 1)));
     }
 }
