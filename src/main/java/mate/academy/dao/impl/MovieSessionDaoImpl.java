@@ -61,7 +61,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllAvailableSessions.setParameter("end", endOfTheDay);
             return getAllAvailableSessions.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all available movie sessions", e);
+            throw new RuntimeException("Can't get all available sessions for movie id "
+                    + movieId + ", and show date " + date, e);
         }
     }
 }
