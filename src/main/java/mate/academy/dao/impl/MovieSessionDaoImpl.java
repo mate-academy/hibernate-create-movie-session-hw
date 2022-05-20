@@ -63,7 +63,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             findAvailableSessionQuery.setParameter("toTime", to);
             return findAvailableSessionQuery.getResultList();
         } catch (HibernateException e) {
-            throw new RuntimeException("Can't get any available movie sessions ", e);
+            throw new RuntimeException("Can't get any available movie sessions for"
+                    + " movie with id" + movieId + " for date " + date, e);
         }
     }
 }

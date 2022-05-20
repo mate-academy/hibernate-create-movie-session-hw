@@ -26,11 +26,11 @@ public class Main {
 
         final CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
-        CinemaHall cinemaHall1 = new CinemaHall();
-        cinemaHall1.setCapacity(24);
-        cinemaHall1.setDescription("Small DX3D");
-        cinemaHallService.add(cinemaHall1);
-        System.out.println(cinemaHallService.get(cinemaHall1.getId()));
+        CinemaHall smallCinemaHall = new CinemaHall();
+        smallCinemaHall.setCapacity(24);
+        smallCinemaHall.setDescription("Small DX3D");
+        cinemaHallService.add(smallCinemaHall);
+        System.out.println(cinemaHallService.get(smallCinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
         final MovieSessionService movieSessionService =
@@ -38,7 +38,7 @@ public class Main {
         MovieSession movieSession = new MovieSession();
         LocalDateTime currentDate1 = LocalDateTime.of(2022,5,20,19,0);
         movieSession.setMovie(theLostCity);
-        movieSession.setCinemaHall(cinemaHall1);
+        movieSession.setCinemaHall(smallCinemaHall);
         movieSession.setShowTime(currentDate1);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.findAvailableSessions(theLostCity.getId(),
