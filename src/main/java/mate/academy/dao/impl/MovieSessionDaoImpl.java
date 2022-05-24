@@ -53,13 +53,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime max = LocalDateTime.of(date, LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> findSessionsQuery = session.createQuery("from MovieSession m "
-                    + "WHERE m.id = :id AND m.showTime BETWEEN :min AND :max", MovieSession.class);
+                    + "WHERE m.movie.id = :id AND m.showTime BETWEEN :min AND :max",
+                    MovieSession.class);
             findSessionsQuery.setParameter("id", movieId);
             findSessionsQuery.setParameter("min", min);
             findSessionsQuery.setParameter("max", max);
             return findSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find available sessions :(", e);
+            throw new DataProcessingException("Can't find available sessions for date "
+                    + date + ", and movieId " + movieId, e);
         }
     }
 }
