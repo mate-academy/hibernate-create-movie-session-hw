@@ -14,7 +14,12 @@ public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
 
     public static void main(String[] args) {
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        final MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        final MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
+        final CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
+
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
@@ -27,8 +32,6 @@ public class Main {
         System.out.println(movieService.get(godfather.getId()));
         movieService.getAll().forEach(System.out::println);
 
-        CinemaHallService cinemaHallService
-                = (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall cinemaHallNumber1 = new CinemaHall();
         cinemaHallNumber1.setCapacity(12);
         cinemaHallNumber1.setDescription("Hall 1");
@@ -42,8 +45,6 @@ public class Main {
         System.out.println(cinemaHallService.getAll());
 
         MovieSession movieSessionFastAndFurious = new MovieSession();
-        final MovieSessionService movieSessionService
-                = (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionFastAndFurious.setMovie(fastAndFurious);
         movieSessionFastAndFurious.setShowTime(LocalDateTime.now());
         movieSessionFastAndFurious.setCinemaHall(cinemaHallNumber1);
