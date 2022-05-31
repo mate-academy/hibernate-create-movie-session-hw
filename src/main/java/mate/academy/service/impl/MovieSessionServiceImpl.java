@@ -10,7 +10,6 @@ import mate.academy.service.MovieSessionService;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-
     @Inject
     private MovieSessionDao movieSessionDao;
 
@@ -26,6 +25,6 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return movieSessionDao.findAvailableSessions(movieId,date);
+        return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }

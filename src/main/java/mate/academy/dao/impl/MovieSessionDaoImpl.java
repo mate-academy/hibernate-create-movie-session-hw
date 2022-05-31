@@ -58,7 +58,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return movieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available sessions by movie id: "
-                    + movieId, e);
+                    + movieId + "and date - " + date, e);
         }
     }
 }
