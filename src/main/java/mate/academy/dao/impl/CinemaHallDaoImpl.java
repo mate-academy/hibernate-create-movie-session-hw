@@ -42,7 +42,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get cinema hall from DB", e);
+            throw new DataProcessingException("Can't get cinema hall from DB with id= " + id, e);
         }
     }
 
