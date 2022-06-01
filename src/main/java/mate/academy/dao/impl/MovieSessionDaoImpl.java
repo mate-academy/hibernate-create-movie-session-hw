@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.Query;
@@ -28,7 +29,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie session " + movieSession, e);
+            throw new DataProcessingException("Can't insert movie session in DB" + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -47,12 +48,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        LocalDateTime beginningOfADay = date.atStartOfDay();
+        LocalDateTime endOfADay = date.atStartOfDay().plusDays(1).minusSeconds(1);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query getAllAvailableSessionsQuery = session.createQuery("from MovieSession ms "
                             + "left join fetch ms.cinemaHall "
                             + "left join fetch ms.movie "
-                    + "where ms.showTime = :date and ms.movie.id = :movieId", MovieSession.class);
-            getAllAvailableSessionsQuery.setParameter("date", date);
+                    + "where ms.showTime between :startTime and :endTime "
+                    + "and ms.movie.id = :movieId", MovieSession.class);
+            getAllAvailableSessionsQuery.setParameter("startTime", beginningOfADay);
+            getAllAvailableSessionsQuery.setParameter("endTime", endOfADay);
             getAllAvailableSessionsQuery.setParameter("movieId", movieId);
             return getAllAvailableSessionsQuery.getResultList();
         } catch (RuntimeException e) {

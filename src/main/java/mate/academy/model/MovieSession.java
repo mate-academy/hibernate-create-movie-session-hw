@@ -1,10 +1,12 @@
 package mate.academy.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,10 +18,13 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinTable(name = "movie_id")
     private Movie movie;
     @OneToOne
+    @JoinTable(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
-    private LocalDate showTime;
+    @Column(name = "show_time")
+    private LocalDateTime showTime;
 
     public MovieSession() {
     }
@@ -48,11 +53,11 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDate getShowTime() {
+    public LocalDateTime getShowTime() {
         return showTime;
     }
 
-    public void setShowTime(LocalDate showTime) {
+    public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
     }
 }
