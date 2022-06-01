@@ -40,7 +40,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a cinema hall by id: " + id, e);
+            throw new DataProcessingException("Can't get a cinema hall by id: "
+                    + id + " from DB", e);
         }
     }
 
@@ -50,7 +51,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Query getAllCinemaHallsQuery = session.createQuery("FROM CinemaHall", CinemaHall.class);
             return getAllCinemaHallsQuery.getResultList();
         } catch (RuntimeException e) {
-            throw new RuntimeException("Unable to get all cinema halls", e);
+            throw new RuntimeException("Unable to get all cinema halls from DB", e);
         }
     }
 }
