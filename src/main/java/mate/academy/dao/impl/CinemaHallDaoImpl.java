@@ -27,7 +27,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add cinema hall in DB: " + cinemaHall, e);
+            throw new DataProcessingException("Can't add in to DB cinema hall: " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -38,7 +38,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(CinemaHall.class,id));
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get from DB cinema hall by id: " + id, e);
         }
     }
 
@@ -48,6 +50,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Query<CinemaHall> getAllCommentsQuery =
                     session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCommentsQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all cinema halls from DB:", e);
         }
     }
 }

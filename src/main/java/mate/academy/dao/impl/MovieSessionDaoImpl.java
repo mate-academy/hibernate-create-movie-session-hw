@@ -28,7 +28,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add movie session in DB: " + movieSession, e);
+            throw new DataProcessingException("Can't add in to DB movie session: "
+                    + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -45,6 +46,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "where ms.id = :id ", MovieSession.class);
             getMovieSessionByuId.setParameter("id", id);
             return Optional.ofNullable(getMovieSessionByuId.getSingleResult());
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get movie session from DB by id: " + id, e);
         }
     }
 
@@ -58,6 +61,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAvailableSession.setParameter("date", date);
             getAvailableSession.setParameter("movieId", movieId);
             return getAvailableSession.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get available movie session for id: "
+                    + movieId + " at: " + date, e);
         }
     }
 }
