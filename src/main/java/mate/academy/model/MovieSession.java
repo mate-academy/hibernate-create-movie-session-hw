@@ -1,6 +1,5 @@
 package mate.academy.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Column;
