@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.Query;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -12,6 +11,7 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -52,7 +52,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime beginningOfADay = date.atStartOfDay();
         LocalDateTime endOfADay = date.atStartOfDay().plusDays(1).minusSeconds(1);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query getAllAvailableSessionsQuery = session.createQuery("from MovieSession ms "
+            Query<MovieSession> getAllAvailableSessionsQuery = session
+                    .createQuery("from MovieSession ms "
                             + "left join fetch ms.cinemaHall "
                             + "left join fetch ms.movie "
                     + "where ms.showTime between :startTime and :endTime "
