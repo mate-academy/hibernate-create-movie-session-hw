@@ -49,7 +49,6 @@ public class Main {
         spidermanMS.setMovie(spiderman);
         spidermanMS.setCinemaHall(cinemaHall3D);
         spidermanMS.setShowTime(LocalDateTime.now().minusDays(1L));
-        //LocalDateTime.parse("2022-06-01 12:30", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         movieSessionService.add(fastAndFuriousMS);
         movieSessionService.add(spidermanMS);
         System.out.println(movieSessionService.get(fastAndFuriousMS.getId()));

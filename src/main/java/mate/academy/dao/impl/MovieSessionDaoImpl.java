@@ -51,8 +51,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime minTime = date.atTime(0, 0, 0);
         LocalDateTime maxTime = date.atTime(23, 59, 59);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("from MovieSession ms left join fetch ms.cinemaHall "
-                    + "left join fetch ms.movie where ms.movie.id = :id and "
+            Query<MovieSession> query = session.createQuery("from MovieSession ms "
+                    + "join fetch ms.cinemaHall "
+                    + "join fetch ms.movie where ms.movie.id = :id and "
                     + "ms.showTime between :min and :max");
             query.setParameter("id", movieId);
             query.setParameter("min", minTime);
