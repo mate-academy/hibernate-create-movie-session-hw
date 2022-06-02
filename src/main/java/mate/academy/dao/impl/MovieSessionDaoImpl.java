@@ -16,7 +16,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
@@ -61,7 +60,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             movieSessionQuery.setParameter("end", endOfTheDay);
             return movieSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Couldn't find available movie sessions ", e);
+            throw new DataProcessingException("Couldn't find available movie sessions by movie id: "
+                    + movieId + " and date: " + date, e);
         }
     }
 }
