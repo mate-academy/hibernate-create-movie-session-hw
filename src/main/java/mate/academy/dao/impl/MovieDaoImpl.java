@@ -43,7 +43,6 @@ public class MovieDaoImpl implements MovieDao {
             throw new DataProcessingException("Can't get a movie by id: " + id, e);
         }
     }
-
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

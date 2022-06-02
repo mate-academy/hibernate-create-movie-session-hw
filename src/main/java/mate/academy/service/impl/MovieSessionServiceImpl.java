@@ -28,4 +28,3 @@ public class MovieSessionServiceImpl implements MovieSessionService {
         return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }
-
