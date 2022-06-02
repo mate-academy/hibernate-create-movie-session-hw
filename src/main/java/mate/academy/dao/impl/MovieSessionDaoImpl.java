@@ -41,7 +41,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getMovieSession = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall"
+                    + " where ms.id = :id", MovieSession.class);
+            getMovieSession.setParameter("id", id);
+            return Optional.ofNullable(getMovieSession.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -52,8 +57,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime min = LocalDateTime.of(date, LocalTime.MIN);
         LocalDateTime max = LocalDateTime.of(date, LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> findSessionsQuery = session.createQuery("from MovieSession m "
-                            + "WHERE m.movie.id = :id AND m.showTime BETWEEN :min AND :max",
+            Query<MovieSession> findSessionsQuery = session.createQuery("from MovieSession ms "
+                            + "left join fetch ms.movie "
+                            + "left join fetch ms.cinemaHall "
+                            + "WHERE ms.movie.id = :id AND ms.showTime BETWEEN :min AND :max",
                     MovieSession.class);
             findSessionsQuery.setParameter("id", movieId);
             findSessionsQuery.setParameter("min", min);

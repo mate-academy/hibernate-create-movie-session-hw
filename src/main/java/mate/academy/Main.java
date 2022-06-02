@@ -41,6 +41,7 @@ public class Main {
         movieSession.setShowTime(localDateTime);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
+        System.out.println(movieSession.getMovie().getTitle());
 
         movieSessionService.findAvailableSessions(movieSession.getId(),
                         LocalDate.from(localDateTime))
