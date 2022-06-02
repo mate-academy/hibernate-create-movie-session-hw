@@ -14,10 +14,12 @@ public class Main {
     static final Injector injector = Injector.getInstance("mate.academy");
     static final MovieSessionService movieSessionService = (MovieSessionService) injector
             .getInstance(MovieSessionService.class);
+    static final CinemaHallService cinemaHallService = (CinemaHallService) injector
+            .getInstance(CinemaHallService.class);
+    static final MovieService movieService = (MovieService) injector
+            .getInstance(MovieService.class);
 
     public static void main(String[] args) {
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
@@ -27,9 +29,6 @@ public class Main {
                 + "directed by George Lucas");
         movieService.add(starWarsIV);
         movieService.getAll().forEach(System.out::println);
-
-        CinemaHallService cinemaHallService = (CinemaHallService) injector
-                .getInstance(CinemaHallService.class);
 
         CinemaHall greenHall = new CinemaHall();
         greenHall.setDescription("Ordinary hall");
@@ -42,29 +41,26 @@ public class Main {
         System.out.println(cinemaHallService.get(goldenHall.getId()));
         System.out.println(cinemaHallService.getAll());
 
-        MovieSession fastAndFuriousMorningSession = new MovieSession();
-        fastAndFuriousMorningSession.setMovie(fastAndFurious);
-        fastAndFuriousMorningSession.setCinemaHall(greenHall);
-        fastAndFuriousMorningSession.setShowTime(LocalDateTime.of(
-                2022, 06, 01, 11, 00));
-        movieSessionService.add(fastAndFuriousMorningSession);
-        MovieSession fastAndFuriousDaySession = new MovieSession();
-        fastAndFuriousMorningSession.setMovie(fastAndFurious);
-        fastAndFuriousMorningSession.setCinemaHall(greenHall);
-        fastAndFuriousMorningSession.setShowTime(LocalDateTime.of(
-                2022, 06, 01, 15, 00));
-        movieSessionService.add(fastAndFuriousDaySession);
-        MovieSession fastAndFuriousEveningSession = new MovieSession();
-        fastAndFuriousMorningSession.setMovie(fastAndFurious);
-        fastAndFuriousMorningSession.setCinemaHall(goldenHall);
-        fastAndFuriousMorningSession.setShowTime(LocalDateTime.of(
+        MovieSession fastAndFuriousMorning = new MovieSession();
+        fastAndFuriousMorning.setMovie(fastAndFurious);
+        fastAndFuriousMorning.setCinemaHall(greenHall);
+        fastAndFuriousMorning.setShowTime(LocalDateTime.of(2022, 06, 01, 11, 00));
+        movieSessionService.add(fastAndFuriousMorning);
+        MovieSession fastAndFuriousDay = new MovieSession();
+        fastAndFuriousDay.setMovie(fastAndFurious);
+        fastAndFuriousDay.setCinemaHall(greenHall);
+        fastAndFuriousDay.setShowTime(LocalDateTime.of(2022, 06, 01, 15, 00));
+        movieSessionService.add(fastAndFuriousDay);
+        MovieSession fastAndFuriousEvening = new MovieSession();
+        fastAndFuriousEvening.setMovie(fastAndFurious);
+        fastAndFuriousEvening.setCinemaHall(goldenHall);
+        fastAndFuriousEvening.setShowTime(LocalDateTime.of(
                 2022, 06, 01, 20, 45));
-        movieSessionService.add(fastAndFuriousEveningSession);
+        movieSessionService.add(fastAndFuriousEvening);
         MovieSession starWarsNightSession = new MovieSession();
-        fastAndFuriousMorningSession.setMovie(starWarsIV);
-        fastAndFuriousMorningSession.setCinemaHall(goldenHall);
-        fastAndFuriousMorningSession.setShowTime(LocalDateTime.of(
-                2022, 06, 01, 23, 00));
+        starWarsNightSession.setMovie(starWarsIV);
+        starWarsNightSession.setCinemaHall(goldenHall);
+        starWarsNightSession.setShowTime(LocalDateTime.of(2022, 06, 01, 23, 00));
         movieSessionService.add(starWarsNightSession);
         System.out.println(movieSessionService.get(starWarsIV.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
