@@ -50,10 +50,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         LocalDateTime earliestTime = LocalDateTime.of(date, LocalTime.MIN);
-        LocalDateTime latestTime = LocalDateTime.of(date, LocalTime.MIDNIGHT);
+        LocalDateTime latestTime = LocalDateTime.of(date, LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessionQuery = session
-                    .createQuery("from MovieSession ms where ms.id = :id "
+                    .createQuery("from MovieSession ms where ms.movie.id = :id "
                     + "and ms.showTime between :start and :finish", MovieSession.class);
             movieSessionQuery.setParameter("id", movieId);
             movieSessionQuery.setParameter("start", earliestTime);
@@ -61,7 +61,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return movieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Could not find available movieSessions"
-                    + "by Movie id: " + movieId, e);
+                    + "by Movie id: " + movieId + " and Date: "+ date, e);
         }
     }
 }

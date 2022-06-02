@@ -12,34 +12,34 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
-    private static final MovieService MOVIE_SERVICE = (MovieService)
+    private static final MovieService movieService = (MovieService)
             injector.getInstance(MovieService.class);
-    private static final CinemaHallService CINEMA_HALL_SERVICE = (CinemaHallService)
+    private static final CinemaHallService cinemaHallService = (CinemaHallService)
             injector.getInstance(CinemaHallService.class);
 
-    private static final MovieSessionService MOVIE_SESSION_SERVICE = (MovieSessionService)
+    private static final MovieSessionService movieSessionService = (MovieSessionService)
             injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
-        MOVIE_SERVICE.add(fastAndFurious);
-        System.out.println(MOVIE_SERVICE.get(fastAndFurious.getId()));
-        MOVIE_SERVICE.getAll().forEach(System.out::println);
+        movieService.add(fastAndFurious);
+        System.out.println(movieService.get(fastAndFurious.getId()));
+        movieService.getAll().forEach(System.out::println);
 
         CinemaHall newBuilding = new CinemaHall();
         newBuilding.setCapacity(7);
         newBuilding.setDescription("Awesome cinema hall, new building");
-        CINEMA_HALL_SERVICE.add(newBuilding);
-        System.out.println(CINEMA_HALL_SERVICE.get(newBuilding.getId()));
-        CINEMA_HALL_SERVICE.getAll().forEach(System.out::println);
+        cinemaHallService.add(newBuilding);
+        System.out.println(cinemaHallService.get(newBuilding.getId()));
+        cinemaHallService.getAll().forEach(System.out::println);
 
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(newBuilding);
         movieSession.setShowTime(LocalDateTime.now());
-        MOVIE_SESSION_SERVICE.add(movieSession);
-        System.out.println(MOVIE_SESSION_SERVICE.get(movieSession.getId()));
-        MOVIE_SESSION_SERVICE.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
+        movieSessionService.add(movieSession);
+        System.out.println(movieSessionService.get(movieSession.getId()));
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
     }
 }
