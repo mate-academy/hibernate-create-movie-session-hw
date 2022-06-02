@@ -12,16 +12,12 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     static final Injector injector = Injector.getInstance("mate.academy");
-    static final MovieSessionService movieSessionService = (MovieSessionService) injector
-            .getInstance(MovieSessionService.class);
-    static final CinemaHallService cinemaHallService = (CinemaHallService) injector
-            .getInstance(CinemaHallService.class);
-    static final MovieService movieService = (MovieService) injector
-            .getInstance(MovieService.class);
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
+        MovieService movieService = (MovieService) injector
+                .getInstance(MovieService.class);
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
         Movie starWarsIV = new Movie("Star Wars. Episode IV: A New Hope");
@@ -33,6 +29,8 @@ public class Main {
         CinemaHall greenHall = new CinemaHall();
         greenHall.setDescription("Ordinary hall");
         greenHall.setCapacity(200);
+        CinemaHallService cinemaHallService = (CinemaHallService) injector
+                .getInstance(CinemaHallService.class);
         cinemaHallService.add(greenHall);
         CinemaHall goldenHall = new CinemaHall();
         goldenHall.setDescription("lux hall");
@@ -45,6 +43,8 @@ public class Main {
         fastAndFuriousMorning.setMovie(fastAndFurious);
         fastAndFuriousMorning.setCinemaHall(greenHall);
         fastAndFuriousMorning.setShowTime(LocalDateTime.of(2022, 06, 01, 11, 00));
+        MovieSessionService movieSessionService = (MovieSessionService) injector
+                .getInstance(MovieSessionService.class);
         movieSessionService.add(fastAndFuriousMorning);
         MovieSession fastAndFuriousDay = new MovieSession();
         fastAndFuriousDay.setMovie(fastAndFurious);
@@ -55,7 +55,7 @@ public class Main {
         fastAndFuriousEvening.setMovie(fastAndFurious);
         fastAndFuriousEvening.setCinemaHall(goldenHall);
         fastAndFuriousEvening.setShowTime(LocalDateTime.of(
-                2022, 06, 01, 20, 45));
+                2022, 06, 01, 19, 45));
         movieSessionService.add(fastAndFuriousEvening);
         MovieSession starWarsNightSession = new MovieSession();
         starWarsNightSession.setMovie(starWarsIV);
