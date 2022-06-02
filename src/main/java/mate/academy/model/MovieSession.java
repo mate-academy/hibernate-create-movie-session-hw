@@ -21,9 +21,9 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
-   private CinemaHall cinemaHall;
+    private CinemaHall cinemaHall;
     @Column(name = "show_time")
-   private LocalDateTime showTime;
+    private LocalDateTime showTime;
 
     public Long getId() {
         return id;
