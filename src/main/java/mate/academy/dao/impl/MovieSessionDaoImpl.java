@@ -54,8 +54,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime max = LocalDateTime.of(date, LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> findAvailableSessionsQuery
-                    = session.createQuery("FROM MovieSession ms "
-                            + "WHERE movie_id = :movieId"
+                    = session.createQuery("FROM MovieSession "
+                            + "WHERE movie.id = :movieId"
                             + " AND showTime BETWEEN :min AND :max",
                     MovieSession.class);
             findAvailableSessionsQuery.setParameter("movieId", movieId);
