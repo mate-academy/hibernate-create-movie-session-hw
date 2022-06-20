@@ -7,15 +7,12 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private static final Logger log = LogManager.getLogger(CinemaHallDaoImpl.class);
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
@@ -31,7 +28,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            log.error("Can`t save to DB cinemaHall: {}", cinemaHall, e);
             throw new DataProcessingException("Can't insert cinemaHall " + cinemaHall, e);
         } finally {
             if (session != null) {
@@ -45,7 +41,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            log.error("Can't get a cinemaHall by id: {}", id, e);
             throw new DataProcessingException("Can't get a cinemaHall by id: " + id, e);
         }
     }
@@ -56,6 +51,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Query<CinemaHall> getAllCinemaHallQuery
                     = session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHallQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can`t get all cinemaHalls ", e);
         }
     }
 }
