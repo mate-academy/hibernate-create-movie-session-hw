@@ -1,6 +1,5 @@
 package mate.academy.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,13 +12,8 @@ public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "capacity")
     private int capacity;
-    @Column(name = "description")
     private String description;
-
-    public CinemaHall(){
-    }
 
     public Long getId() {
         return id;
