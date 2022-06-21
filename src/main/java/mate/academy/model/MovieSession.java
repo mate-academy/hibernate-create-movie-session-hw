@@ -1,7 +1,6 @@
 package mate.academy.model;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -47,11 +46,6 @@ public class MovieSession {
 
     public LocalDateTime getShowTime() {
         return showTime;
-    }
-
-    public String getTime() {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        return dtf.format(getShowTime());
     }
 
     public void setShowTime(LocalDateTime showTime) {

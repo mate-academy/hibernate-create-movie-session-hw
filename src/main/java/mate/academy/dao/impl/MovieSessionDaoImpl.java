@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -14,7 +15,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
@@ -53,8 +53,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     = session.createQuery("from MovieSession m where m.movie.id = :id "
                     + "and m.showTime BETWEEN :start and :end", MovieSession.class);
             getAllCinemaHallQuery.setParameter("id", movieId);
-            getAllCinemaHallQuery.setParameter("start", date.atTime(0, 0, 0));
-            getAllCinemaHallQuery.setParameter("end", date.atTime(23, 59, 59));
+            getAllCinemaHallQuery.setParameter("start", date.atTime(LocalTime.MIN));
+            getAllCinemaHallQuery.setParameter("end", date.atTime(LocalTime.MAX));
             return getAllCinemaHallQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can`t get movieSession by id: " + movieId
