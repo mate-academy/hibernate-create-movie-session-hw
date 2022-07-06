@@ -9,23 +9,19 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-import mate.academy.service.impl.MovieServiceImpl;
-import org.hibernate.SessionFactory;
 
 public class Main {
     public static void main(String[] args) {
         Injector injector = Injector.getInstance("mate.academy");
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-        CinemaHallService cinemaHallService = (CinemaHallService) injector
-                .getInstance(CinemaHallService.class);
-        MovieSessionService movieSessionService = (MovieSessionService) injector
-                .getInstance(MovieSessionService.class);
 
         Movie fastAndFurious = new Movie("Fast and Furious");
         Movie avengersEndgame = new Movie("Avengers: Endgame");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         avengersEndgame.setDescription("A combat action film from Marvel Studios. "
                 + "The Finale of The Infinity Saga.");
+
+        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+
         movieService.add(fastAndFurious);
         movieService.add(avengersEndgame);
         System.out.println("Getting Fast and Furious");
@@ -42,6 +38,10 @@ public class Main {
         anthraciteHall.setCapacity(120);
         anthraciteHall.setDescription("The mud under the moon was sparkling like anthracite, "
                 + "and all guys from the N town were in love with the local committee secretary.");
+
+        CinemaHallService cinemaHallService = (CinemaHallService) injector
+                .getInstance(CinemaHallService.class);
+
         cinemaHallService.add(blueHall);
         cinemaHallService.add(anthraciteHall);
         System.out.println("Getting blue hall");
@@ -51,20 +51,24 @@ public class Main {
         System.out.println("--------------------------------------------------------------------");
 
         MovieSession firstSession = new MovieSession();
-        MovieSession secondSession = new MovieSession();
-        MovieSession thirdSession = new MovieSession();
-        LocalDateTime firstDate = LocalDateTime.of(2022, 7, 11, 12, 0);
-        LocalDateTime secondDate = LocalDateTime.of(2022, 8, 18, 18, 0);
-        LocalDateTime thirdDate = LocalDateTime.of(2021, 7, 11, 17, 0);
         firstSession.setMovie(fastAndFurious);
         firstSession.setCinemaHall(blueHall);
+        LocalDateTime firstDate = LocalDateTime.of(2022, 7, 11, 12, 0);
         firstSession.setShowTime(firstDate);
+        MovieSession secondSession = new MovieSession();
         secondSession.setMovie(avengersEndgame);
         secondSession.setCinemaHall(anthraciteHall);
+        LocalDateTime secondDate = LocalDateTime.of(2022, 8, 18, 18, 0);
         secondSession.setShowTime(secondDate);
+        MovieSession thirdSession = new MovieSession();
         thirdSession.setMovie(fastAndFurious);
         thirdSession.setCinemaHall(anthraciteHall);
+        LocalDateTime thirdDate = LocalDateTime.of(2021, 7, 11, 17, 0);
         thirdSession.setShowTime(thirdDate);
+
+        MovieSessionService movieSessionService = (MovieSessionService) injector
+                .getInstance(MovieSessionService.class);
+
         movieSessionService.add(firstSession);
         movieSessionService.add(secondSession);
         movieSessionService.add(thirdSession);

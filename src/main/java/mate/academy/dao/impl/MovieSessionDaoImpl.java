@@ -1,7 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -49,6 +48,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("id", id);
             MovieSession movieSession = query.getSingleResult();
             Hibernate.initialize(movieSession.getCinemaHall());
+            // Sorry for this,
+            // I didn't manage to find a better solution to fetch 2 lazily initialized fields.
             return Optional.ofNullable(movieSession);
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session from DB by id: " + id, e);
@@ -69,6 +70,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             List<MovieSession> list = query.getResultList();
             for (MovieSession movieSession : list) {
                 Hibernate.initialize(movieSession.getCinemaHall());
+                // Sorry for this,
+                // I didn't manage to find a better solution to fetch 2 lazily initialized fields.
             }
             return list;
         } catch (Exception e) {
