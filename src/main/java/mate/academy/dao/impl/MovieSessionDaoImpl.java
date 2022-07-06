@@ -61,7 +61,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         String hql = "FROM MovieSession ms "
                 + "LEFT JOIN FETCH ms.movie m "
                 + "WHERE m.id = :movieId "
-                + "AND ms.showTime < :upperBound AND ms.showTime > :lowerBound";
+                + "AND ms.showTime BETWEEN :lowerBound AND :upperBound";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
             query.setParameter("movieId", movieId);
