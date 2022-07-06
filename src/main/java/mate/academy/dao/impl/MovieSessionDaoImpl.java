@@ -8,7 +8,6 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -42,14 +41,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         String hql = "FROM MovieSession ms "
                 + "LEFT JOIN FETCH ms.movie "
+                + "LEFT JOIN FETCH ms.cinemaHall "
                 + "WHERE ms.id = :id";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
             query.setParameter("id", id);
             MovieSession movieSession = query.getSingleResult();
-            Hibernate.initialize(movieSession.getCinemaHall());
-            // Sorry for this,
-            // I didn't manage to find a better solution to fetch 2 lazily initialized fields.
             return Optional.ofNullable(movieSession);
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session from DB by id: " + id, e);
@@ -60,6 +57,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         String hql = "FROM MovieSession ms "
                 + "LEFT JOIN FETCH ms.movie m "
+                + "LEFT JOIN FETCH ms.cinemaHall "
                 + "WHERE m.id = :movieId "
                 + "AND ms.showTime BETWEEN :lowerBound AND :upperBound";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -68,11 +66,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("lowerBound", date.atStartOfDay());
             query.setParameter("upperBound", date.plusDays(1).atStartOfDay());
             List<MovieSession> list = query.getResultList();
-            for (MovieSession movieSession : list) {
-                Hibernate.initialize(movieSession.getCinemaHall());
-                // Sorry for this,
-                // I didn't manage to find a better solution to fetch 2 lazily initialized fields.
-            }
             return list;
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available movie sessions by movie id: "
