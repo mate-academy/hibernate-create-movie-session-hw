@@ -16,7 +16,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
@@ -55,12 +54,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String query = "FROM MovieSession AS mv WHERE mv.id = :id "
                     + "AND mv.showTime BETWEEN :startOfTheDay AND :endOfTheDay";
-            Query<MovieSession> getAvailableSessionsQuery
-                    = session.createQuery(query, MovieSession.class);
-            getAvailableSessionsQuery.setParameter("id", movieId);
-            getAvailableSessionsQuery.setParameter("startOfTheDay", startOfTheDay);
-            getAvailableSessionsQuery.setParameter("endOfTheDay", endOfTheDay);
-            return getAvailableSessionsQuery.getResultList();
+            Query<MovieSession> sessionQuery = session.createQuery(query, MovieSession.class);
+            sessionQuery.setParameter("id", movieId);
+            sessionQuery.setParameter("startOfTheDay", startOfTheDay);
+            sessionQuery.setParameter("endOfTheDay", endOfTheDay);
+            return sessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find sessions by id: "
                     + movieId + " , date: " + date, e);
