@@ -3,7 +3,6 @@ package mate.academy.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -29,10 +28,6 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        List<MovieSession> sessions = movieSessionDao.getAllMovies();
-        return sessions.stream()
-                .filter(x -> x.getShowTime().toLocalDate().equals(date)
-                        && x.getMovie().getId().equals(movieId))
-                .collect(Collectors.toList());
+        return movieSessionDao.getMovieByFilmAndDate(movieId, date);
     }
 }

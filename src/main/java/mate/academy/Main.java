@@ -28,11 +28,11 @@ public class Main {
 
         CinemaHall zirka = new CinemaHall();
         zirka.setCapacity(200);
-        zirka.setDescription("Placed at Kyiv");
+        zirka.setDescription("Zirka placed at Kyiv");
 
         CinemaHall pobeda = new CinemaHall();
         pobeda.setCapacity(300);
-        pobeda.setDescription("Placed at Lviv");
+        pobeda.setDescription("Pobeda placed at Lviv");
 
         CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
@@ -58,7 +58,7 @@ public class Main {
         MovieSession pobedaBill = new MovieSession();
         pobedaBill.setMovie(killBill);
         pobedaBill.setCinemaHall(pobeda);
-        pobedaBill.setShowTime(LocalDateTime.of(2022, 7, 7, 17, 0));
+        pobedaBill.setShowTime(LocalDateTime.of(2022, 7, 8, 17, 0));
         movieSessionService.add(pobedaBill);
 
         MovieSession pobedaFast = new MovieSession();
@@ -69,6 +69,5 @@ public class Main {
 
         System.out.println(movieSessionService.get(1L));
         movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
-
     }
 }
