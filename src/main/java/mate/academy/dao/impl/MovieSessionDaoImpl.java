@@ -17,11 +17,10 @@ import org.hibernate.query.Query;
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession entity) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = null;
         Transaction transaction = null;
         try {
-            session = sessionFactory.openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
@@ -40,8 +39,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie session by id " + id, e);
@@ -49,16 +47,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     public List<MovieSession> getMovieByFilmAndDate(Long movieId, LocalDate date) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
                     + "left join fetch ms.movie m "
                     + "left join fetch ms.cinemaHall "
-                    + "where m.id = :idOfMovie "
+                    + "where m.id = :movieId "
                     + "and extract(month from ms.showTime) = :month "
                     + "and extract(day from ms.showTime) = :day "
                     + "and extract(year from ms.showTime) = :year", MovieSession.class);
-            query.setParameter("idOfMovie", movieId);
+            query.setParameter("movieId", movieId);
             query.setParameter("month", date.getMonthValue());
             query.setParameter("day", date.getDayOfMonth());
             query.setParameter("year", date.getYear());

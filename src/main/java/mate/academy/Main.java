@@ -23,7 +23,7 @@ public class Main {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         movieService.add(killBill);
         movieService.add(fastAndFurious);
-        System.out.println(movieService.get(1L));
+        System.out.println(movieService.get(killBill.getId()));
         movieService.getAll().forEach(System.out::println);
 
         CinemaHall zirka = new CinemaHall();
@@ -38,7 +38,7 @@ public class Main {
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
         cinemaHallService.add(pobeda);
         cinemaHallService.add(zirka);
-        System.out.println(cinemaHallService.get(1L));
+        System.out.println(cinemaHallService.get(killBill.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
         MovieSession zirkaBill = new MovieSession();
@@ -67,7 +67,7 @@ public class Main {
         pobedaFast.setShowTime(LocalDateTime.of(2022, 7, 7, 17, 0));
         movieSessionService.add(pobedaFast);
 
-        System.out.println(movieSessionService.get(1L));
-        movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
+        System.out.println(movieSessionService.get(zirkaBill.getId()));
+        movieSessionService.findAvailableSessions(killBill.getId(), LocalDate.now()).forEach(System.out::println);
     }
 }
