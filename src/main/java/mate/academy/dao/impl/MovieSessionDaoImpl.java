@@ -1,6 +1,8 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -46,18 +48,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     public List<MovieSession> getMovieByFilmAndDate(Long movieId, LocalDate date) {
+        LocalDateTime startOfDay = date.atTime(LocalTime.MIN);
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.movie m "
-                    + "left join fetch ms.cinemaHall "
-                    + "where m.id = :movieId "
-                    + "and extract(month from ms.showTime) = :month "
-                    + "and extract(day from ms.showTime) = :day "
-                    + "and extract(year from ms.showTime) = :year", MovieSession.class);
+                    + "where ms.movie.id = :movieId "
+                    + "and ms.showTime between :startTime and :endTime",
+                     MovieSession.class);
             query.setParameter("movieId", movieId);
-            query.setParameter("month", date.getMonthValue());
-            query.setParameter("day", date.getDayOfMonth());
-            query.setParameter("year", date.getYear());
+            query.setParameter("startTime", startOfDay);
+            query.setParameter("endTime", endOfDay);
             return query.getResultList();
         }
     }

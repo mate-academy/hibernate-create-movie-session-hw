@@ -22,7 +22,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public MovieSession get(Long id) {
         Optional<MovieSession> movieSessionOptional = movieSessionDao.get(id);
-        return movieSessionOptional.orElseThrow(() ->
+        return movieSessionDao.get(id).orElseThrow(() ->
                 new RuntimeException("Movie session with id " + id + "is not exist at DB"));
     }
 

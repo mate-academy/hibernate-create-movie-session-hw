@@ -1,7 +1,6 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -20,8 +19,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        Optional<CinemaHall> cinemaHallOptional = cinemaHallDao.get(id);
-        return cinemaHallOptional.orElseThrow(() ->
+        return cinemaHallDao.get(id).orElseThrow(() ->
                 new RuntimeException("Cinema hall with id " + id + " is not exist at DB"));
     }
 
