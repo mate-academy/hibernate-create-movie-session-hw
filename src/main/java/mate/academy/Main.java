@@ -68,6 +68,7 @@ public class Main {
         movieSessionService.add(pobedaFast);
 
         System.out.println(movieSessionService.get(zirkaBill.getId()));
-        movieSessionService.findAvailableSessions(killBill.getId(), LocalDate.now()).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(
+                killBill.getId(), LocalDate.now()).forEach(System.out::println);
     }
 }
