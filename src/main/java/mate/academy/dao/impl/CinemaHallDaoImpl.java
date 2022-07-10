@@ -42,7 +42,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             CinemaHall cinemaHall = session.get(CinemaHall.class, id);
             return Optional.ofNullable(cinemaHall);
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a cinemaHall by id " + id, e);
+            throw new DataProcessingException("Can't get a cinema hall by id " + id, e);
         }
     }
 
@@ -53,7 +53,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     = session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHallQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all cinemaHall", e);
+            throw new DataProcessingException("Can't get all cinema halls", e);
         }
     }
 }
