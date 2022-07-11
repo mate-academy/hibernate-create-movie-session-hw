@@ -10,25 +10,24 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
-    public MovieSession add(MovieSession entity) {
+    public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(entity);
+            session.save(movieSession);
             transaction.commit();
-            return entity;
+            return movieSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie session " + entity, e);
+            throw new DataProcessingException("Can't insert movie session " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -48,14 +47,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM MovieSession "
-                    + "WHERE movie.id = :id "
+            String hqlQuery = "FROM MovieSession WHERE movie.id = :id "
                     + "AND showTime >= :begin AND showTime < :end";
-            Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
-            query.setParameter("id", movieId);
-            query.setParameter("begin", date.atStartOfDay());
-            query.setParameter("end", date.plusDays(1).atStartOfDay());
-            return query.getResultList();
+            return session.createQuery(hqlQuery, MovieSession.class)
+                    .setParameter("id", movieId)
+                    .setParameter("begin", date.atStartOfDay())
+                    .setParameter("end", date.plusDays(1).atStartOfDay())
+                    .getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all movie sessions", e);
         }

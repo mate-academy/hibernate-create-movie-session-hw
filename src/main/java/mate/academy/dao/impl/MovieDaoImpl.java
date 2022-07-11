@@ -9,25 +9,24 @@ import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
     @Override
-    public Movie add(Movie entity) {
+    public Movie add(Movie movie) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(entity);
+            session.save(movie);
             transaction.commit();
-            return entity;
+            return movie;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + entity, e);
+            throw new DataProcessingException("Can't insert movie " + movie, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -47,9 +46,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM Movie";
-            Query<Movie> query = session.createQuery(hql, Movie.class);
-            return query.getResultList();
+            return session.createQuery("FROM Movie", Movie.class).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all movies", e);
         }
