@@ -1,6 +1,5 @@
 package mate.academy.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
