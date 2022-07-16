@@ -49,7 +49,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        List<MovieSession> movieSessions = new ArrayList<>();
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             Query<MovieSession> query = session.createQuery("FROM MovieSession ms "
                     + "LEFT JOIN FETCH ms.movie m WHERE m.id = :id "
@@ -60,10 +59,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("id", movieId);
             query.setParameter("dayBefore", dayBefore);
             query.setParameter("dayAfter", dayAfter);
-            movieSessions = query.getResultList();
+            return query.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Cant get all movie sessions");
+            throw new DataProcessingException("Cant get all movie sessions", e);
         }
-        return movieSessions;
     }
 }
