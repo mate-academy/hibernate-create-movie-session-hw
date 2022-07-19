@@ -1,6 +1,8 @@
 package mate.academy.service.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import mate.academy.dao.MovieDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -19,7 +21,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).orElseThrow();
+        return movieDao.get(id).orElseThrow(
+                () -> new NoSuchElementException("No such cinema hall with id: " + id));
     }
 
     @Override
