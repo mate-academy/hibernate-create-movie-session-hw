@@ -2,9 +2,7 @@ package mate.academy.service.impl;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import mate.academy.dao.CinemaHallDao;
-import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
