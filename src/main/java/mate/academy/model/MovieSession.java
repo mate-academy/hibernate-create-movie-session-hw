@@ -51,4 +51,12 @@ public class MovieSession {
     public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
     }
+
+    @Override
+    public String toString() {
+        return "MovieSession={id=" + id + ", "
+                + movie + ", "
+                + cinemaHall
+                + ", showTime= " + showTime;
+    }
 }
