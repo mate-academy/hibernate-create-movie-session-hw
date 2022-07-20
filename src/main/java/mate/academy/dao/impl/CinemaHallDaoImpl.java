@@ -29,7 +29,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             throw new DataProcessingException("Can't add cinema hall to db,"
                     + " CinemaHall: " + cinemaHall, e);
         }
-        return null;
+        return cinemaHall;
     }
 
     @Override

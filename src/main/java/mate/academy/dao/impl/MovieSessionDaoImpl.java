@@ -31,7 +31,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             throw new DataProcessingException("Can't add movie session to db,"
                     + " MovieSession: " + movieSession, e);
         }
-        return null;
+        return movieSession;
     }
 
     @Override
@@ -48,7 +48,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery(
                     "FROM MovieSession m "
-                            + "LEFT JOIN FETCH m.movie "
                             + "WHERE m.showTime > :startOfDay AND m.showTime < :endOfDay "
                             + "AND m.movie.id = :movieId",
                     MovieSession.class);
