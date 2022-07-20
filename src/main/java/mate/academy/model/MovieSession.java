@@ -15,7 +15,6 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime showTime;
-
     @ManyToOne
     private CinemaHall cinemaHall;
     @ManyToOne
