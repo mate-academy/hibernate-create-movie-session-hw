@@ -48,13 +48,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long movieSessionId) {
         try (Session session = sessionFactory.openSession()) {
-            Query<MovieSession> getMovieSessionQuery = session.createQuery(
+            Query<MovieSession> movieSessionQuery = session.createQuery(
                     "FROM MovieSession ms "
                             + "LEFT JOIN FETCH ms.movie "
                             + "LEFT JOIN FETCH  ms.cinemaHall "
                             + "WHERE ms.id = :id", MovieSession.class);
-            getMovieSessionQuery.setParameter("id", movieSessionId);
-            return getMovieSessionQuery.uniqueResultOptional();
+            movieSessionQuery.setParameter("id", movieSessionId);
+            return movieSessionQuery.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Cannot get MovieSession entity by ID="
                     + movieSessionId + " from DB", e);
