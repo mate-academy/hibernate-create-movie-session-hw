@@ -13,7 +13,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
@@ -48,9 +47,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
-            Query<CinemaHall> getAllMoviesQuery
+            Query<CinemaHall> query
                     = session.createQuery("from CinemaHall", CinemaHall.class);
-            return getAllMoviesQuery.getResultList();
+            return query.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all cinema halls", e);
         }
