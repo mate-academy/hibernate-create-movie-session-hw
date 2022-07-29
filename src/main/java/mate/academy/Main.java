@@ -2,7 +2,6 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -26,7 +25,6 @@ public class Main {
         movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
     }
 
-
     public static void injectMovie() {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription(
@@ -47,19 +45,19 @@ public class Main {
     }
 
     public static void injectMovieSessions() {
-                Movie firstMovie = movieService.get(1L);
-                Movie secondMovie = movieService.get(2L);
-                CinemaHall cinemaHallFromDB = cinemaHallService.get(1L);
-                CinemaHall cinemaHallFromDB2 = cinemaHallService.get(2L);
-                MovieSession terminatorMorning =
-                        new MovieSession(LocalDateTime.now(), firstMovie, cinemaHallFromDB);
-                MovieSession terminatorDay =
-                        new MovieSession(LocalDateTime.now()
+        Movie firstMovie = movieService.get(1L);
+        Movie secondMovie = movieService.get(2L);
+        CinemaHall cinemaHallFromDB = cinemaHallService.get(1L);
+        CinemaHall cinemaHallFromDB2 = cinemaHallService.get(2L);
+        MovieSession terminatorMorning =
+                new MovieSession(LocalDateTime.now(), firstMovie, cinemaHallFromDB);
+        MovieSession terminatorDay =
+                new MovieSession(LocalDateTime.now()
                         .plusHours(3), firstMovie, cinemaHallFromDB);
-                MovieSession terminatorMorning2 =
-                        new MovieSession(LocalDateTime.now(), firstMovie, cinemaHallFromDB2);
-                movieSessionService.add(terminatorMorning);
-                movieSessionService.add(terminatorMorning2);
-                movieSessionService.add(terminatorDay);
+        MovieSession terminatorMorning2 =
+                new MovieSession(LocalDateTime.now(), firstMovie, cinemaHallFromDB2);
+        movieSessionService.add(terminatorMorning);
+        movieSessionService.add(terminatorMorning2);
+        movieSessionService.add(terminatorDay);
     }
 }
