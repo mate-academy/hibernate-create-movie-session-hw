@@ -1,7 +1,6 @@
 package mate.academy.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import mate.academy.model.MovieSession;
 
