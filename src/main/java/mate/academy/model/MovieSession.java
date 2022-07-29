@@ -11,13 +11,19 @@ public class MovieSession {
     private int id;
     private LocalDateTime showTime;
 
-    @OneToOne
+    @ManyToOne
     private Movie movie;
 
-    @OneToOne
+    @ManyToOne
     private CinemaHall cinemaHall;
 
     public MovieSession() {
+    }
+
+    public MovieSession(LocalDateTime showTime, Movie movie, CinemaHall cinemaHall) {
+        this.showTime = showTime;
+        this.movie = movie;
+        this.cinemaHall = cinemaHall;
     }
 
     public int getId() {
