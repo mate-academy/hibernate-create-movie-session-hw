@@ -1,18 +1,16 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -30,12 +28,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie session: " + movieSession, e);
+            throw new DataProcessingException("Can't insert a movie session: " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
             }
-        }    }
+        }
+    }
 
     @Override
     public Optional<MovieSession> get(Long id) {
@@ -51,11 +50,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessionsQuery = session.createQuery(
                     "from MovieSession ms "
-                        + "left join fetch ms.Movie"
-                        + "left join fetch ms.CinemaHall"
-                        + "where DATE(ms.showTime) = :date ", MovieSession.class);
+                        + "left join fetch ms.movie "
+                        + "left join fetch ms.cinemaHall "
+                        + "where DATE(ms.showTime) = DATE(:date)", MovieSession.class);
             getAllMovieSessionsQuery.setParameter("date", date);
             return getAllMovieSessionsQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get available movie session for today", e);
         }
     }
 }

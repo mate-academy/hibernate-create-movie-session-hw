@@ -9,15 +9,20 @@ import javax.persistence.Id;
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    int capacity;
-    String description;
+    private Long id;
+    private int capacity;
+    private String description;
 
     public CinemaHall() {
     }
 
     public CinemaHall(Long id, int capacity, String description) {
         this.id = id;
+        this.capacity = capacity;
+        this.description = description;
+    }
+
+    public CinemaHall(int capacity, String description) {
         this.capacity = capacity;
         this.description = description;
     }

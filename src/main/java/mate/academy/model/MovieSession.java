@@ -1,18 +1,22 @@
 package mate.academy.model;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
     @OneToOne
-    Movie movie;
+    private Movie movie;
     @OneToOne
-    CinemaHall cinemaHall;
-    LocalDateTime showTime;
+    private CinemaHall cinemaHall;
+    private LocalDateTime showTime;
 
     public MovieSession() {
     }
@@ -22,6 +26,12 @@ public class MovieSession {
         this.movie = movie;
         this.cinemaHall = cinemaHall;
         this.showTime = showTime;
+    }
+
+    public MovieSession(LocalDateTime now, Movie firstMovie, CinemaHall cinemaHallFromDB) {
+        this.movie = firstMovie;
+        this.cinemaHall = cinemaHallFromDB;
+        this.showTime = now;
     }
 
     public Long getId() {
