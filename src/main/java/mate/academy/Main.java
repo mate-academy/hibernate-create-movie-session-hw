@@ -26,8 +26,8 @@ public class Main {
             .getInstance(CinemaHallService.class);
 
     public static void main(String[] args) {
-        instanceOfCinemaHalls();
-        instanceOfMovies();
+        setListOfCinemaHalls();
+        setMoviesToRelease();
 
         System.out.println("List of movies:");
         movieService.getAll().forEach(System.out::println);
@@ -56,7 +56,7 @@ public class Main {
                 .forEach(System.out::println);
     }
     
-    private static void instanceOfCinemaHalls() {
+    private static void setListOfCinemaHalls() {
         CinemaHall bigCinemaHall = new CinemaHall();
         bigCinemaHall.setCapacity(5000);
         bigCinemaHall.setDescription("Biggest cinema hall in Ukraine");
@@ -73,7 +73,7 @@ public class Main {
         cinemaHallService.add(smallCinemaHall);
     }
 
-    private static void instanceOfMovies() {
+    private static void setMoviesToRelease() {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
