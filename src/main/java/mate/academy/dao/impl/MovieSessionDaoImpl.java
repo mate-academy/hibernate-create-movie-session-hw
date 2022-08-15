@@ -49,8 +49,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        LocalDateTime startDate = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
-        LocalDateTime endDate = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
+        LocalDateTime startDate = LocalDateTime.MIN;
+        LocalDateTime endDate = LocalDateTime.MAX;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMoviesQuery =
                     session.createQuery("from MovieSession ms "
