@@ -2,7 +2,6 @@ package mate.academy.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
@@ -22,16 +21,9 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        Optional<MovieSession> movieSession;
-        try {
-            movieSession = movieSessionDao.get(id);
-            if (movieSession.isEmpty()) {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
-        }
-        return movieSession.get();
+        return movieSessionDao.get(id)
+                .orElseThrow(() -> new DataProcessingException("Can't get a movie by id: " + id,
+                                                                new Exception()));
     }
 
     @Override

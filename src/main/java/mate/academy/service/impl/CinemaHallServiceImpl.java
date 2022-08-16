@@ -1,7 +1,6 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
@@ -21,16 +20,9 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        Optional<CinemaHall> cinemaHall;
-        try {
-            cinemaHall = cinemaHallDao.get(id);
-            if (cinemaHall.isEmpty()) {
-                throw new Exception();
-            }
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't get a cinema hall by id: " + id, e);
-        }
-        return cinemaHall.get();
+        return cinemaHallDao.get(id)
+                .orElseThrow(() -> new DataProcessingException("Can't get a cinema hall "
+                                                    + "by id: " + id, new Exception()));
     }
 
     @Override
