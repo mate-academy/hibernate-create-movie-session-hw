@@ -22,7 +22,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public MovieSession get(Long id) {
         return movieSessionDao.get(id).orElseThrow(
-                         () -> new NoSuchElementException("Can't get a cinema hall by id: " + id));
+                () -> new NoSuchElementException("Can't get a movieSession by id: " + id));
     }
 
     @Override
