@@ -41,11 +41,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getAllMovieSessionQuery
-                    = session.createQuery("from MovieSession ms "
-                    + "where ms.id = :id", MovieSession.class);
-            getAllMovieSessionQuery.setParameter("id", id);
-            return Optional.ofNullable(getAllMovieSessionQuery.uniqueResult());
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (RuntimeException e) {
             throw new DataProcessingException("Can't get movie session by id " + id, e);
         }
@@ -54,17 +50,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getMovieSessionByIdAndDateQuery
+            Query<MovieSession> getAvailableSessionsQuery
                     = session.createQuery("from MovieSession ms "
                     + "left join fetch ms.movie m "
                     + "where m.id = :movieId "
                     + "and ms.showTime between :startOfDay and :endOfDay", MovieSession.class);
-            getMovieSessionByIdAndDateQuery.setParameter("movieId", movieId);
-            getMovieSessionByIdAndDateQuery.setParameter("startOfDay",
-                    LocalDateTime.of(date, LocalTime.of(0, 0, 0)));
-            getMovieSessionByIdAndDateQuery.setParameter("endOfDay",
-                    LocalDateTime.of(date, LocalTime.of(23, 59, 59)));
-            return getMovieSessionByIdAndDateQuery.getResultList();
+            getAvailableSessionsQuery.setParameter("movieId", movieId);
+            LocalDateTime startOfDay
+                    = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
+            getAvailableSessionsQuery.setParameter("startOfDay", startOfDay);
+            LocalDateTime endOfDay
+                    = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
+            getAvailableSessionsQuery.setParameter("endOfDay", endOfDay);
+            return getAvailableSessionsQuery.getResultList();
         } catch (RuntimeException e) {
             throw new DataProcessingException("Can't find available movie session with "
                     + " movie id " + movieId + " and date " + date, e);

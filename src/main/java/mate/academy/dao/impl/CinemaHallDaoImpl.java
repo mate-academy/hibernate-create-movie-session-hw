@@ -38,10 +38,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<CinemaHall> getCinemaHallByIdQuery
-                    = session.createQuery("FROM CinemaHall c where c.id = :id", CinemaHall.class);
-            getCinemaHallByIdQuery.setParameter("id", id);
-            return Optional.ofNullable(getCinemaHallByIdQuery.uniqueResult());
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (RuntimeException e) {
             throw new DataProcessingException("Can't get cinema hall by id " + id, e);
         }
@@ -51,7 +48,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> getAllCinemaHallQuery
-                    = session.createQuery("FROM CinemaHall", CinemaHall.class);
+                    = session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHallQuery.getResultList();
         } catch (RuntimeException e) {
             throw new DataProcessingException("Can't get all cinema hall", e);
