@@ -57,10 +57,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "and ms.showTime between :startOfDay and :endOfDay", MovieSession.class);
             getAvailableSessionsQuery.setParameter("movieId", movieId);
             LocalDateTime startOfDay
-                    = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
+                    = LocalDateTime.of(date, LocalTime.MIN);
             getAvailableSessionsQuery.setParameter("startOfDay", startOfDay);
             LocalDateTime endOfDay
-                    = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
+                    = LocalDateTime.of(date, LocalTime.MAX);
             getAvailableSessionsQuery.setParameter("endOfDay", endOfDay);
             return getAvailableSessionsQuery.getResultList();
         } catch (RuntimeException e) {
