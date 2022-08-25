@@ -3,10 +3,11 @@ package mate.academy.model;
 import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,9 +16,10 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.EAGER)
     private Movie movie;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 

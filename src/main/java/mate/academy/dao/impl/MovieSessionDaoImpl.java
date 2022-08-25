@@ -23,7 +23,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.persist(movieSession);
+            if (movieSession.getMovie().getId() != null) {
+                session.merge(movieSession);
+            } else {
+                session.persist(movieSession);
+            }
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -61,11 +65,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     session.createQuery("from MovieSession ms "
                                     + "join fetch ms.movie "
                                     + "join fetch ms.cinemaHall "
-                                    + "where ms.showTime between :dateTimeStart and :dateTimeEnd",
+                                    + "where ms.showTime between :dateTimeStart and :dateTimeEnd "
+                                    + "and ms.movie.id = :movieId",
                             MovieSession.class);
             findAvailableSessionQuery.setParameter("dateTimeStart", dateTimeStart);
             findAvailableSessionQuery.setParameter("dateTimeEnd", dateTimeEnd);
+            findAvailableSessionQuery.setParameter("movieId", movieId);
             return findAvailableSessionQuery.getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Can't find available session for movie by id: " + movieId
+                    + "for date: " + date, e);
         }
     }
 }
