@@ -7,13 +7,21 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movies", schema = "cinema")
+@Table(name = "movies")
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
+
+    public Movie() {
+    }
+
+    public Movie(String title, String description) {
+        this.title = title;
+        this.description = description;
+    }
 
     public Movie(String title) {
         this.title = title;
