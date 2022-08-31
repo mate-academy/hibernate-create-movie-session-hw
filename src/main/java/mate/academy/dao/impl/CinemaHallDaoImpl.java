@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.util.List;
 import java.util.Optional;
+import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
@@ -11,7 +12,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class CinemaHallDaoImpl implements mate.academy.dao.CinemaHallDao {
+public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;

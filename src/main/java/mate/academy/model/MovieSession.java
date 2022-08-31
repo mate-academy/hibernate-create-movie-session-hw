@@ -5,9 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,14 +14,14 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
     private Movie movie;
-    @OneToOne
-    @JoinTable(name = "movie_sessions_cinema_halls", joinColumns =
-    @JoinColumn(name = "movie_session_id"), inverseJoinColumns =
-    @JoinColumn(name = "cinema_hall_id"))
+    @ManyToOne
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
+
+    public MovieSession() {
+    }
 
     public Long getId() {
         return id;
