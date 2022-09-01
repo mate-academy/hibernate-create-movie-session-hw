@@ -16,8 +16,8 @@ public class Main {
     private static final LocalDateTime SHOW_TIME =
             LocalDateTime.of(2022, 9, 1, 17, 40);
     private static final LocalDateTime SHOW_PRIME_TIME =
-            LocalDateTime.of(2022, 8, 29, 19, 20);
-    private static final LocalDate SESSION_DATE = LocalDate.now();
+            LocalDateTime.of(2022, 9, 2, 19, 20);
+    private static final LocalDate SESSION_DATE = LocalDate.of(2022, 9, 1);
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
@@ -56,7 +56,7 @@ public class Main {
         System.out.println("There are " + System.lineSeparator() + fastAndFuriousSession
                 + System.lineSeparator() + "and" + System.lineSeparator() + matrixSession
                 + System.lineSeparator() + "movie sessions" + System.lineSeparator()
-                + "Today available:");
+                + "Available sessions on " + SESSION_DATE + ":");
         System.out.println(movieSessionService
                 .findAvailableSessions(fastAndFurious.getId(), SESSION_DATE));
         System.out.println(movieSessionService
