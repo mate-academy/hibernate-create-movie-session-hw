@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -16,7 +17,6 @@ import org.hibernate.query.Query;
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
-
         Transaction transaction = null;
         Session session = null;
         try {
@@ -52,13 +52,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAvailableSessions = session.createQuery(
-                    "from MovieSession m left join fetch m.movie  left join fetch m.cinemaHall "
-                            + "where m.sessionTime > :startTime "
-                            + "and m.sessionTime < :endTime "
+                    "from MovieSession m "
+                            + "where m.sessionTime between :from and :to "
                             + "and m.movie.id = :movieid",
                     MovieSession.class);
-            getAvailableSessions.setParameter("startTime",date.atStartOfDay());
-            getAvailableSessions.setParameter("endTime",date.plusDays(1).atStartOfDay());
+            getAvailableSessions.setParameter("from",date.atTime(LocalTime.MIN));
+            getAvailableSessions.setParameter("to",date.atTime(LocalTime.MAX));
             getAvailableSessions.setParameter("movieid",movieId);
             return getAvailableSessions.getResultList();
         } catch (Exception e) {
