@@ -96,7 +96,6 @@ public class Main {
                 .of(2020, 10, 15, 23, 0));
         movieSessionService.add(nightMovieSession);
         System.out.println(movieSessionService.get(nightMovieSession.getId()));
-
         System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.of(2020, 10, 15)));
     }
