@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-
 @Dao
 public class MovieDaoImpl implements MovieDao {
     @Override
@@ -28,7 +27,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException("Can't insert a movie " + movie, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -51,6 +50,8 @@ public class MovieDaoImpl implements MovieDao {
             String query = "FROM Movie";
             Query<Movie> getAll = session.createQuery(query, Movie.class);
             return getAll.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movies from DB ", e);
         }
     }
 }

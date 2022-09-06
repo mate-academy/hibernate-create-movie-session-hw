@@ -1,5 +1,7 @@
 package mate.academy.dao.impl;
 
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,8 +10,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
@@ -50,6 +50,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             String query = "FROM CinemaHall";
             Query<CinemaHall> getAll = session.createQuery(query, CinemaHall.class);
             return getAll.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all cinema halls from DB ", e);
         }
     }
 }
