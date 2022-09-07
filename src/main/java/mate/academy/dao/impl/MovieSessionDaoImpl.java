@@ -55,8 +55,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "where ms.movie.id = :id "
                             + "and ms.showTime between :from and :to", MovieSession.class);
             findAvailableSessionQuery.setParameter("id", movieId);
-            findAvailableSessionQuery.setParameter("from", LocalDateTime.of(date, LocalTime.MIN));
-            findAvailableSessionQuery.setParameter("to", LocalDateTime.of(date, LocalTime.MAX));
+            findAvailableSessionQuery.setParameter("from", date.atTime(LocalTime.MIN));
+            findAvailableSessionQuery.setParameter("to", date.atTime(LocalTime.MAX));
             return findAvailableSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available movie sessions from DB with "
