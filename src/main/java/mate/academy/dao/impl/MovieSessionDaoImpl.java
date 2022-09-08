@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -53,8 +54,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "where ms.movie.id = : movieId AND "
                     + "showTime BETWEEN : start_time_of_date AND : finish_time_of_date");
             findAvailableSessionsQuery.setParameter("movieId", movieId);
-            findAvailableSessionsQuery.setParameter("start_time_of_date", date.atTime(00, 00));
-            findAvailableSessionsQuery.setParameter("finish_time_of_date", date.atTime(23, 59, 59));
+            findAvailableSessionsQuery.setParameter("start_time_of_date",
+                    date.atTime(LocalTime.MIN));
+            findAvailableSessionsQuery.setParameter("finish_time_of_date",
+                    date.atTime(LocalTime.MAX));
             return findAvailableSessionsQuery.getResultList();
         } catch (DataProcessingException e) {
             throw new DataProcessingException("Can't find available sessions by movieId: "
