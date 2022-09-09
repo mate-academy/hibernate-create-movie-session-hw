@@ -50,7 +50,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> getAllCinemaHalls
-                    = session.createQuery("from CinemaHall", CinemaHall.class);
+                    = session.createQuery("FROM CinemaHall", CinemaHall.class);
             return getAllCinemaHalls.getResultList();
         } catch (DataProcessingException e) {
             throw new DataProcessingException("Can't get all cinema halls from DB", e);
