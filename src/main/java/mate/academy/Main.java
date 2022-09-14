@@ -42,5 +42,7 @@ public class Main {
                 LocalDate.of(2022, 9, 1)).forEach(System.out::println);
         movieSessionService.findAvailableSessions(session.getId(),
                 LocalDate.of(2022, 10, 1)).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(3L,
+                LocalDate.of(2022, 9, 1)).forEach(System.out::println);
     }
 }
