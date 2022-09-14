@@ -84,7 +84,7 @@ public class Main {
         System.out.println(movieSessionService.findAvailableSessions(inception.getId(),
                 LocalDate.of(2022, Month.OCTOBER, 3)));
         // Find_NotOk_Exception
-        movieSessionService.findAvailableSessions(5L,
-                LocalDate.of(2022, Month.OCTOBER, 1));
+        System.out.println(movieSessionService.findAvailableSessions(5L,
+                LocalDate.of(2022, Month.OCTOBER, 1)));
     }
 }
