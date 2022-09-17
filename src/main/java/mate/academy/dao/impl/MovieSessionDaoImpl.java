@@ -53,8 +53,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             LocalDateTime min = date.atTime(LocalTime.MIN);
             LocalDateTime max = date.atTime(LocalTime.MAX);
             Query<MovieSession> findAvailableSession =
-                    session.createQuery("from MovieSession m "
-                            + "where id = :id and m.showTime "
+                    session.createQuery("from MovieSession "
+                            + "where movie_id = :id and showTime "
                             + "between :min and :max", MovieSession.class);
             findAvailableSession.setParameter("id", movieId);
             findAvailableSession.setParameter("min", min);
