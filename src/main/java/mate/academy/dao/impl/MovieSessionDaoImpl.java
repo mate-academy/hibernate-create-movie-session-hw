@@ -60,6 +60,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             findAvailableSessionsQuery.setParameter("min", start);
             findAvailableSessionsQuery.setParameter("max", end);
             return findAvailableSessionsQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can`t get available sessions", e);
         }
     }
 }
