@@ -11,10 +11,15 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
 public class Main {
-    public static void main(String[] args) {
-        Injector injector = Injector.getInstance("mate.academy");
+    private static final Injector injector = Injector.getInstance("mate.academy");
+    private static final MovieService movieService =
+            (MovieService) injector.getInstance(MovieService.class);
+    private static final CinemaHallService cinemaHallService =
+            (CinemaHallService) injector.getInstance(CinemaHallService.class);
+    private static final MovieSessionService movieSessionService =
+            (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+    public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
@@ -26,8 +31,6 @@ public class Main {
         System.out.println("________________All Movies___________________");
         movieService.getAll().forEach(System.out::println);
 
-        CinemaHallService cinemaHallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall bigHall = new CinemaHall();
         bigHall.setCapacity(250);
         bigHall.setDescription("The big hall is located on the first floor");
@@ -42,8 +45,6 @@ public class Main {
         daySessionForsage.setMovie(fastAndFurious);
         daySessionForsage.setCinemaHall(bigHall);
         daySessionForsage.setShowTime(LocalDateTime.of(2022, 9, 20, 12, 00));
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(daySessionForsage);
 
         MovieSession eveningSessionForsage = new MovieSession();
