@@ -54,13 +54,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "WHERE ms.movie.id = :movieId "
                             + "AND ms.showTime BETWEEN :beginningOfDate AND :endingOfDate",
                             MovieSession.class);
-            Query<MovieSession> availableSessions =
-                    getAllMoviesQuery.setParameter("movieId", movieId)
+            getAllMoviesQuery.setParameter("movieId", movieId)
                             .setParameter("beginningOfDate", LocalTime.MIN.atDate(date))
                             .setParameter("endingOfDate", LocalTime.MAX.atDate(date));
-            return availableSessions.getResultList();
+            return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get available sessions from DB", e);
+            throw new DataProcessingException("Can't get available sessions from DB. "
+                    + "Params: movie_id = " + movieId + ", date =  " + date, e);
         }
     }
 }

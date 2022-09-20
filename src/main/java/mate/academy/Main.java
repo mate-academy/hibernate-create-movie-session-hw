@@ -34,6 +34,7 @@ public class Main {
         fall.setDescription("Two girls stuck on a very high TV tower");
         movieService.add(fall);
 
+        System.out.println(movieService.get(spiderMan.getId()));
         System.out.println("List of all Movies");
         movieService.getAll().forEach(System.out::println);
 
@@ -52,6 +53,7 @@ public class Main {
         thirdHall.setDescription("CINETECH+ technology");
         cinemaHallService.add(thirdHall);
 
+        System.out.println(cinemaHallService.get(firstHall.getId()));
         System.out.println("List of all Cinema Halls");
         cinemaHallService.getAll().forEach(System.out::println);
 
@@ -76,6 +78,7 @@ public class Main {
                 .of(2022, 9, 19, 20, 05));
         movieSessionService.add(eveningOfDay);
 
+        System.out.println(movieSessionService.get(eveningOfDay.getId()));
         System.out.println("Session of Spider-Man movie");
         System.out.println(movieSessionService.findAvailableSessions(
                 spiderMan.getId(), LocalDate.of(2022, 9, 19)));
