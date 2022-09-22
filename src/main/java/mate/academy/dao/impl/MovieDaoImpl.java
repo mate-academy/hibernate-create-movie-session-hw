@@ -9,7 +9,6 @@ import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
@@ -47,9 +46,8 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> getAllMovieQuery =
-                    session.createQuery("SELECT m from Movie m", Movie.class);
-            return getAllMovieQuery.getResultList();
+            return session.createQuery("SELECT m from Movie m", Movie.class)
+                    .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get the movies from database", e);
         }
