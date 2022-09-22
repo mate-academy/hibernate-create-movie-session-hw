@@ -40,7 +40,7 @@ public class Main {
         System.out.println(movieSessionService.get(1L));
 
         MovieSession movieSession2 = new MovieSession();
-        movieSession2.setShowTime(LocalDateTime.of(2022, 10, 12, 19, 0));
+        movieSession2.setShowTime(LocalDateTime.of(2022, 10, 13, 19, 0));
         movieSession2.setMovie(fastAndFurious);
         movieSession2.setCinemaHall(cinemaHall);
         movieSessionService.add(movieSession2);
