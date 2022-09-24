@@ -26,8 +26,8 @@ public class Main {
         System.out.println(movieService.get(fastAndFurious.getId()));
 
         Movie theTomorrowWar = new Movie("The Tomorrow War");
-        theTomorrowWar.setDescription("A family man is drafted to fight in a future war " +
-                "where the fate of humanity relies on his ability to confront the past.");
+        theTomorrowWar.setDescription("A family man is drafted to fight in a future war "
+                + "where the fate of humanity relies on his ability to confront the past.");
         movieService.add(theTomorrowWar);
         System.out.println(movieService.get(theTomorrowWar.getId()));
         movieService.getAll().forEach(System.out::println);
