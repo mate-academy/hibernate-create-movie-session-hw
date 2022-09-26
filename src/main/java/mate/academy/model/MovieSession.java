@@ -26,7 +26,6 @@ public class MovieSession {
     private LocalDateTime showTime;
 
     public MovieSession() {
-
     }
 
     public MovieSession(Movie movie, CinemaHall hall, LocalDateTime showTime) {
