@@ -56,10 +56,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .createQuery("select ms from MovieSession ms "
                                     + "where ms.movie.id = :id AND ms.showTime "
                                     + "between :localDateStart AND :localDateEnd",
-                            MovieSession.class);
-            query.setParameter("id", movieId);
-            query.setParameter("localDateStart", localDateStart);
-            query.setParameter("localDateEnd", localDateEnd);
+                            MovieSession.class)
+                    .setParameter("id", movieId)
+                    .setParameter("localDateStart", localDateStart)
+                    .setParameter("localDateEnd", localDateEnd);
             return query.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all movie session from DB", e);
