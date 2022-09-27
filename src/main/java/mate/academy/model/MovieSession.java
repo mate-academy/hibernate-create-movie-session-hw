@@ -21,7 +21,6 @@ public class MovieSession {
     @Cascade(CascadeType.SAVE_UPDATE)
     private Movie movie;
     @ManyToOne
-    @Cascade(CascadeType.SAVE_UPDATE)
     private CinemaHall cinemaHall;
     @Column(name = "show_time")
     private LocalDateTime showTime;

@@ -50,8 +50,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            LocalDateTime localDateEnd = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
-            LocalDateTime localDateStart = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
+            LocalDateTime localDateEnd = LocalDateTime.of(date, LocalTime.MAX);
+            LocalDateTime localDateStart = LocalDateTime.of(date, LocalTime.MIN);
             Query<MovieSession> query = session
                     .createQuery("select ms from MovieSession ms "
                                     + "where ms.movie.id = :id AND ms.showTime "
