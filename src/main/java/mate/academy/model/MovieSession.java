@@ -18,7 +18,6 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @Cascade(CascadeType.SAVE_UPDATE)
     private Movie movie;
     @ManyToOne
     private CinemaHall cinemaHall;
