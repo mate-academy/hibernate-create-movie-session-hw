@@ -34,7 +34,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             }
         }
     }
-    
+
     @Override
     public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -43,7 +43,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             throw new DataProcessingException("Can't get a cinema hall by id: " + id, e);
         }
     }
-    
+
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
