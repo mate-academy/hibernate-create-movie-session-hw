@@ -6,7 +6,7 @@
         <property name="connection.username">mateAcademyDb</property>
         <property name="connection.password">Q4T3cJ9)pass</property>
         <property name="show_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="mate.academy.model.Movie"/>
         <mapping class="mate.academy.model.MovieSession"/>
