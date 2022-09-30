@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,12 +15,12 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
     private Movie movie;
-    @OneToOne
+    @ManyToOne
     private CinemaHall cinemaHall;
-    @Column(name = "session_time")
-    private LocalDateTime sessionTime;
+    @Column(name = "show_time")
+    private LocalDateTime showTime;
 
     public Long getId() {
         return id;
@@ -46,12 +46,12 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getSessionTime() {
-        return sessionTime;
+    public LocalDateTime getShowTime() {
+        return showTime;
     }
 
-    public void setSessionTime(LocalDateTime localDateTime) {
-        this.sessionTime = localDateTime;
+    public void setShowTime(LocalDateTime localDateTime) {
+        this.showTime = localDateTime;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class MovieSession {
                 + "id=" + id
                 + ", movie=" + movie
                 + ", cinemaHall=" + cinemaHall
-                + ", localDateTime=" + sessionTime
+                + ", localDateTime=" + showTime
                 + '}';
     }
 }
