@@ -52,7 +52,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getAvailableSessions = session.createQuery(
                     "from MovieSession ms "
                         + "where ms.movie.id = :movie_id "
-                        + " and ms.showTime between :start_time and :end_time",
+                        + "and ms.showTime between :start_time and :end_time",
                     MovieSession.class)
                     .setParameter("movie_id", movieId)
                     .setParameter("start_time", LocalTime.MIN.atDate(date))
