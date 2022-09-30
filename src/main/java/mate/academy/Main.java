@@ -38,7 +38,7 @@ public class Main {
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
-        movieSessionService.findAvailableSession(fastAndFurious.getId(),
-                LocalDate.of(2022, 10, 1));
+        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                LocalDate.of(2022, 10, 1)));
     }
 }
