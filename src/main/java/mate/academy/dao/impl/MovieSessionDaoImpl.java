@@ -7,9 +7,7 @@ import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.lib.Inject;
 import mate.academy.model.MovieSession;
-import mate.academy.service.MovieService;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -17,8 +15,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    @Inject
-    private MovieService movieService;
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -56,11 +52,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessionsQuery = session.createQuery(
                     "from MovieSession ms where ms.showTime "
-                            + "between :startOfDay and :endOfDay and ms.movie = :movie",
+                            + "between :startOfDay and :endOfDay and ms.movie.id = :movie",
                     MovieSession.class);
             getAllMovieSessionsQuery.setParameter("startOfDay", date.atTime(LocalTime.MIN));
             getAllMovieSessionsQuery.setParameter("endOfDay", date.atTime(LocalTime.MAX));
-            getAllMovieSessionsQuery.setParameter("movie", movieService.get(movieId));
+            getAllMovieSessionsQuery.setParameter("movie", movieId);
             return getAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get movie sessions from DB by movie's id "
