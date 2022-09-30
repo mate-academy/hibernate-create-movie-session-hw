@@ -1,0 +1,58 @@
+package mate.academy.dao.impl;
+
+import mate.academy.dao.CinemaHallDao;
+import mate.academy.exception.DataProcessingException;
+import mate.academy.model.CinemaHall;
+import mate.academy.model.Movie;
+import mate.academy.model.MovieSession;
+import mate.academy.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.List;
+import java.util.Optional;
+
+public class CinemaHallDaoImpl implements CinemaHallDao {
+    @Override
+    public CinemaHall add(CinemaHall cinemaHall) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.save(cinemaHall);
+            transaction.commit();
+            return cinemaHall;
+        } catch (RuntimeException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can not create cinemaHall: " + cinemaHall, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public Optional<CinemaHall> get(Long id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
+        } catch (RuntimeException e) {
+            throw new DataProcessingException("Can not get cinemaHall with id: " + id, e);
+        }
+    }
+
+    @Override
+    public List<CinemaHall> getAll() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<CinemaHall> getAllHallsQuery
+                    = session.createQuery("from CinemaHall", CinemaHall.class);
+            return getAllHallsQuery.getResultList();
+        } catch (RuntimeException e) {
+            throw new DataProcessingException("Can not get all cinema halls from db", e);
+        }
+    }
+}
