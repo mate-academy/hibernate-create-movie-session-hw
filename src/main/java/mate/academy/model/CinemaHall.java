@@ -9,11 +9,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "cinema_halls")
 public class CinemaHall {
-@Id
-@GeneratedValue(strategy = GenerationType.SEQUENCE)
-private Long id;
-private int capacity;
-private String description;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+    private int capacity;
+    private String description;
 
     public Long getId() {
         return id;
@@ -41,10 +41,11 @@ private String description;
 
     @Override
     public String toString() {
-        return "CinemaHall{" +
-                "id=" + id +
-                ", capacity=" + capacity +
-                ", description='" + description + '\'' +
-                '}';
+        return "CinemaHall{"
+                + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description
+                + '\''
+                + '}';
     }
 }
