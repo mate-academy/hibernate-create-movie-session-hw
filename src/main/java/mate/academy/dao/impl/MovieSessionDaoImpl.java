@@ -1,18 +1,19 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
-
+@Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -27,7 +28,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add movie session: " + movieSession + " to DB!", e);
+            throw new DataProcessingException("Can't add movie session: "
+                    + movieSession + " to DB!", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -48,12 +50,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> getAllByMovieIdAndDate(Long movieId, LocalDate localDate) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getAllByMovieIdAndDateQuery = session.createQuery("from MovieSession"
-                    + "where movie_id = :movieId"
-                    + "AND showTime BETWEEN :beginOfDay AND :endOfDay", MovieSession.class);
+            Query<MovieSession> getAllByMovieIdAndDateQuery =
+                    session.createQuery("from MovieSession "
+                    + "where movie_id = :movieId "
+                    + "AND showTime BETWEEN :beginOfDay AND :endOfDay ", MovieSession.class);
             getAllByMovieIdAndDateQuery.setParameter("movieId", movieId);
-            getAllByMovieIdAndDateQuery.setParameter("beginOfDay",localDate.atStartOfDay());
-            getAllByMovieIdAndDateQuery.setParameter("endOfDay", localDate.atTime(23,59,59));
+            getAllByMovieIdAndDateQuery.setParameter("beginOfDay", LocalTime.MIN.atDate(localDate));
+            getAllByMovieIdAndDateQuery.setParameter("endOfDay", LocalTime.MAX.atDate(localDate));
             return getAllByMovieIdAndDateQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Couldn't get all movie sessions by movieId: "
