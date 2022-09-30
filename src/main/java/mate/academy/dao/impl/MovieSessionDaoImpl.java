@@ -60,7 +60,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all movie sessions "
                     + "by movie's id " + movieId
-                    + " at the " + date, e);
+                    + " at the date " + date, e);
         }
     }
 }
