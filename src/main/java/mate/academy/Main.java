@@ -49,6 +49,8 @@ public class Main {
             System.out.println("Session Found: \"" + availableSessions.get(0).getMovie().getTitle()
                     + "\" at " + availableSessions.get(0).getShowTime()
                     + " in " + availableSessions.get(0).getCinemaHall().getDescription());
+        } else {
+            System.out.println("No sessions found");
         }
     }
 }
