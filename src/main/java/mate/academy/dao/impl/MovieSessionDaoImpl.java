@@ -52,12 +52,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getMovieSessionQuery = session.createQuery("from MovieSession ms"
                     + " where ms.id = :id and ms.showTime between :beginingOfDay "
                     + "and :endingOfDay", MovieSession.class);
-            getMovieSessionQuery.setParameter("id", movieId);
+            getMovieSessionQuery.setParameter("movieId", movieId);
             getMovieSessionQuery.setParameter("beginingOfDay", LocalDateTime.MIN);
             getMovieSessionQuery.setParameter("endingOfDay", LocalDateTime.MAX);
             return getMovieSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get movie session by movie's id: " + movieId, e);
+            throw new RuntimeException("Can't get movie session by movie's id: " + movieId
+                    + " and date: " + date, e);
         }
     }
 }
