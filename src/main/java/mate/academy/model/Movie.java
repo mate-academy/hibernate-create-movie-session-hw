@@ -15,6 +15,9 @@ public class Movie {
     private String title;
     private String description;
 
+    public Movie() {
+    }
+
     public Movie(String title) {
         this.title = title;
     }
