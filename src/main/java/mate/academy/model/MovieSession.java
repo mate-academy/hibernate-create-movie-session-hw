@@ -19,7 +19,6 @@ public class MovieSession {
     @ManyToOne(fetch = FetchType.EAGER)
     private Movie movie;
     @ManyToOne(fetch = FetchType.EAGER)
-    @Column(name = "cinema_hall")
     private CinemaHall cinemaHall;
     @Column(name = "show_time")
     private LocalDateTime showTime;
