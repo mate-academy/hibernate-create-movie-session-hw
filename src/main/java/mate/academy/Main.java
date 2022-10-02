@@ -35,7 +35,7 @@ public class Main {
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(greenHall);
-        movieSession.setShowTime(LocalDateTime.of(2022, 9, 30, 16, 20));
+        movieSession.setShowTime(LocalDateTime.of(2022,10,2, 16, 20));
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);

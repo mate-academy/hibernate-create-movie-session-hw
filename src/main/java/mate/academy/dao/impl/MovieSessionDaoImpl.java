@@ -40,9 +40,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getMovieSessionById =
+                    session.createQuery("from MovieSession s "
+                            + "join fetch s.movie "
+                            + "join fetch s.cinemaHall "
+                            + "where s.id = :id", MovieSession.class);
+            getMovieSessionById.setParameter("id", id);
+            return Optional.ofNullable(getMovieSessionById.getSingleResult());
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie session by id: " + id, e);
+            throw new DataProcessingException("Can't get movie sessions by id " + id, e);
         }
     }
 
@@ -50,9 +56,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessionsQuery =
-                    session.createQuery("from MovieSession "
-                            + "where showTime between :beginDate and :endDate "
-                            + "and movie.id = :movieId", MovieSession.class);
+                    session.createQuery("from MovieSession s "
+                            + "join fetch s.movie "
+                            + "join fetch s.cinemaHall "
+                            + "where s.showTime between :beginDate and :endDate "
+                            + "and s.movie.id = :movieId", MovieSession.class);
             getAllMovieSessionsQuery.setParameter("beginDate", date.atTime(LocalTime.MIN));
             getAllMovieSessionsQuery.setParameter("endDate", date.atTime(LocalTime.MAX));
             getAllMovieSessionsQuery.setParameter("movieId", movieId);
