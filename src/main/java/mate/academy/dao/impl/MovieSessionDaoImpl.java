@@ -57,6 +57,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .setParameter("startDay", LocalTime.MIN.atDate(date))
                     .setParameter("finishDay", LocalTime.MAX.atDate(date));
             return availableSessions.list();
+        } catch (Exception exception) {
+            throw new DataProcessingException("Can`t find movie id:" + movieId + "at date :" + date.toString(), exception);
         }
     }
 }
