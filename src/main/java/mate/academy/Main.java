@@ -34,7 +34,7 @@ public class Main {
         morningMovieSession.setMovie(fastAndFurious);
         morningMovieSession.setCinemaHall(cinemaHall);
         morningMovieSession
-                .setShowTime(LocalDateTime.of(2022, 7, 26, 11, 0));
+                .setShowTime(LocalDateTime.of(2022, 9, 22, 10, 0));
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(morningMovieSession);
@@ -42,11 +42,11 @@ public class Main {
         lateNightMovieSession.setMovie(fastAndFurious);
         lateNightMovieSession.setCinemaHall(cinemaHall);
         lateNightMovieSession
-                .setShowTime(LocalDateTime.of(2022, 7, 26, 21, 0));
+                .setShowTime(LocalDateTime.of(2022, 9, 22, 22, 0));
         movieSessionService.add(lateNightMovieSession);
         System.out.println(movieSessionService.get(morningMovieSession.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
-                        LocalDate.of(2022, 7, 26))
+                        LocalDate.of(2022, 9, 22))
                 .forEach(System.out::println);
     }
 }
