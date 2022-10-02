@@ -20,7 +20,6 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne(fetch = FetchType.EAGER)
     private CinemaHall cinemaHall;
-    @Column(name = "show_time")
     private LocalDateTime showTime;
 
     public Long getId() {
