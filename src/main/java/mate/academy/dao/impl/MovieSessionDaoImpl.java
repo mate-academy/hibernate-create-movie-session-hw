@@ -28,7 +28,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add MovieSession " + movieSession, e);
+            throw new DataProcessingException("Can't add movie session " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -42,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a MovieSession with id=" + id, e);
+            throw new DataProcessingException("Can't get a movie session with id=" + id, e);
         }
     }
 
@@ -57,7 +57,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("endOfDay", LocalTime.MAX.atDate(date));
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find a MovieSession for movie with id="
+            throw new DataProcessingException("Can't find a movie sessions for movie with id="
                     + movieId + " and date " + date, e);
         }
     }
