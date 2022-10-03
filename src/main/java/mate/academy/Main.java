@@ -29,7 +29,7 @@ public class Main {
         movieService.add(titanic);
         System.out.println(movieService.get(titanic.getId()));
 
-        Movie autumnInNewYork = new Movie("Autumn in new york");
+        Movie autumnInNewYork = new Movie("Autumn in New York");
         autumnInNewYork.setDescription("Romantic drama");
         movieService.add(autumnInNewYork);
         System.out.println(movieService.get(autumnInNewYork.getId()));
