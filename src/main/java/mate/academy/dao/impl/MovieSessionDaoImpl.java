@@ -56,7 +56,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllAvailableSessions.setParameter("endTime", date.atTime(23,59,59));
             return getAllAvailableSessions.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all cinema halls", e);
+            throw new RuntimeException("Can't get available sessions", e);
         }
     }
 }
