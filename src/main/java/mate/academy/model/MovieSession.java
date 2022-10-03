@@ -17,7 +17,7 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
     private Movie movie;
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
