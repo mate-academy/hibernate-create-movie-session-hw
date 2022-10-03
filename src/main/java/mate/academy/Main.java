@@ -30,7 +30,7 @@ public class Main {
         System.out.println("---------------------------------------------");
         CinemaHall redHall = new CinemaHall();
         redHall.setCapacity(150);
-        redHall.setDescription("Reg big hall.");
+        redHall.setDescription("Red big hall.");
         cinemaHallService.add(redHall);
         System.out.println(cinemaHallService.get(redHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
