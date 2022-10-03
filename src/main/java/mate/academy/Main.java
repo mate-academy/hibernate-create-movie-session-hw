@@ -24,8 +24,8 @@ public class Main {
         CinemaHall cinema3D = new CinemaHall();
         cinema3D.setCapacity(50);
         cinema3D.setDescription("Big and comfortable");
-        CinemaHallService cinemaHallService
-                = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService = (CinemaHallService) injector
+                .getInstance(CinemaHallService.class);
         cinemaHallService.add(cinema3D);
         System.out.println(cinemaHallService.get(cinema3D.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
@@ -34,8 +34,8 @@ public class Main {
         session.setMovie(hungerGames);
         session.setCinemaHall(cinema3D);
         session.setShowTime(LocalDateTime.of(2022, 10, 1, 18, 00));
-        MovieSessionService movieSessionService
-                = (MovieSessionService) injector.getInstance(MovieSessionService.class);
+        MovieSessionService movieSessionService = (MovieSessionService) injector
+                .getInstance(MovieSessionService.class);
         movieSessionService.add(session);
         System.out.println(movieSessionService.get(session.getId()));
         movieSessionService.findAvailableSessions(session.getId(),
