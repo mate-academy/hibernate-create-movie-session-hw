@@ -57,8 +57,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("beginOfDay", LocalTime.MIN.atDate(date));
             query.setParameter("endOfDay", LocalTime.MAX.atDate(date));
             return query.getResultList();
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Can't get list of movie session from Db", e);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get list of movie session from Db", e);
         }
     }
 }
