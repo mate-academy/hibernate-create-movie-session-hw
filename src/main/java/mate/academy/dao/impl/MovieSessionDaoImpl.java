@@ -28,7 +28,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t create movie session:" + movieSession, e);
+            throw new DataProcessingException("Can`t create movie session: " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -42,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can`t get cinema hall by id:" + id, e);
+            throw new DataProcessingException("Can`t get cinema hall by id: " + id, e);
         }
     }
 
@@ -51,7 +51,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSession = session.createQuery(
                         "from MovieSession where movie.id = :movieId and showTime "
-                                    + "between :beginOfDay and :endOfDay ",
+                                    + "between :beginOfDay and :endOfDay",
                             MovieSession.class);
             movieSession.setParameter("movieId", movieId);
             movieSession.setParameter("beginOfDay", date.atTime(LocalTime.MIN));

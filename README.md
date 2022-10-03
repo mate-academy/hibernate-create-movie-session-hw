@@ -19,7 +19,7 @@ The service layer should have the following methods:
 - create `MovieSessionDaoImpl` and `MovieSessionServiceImpl`.
 The service layer should have the following methods:
 ```java
-    MovieSession add(MovieSession movieSessionDao);
+    MovieSession add(MovieSession movieSession);
 
     MovieSession get(Long id);
 
