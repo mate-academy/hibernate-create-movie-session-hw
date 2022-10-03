@@ -25,7 +25,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             session.save(movieSession);
             transaction.commit();
             return movieSession;
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -41,7 +41,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new DataProcessingException("Can not get movieSession with id: " + id, e);
         }
     }
@@ -56,7 +56,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             movieSessionQuery.setParameter("startOfDay", LocalTime.MIN.atDate(localDate));
             movieSessionQuery.setParameter("endOfDay", LocalTime.MAX.atDate(localDate));
             return movieSessionQuery.getResultList();
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new DataProcessingException("Can not get all movie session by movie id: "
                     + movieId + ". At day: " + localDate, e);
         }
