@@ -11,12 +11,10 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
 public class Main {
-    private static final Injector injector
-            = Injector.getInstance("mate.academy");
+    private static final Injector injector = Injector.getInstance("mate.academy");
 
     public static void main(String[] args) {
-        MovieService movieService
-                = (MovieService) injector.getInstance(MovieService.class);
+        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
 
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
@@ -31,7 +29,7 @@ public class Main {
         mummy.setDescription("The film about Egypt");
         movieService.add(mummy);
         Movie java = new Movie("JAVA");
-        java.setDescription("The film about programmists");
+        java.setDescription("The film about programming");
         movieService.add(java);
         System.out.println(movieService.get(fastAndFurious.getId()));
         System.out.println(movieService.get(terminator.getId()));
@@ -43,78 +41,78 @@ public class Main {
 
         CinemaHallService cinemaHallService
                 = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-        CinemaHall cinemaHall1 = new CinemaHall();
-        cinemaHall1.setCapacity(10);
-        cinemaHall1.setDescription("CinemaHall number 1");
-        cinemaHallService.add(cinemaHall1);
+        CinemaHall firstCinemaHall = new CinemaHall();
+        firstCinemaHall.setCapacity(10);
+        firstCinemaHall.setDescription("CinemaHall number 1");
+        cinemaHallService.add(firstCinemaHall);
 
-        CinemaHall cinemaHall2 = new CinemaHall();
-        cinemaHall2.setCapacity(100);
-        cinemaHall2.setDescription("CinemaHall number 2");
-        cinemaHallService.add(cinemaHall2);
+        CinemaHall secondCinemaHall = new CinemaHall();
+        secondCinemaHall.setCapacity(100);
+        secondCinemaHall.setDescription("CinemaHall number 2");
+        cinemaHallService.add(secondCinemaHall);
 
-        CinemaHall cinemaHall3 = new CinemaHall();
-        cinemaHall3.setCapacity(200);
-        cinemaHall3.setDescription("CinemaHall number 3");
-        cinemaHallService.add(cinemaHall3);
+        CinemaHall thirdCinemaHall = new CinemaHall();
+        thirdCinemaHall.setCapacity(200);
+        thirdCinemaHall.setDescription("CinemaHall number 3");
+        cinemaHallService.add(thirdCinemaHall);
 
-        System.out.println(cinemaHallService.get(cinemaHall1.getId()));
+        System.out.println(cinemaHallService.get(firstCinemaHall.getId()));
         System.out.println("------------------");
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSession movieSession1 = new MovieSession();
-        movieSession1.setMovie(terminator);
-        movieSession1.setCinemaHall(cinemaHall1);
-        movieSession1.setShowTime(
+        MovieSession firstMovieSession = new MovieSession();
+        firstMovieSession.setMovie(terminator);
+        firstMovieSession.setCinemaHall(firstCinemaHall);
+        firstMovieSession.setShowTime(
                 LocalDateTime.of(2021,01,01,8,01));
 
-        MovieSession movieSession2 = new MovieSession();
-        movieSession2.setMovie(terminator2);
-        movieSession2.setCinemaHall(cinemaHall2);
-        movieSession2.setShowTime(
+        MovieSession secondMovieSession = new MovieSession();
+        secondMovieSession.setMovie(terminator2);
+        secondMovieSession.setCinemaHall(secondCinemaHall);
+        secondMovieSession.setShowTime(
                 LocalDateTime.of(2021,01,01,10,01));
 
-        MovieSession movieSession3 = new MovieSession();
-        movieSession3.setMovie(mummy);
-        movieSession3.setCinemaHall(cinemaHall2);
-        movieSession3.setShowTime(
+        MovieSession thirdMovieSession = new MovieSession();
+        thirdMovieSession.setMovie(mummy);
+        thirdMovieSession.setCinemaHall(secondCinemaHall);
+        thirdMovieSession.setShowTime(
                 LocalDateTime.of(2021,01,01,11,01));
 
-        MovieSession movieSession4 = new MovieSession();
-        movieSession4.setMovie(fastAndFurious);
-        movieSession4.setCinemaHall(cinemaHall3);
-        movieSession4.setShowTime(
+        MovieSession fourthMovieSession = new MovieSession();
+        fourthMovieSession.setMovie(fastAndFurious);
+        fourthMovieSession.setCinemaHall(thirdCinemaHall);
+        fourthMovieSession.setShowTime(
                 LocalDateTime.of(2021,01,01,20,01));
 
-        MovieSession movieSession5 = new MovieSession();
-        movieSession5.setMovie(terminator);
-        movieSession5.setCinemaHall(cinemaHall3);
-        movieSession5.setShowTime(
+        MovieSession fifthMovieSession = new MovieSession();
+        fifthMovieSession.setMovie(terminator);
+        fifthMovieSession.setCinemaHall(thirdCinemaHall);
+        fifthMovieSession.setShowTime(
                 LocalDateTime.of(2021,01,01,21,01));
 
-        MovieSession movieSession6 = new MovieSession();
-        movieSession6.setMovie(java);
-        movieSession6.setCinemaHall(cinemaHall3);
-        movieSession6.setShowTime(
+        MovieSession sixthMovieSession = new MovieSession();
+        sixthMovieSession.setMovie(java);
+        sixthMovieSession.setCinemaHall(thirdCinemaHall);
+        sixthMovieSession.setShowTime(
                 LocalDateTime.of(2021,01,01,22,01));
 
-        MovieSession movieSession7 = new MovieSession();
-        movieSession7.setMovie(java);
-        movieSession7.setCinemaHall(cinemaHall1);
-        movieSession7.setShowTime(
+        MovieSession seventhMovieSession = new MovieSession();
+        seventhMovieSession.setMovie(java);
+        seventhMovieSession.setCinemaHall(firstCinemaHall);
+        seventhMovieSession.setShowTime(
                 LocalDateTime.of(2021,01,02,9,01));
 
-        MovieSessionService movieSessionService
-                = (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        movieSessionService.add(movieSession1);
-        movieSessionService.add(movieSession2);
-        movieSessionService.add(movieSession3);
-        movieSessionService.add(movieSession4);
-        movieSessionService.add(movieSession5);
-        movieSessionService.add(movieSession6);
-        movieSessionService.add(movieSession7);
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
+        movieSessionService.add(firstMovieSession);
+        movieSessionService.add(secondMovieSession);
+        movieSessionService.add(thirdMovieSession);
+        movieSessionService.add(fourthMovieSession);
+        movieSessionService.add(fifthMovieSession);
+        movieSessionService.add(sixthMovieSession);
+        movieSessionService.add(seventhMovieSession);
 
-        System.out.println(movieSessionService.get(movieSession3.getId()));
+        System.out.println(movieSessionService.get(thirdMovieSession.getId()));
         System.out.println("--------------");
         movieSessionService.findAvailableSessions(terminator2.getId(), LocalDate.of(2021,01,01))
                 .forEach(System.out::println);
