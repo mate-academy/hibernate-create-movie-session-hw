@@ -51,7 +51,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> query =
                     session.createQuery("SELECT ms "
                     + "FROM MovieSession ms "
-                    + "WHERE ms.id = :id AND ms.showTime BETWEEN :start AND :end");
+                    + "WHERE ms.id = :id AND ms.showTime BETWEEN :start AND :end",
+                    MovieSession.class);
             query.setParameter("id", movieId);
             query.setParameter("start", date.atStartOfDay());
             query.setParameter("end", date.atTime(23, 59, 59));
