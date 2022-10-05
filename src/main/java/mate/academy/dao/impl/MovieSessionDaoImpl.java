@@ -1,5 +1,10 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,12 +13,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -30,7 +29,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't create movie session to db:" + movieSession, e);
+            throw new DataProcessingException("Can't create movie session to db:"
+                    + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -54,16 +54,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime endShowDate = LocalDateTime.of(date, LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllActualMovieSessions =
-                    session.createQuery("from MovieSession ms " +
-                    "where ms.id = :id and ms.showTime " +
-                    "between :start and :end", MovieSession.class);
+                    session.createQuery("from MovieSession ms "
+                            + "where ms.id = :id and ms.showTime "
+                            + "between :start and :end", MovieSession.class);
             getAllActualMovieSessions.setParameter("id", movieId);
             getAllActualMovieSessions.setParameter("start", startShowDate);
             getAllActualMovieSessions.setParameter("end", endShowDate);
             return getAllActualMovieSessions.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get actual movies sessions for movie:"
-                    + movieId + ", on the date:"+ date, e);
+                    + movieId + ", on the date:" + date, e);
         }
     }
 }
