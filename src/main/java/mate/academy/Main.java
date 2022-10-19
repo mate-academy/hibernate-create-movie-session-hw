@@ -56,11 +56,17 @@ public class Main {
         movieSessionEvening.setCinemaHall(cinemaHallRed);
         movieSessionEvening.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSessionEvening);
+        MovieSession movieSessionOtherDay = new MovieSession();
+        movieSessionOtherDay.setMovie(fastAndFurious);
+        movieSessionOtherDay.setCinemaHall(cinemaHallRed);
+        movieSessionOtherDay.setShowTime(LocalDateTime.now().minusDays(1));
+        movieSessionService.add(movieSessionOtherDay);
         MovieSession movieSession = movieSessionService.get(movieSessionMorning.getId());
         System.out.println(movieSession.getCinemaHall());
         System.out.println(movieSession.getMovie());
         List<MovieSession> availableSessions
-                = movieSessionService.findAvailableSessions(fifthElement.getId(), LocalDate.now());
+                = movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                LocalDate.now().minusDays(1));
         availableSessions.forEach(System.out::println);
     }
 }
