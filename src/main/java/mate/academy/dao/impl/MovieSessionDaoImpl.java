@@ -1,7 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +40,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getMovieSessionById =
+                    session.createQuery("FROM MovieSession AS ms "
+                                    + "LEFT JOIN FETCH ms.movie "
+                                    + "WHERE ms.id = :id", MovieSession.class)
+                            .setParameter("id", id);
+            return getMovieSessionById.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -52,14 +56,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query getAvailableSessions =
                     session.createQuery("FROM MovieSession AS ms "
+                                    + "LEFT JOIN FETCH ms.movie "
                                     + "WHERE ms.movie.id = :movieId "
                                     + "AND ms.showTime BETWEEN :startDateTime AND :endDateTime "
                                     + "ORDER BY ms.showTime")
                             .setParameter("movieId", movieId)
                             .setParameter("startDateTime",
-                                    LocalDateTime.of(date, LocalTime.of(0,0,0)))
+                                    date.atTime(LocalTime.MIN))
                             .setParameter("endDateTime",
-                                    LocalDateTime.of(date, LocalTime.of(23,59,59)));
+                                    date.atTime(LocalTime.MAX));
             return getAvailableSessions.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available movie sessions!", e);
