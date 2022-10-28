@@ -43,6 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getMovieSessionById =
                     session.createQuery("FROM MovieSession AS ms "
                                     + "LEFT JOIN FETCH ms.movie "
+                                    + "LEFT JOIN FETCH ms.cinemaHall "
                                     + "WHERE ms.id = :id", MovieSession.class)
                             .setParameter("id", id);
             return getMovieSessionById.uniqueResultOptional();
@@ -57,6 +58,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query getAvailableSessions =
                     session.createQuery("FROM MovieSession AS ms "
                                     + "LEFT JOIN FETCH ms.movie "
+                                    + "LEFT JOIN FETCH ms.cinemaHall "
                                     + "WHERE ms.movie.id = :movieId "
                                     + "AND ms.showTime BETWEEN :startDateTime AND :endDateTime "
                                     + "ORDER BY ms.showTime")
