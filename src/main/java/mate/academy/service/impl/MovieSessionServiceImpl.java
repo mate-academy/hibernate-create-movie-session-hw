@@ -12,6 +12,7 @@ import mate.academy.service.MovieSessionService;
 public class MovieSessionServiceImpl implements MovieSessionService {
     @Inject
     private MovieSessionDao movieSessionDao;
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         return movieSessionDao.add(movieSession);

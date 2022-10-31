@@ -43,9 +43,9 @@ public class Main {
         boringMovieSession.setShowTime(LocalDateTime.now());
         movieSessionService.add(boringMovieSession);
         MovieSession funMovieSession = new MovieSession();
-        boringMovieSession.setMovie(putinDied);
-        boringMovieSession.setCinemaHall(redCinemaHall);
-        boringMovieSession.setShowTime(LocalDateTime.now());
+        funMovieSession.setMovie(putinDied);
+        funMovieSession.setCinemaHall(redCinemaHall);
+        funMovieSession.setShowTime(LocalDateTime.now());
         movieSessionService.add(funMovieSession);
         System.out.println(movieSessionService.get(funMovieSession.getId()));
         movieSessionService.findAvailableSessions(putinDied.getId(),
