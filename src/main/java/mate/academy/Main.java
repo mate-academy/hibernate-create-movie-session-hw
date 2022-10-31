@@ -25,7 +25,7 @@ public class Main {
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
         Movie putinDied = new Movie("How putin died in agony");
-        fastAndFurious.setDescription("The best movie of 2022.");
+        putinDied.setDescription("The best movie of 2022.");
         movieService.add(putinDied);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
