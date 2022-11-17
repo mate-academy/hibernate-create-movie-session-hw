@@ -68,9 +68,9 @@ public class Main {
         movieSessionService.add(fastAndFuriousSession);
         movieSessionService.add(fastAndFuriousSecondSession);
         movieSessionService.add(fastAndFuriousThirdSession);
-        System.out.println(movieSessionService.get(fastAndFuriousSession.getId()));
+        System.out.println(movieSessionService.get(fastAndFuriousThirdSession.getId()));
 
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(), date)
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(), thirdDate)
                 .forEach(System.out::println);
 
     }

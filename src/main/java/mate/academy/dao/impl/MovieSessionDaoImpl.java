@@ -1,9 +1,9 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -48,21 +48,18 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        String query = "FROM MovieSession ms left join fetch ms.movie m where m.id = :id";
+        String query = "FROM MovieSession ms "
+                + "left join fetch ms.movie m "
+                + "where m.id = :id and ms.showTime between :from and :to";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessionQuery = session.createQuery(query, MovieSession.class);
             movieSessionQuery.setParameter("id", movieId);
-            List<MovieSession> allMovieSessions = movieSessionQuery.getResultList();
-            return findSessionsByDate(allMovieSessions, date);
+            movieSessionQuery.setParameter("from", date.atTime(LocalTime.MIN));
+            movieSessionQuery.setParameter("to", date.atTime(LocalTime.MAX));
+            return movieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie sessions in date: "
                     + date + " by movie id: " + movieId, e);
         }
-    }
-
-    private List<MovieSession> findSessionsByDate(List<MovieSession> sessions, LocalDate date) {
-        return sessions.stream()
-                .filter(movieSession -> movieSession.getShowTime().toLocalDate().equals(date))
-                .collect(Collectors.toList());
     }
 }
