@@ -18,8 +18,8 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     public CinemaHall add(CinemaHall cinemaHall) {return cinemaHallDao.add(cinemaHall);}
 
     @Override
-    public Optional<CinemaHall> get(Long id) {
-        return cinemaHallDao.get(id);
+    public CinemaHall get(Long id) {
+        return cinemaHallDao.get(id).orElse(new CinemaHall());
     }
 
     @Override

@@ -10,7 +10,7 @@ import mate.academy.model.MovieSession;
 public interface MovieSessionService {
     MovieSession add(MovieSession movieSession);
 
-    Optional<MovieSession> get(Long id);
+    MovieSession get(Long id);
 
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
 }
