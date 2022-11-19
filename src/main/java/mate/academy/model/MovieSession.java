@@ -1,5 +1,6 @@
 package mate.academy.model;
 
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,4 +25,6 @@ public class MovieSession {
     @ManyToOne
     @NonNull
     private CinemaHall cinemaHall;
+    @NonNull
+    private LocalDateTime showTime;
 }
