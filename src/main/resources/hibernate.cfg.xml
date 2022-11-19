@@ -3,9 +3,9 @@
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
-<hibernate-configuration xmlns="http://www.hibernate.org/xsd/hibernate-configuration">
+<hibernate-configuration>
     <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="connection.url">
             jdbc:mysql://usxf67szmbai2qgk:Q4w3oXfizF4nr1EzJQZQ@btasyzqmovikwgcpryug-mysql.services.clever-cloud.com:3306/btasyzqmovikwgcpryug
         </property>
