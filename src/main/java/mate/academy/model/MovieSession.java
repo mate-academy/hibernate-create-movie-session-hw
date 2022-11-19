@@ -1,14 +1,11 @@
 package mate.academy.model;
 
 import java.time.LocalDateTime;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -64,11 +61,11 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", showtime=" + showtime +
-                '}';
+        return "MovieSession{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showtime=" + showtime
+                + '}';
     }
 }

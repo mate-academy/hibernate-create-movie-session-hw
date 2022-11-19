@@ -1,6 +1,5 @@
 package mate.academy.dao.impl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -49,11 +48,11 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         List<Movie> resultList;
-        try(Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String query = "from Movie";
             Query<Movie> getAllMoviesQuery = session.createQuery(query, Movie.class);
             resultList = getAllMoviesQuery.getResultList();
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new DataProcessingException("Can't get list of all movies", e);
         }
         return resultList;

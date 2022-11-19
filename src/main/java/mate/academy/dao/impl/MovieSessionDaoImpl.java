@@ -8,7 +8,6 @@ import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.CinemaHall;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
@@ -55,8 +54,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         List<MovieSession> resultList;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String query = "from MovieSession ms "
-                    + "WHERE ms.movie.id = :movieID " +
-                    "AND "
+                    + "WHERE ms.movie.id = :movieID "
+                    + "AND "
                     + "ms.showtime BETWEEN :dateFrom AND :dateTO ";
             Query<MovieSession> getAllCinemaHalls = session.createQuery(query, MovieSession.class);
             getAllCinemaHalls.setParameter("movieID", movieId);
@@ -67,7 +66,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             resultList = getAllCinemaHalls.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get list of movie sessions by movie id "
-                    + movieId + " and date " + date , e);
+                    + movieId + " and date " + date, e);
         }
         return resultList;
     }
