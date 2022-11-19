@@ -24,6 +24,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
+            transaction.begin();
+            session.persist(movieSession);
             session.save(movieSession);
             transaction.commit();
         } catch (Exception e) {
@@ -52,7 +54,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         List<MovieSession> resultList;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String query = "from MovieSession ms WHERE ms.movie.id = :movieID AND ms.showtime BETWEEN :dateFrom AND :dateTO ";
+            String query = "from MovieSession ms "
+                    + "WHERE ms.movie.id = :movieID " +
+                    "AND "
+                    + "ms.showtime BETWEEN :dateFrom AND :dateTO ";
             Query<MovieSession> getAllCinemaHalls = session.createQuery(query, MovieSession.class);
             getAllCinemaHalls.setParameter("movieID", movieId);
             getAllCinemaHalls
@@ -61,7 +66,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .setParameter("dateTO", LocalDateTime.of(date, LocalTime.MAX));
             resultList = getAllCinemaHalls.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get list of all cinema halls", e);
+            throw new DataProcessingException("Can't get list of movie sessions by movie id "
+                    + movieId + " and date " + date , e);
         }
         return resultList;
     }
