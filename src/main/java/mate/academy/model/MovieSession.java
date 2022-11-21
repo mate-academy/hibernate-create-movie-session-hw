@@ -19,12 +19,15 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @NonNull
     private Movie movie;
+
     @ManyToOne
     @NonNull
     private CinemaHall cinemaHall;
+
     @NonNull
     private LocalDateTime showTime;
 }

@@ -17,8 +17,10 @@ public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NonNull
     private int capacity;
+
     @NonNull
     private String description;
 }
