@@ -20,7 +20,7 @@ public class MovieDaoImpl implements MovieDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.persist(movie);
+            session.save(movie);
             transaction.commit();
             return movie;
         } catch (Exception e) {
@@ -48,8 +48,7 @@ public class MovieDaoImpl implements MovieDao {
     public List<Movie> getAll() {
         List<Movie> resultList;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String query = "from Movie";
-            Query<Movie> getAllMoviesQuery = session.createQuery(query, Movie.class);
+            Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
             resultList = getAllMoviesQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get list of all movies", e);
