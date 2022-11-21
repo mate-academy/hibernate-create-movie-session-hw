@@ -25,7 +25,7 @@ public class MovieDaoImpl extends GenericDaoImpl<Movie> implements MovieDao {
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Movie> query = session.createQuery(
-                    "SELECT m FROM Movie m",
+                    "FROM Movie",
                     Movie.class);
             return query.getResultList();
         } catch (Exception e) {

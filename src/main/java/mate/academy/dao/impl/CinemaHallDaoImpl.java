@@ -26,7 +26,7 @@ public class CinemaHallDaoImpl extends GenericDaoImpl<CinemaHall>
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> query = session.createQuery(
-                    "SELECT ch FROM CinemaHall ch",
+                    "FROM CinemaHall",
                     CinemaHall.class);
             return query.getResultList();
         } catch (Exception e) {
