@@ -1,5 +1,10 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,12 +13,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -56,8 +55,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     "FROM MovieSession ms "
                             + "LEFT JOIN FETCH ms.movie "
                             + "WHERE ms.id = :id "
-                            + "AND ms.showTime BETWEEN :startTime AND :endTime"
-                            ,
+                            + "AND ms.showTime BETWEEN :startTime AND :endTime",
                     MovieSession.class);
             availableSessionsQuery.setParameter("id", movieId);
             availableSessionsQuery.setParameter("startTime",
