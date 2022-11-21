@@ -54,8 +54,8 @@ public class Main {
     }
 
     private static void testMovieSessionService(
-            MovieSessionService movieSessionService
-                    ,CinemaHallService cinemaHallService, MovieService movieService) {
+            MovieSessionService movieSessionService,
+            CinemaHallService cinemaHallService, MovieService movieService) {
         MovieSession firstMovieSession = new MovieSession();
         firstMovieSession.setMovie(movieService.get(3L));
         firstMovieSession.setCinemaHall(cinemaHallService.get(1L));
