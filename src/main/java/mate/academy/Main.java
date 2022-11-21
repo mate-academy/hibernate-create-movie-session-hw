@@ -7,7 +7,6 @@ import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
-import mate.academy.service.GenericService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
@@ -44,6 +43,7 @@ public class Main {
         System.out.println(movie + " added");
         return movie;
     }
+
     private static CinemaHall getCinemaHallTested(CinemaHallService service) {
         CinemaHall hall = new CinemaHall(100, "Hall #1");
         service.add(hall);

@@ -12,6 +12,7 @@ public class CinemaHallServiceImpl extends GenericServiceImpl<CinemaHall>
         implements CinemaHallService {
     @Inject
     private CinemaHallDao cinemaHallDao;
+
     @Override
     protected GenericDao<CinemaHall> getDao() {
         return cinemaHallDao;

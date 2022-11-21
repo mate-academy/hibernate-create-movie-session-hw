@@ -4,6 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import mate.academy.model.MovieSession;
 
-public interface MovieSessionDao extends GenericDao<MovieSession>{
+public interface MovieSessionDao extends GenericDao<MovieSession> {
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
 }
