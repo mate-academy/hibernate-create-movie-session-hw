@@ -10,6 +10,8 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,10 +53,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> availableSessionsQuery = session.createQuery(
-                    "FROM MovieSession" +
-                            "LEFT JOIN Movie" +
-                            "WHERE Movie.id = :id AND MovieSession.showTime = :time",
+                    "FROM MovieSession ms "
+                            + "LEFT JOIN FETCH ms.movie "
+                            + "WHERE ms.id = :id "
+                            + "AND ms.showTime BETWEEN :startTime AND :endTime"
+                            ,
                     MovieSession.class);
+            availableSessionsQuery.setParameter("id", movieId);
+            availableSessionsQuery.setParameter("startTime",
+                    LocalDateTime.of(date, LocalTime.ofSecondOfDay(0)));
+            availableSessionsQuery.setParameter("endTime",
+                    LocalDateTime.of(date, LocalTime.of(23, 59)));
             return availableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get available sessions for movie: " + movieId
