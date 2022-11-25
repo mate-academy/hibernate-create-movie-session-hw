@@ -53,7 +53,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime start =
                 LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 0, 0);
         LocalDateTime end =
-                LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 23, 29);
+                LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(), 23, 59);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessions = session.createQuery(
                     "select new mate.academy.model.MovieSession"
