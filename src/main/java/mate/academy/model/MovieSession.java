@@ -16,26 +16,23 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @ManyToOne
     @JoinColumn(name = "movie_id")
-    @ManyToOne
     private Movie movie;
-
-    @JoinColumn(name = "cinema_hall_id")
     @ManyToOne
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
-
     @Column(name = "show_time")
     private LocalDateTime showTime;
+
+    public MovieSession() {
+    }
 
     public MovieSession(Long id, Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
         this.id = id;
         this.movie = movie;
         this.cinemaHall = cinemaHall;
         this.showTime = showTime;
-    }
-
-    public MovieSession() {
     }
 
     public Long getId() {

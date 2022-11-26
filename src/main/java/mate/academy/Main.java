@@ -22,14 +22,14 @@ public class Main {
         CinemaHallService cinemaHallService
                 = (CinemaHallService) injector.getInstance(CinemaHallService.class);
 
-        testMovieService(movieService);
+        List<Movie> movieList = testMovieService(movieService);
+        CinemaHall cinemaHall = testCinemaHallService(cinemaHallService);
 
-        testCinemaHallService(cinemaHallService);
-
-        testMovieSessionService(movieSessionService, cinemaHallService, movieService);
+        testMovieSessionService(movieSessionService, cinemaHallService, movieService,
+                movieList, cinemaHall);
     }
 
-    private static void testMovieService(MovieService movieService) {
+    private static List<Movie> testMovieService(MovieService movieService) {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
@@ -43,37 +43,44 @@ public class Main {
         movieService.add(lotr);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
+        return List.of(fastAndFurious, harryPotter, lotr);
     }
 
-    private static void testCinemaHallService(CinemaHallService cinemaHallService) {
+    private static CinemaHall testCinemaHallService(CinemaHallService cinemaHallService) {
         CinemaHall chaplinCinema = new CinemaHall();
         chaplinCinema.setCapacity(100L);
         chaplinCinema.setDescription("The biggest cinema hall in Lviv");
         cinemaHallService.add(chaplinCinema);
+        return chaplinCinema;
     }
 
     private static void testMovieSessionService(
             MovieSessionService movieSessionService,
-            CinemaHallService cinemaHallService, MovieService movieService) {
+            CinemaHallService cinemaHallService, MovieService movieService,
+            List<Movie> movies, CinemaHall cinemaHall
+    ) {
+        Movie fastAndFurious = movies.get(1);
         MovieSession firstMovieSession = new MovieSession();
-        firstMovieSession.setMovie(movieService.get(3L));
-        firstMovieSession.setCinemaHall(cinemaHallService.get(1L));
+        firstMovieSession.setMovie(movieService.get(fastAndFurious.getId()));
+        firstMovieSession.setCinemaHall(cinemaHallService.get(cinemaHall.getId()));
         firstMovieSession.setShowTime(LocalDateTime.of(2022, 11, 10, 2, 0));
         movieSessionService.add(firstMovieSession);
 
         MovieSession secondMovieSession = new MovieSession();
-        secondMovieSession.setMovie(movieService.get(1L));
-        secondMovieSession.setCinemaHall(cinemaHallService.get(1L));
+        secondMovieSession.setMovie(movieService.get(fastAndFurious.getId()));
+        secondMovieSession.setCinemaHall(cinemaHallService.get(cinemaHall.getId()));
         secondMovieSession.setShowTime(LocalDateTime.of(2022, 11, 12, 11, 0));
         movieSessionService.add(secondMovieSession);
 
+        Movie lotr = movies.get(3);
         MovieSession thirdMovieSession = new MovieSession();
-        thirdMovieSession.setMovie(movieService.get(3L));
-        thirdMovieSession.setCinemaHall(cinemaHallService.get(1L));
+        thirdMovieSession.setMovie(movieService.get(lotr.getId()));
+        thirdMovieSession.setCinemaHall(cinemaHallService.get(cinemaHall.getId()));
         thirdMovieSession.setShowTime(LocalDateTime.of(2022, 11, 10, 16, 0));
         movieSessionService.add(thirdMovieSession);
 
-        List<MovieSession> movieSessionList = movieSessionService.findAvailableSessions(3L,
+        List<MovieSession> movieSessionList
+                = movieSessionService.findAvailableSessions(lotr.getId(),
                 LocalDate.from(LocalDateTime.of(2022, 11, 10, 6, 0)));
         movieSessionList.forEach(System.out::println);
     }
