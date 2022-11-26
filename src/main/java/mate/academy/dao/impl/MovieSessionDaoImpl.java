@@ -59,9 +59,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     MovieSession.class);
             availableSessionsQuery.setParameter("id", movieId);
             availableSessionsQuery.setParameter("startTime",
-                    LocalDateTime.of(date, LocalTime.ofSecondOfDay(0)));
+                    LocalTime.MIN);
             availableSessionsQuery.setParameter("endTime",
-                    LocalDateTime.of(date, LocalTime.of(23, 59)));
+                    LocalDateTime.of(date, LocalTime.MAX));
             return availableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get available sessions for movie: " + movieId
