@@ -43,7 +43,6 @@ public class Main {
         movieService.add(lotr);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
-
     }
 
     private static void testCinemaHallService(CinemaHallService cinemaHallService) {
