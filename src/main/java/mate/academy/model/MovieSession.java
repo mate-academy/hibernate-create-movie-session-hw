@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,7 +18,9 @@ public class MovieSession {
     @OneToOne
     private Movie movie;
     @OneToOne
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
+    @JoinColumn(name = "show_time")
     private LocalDateTime showTime;
 
     public MovieSession() {
