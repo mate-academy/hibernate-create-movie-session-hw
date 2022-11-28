@@ -27,7 +27,7 @@ public class Main {
         movieService.add(fastAndFurious);
         movieService.add(terminatorSeven);
         movieService.add(crazyNewYear);
-        CinemaHall bigHall = new CinemaHall(100,"big hall");
+        CinemaHall bigHall = new CinemaHall(100, "big hall");
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
         cinemaHallService.add(bigHall);
