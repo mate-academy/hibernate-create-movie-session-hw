@@ -23,7 +23,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.persist(movieSession);
+            session.save(movieSession);
             transaction.commit();
             return movieSession;
         } catch (Exception e) {
@@ -49,13 +49,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        String hqlQuery = "select ms from MovieSession ms where ms.movie.id = :movieId "
-                + "and ms.timeOfBeginning between :midnight and :endOfDay";
         LocalDateTime midnight = LocalDateTime.of(date, LocalTime.MIDNIGHT);
         LocalDateTime endOfDay = LocalDateTime.of(date, LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllAvailableMovieSessions = session
-                        .createQuery(hqlQuery, MovieSession.class);
+                        .createQuery("SELECT ms FROM MovieSession ms "
+                                + "WHERE ms.movie.id = :movieId "
+                                + "AND ms.timeOfBeginning BETWEEN :midnight AND :endOfDay",
+                                MovieSession.class);
             getAllAvailableMovieSessions.setParameter("movieId", movieId);
             getAllAvailableMovieSessions.setParameter("midnight", midnight);
             getAllAvailableMovieSessions.setParameter("endOfDay", endOfDay);

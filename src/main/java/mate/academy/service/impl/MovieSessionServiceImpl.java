@@ -8,6 +8,8 @@ import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
     @Inject
@@ -20,7 +22,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id).get();
+        return movieSessionDao.get(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

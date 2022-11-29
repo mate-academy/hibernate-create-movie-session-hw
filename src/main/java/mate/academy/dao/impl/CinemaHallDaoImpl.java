@@ -9,7 +9,6 @@ import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
@@ -20,7 +19,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.persist(cinemaHall);
+            session.save(cinemaHall);
             transaction.commit();
             return cinemaHall;
         } catch (Exception e) {
@@ -47,9 +46,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hqlQuery = "from CinemaHall";
-            Query<CinemaHall> getAllCinemaHalls = session.createQuery(hqlQuery, CinemaHall.class);
-            return getAllCinemaHalls.getResultList();
+            return session.createQuery("from CinemaHall ", CinemaHall.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all cinema halls", e);
         }
