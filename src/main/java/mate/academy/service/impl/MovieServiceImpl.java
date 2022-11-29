@@ -20,7 +20,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).orElseThrow(EntityNotFoundException::new);
+        return movieDao.get(id)
+                .orElseThrow(() -> new EntityNotFoundException("Can't get "
+                        + "movie by id = " + id));
     }
 
     @Override
