@@ -10,14 +10,15 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class Movie {
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private int capacity;
     private String description;
 
-    public Movie(String title) {
-        this.title = title;
+    public CinemaHall(int capacity, String description) {
+        this.capacity = capacity;
+        this.description = description;
     }
 }
