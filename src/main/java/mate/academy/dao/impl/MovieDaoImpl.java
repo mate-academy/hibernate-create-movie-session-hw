@@ -11,7 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 @Dao
-public class MovieDaoImpl extends GenericDaoImpl<Movie> implements MovieDao {
+public class MovieDaoImpl implements MovieDao {
     @Override
     public Optional<Movie> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

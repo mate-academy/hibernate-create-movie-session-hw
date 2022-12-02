@@ -12,8 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 @Dao
-public class MovieSessionDaoImpl extends GenericDaoImpl<MovieSession>
-        implements MovieSessionDao {
+public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -21,18 +20,6 @@ public class MovieSessionDaoImpl extends GenericDaoImpl<MovieSession>
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session"
                     + " by id: " + id, e);
-        }
-    }
-
-    @Override
-    public List<MovieSession> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery(
-                    "SELECT ms FROM MovieSession ms",
-                    MovieSession.class);
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException("Can't get all movie sessions");
         }
     }
 

@@ -32,7 +32,12 @@ public class Main {
                 fastAndFurious.getId(), nowTime.toLocalDate()
         );
         assert availableSessions.contains(movieSession);
-        printLists(movieService, cinemaHallService, movieSessionService);
+        System.out.println("Lists of entities:\nMovies:");
+        movieService.getAll().forEach(System.out::println);
+        System.out.println("Cinema halls:");
+        cinemaHallService.getAll().forEach(System.out::println);
+        System.out.println("Movie sessions");
+        System.out.println(availableSessions);
     }
 
     private static Movie getMovieTested(MovieService service) {
@@ -51,16 +56,4 @@ public class Main {
         System.out.println(hall + " added");
         return hall;
     }
-
-    private static void printLists(MovieService movieService,
-                                   CinemaHallService cinemaHallService,
-                                   MovieSessionService movieSessionService) {
-        System.out.println("Lists of entities:\nMovies:");
-        movieService.getAll().forEach(System.out::println);
-        System.out.println("Cinema halls:");
-        cinemaHallService.getAll().forEach(System.out::println);
-        System.out.println("Movie sessions");
-        movieSessionService.getAll().forEach(System.out::println);
-    }
-
 }
