@@ -14,20 +14,19 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
-    @NonNull
     private Movie movie;
-
     @ManyToOne
-    @NonNull
     private CinemaHall cinemaHall;
-
-    @NonNull
     private LocalDateTime showTime;
+
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
+        this.movie = movie;
+        this.cinemaHall = cinemaHall;
+        this.showTime = showTime;
+    }
 }

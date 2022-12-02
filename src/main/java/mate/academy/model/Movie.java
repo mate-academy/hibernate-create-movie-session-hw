@@ -12,14 +12,14 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NonNull
     private String title;
-
     private String description;
+
+    public Movie(String title) {
+        this.title = title;
+    }
 }
