@@ -30,10 +30,4 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
             }
         }
     }
-
-    @Override
-    public abstract Optional<T> get(Long id);
-
-    @Override
-    public abstract List<T> getAll();
 }
