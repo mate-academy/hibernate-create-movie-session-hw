@@ -41,7 +41,5 @@ public class Main {
         System.out.println(movieSessionService.get(movieSession.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(), showTime.toLocalDate())
                 .forEach(System.out::println);
-        movieSessionService.getAll()
-                .forEach(System.out::println);
     }
 }
