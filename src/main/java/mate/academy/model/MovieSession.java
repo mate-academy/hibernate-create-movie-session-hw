@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -22,9 +21,7 @@ public class MovieSession {
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
-    @JoinTable(name = "movie_sessions_cinema_halls",
-            joinColumns = @JoinColumn(name = "movie_session_id"),
-            inverseJoinColumns = @JoinColumn(name = "cinema_hall_id"))
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
     @Column(name = "show_time")
     private LocalDateTime showTime;
