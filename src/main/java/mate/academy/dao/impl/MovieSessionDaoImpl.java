@@ -40,14 +40,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        String query = "FROM MovieSession ms "
-                + "LEFT JOIN FETCH ms.movie "
-                + "LEFT JOIN FETCH ms.cinemaHall "
-                + "WHERE ms.id = :id";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getByIdQuery = session.createQuery(query, MovieSession.class);
-            getByIdQuery.setParameter("id", id);
-            return (Optional.ofNullable(getByIdQuery.uniqueResult()));
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -56,8 +50,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         String query = "FROM MovieSession ms "
-                + "LEFT JOIN FETCH ms.movie "
-                + "LEFT JOIN FETCH ms.cinemaHall "
                 + "WHERE ms.movie.id = :id "
                 + "AND ms.showTime BETWEEN :fromDate AND :toDate";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -65,7 +57,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     session.createQuery(query, MovieSession.class);
             findAvailableSessionsQuery.setParameter("id", movieId);
             findAvailableSessionsQuery.setParameter("fromDate",
-                    LocalDateTime.of(date, LocalTime.MIDNIGHT));
+                    LocalDateTime.of(date, LocalTime.MIN));
             findAvailableSessionsQuery.setParameter("toDate",
                     LocalDateTime.of(date, LocalTime.MAX));
             return findAvailableSessionsQuery.getResultList();
