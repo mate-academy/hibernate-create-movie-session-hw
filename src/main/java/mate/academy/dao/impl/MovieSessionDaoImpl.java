@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -42,7 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             MovieSession movieSession = session.get(MovieSession.class, id);
-            return Optional.ofNullable(movieSession);
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get session by id " + id, e);
         }
@@ -51,12 +52,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         LocalDateTime startDay = date.atStartOfDay();
-        LocalDateTime endDay = date.atStartOfDay().plusDays(1L).minusSeconds(1L);
+        LocalDateTime endDay = date.atTime(LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> findSession =
-                    session.createQuery("SELECT ms from MovieSession ms "
+                    session.createQuery("SELECT ms FROM MovieSession ms "
                     + "WHERE ms.id = :id "
-                    + "AND ms.showTime between :startDay and :endDay", MovieSession.class);
+                    + "AND ms.showTime between :startDay AND :endDay", MovieSession.class);
             findSession.setParameter("id", movieId);
             findSession.setParameter("startDay", startDay);
             findSession.setParameter("endDay", endDay);

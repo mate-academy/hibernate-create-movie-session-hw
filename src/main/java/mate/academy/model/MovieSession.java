@@ -1,24 +1,29 @@
 package mate.academy.model;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movieSessions")
+@Table(name = "movie_sessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cinema_hall_id")
     private Long id;
     @OneToOne
+    @JoinColumn(name = "cinema_hall")
     private CinemaHall cinemaHall;
     @ManyToOne
     private Movie movie;
+    @Column(name = "show_time")
     private LocalDateTime showTime;
 
     public MovieSession(CinemaHall cinemaHall, Movie movie, LocalDateTime showTime) {
