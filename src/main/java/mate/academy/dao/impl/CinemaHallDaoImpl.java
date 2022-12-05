@@ -28,6 +28,10 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't add CinemaHall: " + cinemaHall, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
