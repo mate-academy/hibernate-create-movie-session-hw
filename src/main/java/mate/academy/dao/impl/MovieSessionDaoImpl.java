@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -55,16 +56,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "and m.localDateTime between :dateFrom AND :dateTo", MovieSession.class);
             query.setParameter("id", movieId);
             LocalDateTime dateFrom
-                    = LocalDateTime.of(date.getYear(),
-                    date.getMonth(),
-                    date.getDayOfMonth(),
-                    0, 0, 0);
-            LocalDateTime dateTo = LocalDateTime.of(date.getYear(),
-                    date.getMonth(),
-                    date.getDayOfMonth(),
-                    LocalDateTime.MAX.getHour(),
-                    LocalDateTime.MAX.getMinute(),
-                    LocalDateTime.MAX.getSecond());
+                    = LocalDateTime.of(
+                    date,
+                    LocalTime.MIN);
+            LocalDateTime dateTo = LocalDateTime.of(
+                    date,
+                    LocalTime.MAX);
             query.setParameter("dateFrom", dateFrom);
             query.setParameter("dateTo", dateTo);
             return query.getResultList();
