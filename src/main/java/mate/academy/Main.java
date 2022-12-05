@@ -39,10 +39,12 @@ public class Main {
         fastAndFuriousSession.setMovie(fastAndFurious);
         fastAndFuriousSession.setShowTime(LocalDateTime.of(
                 LocalDate.now(), LocalTime.of(7, 7)));
+
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(fastAndFuriousSession);
         System.out.println(movieSessionService.get(fastAndFuriousSession.getId()));
+
         movieSessionService.findAvailableSessions(
                         fastAndFuriousSession.getId(), LocalDate.of(2017, 7, 7))
                 .forEach(System.out::println);
