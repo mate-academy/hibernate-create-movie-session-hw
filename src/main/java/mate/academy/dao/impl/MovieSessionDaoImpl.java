@@ -7,7 +7,7 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import java.time.LocalDate;
+import org.hibernate.query.Query;
 import java.util.List;
 
 @Dao
@@ -30,7 +30,7 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add the movie session: " + movieSession, e);
+            throw new DataProcessingException("Can't add a movie session: " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -43,12 +43,19 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
         try (Session session = sessionFactory.openSession()) {
             return session.get(MovieSession.class, id);
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get the movie session with id: " + id, e);
+            throw new DataProcessingException("Can't get a movie session with id: " + id, e);
         }
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return null;
+    public List<MovieSession> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<MovieSession> findAvailableSessionsQuery = session.createQuery(
+                    "from MovieSession", MovieSession.class);
+            return findAvailableSessionsQuery.getResultList();
+
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get a list of movie sessions", e);
+        }
     }
 }
