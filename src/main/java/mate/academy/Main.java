@@ -34,19 +34,19 @@ public class Main {
         cinemaHallService.getAll().forEach(System.out::println);
         System.out.println();
 
-        MovieSession fastAndFuriousSession = new MovieSession();
-        fastAndFuriousSession.setCinemaHall(cinemaHall);
-        fastAndFuriousSession.setMovie(abc);
-        fastAndFuriousSession.setShowTime(LocalDateTime.of(
+        MovieSession abcSession = new MovieSession();
+        abcSession.setCinemaHall(cinemaHall);
+        abcSession.setMovie(abc);
+        abcSession.setShowTime(LocalDateTime.of(
                 LocalDate.now(), LocalTime.of(14, 0)));
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        movieSessionService.add(fastAndFuriousSession);
-        System.out.println(movieSessionService.get(fastAndFuriousSession.getId()));
+        movieSessionService.add(abcSession);
+        System.out.println(movieSessionService.get(abcSession.getId()));
         movieSessionService.findAvailableSessions(
-                        fastAndFuriousSession.getId(), LocalDate.of(2021, 7, 24))
+                        abcSession.getId(), LocalDate.of(2021, 7, 24))
                 .forEach(System.out::println);
-        movieSessionService.findAvailableSessions(fastAndFuriousSession.getId(), LocalDate.now())
+        movieSessionService.findAvailableSessions(abcSession.getId(), LocalDate.now())
                 .forEach(System.out::println);
     }
 }
