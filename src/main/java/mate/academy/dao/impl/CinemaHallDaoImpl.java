@@ -1,37 +1,36 @@
 package mate.academy.dao.impl;
 
-import java.util.List;
-import java.util.Optional;
-import mate.academy.dao.MovieDao;
+import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.Movie;
+import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import java.util.List;
 
 @Dao
-public class MovieDaoImpl extends AbstractDao implements MovieDao {
-    public MovieDaoImpl() {
+public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
+    public CinemaHallDaoImpl() {
         super(HibernateUtil.getSessionFactory());
     }
 
     @Override
-    public Movie add(Movie movie) {
-        Transaction transaction = null;
+    public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
+        Transaction transaction = null;
         try {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
-            session.save(movie);
+            session.persist(cinemaHall);
             transaction.commit();
-            return movie;
+            return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException("Can't add cinema hall: " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -40,22 +39,22 @@ public class MovieDaoImpl extends AbstractDao implements MovieDao {
     }
 
     @Override
-    public Optional<Movie> get(Long id) {
+    public CinemaHall get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.get(Movie.class, id));
+            return session.get(CinemaHall.class, id);
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException("Can't get a cinema hall with id: " + id, e);
         }
     }
 
     @Override
-    public List<Movie> getAll() {
+    public List<CinemaHall> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            Query<Movie> getAllMoviesQuery = session.createQuery(
-                    "from Movie", Movie.class);
+            Query<CinemaHall> getAllMoviesQuery = session.createQuery(
+                    "from CinemaHall ", CinemaHall.class);
             return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a list of movies", e);
+            throw new DataProcessingException("Can't get a list of cinema halls", e);
         }
     }
 }
