@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cinema_hall")
+@Table(name = "cinema_halls")
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,13 +42,9 @@ public class CinemaHall {
     @Override
     public String toString() {
         return "CinemaHall{"
-                + "id="
-                + id
-                + ", capacity="
-                + capacity
-                + ", description='"
-                + description
-                + '\''
+                + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description + '\''
                 + '}';
     }
 }
