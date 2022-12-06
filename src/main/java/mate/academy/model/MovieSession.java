@@ -20,7 +20,6 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
-
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 

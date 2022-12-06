@@ -1,7 +1,8 @@
 package mate.academy.dao.impl;
 
-import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -48,17 +49,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        String query = "from MovieSession ms where ms.movie.id = :movieId "
+                    + "and ms.showTime between :startTime and :endTime";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAvailableSessionsQuery =
-                    session.createQuery("from MovieSession ms "
-                                    + "where ms.movie.id = :id "
-                                    + "and date(ms.showTime) = :date ", MovieSession.class);
-            getAvailableSessionsQuery.setParameter("id",movieId);
-            getAvailableSessionsQuery.setParameter("date", Date.valueOf(date));
+                    session.createQuery(query, MovieSession.class);
+            getAvailableSessionsQuery.setParameter("movieId", movieId);
+            getAvailableSessionsQuery.setParameter("startTime",
+                    LocalDateTime.of(date, LocalTime.MIDNIGHT));
+            getAvailableSessionsQuery.setParameter("endTime",
+                    LocalDateTime.of(date, LocalTime.MAX));
             return getAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get available movieSessions by id: " + movieId
-                    + " and date: " + date, e);
+            throw new DataProcessingException("Can't get available movie sessions by id: "
+                        + movieId
+                        + " and date: " + date, e);
         }
     }
 }
