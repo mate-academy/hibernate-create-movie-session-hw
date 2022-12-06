@@ -43,8 +43,8 @@ public class Main {
                 = (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
         movieSessionService.add(movieSession2);
-        System.out.println(movieSessionService.get(movieSession.getId()));
+        System.out.println(movieSessionService.get(movieSession2.getId()));
         System.out.println(movieSessionService
-                .findAvailableSessions(1L, LocalDate.of(2022, 12, 4)));
+                .findAvailableSessions(1L, LocalDate.of(2022, 12, 6)));
     }
 }
