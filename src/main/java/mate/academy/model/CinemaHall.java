@@ -12,9 +12,7 @@ public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private Integer capacity;
-
     private String description;
 
     public CinemaHall() {

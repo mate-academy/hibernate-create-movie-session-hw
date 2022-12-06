@@ -53,12 +53,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             String query = "FROM MovieSession m "
                          + "WHERE m.movie.id = :id "
                          + "AND m.showTime  BETWEEN :start AND :end";
-            LocalDateTime start = LocalDateTime.of(date, LocalTime.MIDNIGHT);
-            LocalDateTime end = LocalDateTime.of(date, LocalTime.MAX);
             Query<MovieSession> movieSessionQuery = session.createQuery(query, MovieSession.class);
             movieSessionQuery.setParameter("id", movieId);
-            movieSessionQuery.setParameter("start", start);
-            movieSessionQuery.setParameter("end", end);
+            movieSessionQuery.setParameter("start", LocalDateTime.of(date, LocalTime.MIDNIGHT));
+            movieSessionQuery.setParameter("end", LocalDateTime.of(date, LocalTime.MAX));
             return movieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Cant get all movies by date " + date, e);
