@@ -1,5 +1,9 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.List;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -8,20 +12,15 @@ import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         Injector injector = Injector.getInstance("mate.academy");
 
-        MovieService movieService
+        final MovieService movieService
                 = (MovieService) injector.getInstance(MovieService.class);
-        MovieSessionService movieSessionService
+        final MovieSessionService movieSessionService
                 = (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        CinemaHallService cinemaHallService
+        final CinemaHallService cinemaHallService
                 = (CinemaHallService) injector.getInstance(CinemaHallService.class);
 
         Movie fastAndFurious = new Movie("Fast and Furious");
@@ -49,6 +48,13 @@ public class Main {
                 2020, Month.FEBRUARY, 15, 14, 20));
         movieSessionService.add(movieSessionInter);
 
+        MovieSession movieSessionInter2 = new MovieSession();
+        movieSessionInter2.setMovie(interstellar);
+        movieSessionInter2.setCinemaHall(cinemaHallNorth);
+        movieSessionInter2.setShowTime(LocalDateTime.of(
+                2020, Month.FEBRUARY, 15, 20, 20));
+        movieSessionService.add(movieSessionInter2);
+
         MovieSession movieSessionFast = new MovieSession();
         movieSessionFast.setMovie(fastAndFurious);
         movieSessionFast.setCinemaHall(cinemaHallEast);
@@ -56,20 +62,20 @@ public class Main {
                 2020, Month.FEBRUARY, 15, 19, 50));
         movieSessionService.add(movieSessionFast);
 
-        System.out.println("movie service get");
+        System.out.println("\nmovie service get");
         System.out.println(movieService.get(1L));
-        System.out.println("movieSession service get");
+        System.out.println("\nmovieSession service get");
         System.out.println(movieSessionService.get(1L));
-        System.out.println("cinemaHallService get");
+        System.out.println("\ncinemaHallService get");
         System.out.println(cinemaHallService.get(1L));
 
-        System.out.println("movieService getAll");
+        System.out.println("\nmovieService getAll");
         movieService.getAll().forEach(System.out::println);
-        System.out.println("movieSession service findAvailable");
+        System.out.println("\nmovieSession service findAvailable");
         List<MovieSession> availableSessions = movieSessionService.findAvailableSessions(
-                fastAndFurious.getId(), LocalDate.of(2020, Month.FEBRUARY, 15));
+                interstellar.getId(), LocalDate.of(2020, Month.FEBRUARY, 15));
         availableSessions.forEach(System.out::println);
-        System.out.println("cinemaHallService getAll");
+        System.out.println("\ncinemaHallService getAll");
         cinemaHallService.getAll().forEach(System.out::println);
     }
 }
