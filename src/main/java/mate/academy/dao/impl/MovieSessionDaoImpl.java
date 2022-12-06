@@ -56,8 +56,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "and ms.showTime between :start_date_time and :end_date_time",
                     MovieSession.class);
             getAllAvailableSessions.setParameter("id", movieId);
-            getAllAvailableSessions.setParameter("start_date_time", LocalDateTime.of(date, LocalTime.MIDNIGHT));
-            getAllAvailableSessions.setParameter("end_date_time",LocalDateTime.of(date, LocalTime.MAX));
+            getAllAvailableSessions.setParameter("start_date_time",
+                    LocalDateTime.of(date, LocalTime.MIDNIGHT));
+            getAllAvailableSessions.setParameter("end_date_time",
+                    LocalDateTime.of(date, LocalTime.MAX));
             return getAllAvailableSessions.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all available movie sessions "

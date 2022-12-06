@@ -1,11 +1,11 @@
 package mate.academy.model;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity
 @Table(name = "cinema_halls")
@@ -50,8 +50,12 @@ public class CinemaHall {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CinemaHall that = (CinemaHall) o;
         return Objects.equals(id, that.id)
                 && Objects.equals(capacity, that.capacity)

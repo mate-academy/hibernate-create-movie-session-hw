@@ -1,5 +1,7 @@
 package mate.academy.model;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(name = "movie_sessions")
@@ -20,12 +20,12 @@ public class MovieSession {
     private Long id;
     @OneToOne
     @JoinColumn(name = "movie_id")
-    Movie movie;
+    private Movie movie;
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
-    CinemaHall cinemaHall;
+    private CinemaHall cinemaHall;
     @Column(name = "show_time")
-    LocalDateTime showTime;
+    private LocalDateTime showTime;
 
     public MovieSession() {
     }
@@ -70,8 +70,12 @@ public class MovieSession {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         MovieSession that = (MovieSession) o;
         return Objects.equals(id, that.id) && Objects.equals(movie, that.movie)
                 && Objects.equals(cinemaHall, that.cinemaHall)
