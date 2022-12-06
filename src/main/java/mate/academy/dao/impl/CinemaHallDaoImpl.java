@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -39,9 +40,9 @@ public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
     }
 
     @Override
-    public CinemaHall get(Long id) {
+    public Optional<CinemaHall> get(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(CinemaHall.class, id);
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a cinema hall with id: " + id, e);
         }
@@ -51,7 +52,7 @@ public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = sessionFactory.openSession()) {
             Query<CinemaHall> getAllMoviesQuery = session.createQuery(
-                    "from CinemaHall ", CinemaHall.class);
+                    "from CinemaHall", CinemaHall.class);
             return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a list of cinema halls", e);
