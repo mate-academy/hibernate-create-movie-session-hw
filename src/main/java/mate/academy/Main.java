@@ -61,13 +61,17 @@ public class Main {
         System.out.println("================");
         System.out.println(movieSessionService.get(1L));
         System.out.println("================");
-        cinemaHallService.getAll().forEach(System.out::println);
+        System.out.println(cinemaHallService.get(1L));
+        System.out.println("================");
+
+        movieService.getAll().forEach(System.out::println);
         System.out.println("================");
         List<MovieSession> availableSessions = movieSessionService.findAvailableSessions(
                 fastAndFurious.getId(), LocalDate.of(2020, Month.FEBRUARY, 15));
         System.out.println("================");
         availableSessions.forEach(System.out::println);
         System.out.println("================");
-        movieService.getAll().forEach(System.out::println);
+        cinemaHallService.getAll().forEach(System.out::println);
+        System.out.println("================");
     }
 }
