@@ -7,6 +7,8 @@ import mate.academy.lib.Service;
 import mate.academy.model.Movie;
 import mate.academy.service.MovieService;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class MovieServiceImpl implements MovieService {
     @Inject
@@ -20,7 +22,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie get(Long id) {
         return movieDao.get(id).orElseThrow(() ->
-                new RuntimeException("Can't get movie by id " + id));
+                new EntityNotFoundException("Can't get movie by id " + id));
     }
 
     @Override

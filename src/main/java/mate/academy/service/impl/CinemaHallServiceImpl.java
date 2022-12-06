@@ -7,6 +7,8 @@ import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
@@ -20,7 +22,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     @Override
     public CinemaHall get(Long id) {
         return cinemaHallDao.get(id).orElseThrow(() ->
-                new RuntimeException("Can't get cinema hall by id " + id));
+                new EntityNotFoundException("Can't get cinema hall by id " + id));
     }
 
     @Override
