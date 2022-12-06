@@ -8,13 +8,16 @@ import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class MovieDaoImpl extends AbstractDao implements MovieDao {
+public class MovieDaoImpl implements MovieDao {
+    private final SessionFactory sessionFactory;
+
     public MovieDaoImpl() {
-        super(HibernateUtil.getSessionFactory());
+        sessionFactory = HibernateUtil.getSessionFactory();
     }
 
     @Override

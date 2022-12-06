@@ -8,13 +8,16 @@ import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
+public class CinemaHallDaoImpl implements CinemaHallDao {
+    private final SessionFactory sessionFactory;
+
     public CinemaHallDaoImpl() {
-        super(HibernateUtil.getSessionFactory());
+        sessionFactory = HibernateUtil.getSessionFactory();
     }
 
     @Override

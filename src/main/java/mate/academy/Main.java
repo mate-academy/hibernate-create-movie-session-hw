@@ -63,11 +63,11 @@ public class Main {
         movieSessionService.add(movieSessionFast);
 
         System.out.println("\nmovie service get");
-        System.out.println(movieService.get(1L));
+        System.out.println(movieService.get(fastAndFurious.getId()));
         System.out.println("\nmovieSession service get");
-        System.out.println(movieSessionService.get(1L));
+        System.out.println(movieSessionService.get(movieSessionInter2.getId()));
         System.out.println("\ncinemaHallService get");
-        System.out.println(cinemaHallService.get(1L));
+        System.out.println(cinemaHallService.get(cinemaHallEast.getId()));
 
         System.out.println("\nmovieService getAll");
         movieService.getAll().forEach(System.out::println);

@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -9,13 +10,16 @@ import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao {
+public class MovieSessionDaoImpl implements MovieSessionDao {
+    private final SessionFactory sessionFactory;
+
     public MovieSessionDaoImpl() {
-        super(HibernateUtil.getSessionFactory());
+        sessionFactory = HibernateUtil.getSessionFactory();
     }
 
     @Override
@@ -54,12 +58,12 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAvailableSessionsQuery = session.createQuery(
                     "from MovieSession ms "
-                            + "where ms.movie.id = :movie_id and "
-                            + "ms.showTime between :start_time and :end_time",
+                            + "where ms.movie.id = :movieId and "
+                            + "ms.showTime between :startTime and :endTime",
                     MovieSession.class);
-            getAvailableSessionsQuery.setParameter("movie_id", movieId);
-            getAvailableSessionsQuery.setParameter("start_time", date.atTime(0, 0, 0));
-            getAvailableSessionsQuery.setParameter("end_time", date.atTime(23, 59, 59));
+            getAvailableSessionsQuery.setParameter("movieId", movieId);
+            getAvailableSessionsQuery.setParameter("startTime", date.atTime(LocalTime.MIN));
+            getAvailableSessionsQuery.setParameter("endTime", date.atTime(LocalTime.MAX));
             return getAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a list of movie sessions", e);
