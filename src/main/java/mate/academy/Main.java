@@ -29,7 +29,7 @@ public class Main {
         movieService.add(fastAndFurious);
 
         Movie interstellar = new Movie("Interstellar");
-        fastAndFurious.setDescription("science-fiction");
+        interstellar.setDescription("science-fiction");
         movieService.add(interstellar);
 
         CinemaHall cinemaHallNorth = new CinemaHall();
@@ -56,22 +56,20 @@ public class Main {
                 2020, Month.FEBRUARY, 15, 19, 50));
         movieSessionService.add(movieSessionFast);
 
-        System.out.println("================");
+        System.out.println("movie service get");
         System.out.println(movieService.get(1L));
-        System.out.println("================");
+        System.out.println("movieSession service get");
         System.out.println(movieSessionService.get(1L));
-        System.out.println("================");
+        System.out.println("cinemaHallService get");
         System.out.println(cinemaHallService.get(1L));
-        System.out.println("================");
 
+        System.out.println("movieService getAll");
         movieService.getAll().forEach(System.out::println);
-        System.out.println("================");
+        System.out.println("movieSession service findAvailable");
         List<MovieSession> availableSessions = movieSessionService.findAvailableSessions(
                 fastAndFurious.getId(), LocalDate.of(2020, Month.FEBRUARY, 15));
-        System.out.println("================");
         availableSessions.forEach(System.out::println);
-        System.out.println("================");
+        System.out.println("cinemaHallService getAll");
         cinemaHallService.getAll().forEach(System.out::println);
-        System.out.println("================");
     }
 }
