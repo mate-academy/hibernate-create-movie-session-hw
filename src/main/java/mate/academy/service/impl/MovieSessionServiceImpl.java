@@ -21,8 +21,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id)
-                .orElseThrow(() -> new EntityNotFoundException("Cannot find movie session"));
+        return movieSessionDao.get(id).orElseThrow(() ->
+                new EntityNotFoundException("Cannot find entity movie session. id=" + id));
     }
 
     @Override
