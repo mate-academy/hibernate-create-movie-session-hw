@@ -30,17 +30,17 @@ public class Main {
         System.out.println(cinemaHallService.get(vipCinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
+        LocalDate dateForCinema = LocalDate.of(2022, 12, 20);
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(vipCinemaHall);
-        LocalDateTime showTime = LocalDateTime.of(2022, 12, 20, 10, 30);
+        LocalDateTime showTime = dateForCinema.atTime(10,30);
         movieSession.setShowTime(showTime);
 
         MovieSessionService movieSessionService = (MovieSessionService) injector
                 .getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
-        LocalDate dateForCinema = LocalDate.of(2022, 12, 20);
         movieSessionService.findAvailableSessions(fastAndFurious.getId(), dateForCinema)
                 .forEach(System.out::println);
     }
