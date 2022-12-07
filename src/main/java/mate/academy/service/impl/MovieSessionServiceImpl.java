@@ -21,11 +21,12 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id).orElseThrow(EntityNotFoundException::new);
+        return movieSessionDao.get(id).orElseThrow(() ->
+                new EntityNotFoundException("No movie session with such Id was found. Id: " + id));
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return movieSessionDao.findAvailableSessions(movieId,date);
+        return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }

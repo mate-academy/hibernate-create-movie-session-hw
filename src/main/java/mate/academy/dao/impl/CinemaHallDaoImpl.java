@@ -14,20 +14,20 @@ import org.hibernate.query.Query;
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
-    public CinemaHall add(CinemaHall cinema) {
+    public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(cinema);
+            session.save(cinemaHall);
             transaction.commit();
-            return cinema;
+            return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert cinema " + cinema, e);
+            throw new DataProcessingException("Can't insert cinema hall " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
