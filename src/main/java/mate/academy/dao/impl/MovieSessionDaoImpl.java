@@ -53,12 +53,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getAllAvailableSessions = session.createQuery(
                     "from MovieSession ms "
                             + "where ms.movie.id = :id "
-                            + "and ms.showTime between :start_date_time and :end_date_time",
+                            + "and ms.showTime between :startDateTime and :endDateTime",
                     MovieSession.class);
             getAllAvailableSessions.setParameter("id", movieId);
-            getAllAvailableSessions.setParameter("start_date_time",
+            getAllAvailableSessions.setParameter("startDateTime",
                     LocalDateTime.of(date, LocalTime.MIDNIGHT));
-            getAllAvailableSessions.setParameter("end_date_time",
+            getAllAvailableSessions.setParameter("endDateTime",
                     LocalDateTime.of(date, LocalTime.MAX));
             return getAllAvailableSessions.getResultList();
         } catch (Exception e) {
