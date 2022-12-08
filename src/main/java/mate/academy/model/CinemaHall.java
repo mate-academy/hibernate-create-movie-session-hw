@@ -13,13 +13,14 @@ public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private int capacity;
     private String description;
 
     public long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -31,6 +32,14 @@ public class CinemaHall {
         this.description = description;
     }
 
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -40,18 +49,21 @@ public class CinemaHall {
             return false;
         }
         CinemaHall that = (CinemaHall) o;
-        return id == that.id && Objects.equals(description, that.description);
+        return capacity == that.capacity
+                && Objects.equals(id, that.id)
+                && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description);
+        return Objects.hash(id, capacity, description);
     }
 
     @Override
     public String toString() {
         return "CinemaHall{"
                 + "id=" + id
+                + ", capacity=" + capacity
                 + ", description='" + description + '\''
                 + '}';
     }
