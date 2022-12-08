@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String description;
 
     public long getId() {

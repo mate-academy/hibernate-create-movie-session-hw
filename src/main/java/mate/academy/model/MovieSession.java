@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movie;
