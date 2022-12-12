@@ -41,6 +41,7 @@ public class Main {
         System.out.println("-=-=-=-=-");
 
         LocalDateTime date = LocalDateTime.of(LocalDate.now(), LocalTime.now());
+
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(threeDimensionalCinemaHall);
@@ -48,8 +49,10 @@ public class Main {
 
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
+
+        movieSession.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSession);
-        System.out.println(movieSessionService
-                .findAvailableSessions(movieSession.getId(), LocalDate.now()));
+        System.out.println(movieSessionService.get(movieSession.getId()));
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
     }
 }
