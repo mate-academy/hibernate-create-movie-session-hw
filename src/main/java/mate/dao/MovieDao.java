@@ -1,8 +1,8 @@
-package mate.academy.dao;
+package mate.dao;
 
 import java.util.List;
 import java.util.Optional;
-import mate.academy.model.Movie;
+import mate.model.Movie;
 
 public interface MovieDao {
     Movie add(Movie movie);

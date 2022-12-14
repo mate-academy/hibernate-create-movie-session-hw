@@ -1,0 +1,13 @@
+package mate.service;
+
+import java.time.LocalDate;
+import java.util.List;
+import mate.model.MovieSession;
+
+public interface MovieSessionService {
+    MovieSession add(MovieSession movieSession);
+
+    MovieSession get(Long id);
+
+    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+}
