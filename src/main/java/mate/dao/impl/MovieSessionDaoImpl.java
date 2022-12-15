@@ -39,11 +39,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> movieSessionQueryQuery = session
+            Query<MovieSession> movieSessionQuery = session
                     .createQuery("from MovieSession ms "
                     + "left join fetch ms.cinemaHall where ms.id = :id", MovieSession.class);
-            movieSessionQueryQuery.setParameter("id", id);
-            return Optional.ofNullable(movieSessionQueryQuery.getSingleResult());
+            movieSessionQuery.setParameter("id", id);
+            return Optional.ofNullable(movieSessionQuery.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a MovieSession by id: " + id, e);
         }
@@ -52,13 +52,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String queryString = "from MovieSession "
-                    + "where id = :movieId and date_format(showTime, '%Y-%m-%d') = :dateId";
-            Query<MovieSession> movieSessionQueryQuery = session
+            String queryString = "from MovieSession ms "
+                    + "where ms.movie.id = :movieId and date_format(showTime, '%Y-%m-%d') = :dateId";
+            Query<MovieSession> movieSessionQuery = session
                     .createQuery(queryString, MovieSession.class);
-            movieSessionQueryQuery.setParameter("movieId", movieId);
-            movieSessionQueryQuery.setParameter("dateId", date.toString());
-            return movieSessionQueryQuery.getResultList();
+            movieSessionQuery.setParameter("movieId", movieId);
+            movieSessionQuery.setParameter("dateId", date.toString());
+            return movieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available sessions", e);
         }
