@@ -1,4 +1,4 @@
-package mate.academy.model;
+package mate.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
