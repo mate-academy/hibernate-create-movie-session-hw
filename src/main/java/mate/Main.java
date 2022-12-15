@@ -38,12 +38,12 @@ public class Main {
         cinemaHallService.add(cinemaHall);
 
         // expected in result list ( after findAvailableSessions(1L,LocalDateTime.now()))
-        MovieSessionService movieSessionService = (MovieSessionService)injector
-                .getInstance(MovieSessionService.class);
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setShowTime(LocalDateTime.now());
+        MovieSessionService movieSessionService = (MovieSessionService)injector
+                .getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
 
         // don't expect in result list
