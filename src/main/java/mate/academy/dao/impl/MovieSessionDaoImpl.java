@@ -42,32 +42,33 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getBookingQuery =
-                    session.createQuery("FROM MovieSession AS ms "
+                    session.createQuery("SELECT ms FROM MovieSession ms "
                     + "LEFT JOIN FETCH ms.movie AS m "
                     + "LEFT JOIN FETCH ms.cinemaHall AS ch "
                     + "WHERE m.id = :id", MovieSession.class);
             return getBookingQuery.setParameter("id", id)
                     .uniqueResultOptional();
-        } catch(DataProcessingException e) {
-            throw new RuntimeException("Can't get movie session by id: " + id, e);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get movie session by id: " + id, e);
         }
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        String query = "SELECT ms FROM MovieSession ms " +
-                "WHERE ms.movie.id =:movieId " +
-                "AND ms.showTime between :start and :end";
+        String query = "SELECT ms FROM MovieSession ms "
+                + "WHERE ms.movie.id =:movieId "
+                + "AND ms.showTime between :start and :end";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getMovieSessionByIdAndDate = session.createQuery(query, MovieSession.class);
+            Query<MovieSession> getMovieSessionByIdAndDate =
+                    session.createQuery(query, MovieSession.class);
             LocalDateTime start = LocalDateTime.of(date, LocalTime.MIDNIGHT);
             LocalDateTime end = LocalDateTime.of(date, LocalTime.MAX);
             getMovieSessionByIdAndDate.setParameter("movieId", movieId);
             getMovieSessionByIdAndDate.setParameter("start", start);
             getMovieSessionByIdAndDate.setParameter("end", end);
             return getMovieSessionByIdAndDate.getResultList();
-        } catch(DataProcessingException e) {
-            throw new RuntimeException("Can't get movie session by date: " + date, e);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get movie session by date: " + date, e);
         }
     }
 }

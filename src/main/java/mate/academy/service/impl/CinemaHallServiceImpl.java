@@ -1,7 +1,7 @@
 package mate.academy.service.impl;
 
-import javax.persistence.EntityExistsException;
 import java.util.List;
+import javax.persistence.EntityExistsException;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -11,7 +11,7 @@ import mate.academy.service.CinemaHallService;
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
-    CinemaHallDao cinemaHallDao;
+    private CinemaHallDao cinemaHallDao;
 
     @Override
     public CinemaHall add(CinemaHall movie) {
