@@ -1,17 +1,19 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
 
+@Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -50,8 +52,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime localDateTimeMax = LocalDateTime.of(date.toLocalDate(), LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllAvailableSessions =
-                    session.createQuery("from MovieSession ms " +
-                            "where ms.showTime between :localDateTimeMin and :localDateTimeMax");
+                    session.createQuery("from MovieSession ms "
+                            + "where ms.showTime between :localDateTimeMin and :localDateTimeMax");
             getAllAvailableSessions.setParameter("localDateTimeMin", localDateTimeMin);
             getAllAvailableSessions.setParameter("localDateTimeMax", localDateTimeMax);
             return getAllAvailableSessions.getResultList();
