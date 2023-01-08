@@ -33,6 +33,7 @@ public class Main {
         MovieSession fastAndFuriousSession =
                 new MovieSession(LocalDateTime.now(), superHall, fastAndFurious);
         movieSessionService.add(fastAndFuriousSession);
+        System.out.println(movieSessionService.get(1L));
         System.out.println(movieSessionService
                 .findAvailableSessions(fastAndFurious.getId(), LocalDateTime.now()));
     }
