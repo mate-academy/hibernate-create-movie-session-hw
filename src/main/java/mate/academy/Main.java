@@ -11,13 +11,15 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
 public class Main {
+    static final Injector injector = Injector.getInstance("mate.academy");
+    static final MovieService movieService = (MovieService) injector
+            .getInstance(MovieService.class);
+    static final MovieSessionService movieSessionService = (MovieSessionService) injector
+            .getInstance(MovieSessionService.class);
+    static final CinemaHallService cinemaHallService = (CinemaHallService) injector
+            .getInstance(CinemaHallService.class);
+
     public static void main(String[] args) {
-        final Injector injector = Injector.getInstance("mate.academy");
-        final MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-        final MovieSessionService movieSessionService = (MovieSessionService) injector
-                .getInstance(MovieSessionService.class);
-        final CinemaHallService cinemaHallService = (CinemaHallService) injector
-                .getInstance(CinemaHallService.class);
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
