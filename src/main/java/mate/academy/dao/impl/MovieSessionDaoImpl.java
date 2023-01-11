@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -14,7 +15,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
@@ -55,11 +55,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                                     + "AND m.movie.id = :id",
                             MovieSession.class);
             getAvailableMovieSessionQuery.setParameter("dateFrom", date.atStartOfDay());
-            getAvailableMovieSessionQuery.setParameter("dateTo", date.atTime(23,59,59));
+            getAvailableMovieSessionQuery.setParameter("dateTo", date.atTime(LocalTime.MAX));
             getAvailableMovieSessionQuery.setParameter("id", movieId);
             return getAvailableMovieSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get available movie sessions from DB.", e);
+            throw new DataProcessingException("Can't get available movie sessions from DB "
+                    + "with movie id " + movieId + "and date " + date, e);
         }
     }
 }
