@@ -28,9 +28,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't save a movie session to DB: " + movieSession, e);
+            throw new DataProcessingException("Can't save a movie session to DB: "
+                    + movieSession, e);
         } finally {
-            if (session !=null ) {
+            if (session != null) {
                 session.close();
             }
         }
@@ -39,7 +40,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session from DB by id: " + id, e);
