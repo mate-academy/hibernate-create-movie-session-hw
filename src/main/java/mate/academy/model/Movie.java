@@ -48,10 +48,17 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{"
-                + "id=" + id
-                + ", title='" + title + '\''
-                + ", description='" + description + '\''
-                + '}';
+        StringBuilder stringBuilder = new StringBuilder();
+        return stringBuilder.append("Movie{")
+                .append("id=")
+                .append(id)
+                .append(", title='")
+                .append(title)
+                .append('\'')
+                .append(", description='")
+                .append(description)
+                .append('\'')
+                .append('}')
+                .toString();
     }
 }
