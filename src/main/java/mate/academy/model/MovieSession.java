@@ -57,18 +57,11 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        return stringBuilder.append("MovieSession{")
-                .append("id=")
-                .append(id)
-                .append(", movie=")
-                .append(movie)
-                .append(", cinemaHall=")
-                .append(cinemaHall)
-                .append(", showTime=")
-                .append(showTime)
-                .append('\'')
-                .append('}')
-                .toString();
+        return "MovieSession{"
+                + "id=" + id
+                + ", Movie=" + movie
+                + ", CinemaHall='" + cinemaHall
+                + ", LocalDateTime='" + showTime + '\''
+                + '}';
     }
 }

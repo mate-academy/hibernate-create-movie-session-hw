@@ -44,17 +44,10 @@ public class CinemaHall {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        return stringBuilder.append("CinemaHall{")
-                .append("id=")
-                .append(id)
-                .append(", capacity=")
-                .append(capacity)
-                .append(", description='")
-                .append(", description='")
-                .append(description)
-                .append('\'')
-                .append('}')
-                .toString();
+        return "CinemaHall{"
+                + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description + '\''
+                + '}';
     }
 }
