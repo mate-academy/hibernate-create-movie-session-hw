@@ -1,5 +1,6 @@
 package mate.academy.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import mate.academy.dao.MovieDao;
 import mate.academy.lib.Inject;
@@ -24,6 +25,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
