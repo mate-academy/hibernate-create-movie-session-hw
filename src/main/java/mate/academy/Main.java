@@ -45,12 +45,13 @@ public class Main {
                 LocalDateTime.of(2023, 1, 29, 0, 0, 0));
         movieSessionService.add(movieSessionPaleEyesTinyHall);
         System.out.println(movieSessionService.get(movieSessionPaleEyesTinyHall.getId()));
-        MovieSession movieSessionFastAndFuriousMediumHall = new MovieSession(fastAndFurious, cinemaHallMedium,
+        MovieSession movieSessionFastAndFuriousMediumHall =
+                new MovieSession(fastAndFurious, cinemaHallMedium,
                 LocalDateTime.of(2023, 1, 29, 23, 59, 59));
         movieSessionService.add(movieSessionFastAndFuriousMediumHall);
         System.out.println(movieSessionService.get(movieSessionFastAndFuriousMediumHall.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
-                LocalDate.of(2023, 1, 29)).
-                        forEach(System.out::println);
+                LocalDate.of(2023, 1, 29))
+                        .forEach(System.out::println);
     }
 }
