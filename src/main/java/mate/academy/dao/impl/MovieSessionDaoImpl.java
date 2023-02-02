@@ -1,6 +1,8 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -40,8 +42,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query getMovieSessionQuery = session.createQuery("FROM MovieSession ms "
-                    + "LEFT JOIN FETCH ms.movie "
-                    + "LEFT JOIN FETCH ms.cinemaHall "
                     + "WHERE ms.id = :id");
             getMovieSessionQuery.setParameter("id", id);
             return Optional.ofNullable((MovieSession) getMovieSessionQuery.uniqueResult());
@@ -55,15 +55,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessionsByDate = session.createQuery(
                     "FROM MovieSession ms "
-                    + "LEFT JOIN FETCH ms.cinemaHall "
-                    + "LEFT JOIN FETCH ms.movie "
-                    + "WHERE year(ms.showTime) = :year "
-                    + "AND month(ms.showTime) = :month "
-                    + "AND day(ms.showTime) = :day "
+                    + "WHERE ms.showTime BETWEEN :from AND :to "
                     + "AND ms.movie.id = :movieId", MovieSession.class);
-            getMovieSessionsByDate.setParameter("year", date.getYear());
-            getMovieSessionsByDate.setParameter("month", date.getMonth().getValue());
-            getMovieSessionsByDate.setParameter("day", date.getDayOfMonth());
+            getMovieSessionsByDate.setParameter(
+                    "from", LocalDateTime.of(date, LocalTime.of(0,0)));
+            getMovieSessionsByDate.setParameter(
+                    "to", LocalDateTime.of(date,LocalTime.of(23, 59, 59)));
             getMovieSessionsByDate.setParameter("movieId", movieId);
             return getMovieSessionsByDate.getResultList();
         } catch (Exception e) {
