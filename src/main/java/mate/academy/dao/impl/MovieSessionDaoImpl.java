@@ -43,8 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie "
-                    + "in movie session by id: " + id, e);
+            throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
     }
 
