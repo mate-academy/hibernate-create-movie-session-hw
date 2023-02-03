@@ -1,7 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -41,10 +40,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query getMovieSessionQuery = session.createQuery("FROM MovieSession ms "
-                    + "WHERE ms.id = :id");
-            getMovieSessionQuery.setParameter("id", id);
-            return Optional.ofNullable((MovieSession) getMovieSessionQuery.uniqueResult());
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -55,12 +51,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessionsByDate = session.createQuery(
                     "FROM MovieSession ms "
-                    + "WHERE ms.showTime BETWEEN :from AND :to "
-                    + "AND ms.movie.id = :movieId", MovieSession.class);
-            getMovieSessionsByDate.setParameter(
-                    "from", LocalDateTime.of(date, LocalTime.of(0,0)));
-            getMovieSessionsByDate.setParameter(
-                    "to", LocalDateTime.of(date,LocalTime.of(23, 59, 59)));
+                            + "WHERE ms.showTime BETWEEN :from AND :to "
+                            + "AND ms.movie.id = :movieId", MovieSession.class);
+            getMovieSessionsByDate.setParameter("from", date.atStartOfDay());
+            getMovieSessionsByDate.setParameter("to", date.atTime(LocalTime.MAX));
             getMovieSessionsByDate.setParameter("movieId", movieId);
             return getMovieSessionsByDate.getResultList();
         } catch (Exception e) {
