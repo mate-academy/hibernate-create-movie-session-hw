@@ -1,7 +1,12 @@
 package mate.academy.model;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "movie_sessions")
@@ -58,11 +63,11 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", showTime=" + showTime
+        return "MovieSession{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showTime=" + showTime
                 + '}';
     }
 }

@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -7,11 +9,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-import mate.academy.service.impl.CinemaHallServiceImpl;
-import mate.academy.service.impl.MovieServiceImpl;
-import mate.academy.service.impl.MovieSessionServiceImpl;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -42,9 +39,11 @@ public class Main {
         MovieSessionService movieSessionService = (MovieSessionService) injector
                 .getInstance(MovieSessionService.class);
 
-        MovieSession firstSession = new MovieSession(fastAndFurious, cinemaHallVip, LocalDateTime.now());
+        MovieSession firstSession = new MovieSession(fastAndFurious,
+                cinemaHallVip, LocalDateTime.now());
         movieSessionService.add(firstSession);
-        MovieSession secondSession = new MovieSession(horror, cinemaHallNormal, LocalDateTime.now());
+        MovieSession secondSession = new MovieSession(horror,
+                cinemaHallNormal, LocalDateTime.now());
         movieSessionService.add(secondSession);
         System.out.println(movieSessionService.get(firstSession.getId()));
         movieSessionService.findAvailableSessions(secondSession.getId(),
