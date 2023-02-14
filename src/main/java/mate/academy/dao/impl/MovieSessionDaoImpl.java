@@ -1,6 +1,8 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -49,15 +51,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessionQuery = session.createQuery(
-                    "from MovieSession m where m.movie.id = :id and extract(DAY FROM m.showTime) "
-                            + "= :day " + "and extract(MONTH FROM m.showTime) "
-                            + "= :month", MovieSession.class);
-            getAllMovieSessionQuery.setParameter("day", date.getDayOfMonth());
-            getAllMovieSessionQuery.setParameter("id", movieId);
-            getAllMovieSessionQuery.setParameter("month", date.getMonth());
+                    "from MovieSession m where m.movie.id = :movieId and m.showTime >"
+                            + " :start and m.showTime < :end");
+            getAllMovieSessionQuery.setParameter("movieId", movieId);
+            getAllMovieSessionQuery.setParameter("start", LocalDateTime.of(date,
+                    LocalTime.MIDNIGHT));
+            getAllMovieSessionQuery.setParameter("end", LocalDateTime.of(date, LocalTime.MAX));
             return getAllMovieSessionQuery.getResultList();
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Can't get available movie session from DB", e);
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get available movie session from DB", e);
         }
     }
 }
