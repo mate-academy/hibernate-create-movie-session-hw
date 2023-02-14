@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -51,15 +52,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAllQuery = session
-                    .createQuery("from MovieSession ms where ms.id = :value1 "
-                            + "and ms.showTime >= :value2 "
-                            + "and ms.showTime <= :value3", MovieSession.class);
-            getAllQuery.setParameter("value1", movieId);
-            getAllQuery.setParameter("value2", date.atStartOfDay());
-            getAllQuery.setParameter("value3", date.atTime(23, 59, 59));
+                    .createQuery("from MovieSession ms where ms.id = : ms_id "
+                            + "and ms.showTime >= : ms_start "
+                            + "and ms.showTime <= : ms_end", MovieSession.class);
+            getAllQuery.setParameter("ms_id", movieId);
+            getAllQuery.setParameter("ms_start", date.atTime(LocalTime.MIN));
+            getAllQuery.setParameter("ms_end", date.atTime(LocalTime.MAX));
             return getAllQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all moviesSessions at "
+            throw new DataProcessingException("Can't get all movie sessions at "
                     + date.toString(), e);
         }
     }
