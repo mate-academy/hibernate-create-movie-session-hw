@@ -41,9 +41,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessionQuery = session.createQuery("FROM MovieSession ms"
-                    + " join fetch ms.movie AS m"
-                    + " join fetch ms.cinemaHall AS c"
-                    + " WHERE m.id = :id", MovieSession.class);
+                    + " join fetch ms.movie"
+                    + " join fetch ms.cinemaHall"
+                    + " WHERE Movie.id = :id", MovieSession.class);
             movieSessionQuery.setParameter("id", id);
             return movieSessionQuery.uniqueResultOptional();
         } catch (Exception e) {
@@ -55,11 +55,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessionQuery = session.createQuery("FROM MovieSession ms"
-                    + " join fetch ms.movie AS m"
-                    + " join fetch ms.cinemaHall AS ch"
-                    + " WHERE DATE(ms.showTime) = :visitDay AND m.id = :id", MovieSession.class);
+                    + " join fetch ms.movie"
+                    + " join fetch ms.cinemaHall"
+                    + " WHERE DATE(ms.showTime) = :visitDay AND Movie.id = :movieId", MovieSession.class);
             movieSessionQuery.setParameter("visitDay", Date.valueOf(date));
-            movieSessionQuery.setParameter("id", movieId);
+            movieSessionQuery.setParameter("movieId", movieId);
             return movieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find session by date: "
