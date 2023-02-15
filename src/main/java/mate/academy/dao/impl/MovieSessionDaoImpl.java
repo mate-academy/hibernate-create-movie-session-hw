@@ -42,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.movie left join fetch ms.cinemaHall "
+                    + "join fetch ms.movie join fetch ms.cinemaHall "
                     + "where ms.id = :id");
             query.setParameter("id", id);
             return Optional.ofNullable(query.getSingleResult());
@@ -56,11 +56,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery(
                     "from MovieSession ms "
-                            + "left join fetch ms.movie left join fetch ms.cinemaHall "
-                            + "where ms.movie.id = :id "
+                            + "join fetch ms.movie join fetch ms.cinemaHall "
+                            + "where ms.movie.id = :movieId "
                             + "and ms.showTime between :startOfTheDay and :endOfTheDay",
                     MovieSession.class);
-            query.setParameter("id", movieId);
+            query.setParameter("movieId", movieId);
             query.setParameter("startOfTheDay", date.atStartOfDay());
             query.setParameter("endOfTheDay", date.atTime(LocalTime.MAX));
             return query.getResultList();
