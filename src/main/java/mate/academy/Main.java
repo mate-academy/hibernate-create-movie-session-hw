@@ -42,7 +42,8 @@ public class Main {
         movieSession.setShowTime(LocalDateTime.of(2024, 01, 22, 23, 40));
         movieSessionService.add(bestMovieSession);
         movieService.getAll().forEach(System.out::println);
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.of(2024, 01, 22))
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                        LocalDate.of(2024, 01, 22))
                 .forEach(System.out::println);
     }
 }
