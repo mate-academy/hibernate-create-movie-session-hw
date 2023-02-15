@@ -41,9 +41,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query getMovieSessionQuery = session.createQuery("from MovieSession ms"
-                    + " left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall where ms.id = :id", MovieSession.class);
+            Query getMovieSessionQuery = session.createQuery("from MovieSession ms "
+                    + "join fetch ms.movie "
+                    + "join fetch ms.cinemaHall where ms.id = :id", MovieSession.class);
             return Optional.ofNullable((MovieSession) getMovieSessionQuery.setParameter("id", id)
                     .getSingleResult());
         } catch (Exception e) {
@@ -56,10 +56,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query avilableSessionsQuery = session.createQuery("from MovieSession ms "
-                            + "left join fetch ms.movie "
-                            + "left join fetch ms.cinemaHall where ms.showTime"
-                            + " between :dayStart and :dayEnd",
+                            + "join fetch ms.movie "
+                            + "join fetch ms.cinemaHall "
+                            + "where ms.movie.id = :movieId and "
+                            + "ms.showTime between :dayStart and :dayEnd",
                     MovieSession.class);
+            avilableSessionsQuery.setParameter("movieId", movieId);
             avilableSessionsQuery.setParameter("dayStart", date.atStartOfDay());
             avilableSessionsQuery.setParameter("dayEnd", date.atTime(LocalTime.MAX));
             return avilableSessionsQuery.getResultList();
