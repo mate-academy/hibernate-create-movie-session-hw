@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -14,10 +15,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    private static final int LAST_HOUR = 23;
-    private static final int LAST_MINUTE = 59;
-    private static final int LAST_SECOND = 59;
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
@@ -58,7 +55,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "and :endOfTheDay ", MovieSession.class);
             query.setParameter("movie", movieId);
             query.setParameter("startOfTheDay", date.atStartOfDay());
-            query.setParameter("endOfTheDay", date.atTime(LAST_HOUR, LAST_MINUTE, LAST_SECOND));
+            query.setParameter("endOfTheDay", date.atTime(LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available movie sessions from DB", e);
