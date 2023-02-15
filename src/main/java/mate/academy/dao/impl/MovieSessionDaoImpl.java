@@ -40,9 +40,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getMovieSessionQuery =
+                    session.createQuery("from MovieSession ms "
+                                    + "join fetch ms.movie m "
+                                    + "join fetch ms.cinemaHall ch "
+                                    + "where ms.id = :id",
+                            MovieSession.class);
+            getMovieSessionQuery.setParameter("id", id);
+            MovieSession movieSession = getMovieSessionQuery.uniqueResult();
+            return Optional.ofNullable(movieSession);
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movieSession by id: " + id, e);
+            throw new DataProcessingException("Can`t get movie session by id: " + id, e);
         }
     }
 
