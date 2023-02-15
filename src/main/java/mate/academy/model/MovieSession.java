@@ -13,7 +13,7 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)
     private CinemaHall cinemaHall;
