@@ -50,15 +50,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.movie m "
-                    + "where m.id = :id "
+                    + "where ms.movie.id = :movieId "
                     + "and ms.showTime between :from and :to", MovieSession.class);
-            query.setParameter("id", movieId);
+            query.setParameter("movieId", movieId);
             query.setParameter("from", date.atStartOfDay());
             query.setParameter("to", date.atTime(LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movie sessions from database", e);
+            throw new DataProcessingException(String.format("Can't get all movie sessions by "
+                    + "movie id: %d and data: %s from database", movieId, date), e);
         }
     }
 }
