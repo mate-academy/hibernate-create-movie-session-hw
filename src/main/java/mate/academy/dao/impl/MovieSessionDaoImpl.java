@@ -53,7 +53,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "where movie.id = :movieId "
                     + "and showTime between :startOfDay and :endOfDay", MovieSession.class);
             movieSessionQuery.setParameter("movieId", movieId);
-            movieSessionQuery.setParameter("startOfDay", LocalTime.MIN.atDate(localDate));
+            movieSessionQuery.setParameter("startOfDay", localDate.atStartOfDay());
             movieSessionQuery.setParameter("endOfDay", LocalTime.MAX.atDate(localDate));
             return movieSessionQuery.getResultList();
         } catch (Exception e) {
