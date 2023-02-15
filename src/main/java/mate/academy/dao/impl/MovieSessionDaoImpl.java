@@ -52,11 +52,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getAvailableMovieSessionQuery = session
                     .createQuery("FROM MovieSession m "
                                     + "WHERE m.showTime between :dateFrom AND :dateTo "
-                                    + "AND m.movie.id = :id",
+                                    + "AND m.movie.id = :movieId",
                             MovieSession.class);
             getAvailableMovieSessionQuery.setParameter("dateFrom", date.atStartOfDay());
             getAvailableMovieSessionQuery.setParameter("dateTo", date.atTime(LocalTime.MAX));
-            getAvailableMovieSessionQuery.setParameter("id", movieId);
+            getAvailableMovieSessionQuery.setParameter("movieId", movieId);
             return getAvailableMovieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available movie sessions from DB "
