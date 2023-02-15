@@ -24,7 +24,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -40,9 +40,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            MovieSession movieSession = session.get(MovieSession.class, id);
+            Query<MovieSession> getMovieSessionQuery =
+                    session.createQuery("from MovieSession ms "
+                                    + "join fetch ms.movie m "
+                                    + "join fetch ms.cinemaHall ch "
+                                    + "where ms.id = :id",
+                            MovieSession.class);
+            getMovieSessionQuery.setParameter("id", id);
+            MovieSession movieSession = getMovieSessionQuery.uniqueResult();
             return Optional.ofNullable(movieSession);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new DataProcessingException("Can`t get movie session by id: " + id, e);
         }
     }
@@ -53,14 +60,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> getAvailableSessionsQuery =
                     session.createQuery("from MovieSession ms "
                             + "join fetch ms.movie m "
-                            + "where m.id = :id and ms.showTime between :fromTime and :toTime",
+                            + "join fetch ms.cinemaHall ch "
+                            + "where m.id = :movieId and ms.showTime between :fromTime and :toTime",
                     MovieSession.class);
-            getAvailableSessionsQuery.setParameter("id", movieId);
+            getAvailableSessionsQuery.setParameter("movieId", movieId);
             getAvailableSessionsQuery.setParameter("fromTime", date.atStartOfDay());
             getAvailableSessionsQuery.setParameter("toTime", date.atTime(LocalTime.MAX));
             return getAvailableSessionsQuery.getResultList();
-        } catch (RuntimeException e) {
-            throw new DataProcessingException("Can`t find available movie sessions", e);
+        } catch (Exception e) {
+            throw new DataProcessingException(
+                    String.format("Can`t find available movie session "
+                            + "for movie with id &s at date " + date,movieId), e);
         }
     }
 }
