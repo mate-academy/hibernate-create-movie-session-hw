@@ -20,9 +20,13 @@ public class MovieSession {
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
+    @JoinColumn(name = "cinemaHall_id")
     private CinemaHall cinemaHall;
     @JoinColumn(name = "show_time")
     private LocalDateTime showTime;
+
+    public MovieSession() {
+    }
 
     public Long getId() {
         return id;
