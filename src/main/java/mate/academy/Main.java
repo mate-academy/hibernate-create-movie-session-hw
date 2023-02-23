@@ -3,6 +3,7 @@ package mate.academy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -63,10 +64,10 @@ public class Main {
         //        System.out.println(movieService.get(moviefastAndFurious.getId()));
         //        movieService.getAll().forEach(System.out::println);
 
-        //        List<MovieSession> movieSessions =
-        //        movieSessionService.findAvailableSessions(2l, LocalDate.now());
-        //        movieSessions.forEach(x -> System.out.println(x));
+        List<MovieSession> movieSessions =
+                movieSessionService.findAvailableSessions(2L, LocalDate.now());
+        movieSessions.forEach(x -> System.out.println(x));
 
-        System.out.println(movieSessionService.get(1L));
+        // System.out.println(movieSessionService.get(1L));
     }
 }

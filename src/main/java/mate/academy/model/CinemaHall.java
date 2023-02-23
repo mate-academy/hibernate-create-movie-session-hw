@@ -14,7 +14,6 @@ public class CinemaHall {
     private String discription;
 
     public CinemaHall() {
-
     }
 
     public CinemaHall(int capacity, String discription) {

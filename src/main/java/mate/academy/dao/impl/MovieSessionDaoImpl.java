@@ -19,9 +19,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
@@ -31,10 +29,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert movie " + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
@@ -53,23 +47,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> getAll() {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query getAllMoviesQuery = session.createQuery("from MovieSession", MovieSession.class);
             return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Cant get all MovieSession from db", e);
-        } finally {
-            session.close();
         }
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        LocalDateTime localDateTimeFrom = LocalDateTime.of(date, LocalTime.of(0, 0, 0));
-        LocalDateTime localDateTimeTo = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
-        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
+        LocalTime localTimeFrom = LocalTime.of(0, 0, 0);
+        LocalTime localTimeTo = LocalTime.of(23, 59, 59);
+        LocalDateTime localDateTimeFrom = LocalDateTime.of(date, localTimeFrom);
+        LocalDateTime localDateTimeTo = LocalDateTime.of(date, localTimeTo);
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query getAllMoviesQuery =
                     session.createQuery("from MovieSession ms where ms.showTime >=:dateFrom and "
                     + "ms.showTime <=:dateTo and "
