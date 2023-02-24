@@ -16,7 +16,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             transaction = session.beginTransaction();
             session.save(movie);
             transaction.commit();

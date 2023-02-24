@@ -19,7 +19,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
@@ -59,11 +59,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         LocalDateTime localDateTimeFrom = LocalDateTime.of(date, LocalTime.MIN);
         LocalDateTime localDateTimeTo = LocalDateTime.of(date, LocalTime.MAX);
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             Query getAllMoviesQuery =
                     session.createQuery("from MovieSession ms where ms.showTime >=:dateFrom and "
-                    + "ms.showTime <=:dateTo and "
-                    + "ms.movie.id =:movie_id", MovieSession.class);
+                            + "ms.showTime <=:dateTo and "
+                            + "ms.movie.id =:movie_id", MovieSession.class);
             getAllMoviesQuery.setParameter("dateFrom", localDateTimeFrom);
             getAllMoviesQuery.setParameter("dateTo", localDateTimeTo);
             getAllMoviesQuery.setParameter("movie_id", movieId);
