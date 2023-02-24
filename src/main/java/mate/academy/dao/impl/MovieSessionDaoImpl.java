@@ -57,10 +57,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        LocalTime localTimeFrom = LocalTime.of(0, 0, 0);
-        LocalTime localTimeTo = LocalTime.of(23, 59, 59);
-        LocalDateTime localDateTimeFrom = LocalDateTime.of(date, localTimeFrom);
-        LocalDateTime localDateTimeTo = LocalDateTime.of(date, localTimeTo);
+        LocalDateTime localDateTimeFrom = LocalDateTime.of(date, LocalTime.MIN);
+        LocalDateTime localDateTimeTo = LocalDateTime.of(date, LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query getAllMoviesQuery =
                     session.createQuery("from MovieSession ms where ms.showTime >=:dateFrom and "
