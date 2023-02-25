@@ -58,9 +58,9 @@ public class Main {
         movieSessionService.add(movieSessionRed);
         movieSessionService.add(movieSessionBlue);
 
-        List<MovieSession> availableSessions =
+        List<MovieSession> movieSessions =
                 movieSessionService.findAvailableSessions(1L, LocalDate.now());
-        for (MovieSession movieSession : availableSessions) {
+        for (MovieSession movieSession : movieSessions) {
             System.out.println(movieSession);
         }
     }
