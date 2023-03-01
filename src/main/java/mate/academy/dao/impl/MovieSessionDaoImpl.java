@@ -51,12 +51,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        if (movieId == null || date == null) {
-            throw new RuntimeException(
-                    "For getting list of MovieSessions by movieId and date should be set. "
-                            + "movieId: " + movieId + ", "
-                            + "date: " + date);
-        }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             LocalDateTime startOfDay = date.atStartOfDay();
             LocalDateTime endOfDay = date.atTime(LocalTime.MAX);

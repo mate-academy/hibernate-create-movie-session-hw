@@ -27,6 +27,12 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        if (movieId == null || date == null) {
+            throw new RuntimeException(
+                    "For getting list of available MovieSessions movieId and date should be set. "
+                            + "movieId: " + movieId + ", "
+                            + "date: " + date);
+        }
         return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }
