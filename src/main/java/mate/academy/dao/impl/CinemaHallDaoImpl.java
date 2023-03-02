@@ -22,7 +22,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             session.save(cinemaHall);
             transaction.commit();
         } catch (Exception e) {
-            transaction.rollback();
+            if (transaction != null) {
+                transaction.rollback();
+            }
             throw new DataProcessingException("Can not save CinemaHall: " + cinemaHall, e);
         } finally {
             if (session != null) {
@@ -45,7 +47,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session
-                    .createQuery("from CinemaHall", CinemaHall.class)
+                    .createQuery("FROM CinemaHall", CinemaHall.class)
                     .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can not get list of CinemaHalls. ", e);
