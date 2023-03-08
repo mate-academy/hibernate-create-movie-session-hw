@@ -24,7 +24,7 @@ public class CinemaHallDaoImpl extends AbstractDaoImpl<CinemaHall>
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
+            return session.createQuery("FROM CinemaHall", CinemaHall.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a all cinema halls", e);
         }

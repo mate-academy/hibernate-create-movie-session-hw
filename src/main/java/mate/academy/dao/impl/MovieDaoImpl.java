@@ -23,7 +23,7 @@ public class MovieDaoImpl extends AbstractDaoImpl<Movie> implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Movie ", Movie.class).getResultList();
+            return session.createQuery("FROM Movie ", Movie.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a all movies", e);
         }

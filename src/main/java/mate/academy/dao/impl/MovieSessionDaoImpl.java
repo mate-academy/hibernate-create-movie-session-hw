@@ -27,9 +27,9 @@ public class MovieSessionDaoImpl extends AbstractDaoImpl<MovieSession>
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                    + "where ms.movie.id = :movie and "
-                    + "ms.showTime between :start AND :end", MovieSession.class);
+            Query<MovieSession> query = session.createQuery("FROM MovieSession ms "
+                    + "WHERE ms.movie.id = :movie AND "
+                    + "ms.showTime BETWEEN :start AND :end", MovieSession.class);
             query.setParameter("movie", movieId);
             query.setParameter("start", date.atStartOfDay());
             query.setParameter("end", date.atTime(LocalTime.MAX));
