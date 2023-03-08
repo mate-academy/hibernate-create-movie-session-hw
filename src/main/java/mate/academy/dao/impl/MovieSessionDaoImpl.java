@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -51,13 +52,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessionInCurrentDay =
-                    session.createQuery("FROM MovieSession m WHERE m.showtime >= :value1 "
-                                    + "AND m.showtime <= :value2 AND m.movie.id = :value3",
+                    session.createQuery("FROM MovieSession m WHERE m.showtime "
+                                    + "BETWEEN :fromDateTime AND :toDateTime "
+                                    + "AND m.movie.id = :movieId",
                             MovieSession.class);
-            getAllMovieSessionInCurrentDay.setParameter("value1", date.atTime(00, 00));
-            getAllMovieSessionInCurrentDay.setParameter("value2", date.atTime(23,59));
-            getAllMovieSessionInCurrentDay.setParameter("value3", movieId);
+            getAllMovieSessionInCurrentDay.setParameter("fromDateTime", date.atStartOfDay());
+            getAllMovieSessionInCurrentDay.setParameter("toDateTime", date.atTime(LocalTime.MAX));
+            getAllMovieSessionInCurrentDay.setParameter("movieId", movieId);
             return getAllMovieSessionInCurrentDay.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Couldn't find movie session by movie id: "
+                    + movieId + " and at the date: " + date + " to DB", e);
         }
     }
 }
