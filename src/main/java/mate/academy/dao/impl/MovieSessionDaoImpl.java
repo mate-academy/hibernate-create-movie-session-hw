@@ -62,7 +62,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return getAllMovieSessionInCurrentDay.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Couldn't find movie session by movie id: "
-                    + movieId + " and at the date: " + date + " to DB", e);
+                    + movieId + " and at the date: " + date, e);
         }
     }
 }
