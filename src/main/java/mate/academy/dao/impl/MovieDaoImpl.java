@@ -1,20 +1,18 @@
 package mate.academy.dao.impl;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
-import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
-public abstract class MovieDaoImpl implements MovieDao {
+public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -55,6 +53,4 @@ public abstract class MovieDaoImpl implements MovieDao {
             throw new DataProcessingException("Can't get all movie from DB", e);
         }
     }
-
-    public abstract List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
 }

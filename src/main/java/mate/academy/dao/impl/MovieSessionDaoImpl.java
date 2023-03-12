@@ -53,11 +53,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             LocalDateTime dayStart = date.atTime(LocalTime.MIN);
             LocalDateTime dayEnd = date.atTime(LocalTime.MAX);
             Query<MovieSession> query = session.createQuery("from MovieSession ms  where "
-                    + "ms.showTime >: dayStart and ms.showTime <: dayEnd "
+                    + "ms.showTime between : dayStart and : dayEnd "
                     + "and ms.movie.id =: movieId ", MovieSession.class);
-            query.setParameter("dayStart",dayStart);
-            query.setParameter("dayEnd",dayEnd);
-            query.setParameter("movieId",movieId);
+            query.setParameter("dayStart", dayStart);
+            query.setParameter("dayEnd", dayEnd);
+            query.setParameter("movieId", movieId);
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available session by id: " + movieId, e);
