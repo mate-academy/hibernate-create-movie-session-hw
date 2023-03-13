@@ -1,66 +1,56 @@
 package mate.academy.dao.impl;
 
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.MovieSession;
+import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
+
     @Override
-    public MovieSession add(MovieSession movieSession) {
+    public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
         Transaction transaction = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.getTransaction();
-            session.save(movieSession);
+            transaction = session.beginTransaction();
+            session.save(cinemaHall);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add movieSession " + movieSession + " to DB", e);
+            throw new DataProcessingException("Can't add cinema hall " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return movieSession;
+        return cinemaHall;
     }
 
     @Override
-    public MovieSession get(Long id) {
+    public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(MovieSession.class, id);
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get MovieSession by ID " + id, e);
+            throw new DataProcessingException("Can't get cinema hall by ID " + id, e);
         }
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        String query = "FROM " + MovieSession.class.getName() + " ms "
-                + "JOIN FETCH ms.movie "
-                + "JOIN FETCH ms.cinemaHall "
-                + "WHERE ms.movie.id = :movieId "
-                + "AND DATE(ms.showTime) = :date "
-                + "AND TIME(ms.showTime) > :currentTime";
+    public List<CinemaHall> getAll() {
+        String qurry = "FROM " + CinemaHall.class.getName();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery(query, MovieSession.class)
-                    .setParameter("movieId", movieId)
-                    .setParameter("data", date)
-                    .setParameter("currentTime", currentDateTime.toLocalTime())
-                    .getResultList();
+            return session.createQuery(qurry, CinemaHall.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find available sessions", e);
+            throw new DataProcessingException("Can't get all cinema hall", e);
         }
     }
 }
