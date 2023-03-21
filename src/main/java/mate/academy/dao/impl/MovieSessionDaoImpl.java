@@ -49,9 +49,32 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from MovieSession", MovieSession.class).getResultList();
+            Query<MovieSession> query = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie m "
+                    + "left join fetch ms.cinemaHall ch "
+                    , MovieSession.class);
+            return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Couldn't get all movie sessions", e);
+        }
+    }
+
+    @Override
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<MovieSession> query = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie m "
+                    + "left join fetch ms.cinemaHall ch "
+                    + "where ms.movie.id = :movieId "
+                    + "and ms.showTime between :from and :to", MovieSession.class);
+            query.setParameter("movieId", movieId);
+            query.setParameter("from", date.atTime(0, 0, 0));
+            query.setParameter("to", date.atTime(23, 59, 59));
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Couldn't find available sessions by "
+                    + "movie id: " + movieId
+                    + "date:" + date, e);
         }
     }
 
@@ -73,25 +96,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (session != null) {
                 session.close();
             }
-        }
-    }
-
-    @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.movie m "
-                    + "left join fetch ms.cinemaHall ch "
-                    + "where ms.movie.id = :movieId "
-                    + "and ms.showTime between :from and :to", MovieSession.class);
-            query.setParameter("movieId", movieId);
-            query.setParameter("from", date.atTime(0, 0, 0));
-            query.setParameter("to", date.atTime(23, 59, 59));
-            return query.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Could't find available sessions by "
-                    + "movie id: " + movieId
-                    + "date:" + date, e);
         }
     }
 }

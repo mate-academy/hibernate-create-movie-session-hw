@@ -68,7 +68,10 @@ public class Main {
         System.out.println("Information about all Cinema Hall");
         cinemaHallService.getAll().forEach(System.out::println);
 
-        System.out.println("Information about all movies sessions");
+        System.out.println("Information about all movie sessions");
+        sessionService.getAll().forEach(System.out::println);
+
+        System.out.println("Information about today movie sessions");
         sessionService
                 .findAvailableSessions(fastAndFurious.getId(), LocalDate.parse("2023-03-21"))
                 .forEach(System.out::println);
