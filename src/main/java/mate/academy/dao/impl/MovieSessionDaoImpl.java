@@ -1,7 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -42,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get movie from DB by id:" + id, e);
+            throw new DataProcessingException("Can't get movie session from DB by id:" + id, e);
         }
     }
 
@@ -50,11 +50,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> findAvailableSessions = session.createQuery("from MovieSession m "
-                     + "where m.movie.id = :movieId and m.showTime between :dateBefore and :dateAfter", MovieSession.class);
+                     + "where m.movie.id = :movieId "
+                    + "and m.showTime between :dateBefore and :dateAfter", MovieSession.class);
             findAvailableSessions.setParameter("movieId", movieId);
             findAvailableSessions.setParameter("dateBefore", date.atStartOfDay());
-            findAvailableSessions.setParameter("dateAfter", date.atTime(23,59, 59));
-            return  findAvailableSessions.getResultList();
+            findAvailableSessions.setParameter("dateAfter", date.atTime(LocalTime.MAX));
+            return findAvailableSessions.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available session from movie id: "
                     + movieId + " and date " + date, e);
