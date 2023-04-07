@@ -13,5 +13,6 @@
         <property name="show_sql">true</property>
 
         <mapping class="mate.academy.model.Movie"/>
+        <mapping class="mate.academy.model.CinemaHall"/>
     </session-factory>
 </hibernate-configuration>
