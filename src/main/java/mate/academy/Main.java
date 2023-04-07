@@ -30,6 +30,12 @@ public class Main {
         cinemaHall.setCapacity(100);
         cinemaHall.setDescription("VIP hall");
         cinemaHallService.add(cinemaHall);
+
+        CinemaHall cinemaHall2 = new CinemaHall();
+        cinemaHall2.setCapacity(50);
+        cinemaHall2.setDescription("Sample hall");
+        cinemaHallService.add(cinemaHall2);
+
         System.out.println(cinemaHallService.get(cinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
@@ -38,6 +44,19 @@ public class Main {
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSession);
+
+        MovieSession movieSession2 = new MovieSession();
+        movieSession2.setMovie(fastAndFurious);
+        movieSession2.setCinemaHall(cinemaHall);
+        movieSession2.setShowTime(LocalDateTime.of(2023, 04, 20, 10, 0));
+        movieSessionService.add(movieSession2);
+
+        MovieSession movieSession3 = new MovieSession();
+        movieSession3.setMovie(fastAndFurious);
+        movieSession3.setCinemaHall(cinemaHall2);
+        movieSession3.setShowTime(LocalDateTime.of(2023, 05, 20, 17, 0));
+        movieSessionService.add(movieSession3);
+
         //System.out.println(movieSessionService.get(movieSession.getId()));
         System.out.println();
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
