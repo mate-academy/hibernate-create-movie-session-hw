@@ -2,32 +2,31 @@ package mate.academy.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.NoSuchElementException;
+import mate.academy.dao.MovieSessionDao;
+import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
+    @Inject
+    private MovieSessionDao movieSessionDao;
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-        // TODO Auto-generated method stub
-        return null;
+        return movieSessionDao.add(movieSession);
     }
 
     @Override
     public MovieSession get(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return movieSessionDao.get(id).orElseThrow(() -> 
+        new NoSuchElementException("Can't get movie session by id: " + id));
     }
-    
-//  Keep in mind that method `findAvailableSessions()` expects a `LocalDate` that represents the day 
-//  chosen by a customer to visit our cinema, so your task here is to return all MovieSessions 
-//  that will be running between 00:00 and 23:59:59 on that particular day.
+
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        // TODO Auto-generated method stub
-        return null;
+        return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }

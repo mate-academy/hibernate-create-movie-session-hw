@@ -1,29 +1,31 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-
+import java.util.NoSuchElementException;
+import mate.academy.dao.CinemaHallDao;
+import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
-
+    @Inject
+    private CinemaHallDao cinemaHallDao;
+    
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        // TODO Auto-generated method stub
-        return null;
+        return cinemaHallDao.add(cinemaHall);
     }
 
     @Override
     public CinemaHall get(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return cinemaHallDao.get(id).orElseThrow(
+                () -> new NoSuchElementException("Can't get cinema hall by id: " + id));
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        // TODO Auto-generated method stub
-        return null;
+        return cinemaHallDao.getAll();
     }
 }
