@@ -12,7 +12,6 @@ import org.hibernate.Transaction;
 
 @Service
 public class CinemaHallDaoImpl implements CinemaHallDao {
-
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
