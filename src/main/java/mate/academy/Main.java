@@ -2,6 +2,7 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -41,6 +42,8 @@ public class Main {
                 .of(2022, 2, 3);
 
         movieSessionService.get(1L);
-        movieSessionService.findAvailableSessions(1L, of1);
+        List<MovieSession> availableSessions = movieSessionService.findAvailableSessions(1L, of1);
+        availableSessions.forEach(System.out::println);
+
     }
 }
