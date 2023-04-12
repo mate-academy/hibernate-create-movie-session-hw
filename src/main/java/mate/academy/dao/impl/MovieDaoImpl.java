@@ -24,7 +24,7 @@ public class MovieDaoImpl implements MovieDao {
             session.save(movie);
             transaction.commit();
             return movie;
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -40,7 +40,7 @@ public class MovieDaoImpl implements MovieDao {
     public Optional<Movie> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(Movie.class, id));
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie by id: " + id, e);
         }
     }
@@ -50,7 +50,7 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
             return getAllMoviesQuery.getResultList();
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             throw new DataProcessingException("Can't get all movies from DB : ", e);
         }
     }
