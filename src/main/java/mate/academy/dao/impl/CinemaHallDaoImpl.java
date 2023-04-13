@@ -3,7 +3,6 @@ package mate.academy.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
@@ -48,19 +47,19 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        EntityManager entityManager = null;
+        Session session = null;
         List<CinemaHall> list = new ArrayList<>();
 
         try {
-            entityManager = HibernateUtil.getSessionFactory().openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             String hql = "FROM CinemaHall";
-            Query query = entityManager.createQuery(hql);
+            Query query = session.createQuery(hql);
             list.addAll((List<CinemaHall>) query.getResultList());
         } catch (Exception e) {
             throw new RuntimeException("Could not get all cinema halls from DB", e);
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
 

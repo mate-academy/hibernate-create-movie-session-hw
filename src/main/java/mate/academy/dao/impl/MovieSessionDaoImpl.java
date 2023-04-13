@@ -62,8 +62,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             session = HibernateUtil.getSessionFactory().openSession();
             Query<MovieSession> query = session.createQuery("SELECT ms "
                     + "FROM MovieSession ms "
-                    + "JOIN ms.cinemaHall c "
-                    + "JOIN ms.movie m "
+                    + "LEFT JOIN FETCH ms.cinemaHall c "
+                    + "LEFT JOIN FETCH ms.movie m "
                     + "WHERE m.id = :movieId "
                     + "AND YEAR(ms.showTime) = YEAR(:targetDate) "
                     + "AND MONTH(ms.showTime) = MONTH(:targetDate) AND DAY(ms.showTime)"

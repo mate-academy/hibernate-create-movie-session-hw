@@ -3,7 +3,6 @@ package mate.academy.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import mate.academy.dao.MovieDao;
 import mate.academy.exception.DataProcessingException;
@@ -48,19 +47,19 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        EntityManager entityManager = null;
+        Session session = null;
         List<Movie> list = new ArrayList<>();
 
         try {
-            entityManager = HibernateUtil.getSessionFactory().openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             String hql = "FROM Movie";
-            Query query = entityManager.createQuery(hql);
+            Query query = session.createQuery(hql);
             list.addAll((List<Movie>) query.getResultList());
         } catch (Exception e) {
             throw new RuntimeException("Could not get all movies from DB", e);
         } finally {
-            if (entityManager != null) {
-                entityManager.close();
+            if (session != null) {
+                session.close();
             }
         }
 

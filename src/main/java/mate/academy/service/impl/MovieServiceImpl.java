@@ -1,7 +1,6 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Supplier;
 import mate.academy.dao.MovieDao;
 import mate.academy.exception.DataProcessingException;
@@ -22,10 +21,9 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        Optional<Movie> movieOptional = movieDao.get(id);
-        return movieOptional.orElseThrow((Supplier<RuntimeException>) ()
-                -> new DataProcessingException("could not retrieve"
-                + " movie with id: " + id, null));
+        return movieDao.get(id).orElseThrow((Supplier<RuntimeException>) ()
+            -> new DataProcessingException("could not retrieve"
+            + " movie with id: " + id, null));
     }
 
     @Override
