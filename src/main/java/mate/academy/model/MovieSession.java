@@ -14,18 +14,18 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime showTime;
     @ManyToOne
     private Movie movie;
+    private LocalDateTime showTime;
     @ManyToOne
     private CinemaHall cinemaHall;
 
     public MovieSession() {
     }
 
-    public MovieSession(LocalDateTime showTime, Movie movie, CinemaHall cinemaHall) {
-        this.showTime = showTime;
+    public MovieSession(Movie movie, LocalDateTime showTime, CinemaHall cinemaHall) {
         this.movie = movie;
+        this.showTime = showTime;
         this.cinemaHall = cinemaHall;
     }
 
