@@ -12,11 +12,16 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
+    private static final MovieService movieService =
+            (MovieService)injector.getInstance(MovieService.class);
+    private static final CinemaHallService cinemaHallService =
+            (CinemaHallService)injector.getInstance(CinemaHallService.class);
+    private static final MovieSessionService movieSessionService =
+            (MovieSessionService)injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
-        MovieService movieService = (MovieService)injector.getInstance(MovieService.class);
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
@@ -24,8 +29,6 @@ public class Main {
         CinemaHall firstHall = new CinemaHall();
         firstHall.setCapacity(100);
         firstHall.setDescription("Is a big hall");
-        CinemaHallService cinemaHallService =
-                (CinemaHallService)injector.getInstance(CinemaHallService.class);
         cinemaHallService.add(firstHall);
         System.out.println(cinemaHallService.get(firstHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
@@ -34,8 +37,6 @@ public class Main {
         session.setMovie(fastAndFurious);
         session.setCinemaHall(firstHall);
         session.setShowTime(LocalDateTime.now());
-        MovieSessionService movieSessionService =
-                (MovieSessionService)injector.getInstance(MovieSessionService.class);
         movieSessionService.add(session);
         System.out.println(movieSessionService.get(session.getId()));
         LocalDate toDay = LocalDate.now();
