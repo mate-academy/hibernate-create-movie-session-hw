@@ -2,30 +2,29 @@ package mate.academy.service.impl;
 
 import java.util.List;
 import mate.academy.dao.CinemaHallDao;
-import mate.academy.lib.Injector;
+import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
-    private static final Injector injector =
-            Injector.getInstance("mate.academy");
-    private final CinemaHallDao cinemaHallDao =
-            (CinemaHallDao) injector.getInstance(CinemaHallDao.class);
+    @Inject
+    private CinemaHallDao cinemaHallDao;
 
     @Override
     public CinemaHall add(CinemaHall entity) {
-        return null;
+        return cinemaHallDao.add(entity);
     }
 
     @Override
     public CinemaHall get(Long id) {
-        return null;
+        return cinemaHallDao.get(id).orElseThrow(() ->
+                new RuntimeException("Can't get cinema hall by id" + id));
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        return null;
+        return cinemaHallDao.getAll();
     }
 }

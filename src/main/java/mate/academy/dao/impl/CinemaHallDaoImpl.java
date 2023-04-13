@@ -3,30 +3,55 @@ package mate.academy.dao.impl;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
-import org.hibernate.SessionFactory;
+import mate.academy.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private static final Injector injector =
-            Injector.getInstance("mate.academy");
-    private final SessionFactory sessionFactory =
-            (SessionFactory) injector.getInstance(SessionFactory.class);
-
     @Override
     public CinemaHall add(CinemaHall entity) {
-        return null;
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.persist(entity);
+            transaction.commit();
+            return entity;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can't save cinema hall: " + entity, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        return Optional.empty();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get cinema hall by id: " + id, e);
+        }
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<CinemaHall> getAllCinemaHalls =
+                    session.createQuery("from CinemaHall", CinemaHall.class);
+            return getAllCinemaHalls.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all cinema halls", e);
+        }
     }
 }

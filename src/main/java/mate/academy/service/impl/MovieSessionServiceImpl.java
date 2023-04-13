@@ -3,35 +3,34 @@ package mate.academy.service.impl;
 import java.time.LocalDate;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
-import mate.academy.lib.Injector;
+import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-    private static final Injector injector =
-            Injector.getInstance("mate.academy");
-    private final MovieSessionDao movieSessionDao =
-            (MovieSessionDao) injector.getInstance(MovieSessionDao.class);
+    @Inject
+    private MovieSessionDao movieSessionDao;
 
     @Override
     public MovieSession add(MovieSession entity) {
-        return null;
+        return movieSessionDao.add(entity);
     }
 
     @Override
     public MovieSession get(Long id) {
-        return null;
+        return movieSessionDao.get(id).orElseThrow(() ->
+                new RuntimeException("Can't get movie session by id: " + id));
     }
 
     @Override
     public List<MovieSession> getAll() {
-        return null;
+        return movieSessionDao.getAll();
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return null;
+        return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }
