@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -51,9 +52,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAllMovieSession = session.createQuery("from MovieSession ms "
-                    + "where date(ms.localDateTime) = cast(:date as java.sql.Date) "
+                    + "where date(ms.localDateTime) = :date "
                     + "and ms.id =: movieId", MovieSession.class);
-            getAllMovieSession.setParameter("date", date);
+            getAllMovieSession.setParameter("date", Date.valueOf(date));
             getAllMovieSession.setParameter("movieId", movieId);
             return getAllMovieSession.getResultList();
         }
