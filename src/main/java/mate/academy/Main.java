@@ -23,20 +23,20 @@ public class Main {
             .getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
-        Movie fastAndFurious = new Movie("Fast and Furious");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
+        Movie fastAndFurious = new Movie("Java 2");
+        fastAndFurious.setDescription("How I learn java");
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
         CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setCapacity(12);
-        cinemaHall.setDescription("red hall");
+        cinemaHall.setCapacity(13);
+        cinemaHall.setDescription("green hall");
         cinemaHallService.add(cinemaHall);
         cinemaHallService.getAll().forEach(System.out::println);
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHalls(cinemaHallService.getAll());
-        movieSession.setLocalDateTime(LocalDateTime.of(2023, 4, 14, 18, 0));
+        movieSession.setLocalDateTime(LocalDateTime.of(2023, 4, 14, 10, 0));
         movieSessionService.add(movieSession);
         movieSessionService.get(1L);
         movieSessionService.findAvailableSessions(movieSession.getId(), LocalDate.now());

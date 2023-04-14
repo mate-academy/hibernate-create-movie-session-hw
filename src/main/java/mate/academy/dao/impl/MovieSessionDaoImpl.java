@@ -51,11 +51,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> getAllMovieSession = session.createQuery("from MovieSession ms "
-                    + "where (ms.localDateTime >= :startOfDay "
-                    + "and ms.localDateTime < :startOfNextDay)"
+                    + "where date(ms.localDateTime) = cast(:date as java.sql.Date) "
                     + "and ms.id =: movieId", MovieSession.class);
-            getAllMovieSession.setParameter("startOfDay", date.atStartOfDay());
-            getAllMovieSession.setParameter("startOfNextDay", date.plusDays(1).atStartOfDay());
+            getAllMovieSession.setParameter("date", date);
             getAllMovieSession.setParameter("movieId", movieId);
             return getAllMovieSession.getResultList();
         }
