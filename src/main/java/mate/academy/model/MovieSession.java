@@ -1,6 +1,7 @@
 package mate.academy.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,7 +17,7 @@ public class MovieSession {
     private Long id;
     @ManyToOne
     private Movie movie;
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.LAZY)
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
