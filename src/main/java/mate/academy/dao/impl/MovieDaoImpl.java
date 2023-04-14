@@ -50,7 +50,7 @@ public class MovieDaoImpl implements MovieDao {
             Query<Movie> allFromMovieQuery = session.createQuery("from Movie", Movie.class);
             return allFromMovieQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movie from db");
+            throw new DataProcessingException("Can't get all movie from db", e);
         }
     }
 }

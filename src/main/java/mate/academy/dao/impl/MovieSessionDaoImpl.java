@@ -28,7 +28,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add movie session " + movieSession + " to db");
+            throw new DataProcessingException("Can't add movie session " + movieSession
+                    + " to db" + e);
         } finally {
             if (session != null) {
                 session.close();
@@ -41,12 +42,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from MovieSession ms "
-                    + "join fetch ms.movie join fetch ms.cinemaHall"
+                    + "join fetch ms.cinemaHall "
+                    + "join fetch ms.movie"
                    + " where ms.id = :id", MovieSession.class)
                    .setParameter("id", id).uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie session by id: " + id
-                    + " from db");
+                    + " from db" + e);
         }
     }
 
@@ -55,7 +57,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> availableMovieSessionQuery = session.createQuery(
                     "from MovieSession ms "
-                    + "join fetch ms.movie join fetch ms.cinemaHall where ms.movie.id = :movieId "
+                    + "join fetch ms.cinemaHall "
+                    + "join fetch ms.movie where ms.movie.id = :movieId "
                     + "and ms.showTime between :start and :end", MovieSession.class);
             availableMovieSessionQuery.setParameter("movieId", movieId);
             availableMovieSessionQuery.setParameter("start", date.atStartOfDay());
@@ -63,7 +66,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return availableMovieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available movie session by date: "
-                    + date + " and movie id: " + movieId);
+                    + date + " and movie id: " + movieId + e);
         }
     }
 }
