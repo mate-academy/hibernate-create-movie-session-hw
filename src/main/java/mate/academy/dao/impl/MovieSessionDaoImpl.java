@@ -38,28 +38,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        Session session = null;
-
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            Query<MovieSession> query = session.createQuery("from MovieSession o "
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<MovieSession> query = session.createQuery("FROM MovieSession o "
                     + "left join fetch o.cinemaHall, o.movie where o.id = :id", MovieSession.class);
             return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
             throw new RuntimeException("Could not get all movie sessions from DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
-    
+
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        Session session = null;
 
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("SELECT ms "
                     + "FROM MovieSession ms "
                     + "LEFT JOIN FETCH ms.cinemaHall c "
@@ -73,10 +64,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return query.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Could not get all movie sessions from DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 }

@@ -1,9 +1,8 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.NoSuchElementException;
 import mate.academy.dao.CinemaHallDao;
-import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
@@ -21,9 +20,8 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id).orElseThrow((Supplier<RuntimeException>) ()
-                -> new DataProcessingException("could not retrieve"
-                + " cinema hall with id: " + id, null));
+        return cinemaHallDao.get(id).orElseThrow(()
+                -> new NoSuchElementException("Could not retrieve cinema hall with id: " + id));
     }
 
     @Override

@@ -47,20 +47,15 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        Session session = null;
         List<CinemaHall> list = new ArrayList<>();
 
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
             String hql = "FROM CinemaHall";
             Query query = session.createQuery(hql);
             list.addAll((List<CinemaHall>) query.getResultList());
         } catch (Exception e) {
             throw new RuntimeException("Could not get all cinema halls from DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
 
         return list;
