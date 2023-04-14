@@ -12,6 +12,8 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
+    private static final int IMAX_CAPACITY = 100;
+    private static final int DELUXE_CAPACITY = 40;
 
     public static void main(String[] args) {
         final MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
@@ -41,12 +43,12 @@ public class Main {
 
         CinemaHall imax = new CinemaHall();
         imax.setDescription("IMAX cinema hall");
-        imax.setCapacity(100);
+        imax.setCapacity(IMAX_CAPACITY);
         cinemaHallService.add(imax);
 
         CinemaHall deluxe = new CinemaHall();
         deluxe.setDescription("Deluxe cinema hall");
-        deluxe.setCapacity(40);
+        deluxe.setCapacity(DELUXE_CAPACITY);
         cinemaHallService.add(deluxe);
         System.out.println(cinemaHallService.get(deluxe.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
