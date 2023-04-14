@@ -44,7 +44,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "left join fetch ms.movie "
                     + "left join fetch ms.cinemaHall "
                     + "where ms.id = :id", MovieSession.class);
-            getQuery.setParameter("id", id);
+            getQuery.setParameter("id", id).uniqueResultOptional();
             return getQuery.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movieSession by id: " + id, e);
