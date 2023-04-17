@@ -34,7 +34,7 @@ public class Main {
         cinemaHallService.getAll().forEach(System.out::println);
 
         MovieSession movieSession = new MovieSession();
-        LocalDateTime localDateTime = LocalDateTime.of(2023, 4, 17, 17, 00,00);
+        LocalDateTime localDateTime = LocalDateTime.of(2023, 4, 17, 17, 00, 00);
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(redHall);
         movieSession.setShowTime(localDateTime);
