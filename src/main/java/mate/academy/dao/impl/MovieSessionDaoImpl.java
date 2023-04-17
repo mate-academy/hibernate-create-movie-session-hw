@@ -53,9 +53,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + " AND YEAR(ms.showTime) = :year"
                     + " AND MONTH(ms.showTime) = :month"
                     + " AND DAY(ms.showTime) = :day", MovieSession.class);
-            findAllMovieSessionsQuery.setParameter("id", movieId);
+            findAllMovieSessionsQuery.setParameter("movieId", movieId);
             findAllMovieSessionsQuery.setParameter("year", date.getYear());
-            findAllMovieSessionsQuery.setParameter("month", date.getMonth());
+            findAllMovieSessionsQuery.setParameter("month", date.getMonthValue());
             findAllMovieSessionsQuery.setParameter("day", date.getDayOfMonth());
             return findAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
