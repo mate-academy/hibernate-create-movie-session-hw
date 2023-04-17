@@ -69,6 +69,10 @@ public class Main {
         System.out.println("Get by id:\n" + movieSessionService.get(secondSession.getId()));
 
         System.out.println("Find Available Sessions:");
+        MovieSession thirdSession = new MovieSession();
+        thirdSession.setMovie(fastAndFurious);
+        thirdSession.setShowTime(LocalDateTime.of(1991, 1, 1,1,1,1));
+        movieSessionService.add(thirdSession);
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.now()).forEach(System.out::println);
     }
