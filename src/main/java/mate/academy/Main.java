@@ -54,7 +54,9 @@ public class Main {
         movieSessionService.add(fastAndFuriousSecond);
         System.out.println(movieSessionService.get(fastAndFuriousFirst.getId()));
         System.out.println("Available");
-        movieSessionService.findAvailableSessions(
+        movieSessionService.findAvailableSessions(1L,
+                LocalDate.parse(firstSession, formatter)).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(2L,
                 LocalDate.parse(firstSession, formatter)).forEach(System.out::println);
     }
 }

@@ -53,12 +53,20 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> findAvailableSessions(LocalDate date) {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("from MovieSession m "
-                            + "left join fetch m.movie "
-                            + "left join fetch m.cinemaHall ",
+            Query<MovieSession> query = session.createQuery("from MovieSession ms "
+                            + "left join fetch ms.movie "
+                            + "left join fetch ms.cinemaHall "
+                            + "WHERE ms.movie.id = :movieId "
+                            + "AND YEAR(ms.showTime) = :year "
+                            + "AND MONTH(ms.showTime) = :month "
+                            + "AND DAY(ms.showTime) = :day",
                     MovieSession.class);
+            query.setParameter("movieId", movieId);
+            query.setParameter("year", date.getYear());
+            query.setParameter("month", date.getMonthValue());
+            query.setParameter("day", date.getDayOfMonth());
             return query.getResultList()
                     .stream()
                     .filter(m -> m.getShowTime().getDayOfYear() == date.getDayOfYear())
