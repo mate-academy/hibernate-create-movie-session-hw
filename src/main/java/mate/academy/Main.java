@@ -23,7 +23,7 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
-        CinemaHall redHall = new CinemaHall(50,"Cozy red cinema hall.");
+        CinemaHall redHall = new CinemaHall(50, "Cozy red cinema hall.");
         cinemaHallService.add(redHall);
         System.out.println(cinemaHallService.get(redHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
@@ -36,6 +36,6 @@ public class Main {
         movieSessionService.add(firstMorningSession);
         System.out.println(movieSessionService.get(firstMorningSession.getId()));
         movieSessionService.findAvailableSessions(redHall.getId(),
-                LocalDate.of(2023,4,13)).forEach(System.out::println);
+                LocalDate.of(2023, 4, 13)).forEach(System.out::println);
     }
 }

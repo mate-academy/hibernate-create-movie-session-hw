@@ -3,7 +3,6 @@ package mate.academy.dao.impl;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -61,7 +60,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     LocalTime.of(23,59,59)));
             return getAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
-            return new ArrayList<MovieSession>();
+            throw new DataProcessingException("Exception was occurred during finding available "
+                    + "sessions for movie id: " + movieId + " and date: " + date, e);
         }
     }
 }
