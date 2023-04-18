@@ -55,7 +55,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .setParameter("date", date)
                     .getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movies", e);
+            throw new DataProcessingException("Can't get all movie sessions", e);
         }
     }
 }
