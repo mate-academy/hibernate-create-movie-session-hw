@@ -48,15 +48,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query findAvailableSessionQuery = session.createQuery("from MovieSession s"
-                    + " where s.movie.id = :id "
-                    + "and year(s.showTime) = :year "
-                    + "and month(s.showTime) = :month "
-                    + "and day(s.showTime) = :day", MovieSession.class);
+            Query findAvailableSessionQuery = session.createQuery("from MovieSession ch"
+                    + " where ch.movie.id = :id AND "
+                    + "ch.showTime = :date");
             findAvailableSessionQuery.setParameter("id", movieId);
-            findAvailableSessionQuery.setParameter("year", date.getYear());
-            findAvailableSessionQuery.setParameter("month", date.getMonthValue());
-            findAvailableSessionQuery.setParameter("day", date.getDayOfMonth());
+            findAvailableSessionQuery.setParameter("date", date);
             return findAvailableSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can`t find available sessions in db.", e);
