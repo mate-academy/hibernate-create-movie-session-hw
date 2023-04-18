@@ -52,7 +52,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     session.createQuery("select ms from MovieSession ms "
                             + "left join ms.movie "
                             + "left join ms.cinemaHall "
-                            + "where ms.id = :movieId "
+                            + "where ms.movie.id = :movieId "
                             + "and ms.showTime >= :date and ms.showTime < : plusDay",
                             MovieSession.class);
             getAvailableQuery.setParameter("movieId", movieId);
