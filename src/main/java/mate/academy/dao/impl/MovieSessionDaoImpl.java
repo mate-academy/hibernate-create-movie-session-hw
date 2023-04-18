@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -36,9 +37,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession get(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(MovieSession.class, id);
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie session by id: " + id, e);
         }
@@ -50,10 +51,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
                     + "where year(ms.showTime) = :year"
                     + "and month(ms.showTime) = :month "
-                    + "and day(ms.showTime) = :day", MovieSession.class);
+                    + "and day(ms.showTime) = :day"
+                    + "and movieId = :movieId", MovieSession.class);
             query.setParameter("year", date.getYear());
             query.setParameter("month", date.getMonth());
             query.setParameter("day", date.getDayOfMonth());
+            query.setParameter("movieId", movieId);
             return query.getResultList();
         }
     }
