@@ -17,7 +17,7 @@ public class Main {
     private static final String PARIS = "Paris";
     private static final String LONDON = "London";
     private static final String TOKIO = "Tokio";
-    private static Injector injector = Injector.getInstance("mate.academy");
+    private static final Injector injector = Injector.getInstance("mate.academy");
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
@@ -25,7 +25,7 @@ public class Main {
         Movie snitch = new Movie("Snitch");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         terminator.setDescription("An action and fantastic film about war against machines.");
-        snitch.setDescription("Film is based real evens");
+        snitch.setDescription("Film is based real events");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         movieService.add(fastAndFurious);
         movieService.add(terminator);
