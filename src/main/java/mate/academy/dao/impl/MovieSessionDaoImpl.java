@@ -18,9 +18,10 @@ import org.hibernate.query.Query;
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
-        final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();

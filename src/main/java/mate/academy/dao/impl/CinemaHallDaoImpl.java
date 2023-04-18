@@ -15,9 +15,10 @@ import org.hibernate.Transaction;
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
