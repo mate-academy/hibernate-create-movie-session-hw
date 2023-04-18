@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -36,9 +37,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession get(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(MovieSession.class, id);
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movieSession by id: " + id, e);
         }
@@ -47,12 +48,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query getAllFromCinemaHallQuery = session.createQuery("from MovieSession ch"
-                    + " where ch.movie.id = :id AND "
-                    + "ch.showTime = :date");
-            getAllFromCinemaHallQuery.setParameter("id",movieId);
-            getAllFromCinemaHallQuery.setParameter("date",date);
-            return getAllFromCinemaHallQuery.getResultList();
+            Query findAvailableSessionQuery = session.createQuery("from MovieSession s"
+                    + " where s.movie.id = :id "
+                    + "and year(s.showTime) = :year "
+                    + "and month(s.showTime) = :month "
+                    + "and day(s.showTime) = :day", MovieSession.class);
+            findAvailableSessionQuery.setParameter("id", movieId);
+            findAvailableSessionQuery.setParameter("year", date.getYear());
+            findAvailableSessionQuery.setParameter("month", date.getMonthValue());
+            findAvailableSessionQuery.setParameter("day", date.getDayOfMonth());
+            return findAvailableSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can`t find available sessions in db.", e);
         }
