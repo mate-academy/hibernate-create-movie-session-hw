@@ -11,6 +11,7 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
 public class Main {
+    private final static int HALL_CAPACITY = 20;
     private static final Injector injector = Injector.getInstance("mate.academy");
     private static final MovieService movieService =
             (MovieService) injector.getInstance(MovieService.class);
@@ -27,12 +28,12 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
 
         CinemaHall redVipHall = new CinemaHall();
-        redVipHall.setCapacity(20);
+        redVipHall.setCapacity(HALL_CAPACITY);
         redVipHall.setDescription("Hall #7 on schema");
         cinemaHallService.add(redVipHall);
         System.out.println(cinemaHallService.get(redVipHall.getId()));
         CinemaHall blue3DHall = new CinemaHall();
-        blue3DHall.setCapacity(20);
+        blue3DHall.setCapacity(HALL_CAPACITY);
         blue3DHall.setDescription("Hall #2 on schema");
         cinemaHallService.add(blue3DHall);
         cinemaHallService.getAll().forEach(System.out::println);
