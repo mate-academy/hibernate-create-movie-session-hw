@@ -43,11 +43,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 + "LEFT JOIN FETCH ms.cinemaHall "
                 + "WHERE ms.id = :movieId";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(
-                    session.createQuery(query, MovieSession.class)
+            return session.createQuery(query, MovieSession.class)
                             .setParameter("movieId", id)
-                            .getSingleResult()
-            );
+                            .uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can`t get movie session by id: " + id, e);
         }
