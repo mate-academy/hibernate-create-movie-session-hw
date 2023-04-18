@@ -36,7 +36,7 @@ public class Main {
         focusGroup.setCinemaHall(greenHall);
         focusGroup.setMovie(fastAndFurious);
         LocalDateTime dateOfShowTime =
-                LocalDateTime.of(2023, 4, 18, 10, 00);
+                LocalDateTime.now();
         focusGroup.setShowTime(dateOfShowTime);
         movieSessionService.add(focusGroup);
         System.out.println(movieSessionService.get(focusGroup.getId()));

@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -18,10 +19,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
@@ -32,10 +31,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             }
             throw new DataProcessingException("Can't add a movie session to database"
                     + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
@@ -56,13 +51,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> findAllMovieSessionsQuery
                     = session.createQuery("from MovieSession ms"
                     + " WHERE ms.movie.id = :movieId"
-                    + " AND YEAR(ms.showTime) = :year"
-                    + " AND MONTH(ms.showTime) = :month"
-                    + " AND DAY(ms.showTime) = :day", MovieSession.class);
+                    + " AND ms.showTime between :start and :end", MovieSession.class);
             findAllMovieSessionsQuery.setParameter("movieId", movieId);
-            findAllMovieSessionsQuery.setParameter("year", date.getYear());
-            findAllMovieSessionsQuery.setParameter("month", date.getMonthValue());
-            findAllMovieSessionsQuery.setParameter("day", date.getDayOfMonth());
+            findAllMovieSessionsQuery.setParameter("start", date.atStartOfDay());
+            findAllMovieSessionsQuery.setParameter("end", date.atTime(LocalTime.MAX));
             return findAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(
