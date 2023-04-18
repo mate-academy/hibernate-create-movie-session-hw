@@ -22,6 +22,7 @@ public class MovieSession {
     @ManyToOne
     @Column(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
+    @Column(name = "show_time")
     private LocalDateTime showTime;
 
     public MovieSession() {
