@@ -43,15 +43,15 @@ public class Main {
         movieSession.setShowTime(time);
         movieSessionService.add(movieSession);
 
-        LocalDateTime localDateTime = LocalDateTime.of(2023, 4,15,10,30);
+        LocalDateTime localDateTime = LocalDateTime.of(2023, 4, 15, 10, 30);
         MovieSession anotherSession = new MovieSession();
         anotherSession.setMovie(movie);
         anotherSession.setCinemaHall(cinemaHall);
         anotherSession.setShowTime(localDateTime);
         movieSessionService.add(anotherSession);
-        System.out.println(movieSessionService.get(1L));
+        System.out.println(movieSessionService.get(anotherSession.getId()));
 
-        LocalDate localDate = LocalDate.of(2023,4,16);
-        System.out.println(movieSessionService.findAvailableSessions(1L, localDate));
+        LocalDate localDate = LocalDate.of(2023, 4, 16);
+        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(), localDate));
     }
 }
