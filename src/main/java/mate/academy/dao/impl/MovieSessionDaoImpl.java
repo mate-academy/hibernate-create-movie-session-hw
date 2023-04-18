@@ -40,10 +40,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall "
-                    + "where ms.id = :movieId ", MovieSession.class);
-            query.setParameter("movieId", id);
+                    + "join fetch ms.movie "
+                    + "join fetch ms.cinemaHall "
+                    + "where ms.id = :sessionId ", MovieSession.class);
+            query.setParameter("sessionId", id);
             return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
@@ -55,17 +55,18 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAvailableQuery =
                     session.createQuery("from MovieSession ms "
-                            + "left join fetch ms.movie "
-                            + "left join fetch ms.cinemaHall "
+                            + "join fetch ms.movie "
+                            + "join fetch ms.cinemaHall "
                             + "where ms.movie.id = :movieId "
-                            + "and ms.showTime >= :date and ms.showTime < :plusDay",
+                            + "and ms.showTime between :date and :plusDay",
                             MovieSession.class);
             getAvailableQuery.setParameter("movieId", movieId);
             getAvailableQuery.setParameter("date", date.atStartOfDay());
             getAvailableQuery.setParameter("plusDay", date.plusDays(1).atStartOfDay());
             return getAvailableQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movie sessions from DB", e);
+            throw new DataProcessingException("Can't get all movie sessions from DB: "
+                    + movieId + " date: " + date, e);
         }
     }
 }
