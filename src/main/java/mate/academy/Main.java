@@ -52,6 +52,7 @@ public class Main {
         System.out.println(movieSessionService.get(anotherSession.getId()));
 
         LocalDate localDate = LocalDate.of(2023, 4, 16);
-        System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(), localDate));
+        System.out.println(movieSessionService.findAvailableSessions(
+                fastAndFurious.getId(), localDate));
     }
 }
