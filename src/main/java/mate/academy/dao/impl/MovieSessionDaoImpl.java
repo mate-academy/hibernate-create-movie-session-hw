@@ -41,10 +41,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("from MovieSession m "
-                    + "left join fetch m.movie "
-                    + "left join fetch m.cinemaHall "
-                    + "where m.id = :id", MovieSession.class);
+            Query<MovieSession> query = session.createQuery("FROM MovieSession m "
+                    + "LEFT JOIN FETCH m.movie "
+                    + "LEFT JOIN FETCH m.cinemaHall "
+                    + "WHERE m.id = :id", MovieSession.class);
             query.setParameter("id", id);
             return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
@@ -55,9 +55,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                            + "left join fetch ms.movie "
-                            + "left join fetch ms.cinemaHall "
+            Query<MovieSession> query = session.createQuery("FROM MovieSession ms "
+                            + "LEFT JOIN FETCH ms.movie "
+                            + "LEFT JOIN FETCH ms.cinemaHall "
                             + "WHERE ms.movie.id = :movieId "
                             + "AND YEAR(ms.showTime) = :year "
                             + "AND MONTH(ms.showTime) = :month "
@@ -67,10 +67,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("year", date.getYear());
             query.setParameter("month", date.getMonthValue());
             query.setParameter("day", date.getDayOfMonth());
-            return query.getResultList()
-                    .stream()
-                    .filter(m -> m.getShowTime().getDayOfYear() == date.getDayOfYear())
-                    .collect(Collectors.toList());
+            return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available movie sessions by", e);
         }
