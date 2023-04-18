@@ -63,7 +63,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             avaibleSessionQuery.setParameter("end", date.atTime(LocalTime.MAX));
             return avaibleSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find avaible MovieSession "
+            throw new DataProcessingException("Can't find available MovieSession "
                     + "from DB by Movie ID: "
                     + movieId + " and date: " + date, e);
         }
