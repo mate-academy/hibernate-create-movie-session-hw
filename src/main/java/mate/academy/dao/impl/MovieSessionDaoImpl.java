@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -40,10 +41,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessionQuery =
-                    session.createQuery("from MovieSession ms"
-                    + " left join fetch ms.movie"
-                    + " left join fetch ms.cinemaHall"
-                    + " where ms.id = :id");
+                    session.createQuery("FROM MovieSession ms"
+                    + " LEFT JOIN FETCH ms.movie"
+                    + " LEFT JOIN FETCH ms.cinemaHall"
+                    + " WHERE ms.id = :id");
             getMovieSessionQuery.setParameter("id", id);
             return getMovieSessionQuery.uniqueResultOptional();
         } catch (Exception e) {
@@ -55,16 +56,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> findAvailableSessionQuery =
-                    session.createQuery("from MovieSession ms"
-                    + " left join fetch ms.movie"
-                    + " left join fetch ms.cinemaHall"
-                    + " where ms.movie.id = :id"
-                    + " and ms.showTime between :startOfDay and :startOfNextDay",
+                    session.createQuery("FROM MovieSession ms"
+                    + " LEFT JOIN FETCH ms.movie"
+                    + " LEFT JOIN FETCH ms.cinemaHall"
+                    + " WHERE ms.movie.id = :id"
+                    + " AND ms.showTime BETWEEN :startOfDay AND :endOfDay",
                             MovieSession.class);
             findAvailableSessionQuery.setParameter("id", movieId);
             findAvailableSessionQuery.setParameter("startOfDay", date.atStartOfDay());
-            findAvailableSessionQuery.setParameter("startOfNextDay",
-                    date.plusDays(1).atStartOfDay());
+            findAvailableSessionQuery.setParameter("endOfDay",
+                    date.atTime(LocalTime.MAX));
             return findAvailableSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available session "
