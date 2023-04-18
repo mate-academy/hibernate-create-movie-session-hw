@@ -11,12 +11,12 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
 public class Main {
-    private static Injector injector = Injector.getInstance("mate.academy");
-    private static MovieService movieService
+    private static final Injector injector = Injector.getInstance("mate.academy");
+    private static final MovieService movieService
             = (MovieService) injector.getInstance(MovieService.class);
-    private static CinemaHallService cinemaHallService
+    private static final CinemaHallService cinemaHallService
             = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-    private static MovieSessionService movieSessionService
+    private static final MovieSessionService movieSessionService
             = (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
