@@ -51,13 +51,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> findAvailableSessionsQuery =
                     session.createQuery("from MovieSession m "
                     + "where m.movie.id = :movieId "
-                    + "and year(m.showTime) = :year "
-                    + "and month(m.showTime) = :month "
-                    + "and day(m.showTime) = :day", MovieSession.class);
+                    + "and date(m.showTime) = :date ", MovieSession.class);
             findAvailableSessionsQuery.setParameter("movieId", movieId);
-            findAvailableSessionsQuery.setParameter("year", date.getYear());
-            findAvailableSessionsQuery.setParameter("month", date.getMonthValue());
-            findAvailableSessionsQuery.setParameter("day", date.getDayOfMonth());
+            findAvailableSessionsQuery.setParameter("date", date);
             return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available movie session by movie id: "
