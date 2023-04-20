@@ -39,6 +39,7 @@ public class Main {
 
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
-        System.out.println(movieSessionService.findAvailableSessions(1L, LocalDate.now()));
+        System.out.println("available:" + movieSessionService
+                .findAvailableSessions(1L, LocalDate.now()));
     }
 }
