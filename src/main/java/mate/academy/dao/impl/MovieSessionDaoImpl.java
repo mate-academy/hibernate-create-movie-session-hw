@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -39,8 +40,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> sessionQuery = session
-                    .createQuery("from MovieSession m "
-                            + "join fetch m.movie mm where m.id = :id ", MovieSession.class);
+                    .createQuery("FROM MovieSession m "
+                            + "JOIN FETCH m.movie mm WHERE m.id = :id ", MovieSession.class);
             sessionQuery.setParameter("id", id);
             return Optional.ofNullable(sessionQuery.getSingleResult());
         } catch (Exception e) {
@@ -52,11 +53,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> sessionQuery = session
-                    .createQuery("from MovieSession m join fetch m.movie mm "
-                            + "where m.showTime = :date and mm.id = :movie_id ",
+                    .createQuery("FROM MovieSession m JOIN FETCH m.movie mm "
+                            + "WHERE m.showTime BETWEEN :dateStart AND :dateEND "
+                                    + "GROUP BY (mm.id = :movie_id) ",
                             MovieSession.class);
-            sessionQuery.setParameter("date", LocalDateTime.of(date.getYear(), date.getMonthValue(),
-                    date.getDayOfMonth(), 0, 0));
+            sessionQuery.setParameter("dateStart", LocalDateTime.of(date,
+                    LocalTime.parse("00:00:00")));
+            sessionQuery.setParameter("dateEND", LocalDateTime.of(date,
+                    LocalTime.parse("23:59:59")));
             sessionQuery.setParameter("movie_id", movieId);
             return sessionQuery.getResultList();
         } catch (Exception e) {
