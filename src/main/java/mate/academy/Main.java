@@ -12,14 +12,15 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
-    private static final MovieService movieService
-            = (MovieService) injector.getInstance(MovieService.class);
-    private static final CinemaHallService cinemaHallService
-            = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-    private static final MovieSessionService movieSessionService
-            = (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
+        MovieService movieService
+                = (MovieService) injector.getInstance(MovieService.class);
+        CinemaHallService cinemaHallService
+                = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        MovieSessionService movieSessionService
+                = (MovieSessionService) injector.getInstance(MovieSessionService.class);
+
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         Movie fast5 = new Movie("Fast 5");
@@ -31,9 +32,9 @@ public class Main {
 
         CinemaHall firstHall = new CinemaHall();
         firstHall.setCapacity(10);
-        firstHall.setDecription("Comfort");
+        firstHall.setDescription("Comfort");
         CinemaHall secondHall = new CinemaHall();
-        secondHall.setDecription("Lux");
+        secondHall.setDescription("Lux");
         secondHall.setCapacity(20);
         cinemaHallService.add(firstHall);
         cinemaHallService.add(secondHall);

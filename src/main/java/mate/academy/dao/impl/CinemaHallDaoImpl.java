@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.util.List;
 import mate.academy.dao.CinemaHallDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
@@ -24,7 +25,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't add cinema hall to db " + cinemaHall);
+            throw new DataProcessingException("Can't add cinema hall to db " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -40,7 +41,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             session = HibernateUtil.getSessionFactory().openSession();
             return session.get(CinemaHall.class, id);
         } catch (Exception e) {
-            throw new RuntimeException("Can't get cinema hall by id: " + id);
+            throw new DataProcessingException("Can't get cinema hall by id: " + id, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -57,7 +58,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     = session.createQuery("FROM CinemaHall", CinemaHall.class);
             return getAllCommentsQuerry.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all halls");
+            throw new DataProcessingException("Can't get all halls", e);
         } finally {
             if (session != null) {
                 session.close();

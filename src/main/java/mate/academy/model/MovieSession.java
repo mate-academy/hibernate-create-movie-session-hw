@@ -56,8 +56,8 @@ public class MovieSession {
         return showTime;
     }
 
-    public void setShowTime(LocalDateTime localDateTime) {
-        this.showTime = localDateTime;
+    public void setShowTime(LocalDateTime showTime) {
+        this.showTime = showTime;
     }
 
     @Override
