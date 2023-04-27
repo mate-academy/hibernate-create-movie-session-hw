@@ -14,11 +14,11 @@ public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
 
     public static void main(String[] args) {
-        MovieService movieService
+        final MovieService movieService
                 = (MovieService) injector.getInstance(MovieService.class);
-        CinemaHallService cinemaHallService
+        final CinemaHallService cinemaHallService
                 = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-        MovieSessionService movieSessionService
+        final MovieSessionService movieSessionService
                 = (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         Movie fastAndFurious = new Movie("Fast and Furious");
