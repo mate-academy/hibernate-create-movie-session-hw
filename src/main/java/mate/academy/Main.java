@@ -37,23 +37,18 @@ public class Main {
         movie.setDescription("rating 10");
         movieService.add(movie);
 
-        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now();
 
-        MovieSession movieSession = new MovieSession();
-        movieSession.setMovie(movie);
-        movieSession.setCinemaHall(cinemaHall);
-        movieSession.setLocalDateTime(localDateTime);
+        MovieSession movieSession = new MovieSession(movie, cinemaHall, currentDateTime);
         movieSessionService.add(movieSession);
 
-        LocalDateTime localDateTime2 = LocalDateTime.of(2023, Month.MAY, 6, 18, 33);
-        MovieSession movieSession2 = new MovieSession();
-        movieSession2.setMovie(movie);
-        movieSession2.setCinemaHall(cinemaHall);
-        movieSession2.setLocalDateTime(localDateTime2);
-        movieSessionService.add(movieSession2);
+        LocalDateTime futureDateTime = LocalDateTime.of(2023, Month.MAY, 6, 18, 33);
+
+        MovieSession movieSessionSecond = new MovieSession(movie, cinemaHall, futureDateTime);
+        movieSessionService.add(movieSessionSecond);
 
         LocalDate date = LocalDate.of(2023, Month.MAY, 7);
 
-        movieSessionService.findAvailableSessions(2L, date).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(movie.getId(), date).forEach(System.out::println);
     }
 }
