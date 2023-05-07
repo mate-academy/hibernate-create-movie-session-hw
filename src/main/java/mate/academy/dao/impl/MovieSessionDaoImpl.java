@@ -49,17 +49,18 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getMovieSession = session.createQuery("FROM MovieSession m "
-                            + "WHERE movie.id = :id AND EXTRACT(DAY FROM localDateTime) = :day "
-                            + "AND EXTRACT(MONTH FROM localDateTime) = :month " +
-                            "AND EXTRACT(YEAR FROM localDateTime) = :year", MovieSession.class);
-            getMovieSession.setParameter("id", movieId);
-            getMovieSession.setParameter("day", date.getDayOfMonth());
-            getMovieSession.setParameter("month", date.getMonthValue());
-            getMovieSession.setParameter("year", date.getYear());
-            return getMovieSession.getResultList();
+            Query<MovieSession> moviesSessions = session.createQuery("FROM MovieSession m "
+                    + "WHERE movie.id = :id AND EXTRACT(DAY FROM localDateTime) = :day "
+                    + "AND EXTRACT(MONTH FROM localDateTime) = :month "
+                    + "AND EXTRACT(YEAR FROM localDateTime) = :year", MovieSession.class);
+            moviesSessions.setParameter("id", movieId);
+            moviesSessions.setParameter("day", date.getDayOfMonth());
+            moviesSessions.setParameter("month", date.getMonthValue());
+            moviesSessions.setParameter("year", date.getYear());
+            return moviesSessions.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can not get all movieSessions by id" + movieId, e);
+            throw new DataProcessingException("Can not get all movieSessions by movieId: " + movieId
+                    + " and date " + date, e);
         }
     }
 }

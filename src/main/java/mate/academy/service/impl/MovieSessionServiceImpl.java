@@ -6,7 +6,6 @@ import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
-
 import java.time.LocalDate;
 import java.util.List;
 
