@@ -6,7 +6,7 @@ import mate.academy.service.MovieService;
 
 public class Main {
     public static void main(String[] args) {
-        Injector injector = Injector.getInstance("mate.academy");
+        Injector injector = Injector.getInstance("mate");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
 
         Movie fastAndFurious = new Movie("Fast and Furious");
