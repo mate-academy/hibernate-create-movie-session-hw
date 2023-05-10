@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
@@ -34,9 +35,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     }
 
     @Override
-    public CinemaHall get(Long id) {
+    public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(CinemaHall.class, id);
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new RuntimeException("can't get the cinema_hall with id: " + id);
         }
