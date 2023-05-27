@@ -1,10 +1,13 @@
 package mate.academy.model;
 
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.proxy.LazyInitializer;
-
 import java.time.LocalDateTime;
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "sessions")
