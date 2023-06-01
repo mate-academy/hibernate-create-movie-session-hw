@@ -5,12 +5,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.Query;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
+import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -42,7 +42,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            MovieSession movieSessionFromDB = new MovieSession();
+            Query<MovieSession> getMovieSessionQuery
+                    = session.createQuery("from MovieSession m "
+                    + "left join fetch m.cinemaHall "
+                    + "left join fetch m.movie"
+                    + " where m.id = :id", MovieSession.class);
+            getMovieSessionQuery.setParameter("id", id);
+            movieSessionFromDB = getMovieSessionQuery.getSingleResult();
+            return Optional.ofNullable(movieSessionFromDB);
         } catch (Exception e) {
             throw new DataProcessingException("Can not get a movie session by id! " + id, e);
         }
@@ -53,9 +61,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             LocalDateTime startTime = LocalDateTime.of(date, LocalTime.MIDNIGHT);
             LocalDateTime endTime = LocalDateTime.of(date, LocalTime.of(23, 59, 59));
-            Query findAvailableSessionQuery
-                    = session.createQuery("from MovieSession where id = :id "
-                    + "and showTime >= :startTime and showTime <= :endTime");
+            Query<MovieSession> findAvailableSessionQuery
+                    = session.createQuery("from MovieSession m "
+                    + "left join fetch m.cinemaHall "
+                    + "left join fetch m.movie "
+                    + "where m.id = :id "
+                    + "and m.showTime >= :startTime and m.showTime <= :endTime");
             findAvailableSessionQuery.setParameter("id", movieId);
             findAvailableSessionQuery.setParameter("startTime", startTime);
             findAvailableSessionQuery.setParameter("endTime", endTime);
