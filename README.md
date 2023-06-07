@@ -35,4 +35,5 @@ using injector and test all their methods
 #### [Try to avoid these common mistakes, while solving task](https://mate-academy.github.io/jv-program-common-mistakes/hibernate/add-movie-session/add_movie_session_checklist)
 
 ### Model structure
+
 ![pic](Hibernate_Cinema_Uml.png)
