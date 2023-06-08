@@ -6,10 +6,8 @@ import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +28,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert cinemaHall  " + cinemaHall, e);
+            throw new DataProcessingException("Can't insert cinemaHall " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -54,7 +52,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     "from CinemaHall", CinemaHall.class);
             return getAllFromCinemaHallQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get the list of CinemaHall from DB", e);
+            throw new DataProcessingException("Can't get the list of CinemaHall from DB ", e);
         }
     }
 }

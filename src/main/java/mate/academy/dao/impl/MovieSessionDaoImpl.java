@@ -1,5 +1,9 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,9 +12,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -28,7 +29,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie Session " + movieSession, e);
+            throw new DataProcessingException("Can't insert movieSession " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -40,18 +41,20 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get a movieSessiom by id: " + id, e);
         }
     }
 
-
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession();) {
-            Query<MovieSession> getCertainMovieSession = session.createQuery(
-                    "from MovieSession", MovieSession.class);
-            List<MovieSession> resultList = getCertainMovieSession.getResultList();
-
-            return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<MovieSession> getCertainMovieSessionQuery = session.createQuery("from MovieSession ms where ms.movie.id = : id", MovieSession.class);
+            getCertainMovieSessionQuery.setParameter("id", movieId);
+            List<MovieSession> resultList = getCertainMovieSessionQuery.getResultList();
+            return resultList.stream()
+                    .filter(movieSession -> movieSession.getShowTime().toLocalDate().equals(date))
+                    .collect(Collectors.toList());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get the list of movieSession from DB", e);
         }
