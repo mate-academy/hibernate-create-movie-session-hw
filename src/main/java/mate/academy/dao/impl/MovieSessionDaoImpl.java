@@ -51,10 +51,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             LocalDateTime startOfTheDay = date.atStartOfDay();
             LocalDateTime endOfTheDay = date.plusDays(1).atStartOfDay();
-            Query<MovieSession> query = session.createQuery("select distinct ms "
-                    + "from MovieSession ms "
-                    + "left join ms.movie m "
-                    + "left join ms.cinemaHall "
+            Query<MovieSession> query = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie m "
+                    + "left join fetch ms.cinemaHall "
                     + "where ms.showTime >= :startOfTheDay "
                     + "and m.id = :movieId "
                     + "and ms.showTime < :endOfTheDay ", MovieSession.class);
