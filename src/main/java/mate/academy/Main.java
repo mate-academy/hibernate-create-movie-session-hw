@@ -12,17 +12,20 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
+    private static MovieService movieService =
+            (MovieService) injector.getInstance(MovieService.class);
+    private static CinemaHallService cinemaHallService =
+            (CinemaHallService) injector.getInstance(CinemaHallService.class);
+    private static MovieSessionService movieSessionService =
+            (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
-        CinemaHallService cinemaHallService =
-                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall firstCinemaHall = new CinemaHall();
         firstCinemaHall.setCapacity(50);
         firstCinemaHall.setDescription("Dolby atmos sound system");
@@ -35,8 +38,7 @@ public class Main {
         morningMovieSession.setCinemaHall(firstCinemaHall);
         LocalDateTime showTime = LocalDateTime.of(2023, 6, 16, 9, 30);
         morningMovieSession.setShowTime(showTime);
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
+
         movieSessionService.add(morningMovieSession);
         System.out.println(movieSessionService.get(morningMovieSession.getId()));
         LocalDate date = LocalDate.of(2023, 6, 16);
