@@ -1,7 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -42,11 +41,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessionById = session.createQuery("from MovieSession as ms "
-                    + "left join fetch ms.movie "
-                    + "left join fetch ms.cinemaHall "
-                    + "where ms.id = :id", MovieSession.class);
-            getMovieSessionById.setParameter("id", id);
-            return getMovieSessionById.uniqueResultOptional();
+                            + "left join fetch ms.movie "
+                            + "left join fetch ms.cinemaHall "
+                            + "where ms.id = :id",
+                    MovieSession.class);
+            return getMovieSessionById.setParameter("id", id).uniqueResultOptional();
         } catch (HibernateException e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -55,17 +54,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getMovieSessionByDate
-                    = session.createQuery("from MovieSession as ms "
-                    + "left join fetch ms.movie as m "
-                    + "left join fetch ms.cinemaHall as c "
-                    + "where m.id = :id "
-                    + "and ms.showTime >= :startDate "
-                    + "and ms.showTime <= :endDate", MovieSession.class);
-            getMovieSessionByDate.setParameter("id", movieId);
-            getMovieSessionByDate.setParameter("startDate", date.atStartOfDay());
-            getMovieSessionByDate.setParameter("endDate", date.atTime(LocalTime.MAX));
-            return getMovieSessionByDate.getResultList();
+            Query<MovieSession> query = session.createQuery("FROM MovieSession ms "
+                            + "LEFT JOIN FETCH ms.movie "
+                            + "LEFT JOIN FETCH ms.cinemaHall "
+                            + "WHERE ms.movie.id = :movieId "
+                            + "AND YEAR(ms.showTime) = :year "
+                            + "AND MONTH(ms.showTime) = :month "
+                            + "AND DAY(ms.showTime) = :day",
+                    MovieSession.class);
+            query.setParameter("movieId", movieId);
+            query.setParameter("year", date.getYear());
+            query.setParameter("month", date.getMonthValue());
+            query.setParameter("day", date.getDayOfMonth());
+            return query.getResultList();
         } catch (HibernateException e) {
             throw new DataProcessingException("Can't get a movie: "
                     + movieId + " by date: " + date, e);
