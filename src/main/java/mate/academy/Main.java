@@ -41,22 +41,22 @@ public class Main {
         System.out.println(cinemaHallService.get(vipCinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSession movieSession1 = new MovieSession();
-        movieSession1.setMovie(fastAndFurious);
-        movieSession1.setCinemaHall(regularCinemaHall);
+        MovieSession firstMovieSession = new MovieSession();
+        firstMovieSession.setMovie(fastAndFurious);
+        firstMovieSession.setCinemaHall(regularCinemaHall);
         LocalDateTime localDateTime = LocalDateTime.of(2023, 06, 23, 12,30);
-        movieSession1.setShowTime(localDateTime);
-        MovieSession movieSession2 = new MovieSession();
-        movieSession2.setCinemaHall(vipCinemaHall);
-        movieSession2.setMovie(goneIn60Seconds);
-        movieSession2.setShowTime(localDateTime.plusDays(1L));
+        firstMovieSession.setShowTime(localDateTime);
+        MovieSession secondMovieSession = new MovieSession();
+        secondMovieSession.setCinemaHall(vipCinemaHall);
+        secondMovieSession.setMovie(goneIn60Seconds);
+        secondMovieSession.setShowTime(localDateTime.plusDays(1L));
 
         MovieSessionService movieSessionService = (MovieSessionService) injector
                 .getInstance(MovieSessionService.class);
-        movieSessionService.add(movieSession1);
-        movieSessionService.add(movieSession2);
+        movieSessionService.add(firstMovieSession);
+        movieSessionService.add(secondMovieSession);
 
-        System.out.println(movieSessionService.get(movieSession2.getId()));
+        System.out.println(movieSessionService.get(secondMovieSession.getId()));
         LocalDate localDate = LocalDate.of(2023, 06, 24);
         System.out.println(movieSessionService
                 .findAvailableSessions(1L, localDate));

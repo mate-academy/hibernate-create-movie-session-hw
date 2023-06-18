@@ -42,7 +42,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getMovieSessionQuery = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall "
+                    + "where ms.id = :id", MovieSession.class);
+            getMovieSessionQuery.setParameter("id", id);
+            return Optional.of(getMovieSessionQuery.getSingleResult());
+
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -52,12 +58,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         List<MovieSession> resultList;
         LocalTime localTime = LocalTime.of(00, 00, 00);
-        LocalDateTime after = LocalDateTime.of(date, localTime);
+        LocalDateTime fromDateTime = LocalDateTime.of(date, localTime);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> allCinemaHallQuery = session.createQuery("from MovieSession "
-                    + "where showTime > :value1 AND showTime < :value2", MovieSession.class);
-            allCinemaHallQuery.setParameter("value1", after);
-            allCinemaHallQuery.setParameter("value2", after.plusDays(1L));
+            Query<MovieSession> allCinemaHallQuery = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall "
+                    + "where ms.showTime > :value1 AND showTime < :value2", MovieSession.class);
+            allCinemaHallQuery.setParameter("value1", fromDateTime);
+            allCinemaHallQuery.setParameter("value2", fromDateTime.plusDays(1L));
             resultList = allCinemaHallQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all Cinema Hall's from DB", e);
