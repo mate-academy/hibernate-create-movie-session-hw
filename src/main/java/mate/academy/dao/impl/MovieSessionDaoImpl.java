@@ -57,8 +57,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         List<MovieSession> resultList;
-        LocalTime localTime = LocalTime.of(00, 00, 00);
-        LocalDateTime fromDateTime = LocalDateTime.of(date, localTime);
+        LocalTime beganTime = LocalTime.of(00, 00, 00);
+        LocalDateTime fromDateTime = LocalDateTime.of(date, beganTime);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> allCinemaHallQuery = session.createQuery("from MovieSession ms "
                     + "left join fetch ms.movie "
