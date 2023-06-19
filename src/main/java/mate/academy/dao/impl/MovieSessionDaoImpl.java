@@ -57,15 +57,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         List<MovieSession> resultList;
-        LocalTime beganTime = LocalTime.of(00, 00, 00);
-        LocalDateTime fromDateTime = LocalDateTime.of(date, beganTime);
+        LocalTime beginTime = LocalTime.of(00, 00, 00);
+        LocalDateTime sessionBeginDateTime = LocalDateTime.of(date, beginTime);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> allCinemaHallQuery = session.createQuery("from MovieSession ms "
                     + "left join fetch ms.movie "
                     + "left join fetch ms.cinemaHall "
                     + "where ms.showTime > :value1 AND showTime < :value2", MovieSession.class);
-            allCinemaHallQuery.setParameter("value1", fromDateTime);
-            allCinemaHallQuery.setParameter("value2", fromDateTime.plusDays(1L));
+            allCinemaHallQuery.setParameter("value1", sessionBeginDateTime);
+            allCinemaHallQuery.setParameter("value2", sessionBeginDateTime.plusDays(1L));
             resultList = allCinemaHallQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all Cinema Hall's from DB", e);
