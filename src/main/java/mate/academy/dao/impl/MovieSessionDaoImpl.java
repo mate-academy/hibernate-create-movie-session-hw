@@ -63,9 +63,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> allCinemaHallQuery = session.createQuery("from MovieSession ms "
                     + "left join fetch ms.movie "
                     + "left join fetch ms.cinemaHall "
-                    + "where ms.showTime > :value1 AND showTime < :value2", MovieSession.class);
-            allCinemaHallQuery.setParameter("value1", sessionBeginDateTime);
-            allCinemaHallQuery.setParameter("value2", sessionBeginDateTime.plusDays(1L));
+                    + "where ms.showTime > :from AND showTime < :to", MovieSession.class);
+            allCinemaHallQuery.setParameter("from", sessionBeginDateTime);
+            allCinemaHallQuery.setParameter("to", sessionBeginDateTime.plusDays(1L));
             resultList = allCinemaHallQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all Cinema Hall's from DB", e);
