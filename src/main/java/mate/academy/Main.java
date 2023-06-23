@@ -36,6 +36,7 @@ public class Main {
         MovieSession movieSession = new MovieSession(fastAndFurious, cinemaHall, localDate);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(), localDate).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(
+                fastAndFurious.getId(), localDate).forEach(System.out::println);
     }
 }
