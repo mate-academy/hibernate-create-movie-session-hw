@@ -1,6 +1,6 @@
 package mate.academy;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -32,7 +32,7 @@ public class Main {
 
         MovieSessionService movieSessionService = (MovieSessionService)
                 injector.getInstance(MovieSessionService.class);
-        LocalDate localDate = LocalDate.of(2023, 6, 23);
+        LocalDateTime localDate = LocalDateTime.of(2023, 6, 23, 1, 1);
         MovieSession movieSession = new MovieSession(fastAndFurious, cinemaHall, localDate);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));

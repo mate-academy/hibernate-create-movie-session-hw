@@ -1,6 +1,6 @@
 package mate.academy.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,12 +19,12 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)
     private CinemaHall cinemaHall;
-    private LocalDate showTime;
+    private LocalDateTime showTime;
 
     public MovieSession() {
     }
 
-    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDate showTime) {
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
         this.movie = movie;
         this.cinemaHall = cinemaHall;
         this.showTime = showTime;
@@ -54,11 +54,11 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDate getShowTime() {
+    public LocalDateTime getShowTime() {
         return showTime;
     }
 
-    public void setShowTime(LocalDate showTime) {
+    public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
     }
 
