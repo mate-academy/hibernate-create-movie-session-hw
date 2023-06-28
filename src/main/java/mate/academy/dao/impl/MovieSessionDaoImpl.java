@@ -1,7 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -40,7 +40,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> query = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie m "
+                    + "left join fetch ms.cinemaHall ch "
+                    + "where ms.id = :id");
+            query.setParameter("id", id);
+            return query.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -49,14 +54,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            LocalDateTime startOfDay = date.atStartOfDay();
-            LocalDateTime endOfDay = date.atTime(23, 59, 59);
             Query<MovieSession> query = session.createQuery("from MovieSession ms "
-                    + "where ms.movie.id = :id and (ms.showTime >= :startOfDay "
-                    + "and ms.showTime <= :endOfDay)", MovieSession.class);
+                    + "left join fetch ms.movie m "
+                    + "left join fetch ms.cinemaHall ch "
+                    + "where ms.movie.id = :id "
+                    + "and ms.showTime between :startOfDay and :endOfDay", MovieSession.class);
             query.setParameter("id", movieId);
-            query.setParameter("startOfDay", startOfDay);
-            query.setParameter("endOfDay", endOfDay);
+            query.setParameter("startOfDay", date.atStartOfDay());
+            query.setParameter("endOfDay", date.atTime(LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("can't find available sessions", e);
