@@ -22,9 +22,6 @@ public class Main {
             (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
-
-        System.out.println(" passwpoerd");
-
         movieOptions();
         cinemaHallOptions();
         movieSessionOptions();
