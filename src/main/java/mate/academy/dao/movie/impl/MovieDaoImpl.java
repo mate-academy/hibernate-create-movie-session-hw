@@ -1,14 +1,15 @@
-package mate.academy.dao.impl;
+package mate.academy.dao.movie.impl;
 
 import java.util.List;
 import java.util.Optional;
-import mate.academy.dao.MovieDao;
+import mate.academy.dao.movie.MovieDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
@@ -26,7 +27,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException("Can't insert movie " + movie + " to DB.", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -39,12 +40,17 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(Movie.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException("Can't get a movie by id: " + id + " from DB.", e);
         }
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Movie> movies = session.createQuery("from Movie", Movie.class);
+            return movies.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movies from DB.", e);
+        }
     }
 }

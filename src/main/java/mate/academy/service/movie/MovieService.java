@@ -1,13 +1,12 @@
-package mate.academy.dao;
+package mate.academy.service.movie;
 
 import java.util.List;
-import java.util.Optional;
 import mate.academy.model.Movie;
 
-public interface MovieDao {
+public interface MovieService {
     Movie add(Movie movie);
 
-    Optional<Movie> get(Long id);
+    Movie get(Long id);
 
     List<Movie> getAll();
 }
