@@ -22,6 +22,7 @@ public class Main {
             (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
     public static void main(String[] args) {
+
         movieOptions();
         cinemaHallOptions();
         movieSessionOptions();
