@@ -1,5 +1,9 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,10 +12,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -46,21 +46,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         }
     }
 
-
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAvailableSessions =
-                    session.createQuery("FROM MovieSession ms " +
-                            "left join fetch ms.movie m WHERE m.id = :movieId " +
-                            "AND ms.showTime  BETWEEN :startDay AND :endDay ", MovieSession.class);
+                    session.createQuery("FROM MovieSession ms "
+                            + "left join fetch ms.movie m WHERE m.id = :movieId "
+                            + "AND ms.showTime  BETWEEN :startDay AND :endDay ",
+                            MovieSession.class);
             getAvailableSessions.setParameter("movieId", movieId);
             getAvailableSessions.setParameter("startDay", date.atStartOfDay());
             getAvailableSessions.setParameter("endDay", date.atTime(LocalTime.MAX));
             return getAvailableSessions.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find list of MovieSessions by movieId: " +
-                    movieId + " and date: " + date, e);
+            throw new DataProcessingException("Can't find list of MovieSessions by movieId: "
+                    + movieId + " and date: " + date, e);
         }
     }
 }
