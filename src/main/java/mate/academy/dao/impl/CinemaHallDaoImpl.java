@@ -26,7 +26,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert return cinemaHall: " + cinemaHall, e);
+            throw new DataProcessingException("Can't insert cinema hall: " + cinemaHall + " to DB.", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -40,7 +40,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get cinema hall by id " + id, e);
+            throw new DataProcessingException("Can't get cinema hall by id: " + id, e);
         }
     }
 

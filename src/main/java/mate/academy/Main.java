@@ -21,9 +21,13 @@ public class Main {
 
     public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
+        Movie avatar = new Movie("AVATAR 2");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
+        avatar.setDescription("A fantastic movie");
         movieService.add(fastAndFurious);
+        movieService.add(avatar);
         System.out.println(movieService.get(fastAndFurious.getId()));
+        System.out.println(movieService.get(avatar.getId()));
         movieService.getAll().forEach(System.out::println);
 
         CinemaHall cinemaHall = new CinemaHall(56, "Red cinema Hall");
