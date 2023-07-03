@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -40,7 +41,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> movieSessionQuery = session.createQuery(
+                    "FROM MovieSession ms "
+                            + "LEFT JOIN fetch ms.movie "
+                            + "LEFT JOIN fetch ms.cinemaHall "
+                            + "WHERE ms.id = :id", MovieSession.class);
+            movieSessionQuery.setParameter("id", id);
+            return movieSessionQuery.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -53,6 +60,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             LocalDateTime endOfDay = date.atTime(23, 59, 59);
             Query<MovieSession> movieSessionQuery = session.createQuery(
                     "FROM MovieSession ms "
+                            + "LEFT JOIN fetch ms.movie "
+                            + "LEFT JOIN fetch ms.cinemaHall "
                             + "WHERE ms.movie.id = :movieId "
                             + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay",
                     MovieSession.class);

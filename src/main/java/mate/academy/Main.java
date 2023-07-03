@@ -36,12 +36,13 @@ public class Main {
         MovieSession session = new MovieSession();
         session.setMovie(fastAndFurious);
         session.setCinemaHall(cinemaHall);
-        session.setShowTime(LocalDateTime.now());
+        LocalDateTime localDateTime = LocalDateTime.of(2022, 12, 30, 18, 30);
+        session.setShowTime(localDateTime);
         MovieSessionService movieSessionService = (MovieSessionService) injector
                 .getInstance(MovieSessionService.class);
         movieSessionService.add(session);
         System.out.println(movieSessionService.get(session.getId()));
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now())
-                .forEach(System.out::println);
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(),
+                LocalDate.of(2022, 12, 30)).forEach(System.out::println);
     }
 }
