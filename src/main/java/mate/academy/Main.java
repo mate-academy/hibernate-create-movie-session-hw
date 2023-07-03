@@ -29,7 +29,7 @@ public class Main {
 
         CinemaHall firstHall = new CinemaHall();
         firstHall.setCapacity(50);
-        firstHall.setDecription("Modern hall with capacity 50 seats");
+        firstHall.setDescription("Modern hall with capacity 50 seats");
         cinemaHallService.add(firstHall);
         System.out.println(cinemaHallService.get(firstHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
