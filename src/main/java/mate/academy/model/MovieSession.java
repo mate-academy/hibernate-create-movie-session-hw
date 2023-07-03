@@ -19,9 +19,15 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)
     private CinemaHall cinemaHall;
-    private LocalDateTime localDateTime;
+    private LocalDateTime showTime;
 
     public MovieSession() {
+    }
+
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
+        this.movie = movie;
+        this.cinemaHall = cinemaHall;
+        this.showTime = showTime;
     }
 
     public Long getId() {
@@ -49,11 +55,11 @@ public class MovieSession {
     }
 
     public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+        return showTime;
     }
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+        this.showTime = localDateTime;
     }
 
     @Override
@@ -62,7 +68,7 @@ public class MovieSession {
                 + "id=" + id
                 + ", movie=" + movie
                 + ", cinemaHall=" + cinemaHall
-                + ", localDateTime=" + localDateTime
+                + ", localDateTime=" + showTime
                 + '}';
     }
 }
