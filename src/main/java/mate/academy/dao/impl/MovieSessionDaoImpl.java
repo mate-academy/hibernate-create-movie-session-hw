@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +40,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> query = session.createQuery("from MovieSession ms "
+            + "left join fetch ms.movie m "
+            + "left join fetch ms.cinemaHall ch " 
+            + "where ms.id = :id", MovieSession.class);
+            return query.setParameter("id", id).uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -50,13 +55,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession ms " 
                     + "left join fetch ms.movie m " 
-                    + "where m.id = :movieId and year(ms.showTime) = :year " 
-                    + "and month(ms.showTime) = :month " 
-                    + "and day(ms.showTime) = :day", MovieSession.class);
+                    + "left join fetch ms.cinemaHall ch " 
+                    + "where m.id = :movieId and date(ms.showTime) = :date", MovieSession.class);
             return query.setParameter("movieId", movieId)
-                    .setParameter("year", date.getYear())
-                    .setParameter("month", date.getMonthValue())
-                    .setParameter("day", date.getDayOfMonth())
+                    .setParameter("date", Date.valueOf(date))
                     .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie sessions by movie id: " 
