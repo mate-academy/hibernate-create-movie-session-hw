@@ -37,9 +37,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        CinemaHall cinemaHall;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            cinemaHall = session.get(CinemaHall.class, id);
+            CinemaHall cinemaHall = session.get(CinemaHall.class, id);
             return Optional.ofNullable(cinemaHall);
         } catch (Exception e) {
             throw new DataProcessingException(

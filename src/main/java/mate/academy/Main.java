@@ -16,13 +16,12 @@ public class Main {
     public static void main(String[] args) {
         MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
 
-        Movie fastAndFurious = new Movie("Fast and Furious");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
+        Movie fastAndFurious = new Movie("Fast and Furious",
+                "An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
 
-        Movie incredible = new Movie("Incredible");
-        incredible.setDescription("Some uniq incredible movie.");
+        Movie incredible = new Movie("Incredible", "Some uniq incredible movie.");
         movieService.add(incredible);
         System.out.println(movieService.get(incredible.getId()));
 
@@ -31,37 +30,30 @@ public class Main {
         CinemaHallService cinemaHallService =
                 (CinemaHallService) INJECTOR.getInstance(CinemaHallService.class);
 
-        CinemaHall bestKyivCinema = new CinemaHall();
-        bestKyivCinema.setCapacity(100);
-        bestKyivCinema.setDescription("Cinema Hall with middle level of service");
+        CinemaHall bestKyivCinema = new CinemaHall(100,
+                "Cinema Hall with middle level of service");
         cinemaHallService.add(bestKyivCinema);
         System.out.println(cinemaHallService.get(bestKyivCinema.getId()));
 
-        CinemaHall flyingStar = new CinemaHall();
-        flyingStar.setCapacity(75);
-        flyingStar.setDescription("Cinema Hall with good level of service");
+        CinemaHall flyingStar = new CinemaHall(75,
+                "Cinema Hall with good level of service");
         cinemaHallService.add(flyingStar);
         System.out.println(cinemaHallService.get(flyingStar.getId()));
 
         System.out.println(cinemaHallService.getAll());
 
-        MovieSession firstSession = new MovieSession();
-        firstSession.setMovie(fastAndFurious);
-        firstSession.setCinemaHall(bestKyivCinema);
         LocalDateTime firstSessionTime = LocalDateTime.of(
                 2023, 6, 27, 18, 40);
-        firstSession.setShowTime(firstSessionTime);
+        MovieSession firstSession = new MovieSession(
+                fastAndFurious, bestKyivCinema, firstSessionTime);
         MovieSessionService movieSessionService = (MovieSessionService)
                 INJECTOR.getInstance(MovieSessionService.class);
         movieSessionService.add(firstSession);
         System.out.println(movieSessionService.get(firstSession.getId()));
 
-        MovieSession secondSession = new MovieSession();
-        secondSession.setMovie(incredible);
-        secondSession.setCinemaHall(flyingStar);
         LocalDateTime secondSessionTime = LocalDateTime.of(
                 2022, 1, 15, 12, 0);
-        secondSession.setShowTime(secondSessionTime);
+        MovieSession secondSession = new MovieSession(incredible, flyingStar, secondSessionTime);
         movieSessionService.add(secondSession);
         System.out.println(movieSessionService.get(secondSession.getId()));
 
@@ -70,6 +62,5 @@ public class Main {
 
         System.out.println(movieSessionService.findAvailableSessions(incredible.getId(),
                 LocalDate.of(2023, 6, 15)));
-
     }
 }

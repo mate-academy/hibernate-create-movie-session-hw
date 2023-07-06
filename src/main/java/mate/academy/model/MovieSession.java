@@ -6,7 +6,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,12 +16,19 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
+
+    public MovieSession() {
+    }
+
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
+        this.movie = movie;
+        this.cinemaHall = cinemaHall;
+        this.showTime = showTime;
+    }
 
     public Long getId() {
         return id;

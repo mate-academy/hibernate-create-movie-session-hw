@@ -2,6 +2,7 @@ package mate.academy.service.movie.session.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import mate.academy.dao.movie.session.MovieSessionDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -20,8 +21,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id).orElseThrow(() -> new RuntimeException(
-                "Can't get MovieSession with id: " + id + " from Dao."
+        return movieSessionDao.get(id).orElseThrow(() -> new NoSuchElementException(
+                "Can't get MovieSession with id: " + id
         ));
     }
 

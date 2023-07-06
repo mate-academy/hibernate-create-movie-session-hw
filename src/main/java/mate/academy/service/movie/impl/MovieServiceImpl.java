@@ -1,6 +1,7 @@
 package mate.academy.service.movie.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import mate.academy.dao.movie.MovieDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -19,9 +20,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).orElseThrow(() -> new RuntimeException(
-                "Can't get Movie with id: " + id + " from Dao."
-        ));
+        return movieDao.get(id).orElseThrow(() ->
+                new NoSuchElementException("Can't get a movie session by id: " + id));
     }
 
     @Override

@@ -41,8 +41,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessionQuery = session.createQuery(
-                    "from MovieSession ms left join fetch ms.cinemaHall "
-                            + "left join fetch ms.movie where ms.id = :id", MovieSession.class);
+                    "from MovieSession ms "
+                            + "left join fetch ms.cinemaHall "
+                            + "left join fetch ms.movie "
+                            + "where ms.id = :id",
+                    MovieSession.class);
             movieSessionQuery.setParameter("id", id);
             return Optional.ofNullable(movieSessionQuery.uniqueResult());
         } catch (Exception e) {
@@ -55,10 +58,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessions = session.createQuery(
-                    "from MovieSession ms left join fetch ms.cinemaHall "
-                            + "left join fetch ms.movie where ms.movie.id = :id "
-                            + "and YEAR(ms.showTime) = :year "
-                            + "and MONTH(ms.showTime) = :month and DAY(ms.showTime) = :day ",
+                    "from MovieSession ms "
+                            + "left join fetch ms.cinemaHall "
+                            + "left join fetch ms.movie "
+                            + "where ms.movie.id = :id "
+                            + "and year(ms.showTime) = :year "
+                            + "and month(ms.showTime) = :month "
+                            + "and day(ms.showTime) = :day ",
                     MovieSession.class);
             movieSessions.setParameter("id", movieId);
             movieSessions.setParameter("year", date.getYear());
