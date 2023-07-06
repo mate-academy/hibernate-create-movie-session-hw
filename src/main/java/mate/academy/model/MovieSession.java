@@ -10,8 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "movie_sessions")
-public class MovieSession implements Cloneable {
-
+public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -69,15 +68,6 @@ public class MovieSession implements Cloneable {
 
     public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
-    }
-
-    @Override
-    protected MovieSession clone() {
-        try {
-            return (MovieSession) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Can`t make clone " + this, e);
-        }
     }
 
     @Override

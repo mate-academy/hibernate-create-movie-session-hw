@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "movies")
-public class Movie implements Cloneable {
+public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,15 +44,6 @@ public class Movie implements Cloneable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    protected Movie clone() {
-        try {
-            return (Movie) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Can`t make clone " + this, e);
-        }
     }
 
     @Override
