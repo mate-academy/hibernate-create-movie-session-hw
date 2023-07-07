@@ -9,13 +9,13 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
@@ -26,7 +26,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             session.save(movieSession);
             transaction.commit();
             return movieSession;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -48,7 +48,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "WHERE ms.id = :id", MovieSession.class);
             movieSessionQuery.setParameter("id", id);
             return movieSessionQuery.uniqueResultOptional();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
     }
@@ -66,8 +66,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .setParameter("startOfDay", date.atStartOfDay())
                     .setParameter("endOfDay", date.atTime(LocalTime.MAX));
             return getAllMovieSessionsQuery.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Can't find available movie sessions", e);
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Can't find available movie sessions "
+                    + "for a movie with id: " + movieId
+                    + "and date: " + date, e);
         }
     }
 }
