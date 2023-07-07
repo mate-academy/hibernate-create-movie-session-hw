@@ -20,9 +20,6 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
-    /*@JoinTable(name = "movie_sessions_cinema_halls",
-    joinColumns = @JoinColumn(name = "movie_session_id"),
-    inverseJoinColumns = @JoinColumn(name = "cinema_halls_id"))*/
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
@@ -73,4 +70,3 @@ public class MovieSession {
                 + ", showTime=" + showTime + '}';
     }
 }
-
