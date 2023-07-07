@@ -67,8 +67,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             findAvailableSessionsQuery.setParameter("year", date.getYear());
             findAvailableSessionsQuery.setParameter("month", date.getMonthValue());
             findAvailableSessionsQuery.setParameter("day", date.getDayOfMonth());
-            List<MovieSession> availableSessions = findAvailableSessionsQuery.getResultList();
-            return availableSessions;
+            return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(
                     "Can't find available sessions on date "
