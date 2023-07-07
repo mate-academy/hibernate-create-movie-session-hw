@@ -60,10 +60,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     session.createQuery("FROM MovieSession ms "
                             + "LEFT JOIN FETCH ms.cinemaHall "
                             + "LEFT JOIN FETCH ms.movie "
-                    + "WHERE ms.movie.id = :movieId "
-                    + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay", MovieSession.class);
-            getAllMovieSessionsQuery.setParameter("movieId", movieId)
-                    .setParameter("startOfDay", date.atStartOfDay())
+                            + "WHERE ms.movie.id = :movieId "
+                            + "AND YEAR(ms.showTime) = :year "
+                            + "AND MONTH(ms.showTime) = :month "
+                            + "AND DAY(ms.showTime) = :day "
+                            + "AND ms.showTime "
+                            + "BETWEEN :startOfDay AND :endOfDay",
+                            MovieSession.class);
+            getAllMovieSessionsQuery
+                    .setParameter("movieId", movieId)
+                    .setParameter("day", date.getDayOfMonth())
+                    .setParameter("month", date.getMonthValue())
+                    .setParameter("year", date.getYear())
+                    .setParameter("startOfDay", date.atTime(LocalTime.MIN))
                     .setParameter("endOfDay", date.atTime(LocalTime.MAX));
             return getAllMovieSessionsQuery.getResultList();
         } catch (HibernateException e) {
