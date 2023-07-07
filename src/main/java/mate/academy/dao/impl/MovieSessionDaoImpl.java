@@ -46,8 +46,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "LEFT JOIN FETCH ms.cinemaHall "
                             + "LEFT JOIN FETCH ms.movie "
                             + "WHERE ms.movie.id = :movieId", MovieSession.class);
-            findSessionQuery.setParameter("movieId", id);
-            return Optional.ofNullable(findSessionQuery.getSingleResult());
+            return findSessionQuery.setParameter("movieId", id).uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a MovieSession with id: " + id, e);
         }
@@ -61,9 +60,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "LEFT JOIN FETCH ms.cinemaHall "
                             + "LEFT JOIN FETCH ms.movie "
                             + "WHERE ms.movie.id = :movieId "
-                            + "AND DATE (ms.showTime) = :date", MovieSession.class);
+                            + "AND YEAR(ms.showTime) = :year "
+                            + "AND MONTH(ms.showTime) = :month "
+                            + "AND DAY(ms.showTime) = :day ", MovieSession.class);
             findAvailableSessionsQuery.setParameter("movieId", movieId);
-            findAvailableSessionsQuery.setParameter("date", Date.valueOf(date));
+            findAvailableSessionsQuery.setParameter("year", date.getYear());
+            findAvailableSessionsQuery.setParameter("month", date.getMonthValue());
+            findAvailableSessionsQuery.setParameter("day", date.getDayOfMonth());
             return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id " + movieId
