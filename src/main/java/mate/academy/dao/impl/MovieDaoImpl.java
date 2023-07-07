@@ -51,6 +51,5 @@ public class MovieDaoImpl implements MovieDao {
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all movie", e);
         }
-
     }
 }

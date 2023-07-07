@@ -25,10 +25,8 @@ public class Main {
 
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
-        CinemaHall firstCinemaHall =
-                new CinemaHall(30, "2D");
-        CinemaHall secondCinemaHall =
-                new CinemaHall(45, "3D");
+        CinemaHall firstCinemaHall = new CinemaHall(30, "2D");
+        CinemaHall secondCinemaHall = new CinemaHall(45, "3D");
         cinemaHallService.add(secondCinemaHall);
         cinemaHallService.add(firstCinemaHall);
         System.out.println(cinemaHallService.get(firstCinemaHall.getId()));
@@ -44,8 +42,8 @@ public class Main {
                 .of(2023, 8, 9, 10,50);
         MovieSession firstMovieSession = new MovieSession(fastAndFurious,
                 firstCinemaHall, firstMovieTime);
-        MovieSession secondMovieSession = new MovieSession(fastAndFurious,
-                secondCinemaHall, lastMovieTime);
+        MovieSession secondMovieSession =
+                new MovieSession(fastAndFurious, secondCinemaHall, lastMovieTime);
 
         movieSessionService.add(firstMovieSession);
         movieSessionService.add(secondMovieSession);
