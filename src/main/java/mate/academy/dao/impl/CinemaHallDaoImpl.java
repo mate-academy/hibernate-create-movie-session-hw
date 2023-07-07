@@ -29,7 +29,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             }
             throw new DataProcessingException("Can`t insert cinema hall " + cinemaHall, e);
         } finally {
-            if (session !=null) {
+            if (session != null) {
                 session.close();
             }
         }
@@ -49,7 +49,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> getAllCinemaHallsQuery
                     = session.createQuery("from CinemaHall", CinemaHall.class);
-            return getAllCinemaHallsQuery .getResultList();
+            return getAllCinemaHallsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all cinema halls", e);
         }

@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Movie_Session")
@@ -64,11 +64,11 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", showtime=" + showtime +
-                '}';
+        return "MovieSession{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showtime=" + showtime
+                + '}';
     }
 }
