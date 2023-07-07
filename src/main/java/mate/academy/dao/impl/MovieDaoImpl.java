@@ -14,7 +14,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -48,8 +47,7 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Movie> getAllMovieQuery =
                     session.createQuery("from Movie", Movie.class);
             return getAllMovieQuery.getResultList();

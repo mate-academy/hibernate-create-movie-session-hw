@@ -58,9 +58,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "left join fetch m.movie "
                             + "left join fetch m.cinemaHall "
                             + "where m.id = :id "
-                            + "AND YEAR(m.showTime) = :year "
-                            + "AND MONTH(m.showTime) = :month "
-                            + "AND DAY(m.showTime) = :day", MovieSession.class);
+                            + "and year(m.showTime) = :year "
+                            + "and month(m.showTime) = :month "
+                            + "and day(m.showTime) = :day", MovieSession.class);
             findAvailableSessionsQuery.setParameter("id", movieId);
             findAvailableSessionsQuery.setParameter("year", date.getYear());
             findAvailableSessionsQuery.setParameter("month", date.getMonthValue());
