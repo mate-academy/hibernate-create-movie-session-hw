@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -9,9 +11,6 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Main {
     private static Injector injector = Injector.getInstance("mate.academy");
