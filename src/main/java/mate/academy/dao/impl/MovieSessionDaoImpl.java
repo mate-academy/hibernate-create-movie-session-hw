@@ -55,6 +55,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> movieSessionQuery = session.createQuery(
                     "from MovieSession ms "
                     + "left join fetch ms.movie m "
+                    + "left join fetch ms.cinemaHall "
                     + "where m.id = :movie_id and ms.showTime >= :date_beginning "
                     + "and ms.showTime <= :date_ending", MovieSession.class
             );
