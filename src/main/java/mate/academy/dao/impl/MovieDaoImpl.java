@@ -47,7 +47,7 @@ public class MovieDaoImpl implements MovieDao {
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             List<Movie> getAllCommentsQuery
-                    = session.createQuery("from Movie", Movie.class).list();
+                    = session.createQuery("FROM Movie", Movie.class).list();
             return getAllCommentsQuery;
         } catch (Exception e) {
             throw new RuntimeException("Can't get all comments", e);
