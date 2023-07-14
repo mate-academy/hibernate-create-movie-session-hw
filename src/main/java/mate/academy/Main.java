@@ -37,37 +37,38 @@ public class Main {
         System.out.println(cinemaHallService.get(greenHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
-
         MovieSession firstMovieSession = new MovieSession();
         firstMovieSession.setMovie(fastAndFurious);
         firstMovieSession.setCinemaHall(greenHall);
         firstMovieSession.setShowTime(LocalDateTime.of(2023, 8, 12, 10, 0));
-        movieSessionService.add(firstMovieSession);
-        System.out.println(movieSessionService.get(firstMovieSession.getId()));
 
         MovieSession secondMovieSession = new MovieSession();
         secondMovieSession.setMovie(anotherFilm);
         secondMovieSession.setCinemaHall(greenHall);
         secondMovieSession.setShowTime(LocalDateTime.of(2023, 8, 12, 14, 0));
-        movieSessionService.add(secondMovieSession);
-        System.out.println(movieSessionService.get(secondMovieSession.getId()));
 
         MovieSession thirdMovieSession = new MovieSession();
         thirdMovieSession.setMovie(fastAndFurious);
         thirdMovieSession.setCinemaHall(greenHall);
         thirdMovieSession.setShowTime(LocalDateTime.of(2023, 8, 12, 18, 0));
-        movieSessionService.add(thirdMovieSession);
-        System.out.println(movieSessionService.get(thirdMovieSession.getId()));
 
         MovieSession fourthMovieSession = new MovieSession();
         fourthMovieSession.setMovie(fastAndFurious);
         fourthMovieSession.setCinemaHall(greenHall);
         fourthMovieSession.setShowTime(LocalDateTime.of(2023, 8, 13, 10, 0));
-        movieSessionService.add(fourthMovieSession);
-        System.out.println(movieSessionService.get(fourthMovieSession.getId()));
 
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
+
+        movieSessionService.add(firstMovieSession);
+        movieSessionService.add(secondMovieSession);
+        movieSessionService.add(thirdMovieSession);
+        movieSessionService.add(fourthMovieSession);
+
+        System.out.println(movieSessionService.get(firstMovieSession.getId()));
+        System.out.println(movieSessionService.get(secondMovieSession.getId()));
+        System.out.println(movieSessionService.get(thirdMovieSession.getId()));
+        System.out.println(movieSessionService.get(fourthMovieSession.getId()));
         System.out.println(movieSessionService.findAvailableSessions(
                 fastAndFurious.getId(),
                 LocalDate.of(2023, 8, 12)));
