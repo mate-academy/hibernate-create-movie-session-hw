@@ -22,7 +22,7 @@ public class Main {
         System.out.println(movieService.get(fastAndFurious.getId()));
 
         Movie anotherFilm = new Movie("SomeFilm");
-        fastAndFurious.setDescription("Something happens in this film.");
+        anotherFilm.setDescription("Something happens in this film.");
         movieService.add(anotherFilm);
         System.out.println(movieService.get(anotherFilm.getId()));
         movieService.getAll().forEach(System.out::println);
