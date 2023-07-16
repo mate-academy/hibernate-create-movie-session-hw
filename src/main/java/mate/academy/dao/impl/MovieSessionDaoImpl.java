@@ -1,7 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -50,24 +49,22 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            LocalDateTime dateTimeStart = LocalDateTime.of(date.getYear(),
-                    date.getMonth(),
-                    date.getDayOfMonth(), 0, 0);
-            LocalDateTime dateTimeEnd = dateTimeStart.plusHours(23).plusMinutes(59)
-                    .plusSeconds(59).plusNanos(999999999);
             Query<MovieSession> getAvailableSessionQuery = session.createQuery(
                     "from MovieSession ms "
                     + "left join fetch ms.movie "
                     + "left join fetch ms.cinemaHall "
                     + "where ms.movie.id = :id "
-                    + "AND ms.showTime >= :startTime AND ms.showTime <= :endTime",
+                    + "AND YEAR(ms.showTime) = :year "
+                    + "AND MONTH(ms.showTime) = :month "
+                    + "AND DAY(ms.showTime) = :day",
                     MovieSession.class);
-            getAvailableSessionQuery.setParameter("startTime", dateTimeStart);
-            getAvailableSessionQuery.setParameter("endTime", dateTimeEnd);
             getAvailableSessionQuery.setParameter("id", movieId);
+            getAvailableSessionQuery.setParameter("year", date.getYear());
+            getAvailableSessionQuery.setParameter("month", date.getMonthValue());
+            getAvailableSessionQuery.setParameter("day", date.getDayOfMonth());
             return getAvailableSessionQuery.getResultList();
         } catch (HibernateException e) {
-            throw new DataProcessingException("Can't get from DB available sessions from DB", e);
+            throw new DataProcessingException("Can't get DB available sessions from DB", e);
         }
     }
 }
