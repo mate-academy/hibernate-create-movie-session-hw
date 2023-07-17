@@ -1,13 +1,13 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
@@ -36,9 +36,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     }
 
     @Override
-    public CinemaHall get(Long id) {
+    public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(CinemaHall.class, id);
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a cinemaHall by id: " + id, e);
         }
@@ -46,10 +46,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        SessionFactory factory = HibernateUtil.getSessionFactory();
-        try (Session session = factory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> cinemaHallQuery =
-                    session.createQuery("from CinemaHall", CinemaHall.class);
+                    session.createQuery("FROM CinemaHall", CinemaHall.class);
             return cinemaHallQuery.getResultList();
         } catch (RuntimeException e) {
             throw new RuntimeException("Could not get all cinemaHalls from DB ", e);
