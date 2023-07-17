@@ -1,6 +1,8 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -53,18 +55,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     "FROM MovieSession ms "
                     + "JOIN FETCH ms.movie m "
                     + "JOIN FETCH ms.cinemaHall "
-                    + "WHERE EXTRACT(YEAR FROM ms.showTime) = :year "
-                    + "AND EXTRACT(MONTH FROM ms.showTime) = :month "
-                    + "AND EXTRACT(DAY FROM ms.showTime) = :day "
-                    + "AND m.id = :movieId", MovieSession.class);
-            getAllAvailableSessionsQuery.setParameter("year", (int) date.getYear());
-            getAllAvailableSessionsQuery.setParameter("month", date.getMonthValue());
-            getAllAvailableSessionsQuery.setParameter("day", date.getDayOfMonth());
+                    + "WHERE m.id = :movieId "
+                    + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay", MovieSession.class);
             getAllAvailableSessionsQuery.setParameter("movieId", movieId);
+            getAllAvailableSessionsQuery.setParameter("startOfDay",
+                                            LocalDateTime.of(date, LocalTime.MIN));
+            getAllAvailableSessionsQuery.setParameter("endOfDay",
+                                            LocalDateTime.of(date, LocalTime.MAX));
             return getAllAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can`t get all available sessions for date: "
-                    + date, e);
+                    + date + " and movie id " + movieId, e);
         }
     }
 }
