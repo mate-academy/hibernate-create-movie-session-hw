@@ -16,9 +16,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
@@ -28,10 +26,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert cinema hall " + cinemaHall, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 

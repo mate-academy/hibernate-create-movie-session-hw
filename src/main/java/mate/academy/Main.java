@@ -25,7 +25,7 @@ public class Main {
         movieService.add(fastAndFuriousTwo);
 
         Movie fastAndFuriousThree = new Movie("Fast and Furious part 3");
-        fastAndFuriousTwo.setDescription("An action film.");
+        fastAndFuriousThree.setDescription("An action film.");
         movieService.add(fastAndFuriousThree);
 
         System.out.println(movieService.get(fastAndFurious.getId()));
