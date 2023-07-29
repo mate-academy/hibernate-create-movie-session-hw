@@ -1,5 +1,7 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -10,8 +12,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -40,8 +40,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("from MovieSession ms left join fetch ms.movie " +
-                    "left join fetch ms.cinemaHall where ms.id = :id", MovieSession.class);
+            Query<MovieSession> query = session.createQuery("from MovieSession ms "
+                    + "left join fetch ms.movie "
+                    + "left join fetch ms.cinemaHall where ms.id = :id", MovieSession.class);
             query.setParameter("id", id);
             return Optional.ofNullable(query.getSingleResult());
         } catch (Exception e) {
