@@ -42,31 +42,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session session = null;
-        try {
-            session = factory.openSession();
-            Query<MovieSession> allMovieSession = session.createQuery("from MovieSession ms "
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<MovieSession> movieSessionById = session.createQuery("from MovieSession ms "
                     + " left join fetch ms.cinemaHall "
                     + " left join fetch ms.movie"
                     + " where ms.id = :id", MovieSession.class);
-            allMovieSession.setParameter("id", id);
-            return allMovieSession.uniqueResultOptional();
+            movieSessionById.setParameter("id", id);
+            return movieSessionById.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get MovieSession from DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session session = null;
-        try {
-            session = factory.openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from MovieSession ms"
                             + "left join fetch ms.movie"
                             + "left join fetch ms.cinemaHall"
@@ -78,10 +68,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get List of MovieSessions from DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 }

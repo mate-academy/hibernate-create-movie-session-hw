@@ -39,34 +39,20 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session session = null;
-        try {
-            session = factory.openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get CinemaHall from DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        SessionFactory factory = HibernateUtil.getSessionFactory();
-        Session session = null;
-        try {
-            session = factory.openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from CinemaHall ", CinemaHall.class)
                     .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get List of CinemaHalls from DB", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 }
