@@ -7,50 +7,46 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "movies")
-public class Movie {
+@Table(name = "cinema_halls")
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private int capacity;
     private String description;
-
-    public Movie() {
-    }
-
-    public Movie(String title) {
-        this.title = title;
-    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public CinemaHall setId(Long id) {
         this.id = id;
+        return this;
     }
 
-    public String getTitle() {
-        return title;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public CinemaHall setCapacity(int capacity) {
+        this.capacity = capacity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public CinemaHall setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     @Override
     public String toString() {
-        return "Movie{"
+        return "CinemaHall{"
                 + "id=" + id
-                + ", title='" + title + '\''
+                + ", capacity=" + capacity
                 + ", description='" + description + '\''
                 + '}';
     }

@@ -1,0 +1,1 @@
+CREATE SCHEMA `movie_session` DEFAULT CHARACTER SET utf8;

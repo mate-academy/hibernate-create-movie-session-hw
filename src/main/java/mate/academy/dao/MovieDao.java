@@ -10,4 +10,6 @@ public interface MovieDao {
     Optional<Movie> get(Long id);
 
     List<Movie> getAll();
+
+    List<Movie> getByTittleFirstLetter(String parameter);
 }
