@@ -65,11 +65,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "AND day(m_s.showTime) = :day ", MovieSession.class);
             findAvailableSessionsQuery.setParameter("movieId", movieId);
             findAvailableSessionsQuery.setParameter("year", date.getYear());
-            findAvailableSessionsQuery.setParameter("month", date.getMonth());
+            findAvailableSessionsQuery.setParameter("month", date.getMonthValue());
             findAvailableSessionsQuery.setParameter("day", date.getDayOfMonth());
             return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all movies from DB", e);
+            throw new DataProcessingException("Can't get movie session from DB by movie id "
+                    + movieId + " and date " + date, e);
         }
     }
 }
