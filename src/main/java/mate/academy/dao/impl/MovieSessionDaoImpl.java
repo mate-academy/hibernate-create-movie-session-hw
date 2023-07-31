@@ -57,7 +57,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("startOfNextDay", date.plusDays(1).atStartOfDay());
             return query.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all movie session from DB by date" + date, e);
+            throw new DataProcessingException(
+                    "Can't get all movie session from DB by date" + date, e);
         }
     }
 }
