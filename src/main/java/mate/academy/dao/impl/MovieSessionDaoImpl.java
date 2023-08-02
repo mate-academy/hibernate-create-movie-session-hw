@@ -43,7 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> movieSessionById = session.createQuery("from MovieSession ms "
+            Query<MovieSession> movieSessionById = session.createQuery("FROM MovieSession ms "
                     + " left join fetch ms.cinemaHall "
                     + " left join fetch ms.movie"
                     + " where ms.id = :id", MovieSession.class);
@@ -57,11 +57,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from MovieSession ms"
+            return session.createQuery("FROM MovieSession ms "
                             + "left join fetch ms.movie"
-                            + "left join fetch ms.cinemaHall"
-                            + "where ms.showTime between :beginSession and :endSession"
-                            + "and ms.movie.id = :id")
+                            + " left join fetch ms.cinemaHall"
+                            + " where ms.showTime"
+                            + "  between :beginSession"
+                            + " and :endSession and ms.movie.id = :id")
                     .setParameter("beginSession", date.atStartOfDay())
                     .setParameter("endSession", date.atTime(LocalTime.MAX))
                     .setParameter("id", movieId)
