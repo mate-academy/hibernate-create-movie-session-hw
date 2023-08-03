@@ -1,7 +1,6 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -20,9 +19,8 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        Optional<CinemaHall> cinemaHall = cinemaHallDao.get(id);
-        return cinemaHall.orElseThrow(() ->
-                new RuntimeException("Can't found cinema hall with id " + id));
+        return cinemaHallDao.get(id)
+                .orElseThrow(() -> new RuntimeException("Can't found cinema hall with id " + id));
     }
 
     @Override

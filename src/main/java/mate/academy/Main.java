@@ -39,13 +39,13 @@ public class Main {
     private static void initMovies() {
         movieService.add(new Movie("Fast and Furious",
                 "An action film about street racing, heists, and spies."));
-        movieService.add(new Movie("Brave heart","Movie about brave hero."));
+        movieService.add(new Movie("Brave heart", "Movie about brave hero."));
     }
 
     private static void initCinemaHalls() {
-        cinemaHallService.add(new CinemaHall(100,"RED hall"));
-        cinemaHallService.add(new CinemaHall(50,"GREEN hall"));
-        cinemaHallService.add(new CinemaHall(500,"BIG hall"));
+        cinemaHallService.add(new CinemaHall(100, "RED hall"));
+        cinemaHallService.add(new CinemaHall(50, "GREEN hall"));
+        cinemaHallService.add(new CinemaHall(500, "BIG hall"));
     }
 
     private static void initMovieSessions() {
@@ -54,19 +54,19 @@ public class Main {
         LocalDateTime showTime;
         movie = movieService.get(1L);
         cinemaHall = cinemaHallService.get(1L);
-        showTime = LocalDateTime.of(2022,8,02,10,00);
-        movieSessionService.add(new MovieSession(movie,cinemaHall, showTime));
+        showTime = LocalDateTime.of(2022, 8, 02, 10, 00);
+        movieSessionService.add(new MovieSession(movie, cinemaHall, showTime));
         movie = movieService.get(2L);
         cinemaHall = cinemaHallService.get(2L);
-        showTime = LocalDateTime.of(2022,8,02,12,00);
-        movieSessionService.add(new MovieSession(movie,cinemaHall, showTime));
+        showTime = LocalDateTime.of(2022, 8, 02, 12, 00);
+        movieSessionService.add(new MovieSession(movie, cinemaHall, showTime));
         movie = movieService.get(2L);
         cinemaHall = cinemaHallService.get(3L);
-        showTime = LocalDateTime.of(2022,8,02,14,00);
-        movieSessionService.add(new MovieSession(movie,cinemaHall, showTime));
+        showTime = LocalDateTime.of(2022, 8, 02, 14, 00);
+        movieSessionService.add(new MovieSession(movie, cinemaHall, showTime));
         movie = movieService.get(2L);
         cinemaHall = cinemaHallService.get(2L);
-        showTime = LocalDateTime.of(2022,8,02,18,00);
-        movieSessionService.add(new MovieSession(movie,cinemaHall, showTime));
+        showTime = LocalDateTime.of(2022, 8, 02, 18, 00);
+        movieSessionService.add(new MovieSession(movie, cinemaHall, showTime));
     }
 }
