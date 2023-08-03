@@ -21,18 +21,12 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     @Override
     public CinemaHall get(Long id) {
         Optional<CinemaHall> cinemaHall = cinemaHallDao.get(id);
-        if (cinemaHall.isEmpty()) {
-            throw new RuntimeException("Can't found cinema hall with id " + id);
-        }
-        return cinemaHall.get();
+        return cinemaHall.orElseThrow(() ->
+                new RuntimeException("Can't found cinema hall with id " + id));
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        List<CinemaHall> cinemaHalls = cinemaHallDao.getAll();
-        if (cinemaHalls.isEmpty()) {
-            throw new RuntimeException("Can't found all cinema halls.");
-        }
-        return cinemaHalls;
+        return cinemaHallDao.getAll();
     }
 }

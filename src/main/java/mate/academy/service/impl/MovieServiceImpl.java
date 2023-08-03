@@ -21,18 +21,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie get(Long id) {
         Optional<Movie> movie = movieDao.get(id);
-        if (movie.isEmpty()) {
-            throw new RuntimeException("Can't get movie by id " + id);
-        }
-        return movie.get();
+        return movie.orElseThrow(() -> new RuntimeException("Can't get movie by id " + id));
     }
 
     @Override
     public List<Movie> getAll() {
-        List<Movie> movies = movieDao.getAll();
-        if (movies.isEmpty()) {
-            throw new RuntimeException("Can't get all movies.");
-        }
-        return movies;
+        return movieDao.getAll();
     }
 }

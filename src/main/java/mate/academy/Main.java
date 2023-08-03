@@ -30,6 +30,10 @@ public class Main {
         System.out.println("Get all movie sessions of "
                 + movieService.get(movieId) + " on date " + onDate);
         movieSessionService.findAvailableSessions(movieId,onDate).forEach(System.out::println);
+        System.out.println("Get cinema hall with id = 1");
+        System.out.println(cinemaHallService.get(1L));
+        System.out.println("Get cinema hall with id = 55");
+        System.out.println(cinemaHallService.get(55L));
     }
 
     private static void initMovies() {
