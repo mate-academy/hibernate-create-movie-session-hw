@@ -39,12 +39,12 @@ public class Main {
         cinemaHallService.add(bigHall);
 
         MovieSession firstMovieSession = new MovieSession();
-        firstMovieSession.setMovie(movieService.get(1L).orElseThrow());
+        firstMovieSession.setMovie(movieService.get(1L));
         firstMovieSession.setCinemaHall(cinemaHallService.get(2L).orElseThrow());
         firstMovieSession.setShowTime(LocalDateTime.of(2023, 8, 8, 12, 30));
 
         MovieSession secondMovieSession = new MovieSession();
-        secondMovieSession.setMovie(movieService.get(2L).orElseThrow());
+        secondMovieSession.setMovie(movieService.get(2L));
         secondMovieSession.setCinemaHall(cinemaHallService.get(1L).orElseThrow());
         secondMovieSession.setShowTime(LocalDateTime.of(2023, 9, 8, 14, 30));
         movieSessionService.add(firstMovieSession);
