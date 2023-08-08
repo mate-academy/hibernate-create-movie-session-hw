@@ -28,6 +28,7 @@ public class Main {
         cinemaHallService.add(cinemaHall);
         System.out.println(movieService.get(fastAndFurious.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
+
         MovieSessionService movieSessionService = (MovieSessionService)
                 injector.getInstance(MovieSessionService.class);
         MovieSession movieSession =
