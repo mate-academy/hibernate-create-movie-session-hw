@@ -23,6 +23,7 @@ public class Main {
         movieService.add(harryPotter);
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
+
         CinemaHall basicHall = new CinemaHall();
         basicHall.setCapacity(100);
         basicHall.setDescription("Basic cinema hall");
@@ -35,6 +36,7 @@ public class Main {
         cinemaHallService.add(largeHall);
         System.out.println(cinemaHallService.get(largeHall.getId()));
         System.out.println(cinemaHallService.getAll());
+
         MovieSession fastAndFuriousSession = new MovieSession();
         fastAndFuriousSession.setMovie(fastAndFurious);
         fastAndFuriousSession.setCinemaHall(basicHall);
