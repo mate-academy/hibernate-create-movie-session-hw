@@ -17,6 +17,7 @@ public class Main {
         Movie movieHatiko = new Movie("Hatiko");
         Movie movieIt = new Movie("It");
         Movie movieIt2 = new Movie("It 2");
+
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         movieService.add(movieHatiko);
         movieService.add(movieIt);
@@ -25,11 +26,12 @@ public class Main {
         movieService.getAll();
 
         CinemaHall cinemaHallWithImax = new CinemaHall();
-        CinemaHall basicCinemaHall = new CinemaHall();
-        CinemaHall cinemaHallWith3D = new CinemaHall();
         cinemaHallWithImax.setDescription("IMAX");
+        CinemaHall basicCinemaHall = new CinemaHall();
         basicCinemaHall.setDescription("Normal cinema hall");
+        CinemaHall cinemaHallWith3D = new CinemaHall();
         cinemaHallWith3D.setDescription("3D included");
+
         CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
         cinemaHallService.add(cinemaHallWithImax);
@@ -42,14 +44,17 @@ public class Main {
         movieSessionWithCurrentShowTime.setShowTime(LocalDateTime.now());
         movieSessionWithCurrentShowTime.setCinemaHall(cinemaHallWithImax);
         movieSessionWithCurrentShowTime.setMovie(movieHatiko);
+
         MovieSession movieSessionWithPlusMonthShowTime = new MovieSession();
         movieSessionWithPlusMonthShowTime.setShowTime(LocalDateTime.now().plusMonths(1));
         movieSessionWithPlusMonthShowTime.setCinemaHall(basicCinemaHall);
         movieSessionWithPlusMonthShowTime.setMovie(movieIt);
+
         MovieSession movieSessionWithPlus5MonthsShowTime = new MovieSession();
         movieSessionWithPlus5MonthsShowTime.setShowTime(LocalDateTime.now().plusMonths(5));
         movieSessionWithPlus5MonthsShowTime.setCinemaHall(cinemaHallWith3D);
         movieSessionWithPlus5MonthsShowTime.setMovie(movieIt2);
+
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSessionWithCurrentShowTime);
