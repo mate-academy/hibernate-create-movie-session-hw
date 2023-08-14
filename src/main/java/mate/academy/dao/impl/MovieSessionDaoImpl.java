@@ -1,5 +1,8 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,9 +11,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -56,11 +56,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "and mv.showTime between :start and :end", MovieSession.class);
             getMovieSessionQuery.setParameter("movieId", movieId);
             getMovieSessionQuery.setParameter("start", date.atStartOfDay());
-            getMovieSessionQuery.setParameter("end", date.atTime(TWENTY_THREE, FIFTY_NINE, FIFTY_NINE));
+            getMovieSessionQuery.setParameter(
+                    "end", date.atTime(TWENTY_THREE, FIFTY_NINE, FIFTY_NINE));
             return getMovieSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find available sessions by movie id: " + movieId
-                    + " and date: " + date, e);
+            throw new DataProcessingException("Can't find available sessions by movie id: "
+                    + movieId + " and date: " + date, e);
         }
     }
 }
