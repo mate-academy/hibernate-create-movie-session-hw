@@ -68,6 +68,6 @@ public class Main {
         localDate = LocalDate.of(2023, 8, 16);
         movieSessionService.findAvailableSessions(wolfFromWallStreet.getId(), localDate)
                 .forEach(System.out::println);
-        System.out.println(movieSessionService.get(0L));
+        movieSessionService.get(0L);
     }
 }
