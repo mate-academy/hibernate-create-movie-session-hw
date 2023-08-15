@@ -43,8 +43,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        String query = "from MovieSession m left join fetch m.movie mov where mov.id = :id and"
-                + " m.showTime between :dayStart and :dayOver";
+        String query = "FROM MovieSession m LEFT JOIN FETCH m.movie mov WHERE mov.id = :id AND"
+                + " m.showTime BETWEEN :dayStart AND :dayOver";
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMoviesInTimeQuery =
                     session.createQuery(query, MovieSession.class);
