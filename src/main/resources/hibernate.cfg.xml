@@ -1,0 +1,15 @@
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://sql7.freesqldatabase.com:3306/sql7633485</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        <property name="connection.username">sql7633485</property>
+        <property name="connection.password">erHDpGC53N</property>
+        <property name="show_sql">true</property>
+        <property name="hbm2ddl.auto">create-drop</property>
+
+        <mapping class="mate.academy.model.Movie"/>
+        <mapping class="mate.academy.model.MovieSession"/>
+        <mapping class="mate.academy.model.CinemaHall"/>
+    </session-factory>
+</hibernate-configuration>
