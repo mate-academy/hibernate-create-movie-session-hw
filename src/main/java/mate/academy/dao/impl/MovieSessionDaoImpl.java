@@ -30,7 +30,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie session " + movieSession, e);
+            throw new DataProcessingException("Can't save movie session " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -50,9 +50,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getAllMovieSession = session.createQuery("from MovieSession "
-                            + "where movie.id=:id and "
-                            + "showTime between :startOfDay and :endOfDay",
+            Query<MovieSession> getAllMovieSession = session.createQuery("FROM MovieSession "
+                            + "WHERE movie.id=:id AND "
+                            + "showTime BETWEEN :startOfDay AND :endOfDay",
                     MovieSession.class);
             getAllMovieSession.setParameter("id", movieId);
             getAllMovieSession.setParameter("startOfDay", LocalDateTime.of(date, LocalTime.MIN));

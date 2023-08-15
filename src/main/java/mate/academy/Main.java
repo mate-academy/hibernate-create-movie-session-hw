@@ -21,6 +21,7 @@ public class Main {
         harryPotter.setDescription("Great film of the fantasy genre about magic");
         movieService.add(fastAndFurious);
         movieService.add(harryPotter);
+
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
@@ -30,6 +31,7 @@ public class Main {
         CinemaHall largeHall = new CinemaHall();
         largeHall.setCapacity(300);
         largeHall.setDescription("Cinema hall with big capacity");
+
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
         cinemaHallService.add(basicHall);
@@ -41,10 +43,12 @@ public class Main {
         fastAndFuriousSession.setMovie(fastAndFurious);
         fastAndFuriousSession.setCinemaHall(basicHall);
         fastAndFuriousSession.setShowTime(LocalDateTime.now());
+
         MovieSession harryPotterSession = new MovieSession();
         harryPotterSession.setMovie(harryPotter);
         harryPotterSession.setCinemaHall(largeHall);
         harryPotterSession.setShowTime(LocalDateTime.now().plusDays(15));
+
         MovieSessionService movieSessionService = (MovieSessionService) injector
                 .getInstance(MovieSessionService.class);
         movieSessionService.add(fastAndFuriousSession);

@@ -27,7 +27,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException("Can't save movie " + movie, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -47,7 +47,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> getAllMovieQuery = session.createQuery("from Movie", Movie.class);
+            Query<Movie> getAllMovieQuery = session.createQuery("FROM Movie", Movie.class);
             return getAllMovieQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all movie from DB", e);
