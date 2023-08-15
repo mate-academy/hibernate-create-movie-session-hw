@@ -61,6 +61,6 @@ public class Main {
         movieSessionService.add(movieSessionWithPlusMonthShowTime);
         movieSessionService.add(movieSessionWithPlus5MonthsShowTime);
         movieSessionService.get(2L);
-        movieSessionService.findAvailableSessions(1L, LocalDate.now());
+        movieSessionService.findAvailableSessions(movieHatiko.getId(), LocalDate.now());
     }
 }
