@@ -16,6 +16,9 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final String MOVIE_ID = "movieId";
+    private static final String DAY_BEGIN = "dayBegin";
+    private static final String DAY_END = "dayEnd";
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -50,14 +53,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        String hqlQuery = "FROM MovieSession m WHERE movie.id = :movieId "
-                + "AND showTime > :dayBegin "
-                + "AND showTime < :dayEnd";
+        String hqlQuery = "FROM MovieSession m WHERE movie.id = :" + MOVIE_ID
+                + "AND showTime > :" + DAY_BEGIN
+                + "AND showTime < :" + DAY_END;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> findSessionsQuery = session.createQuery(hqlQuery);
-            findSessionsQuery.setParameter("movieId", movieId);
-            findSessionsQuery.setParameter("dayBegin", LocalDateTime.of(date, LocalTime.MIN));
-            findSessionsQuery.setParameter("dayEnd", LocalDateTime.of(date, LocalTime.MAX));
+            findSessionsQuery.setParameter(MOVIE_ID, movieId);
+            findSessionsQuery.setParameter(DAY_BEGIN, LocalDateTime.of(date, LocalTime.MIN));
+            findSessionsQuery.setParameter(DAY_END, LocalDateTime.of(date, LocalTime.MAX));
             return findSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find any movie sessions.", e);
