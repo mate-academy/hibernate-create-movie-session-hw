@@ -28,7 +28,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movieSession);
+            session.persist(movieSession);
             transaction.commit();
             return movieSession;
         } catch (Exception e) {
@@ -68,7 +68,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     date.atTime(MAX_HOUR,MAX_MINUTE, MAX_SECOND));
             return getMovieSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie session list ", e);
+            throw new DataProcessingException(
+                    String.format("Can't get a movie session list with id = " + movieId
+                            + " and date = " + date), e);
         }
     }
 }
