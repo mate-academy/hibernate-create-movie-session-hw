@@ -14,6 +14,13 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final int ZERO_HOURS = 0;
+    private static final int ZERO_MINUTES = 0;
+    private static final int ZERO_SECONDS = 0;
+    private static final int MAX_HOUR = 23;
+    private static final int MAX_MINUTE = 59;
+    private static final int MAX_SECOND = 59;
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
@@ -56,9 +63,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             MovieSession.class);
             getMovieSessionsQuery.setParameter("movieId", movieId);
             getMovieSessionsQuery.setParameter("dateTimeFrom",
-                    date.atTime(0,0, 0));
+                    date.atTime(ZERO_HOURS,ZERO_MINUTES, ZERO_SECONDS));
             getMovieSessionsQuery.setParameter("dateTimeTo",
-                    date.atTime(23,59, 59));
+                    date.atTime(MAX_HOUR,MAX_MINUTE, MAX_SECOND));
             return getMovieSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session list ", e);
