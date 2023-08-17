@@ -9,6 +9,7 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -44,7 +45,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            MovieSession movieSession = session.get(MovieSession.class, id);
+            if (movieSession != null) {
+                Hibernate.initialize(movieSession.getMovie());
+            }
+            return Optional.ofNullable(movieSession);
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -54,7 +59,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         String query = String.format("from MovieSession m where m.movie.id = :%s"
                         + " and m.showTime >= :%s and m.showTime <= :%s",
-                "MOVIE_ID", "START_OF_DATE", "END_OF_DATE");
+                MOVIE_ID, START_OF_DATE, END_OF_DATE);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAll = session.createQuery(query, MovieSession.class);
             getAll.setParameter(MOVIE_ID, movieId);
@@ -63,7 +68,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return getAll.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(
-                    "Can't get movie session on required date: " + date, e);
+                    "Can't get movie session with id " + movieId
+                    + " on required date: " + date, e);
         }
     }
 }
