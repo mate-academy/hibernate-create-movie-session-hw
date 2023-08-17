@@ -18,12 +18,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     private static final String START_OF_DAY = "startOfDay";
     private static final String END_OF_DAY = "endOfDay";
     private static final int NEXT_DAY = 1;
-    private static final String GET_AVAILABLE_QUERY = """
-            FROM MovieSession s
-            WHERE s.id = :id
-            AND s.showTime >= :startOfDay
-            AND s.showTime < :endOfDay
-            """;
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -40,7 +34,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert a new movie session "
-                    + movieSession, e);
+                                              + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -59,16 +53,24 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        String getAvailableQueryString = """
+                FROM MovieSession s
+                WHERE s.id = :id
+                AND s.showTime >= :startOfDay
+                AND s.showTime < :endOfDay
+                """;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAvailableQuery = session.createQuery(
-                    GET_AVAILABLE_QUERY,
+                    getAvailableQueryString,
                     MovieSession.class);
             getAvailableQuery.setParameter(ID, movieId);
             getAvailableQuery.setParameter(START_OF_DAY, date.atStartOfDay());
             getAvailableQuery.setParameter(END_OF_DAY, date.atStartOfDay().plusDays(NEXT_DAY));
             return getAvailableQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get movie sessions from the database", e);
+            throw new DataProcessingException(
+                    "Can't get movie sessions from the database for date " + date
+                    + " and movie with id" + movieId, e);
         }
     }
 }
