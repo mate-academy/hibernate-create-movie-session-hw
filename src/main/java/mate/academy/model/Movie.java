@@ -5,10 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import mate.academy.exception.DataProcessingException;
 
 @Entity
 @Table(name = "movies")
-public class Movie {
+public class Movie implements Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,6 +45,15 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    protected Movie clone() throws CloneNotSupportedException {
+        try {
+            return (Movie) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new DataProcessingException("Can't make clone of " + this, e);
+        }
     }
 
     @Override
