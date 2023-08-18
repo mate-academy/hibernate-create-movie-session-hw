@@ -40,6 +40,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get a MovieSession by id: " + id, e);
         }
     }
 
@@ -56,6 +58,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             movieSessionQuery.setParameter("dateTime", date);
 
             return movieSessionQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't findAvailableSessions by:"
+                    + " id: " + movieId + ", date:" + date, e);
         }
     }
 }
