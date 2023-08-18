@@ -30,7 +30,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't create movie session" + movieSession, e);
+            throw new DataProcessingException("Can't create movie session: " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -51,10 +51,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessions = session.createQuery(
-                    "from MovieSession m "
-                            + "join fetch m.movie "
-                            + "join fetch m.cinemaHall "
-                            + "where m.movie.id = :id "
+                    "FROM MovieSession m "
+                            + "JOIN FETCH m.movie "
+                            + "JOIN FETCH m.cinemaHall "
+                            + "WHERE m.movie.id = :id "
                             + "AND " + "m.showTime BETWEEN :startOfDay AND :endOfDay",
                     MovieSession.class);
             getAllMovieSessions.setParameter("id", movieId);
