@@ -12,7 +12,6 @@ import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
@@ -22,6 +21,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.save(cinemaHall);
             transaction.commit();
+            return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -32,7 +32,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                 session.close();
             }
         }
-        return cinemaHall;
     }
 
     @Override
@@ -47,7 +46,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM CinemaHall", CinemaHall.class).getResultList();
+            List<CinemaHall> getAllCommentsQuery =
+                    session.createQuery("FROM CinemaHall", CinemaHall.class).getResultList();
+            return getAllCommentsQuery;
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all cinema hall", e);
         }

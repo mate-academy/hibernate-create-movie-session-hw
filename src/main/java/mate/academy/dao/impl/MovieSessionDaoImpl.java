@@ -16,6 +16,10 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final String MOVIE_ID = "movieId";
+    private static final String START_OF_DAY = "startOfDay";
+    private static final String END_OF_DAY = "endOfDay";
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
@@ -25,6 +29,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
+            return movieSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -35,7 +40,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 session.close();
             }
         }
-        return movieSession;
     }
 
     @Override
@@ -54,10 +58,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     session.createQuery("FROM MovieSession m WHERE m.movie.id = :movieId"
                             + "AND m.showTime BETWEEN :startOfDay AND :endOfDay",
                             MovieSession.class);
-            findAvailableMovieSession.setParameter("movieId", movieId);
-            findAvailableMovieSession.setParameter("startOfDay",
+            findAvailableMovieSession.setParameter(MOVIE_ID, movieId);
+            findAvailableMovieSession.setParameter(START_OF_DAY,
                     LocalDateTime.of(localDate, LocalTime.MIN));
-            findAvailableMovieSession.setParameter("endOfDay",
+            findAvailableMovieSession.setParameter(END_OF_DAY,
                     LocalDateTime.of(localDate, LocalTime.MAX));
             return findAvailableMovieSession.getResultList();
         } catch (Exception e) {

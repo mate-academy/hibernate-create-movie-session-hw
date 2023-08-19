@@ -1,7 +1,6 @@
 package mate.academy.model;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +16,6 @@ public class MovieSession {
     private Long id;
     @ManyToOne
     private Movie movie;
-
     @ManyToOne
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
@@ -61,25 +59,6 @@ public class MovieSession {
 
     public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        MovieSession that = (MovieSession) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getMovie(),
-                that.getMovie()) && Objects.equals(getCinemaHall(), that.getCinemaHall())
-                && Objects.equals(getShowTime(), that.getShowTime());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getMovie(), getCinemaHall(), getShowTime());
     }
 
     @Override
