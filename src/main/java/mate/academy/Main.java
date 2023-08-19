@@ -32,7 +32,7 @@ public class Main {
         cinemaHallService.getAll().forEach(System.out::println);
 
         LocalDateTime sessionTime =
-                LocalDateTime.of(2023, 11, 12, 10, 00);
+                LocalDateTime.of(2023, 11, 12, 10, 0);
         MovieSession movieSession = new MovieSession(fastAndFurious, cinemaHall, sessionTime);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
