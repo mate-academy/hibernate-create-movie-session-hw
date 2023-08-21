@@ -15,7 +15,6 @@ import mate.academy.service.MovieSessionService;
 public class Main {
     public static void main(String[] args) {
         Injector injector = Injector.getInstance("mate.academy");
-
         final MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         final CinemaHallService cinemaHallService =
