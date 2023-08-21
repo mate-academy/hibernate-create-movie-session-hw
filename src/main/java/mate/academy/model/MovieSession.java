@@ -12,21 +12,21 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "sessions")
+@Table(name = "MovieSession")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime dateOfSession;
+    private LocalDateTime showTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    private Movie movieOfSession;
+    private Movie movie;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hall_id")
-    private CinemaHall hallOfSession;
+    private CinemaHall cinemaHall;
 
     public Long getId() {
         return id;
@@ -37,36 +37,36 @@ public class MovieSession {
     }
 
     public LocalDateTime getDateOfSession() {
-        return dateOfSession;
+        return showTime;
     }
 
-    public void setDateOfSession(LocalDateTime dateOfSession) {
-        this.dateOfSession = dateOfSession;
+    public void setDateOfSession(LocalDateTime showTime) {
+        this.showTime = showTime;
     }
 
     public Movie getMovieOfSession() {
-        return movieOfSession;
+        return movie;
     }
 
-    public void setMovieOfSession(Movie movieOfSession) {
-        this.movieOfSession = movieOfSession;
+    public void setMovieOfSession(Movie movie) {
+        this.movie = movie;
     }
 
     public CinemaHall getHallOfSession() {
-        return hallOfSession;
+        return cinemaHall;
     }
 
-    public void setHallOfSession(CinemaHall hallOfSession) {
-        this.hallOfSession = hallOfSession;
+    public void setHallOfSession(CinemaHall cinemaHall) {
+        this.cinemaHall = cinemaHall;
     }
 
     @Override
     public String toString() {
         return "MovieSession{"
                 + "id=" + id
-                + ", dateOfSession=" + dateOfSession
-                + ", movieOfSession=" + movieOfSession
-                + ", hallOfSession=" + hallOfSession
+                + ", dateOfSession=" + showTime
+                + ", movieOfSession=" + movie
+                + ", hallOfSession=" + cinemaHall
                 + '}';
     }
 }

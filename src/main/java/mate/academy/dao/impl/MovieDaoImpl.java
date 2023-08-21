@@ -50,6 +50,8 @@ public class MovieDaoImpl implements MovieDao {
             Query<Movie> getAllCommentsQuery = session.createQuery(
                     "from Movie", Movie.class);
             return getAllCommentsQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movies", e);
         }
     }
 }
