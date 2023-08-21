@@ -20,8 +20,8 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     @Override
     public CinemaHall get(Long id) {
         return cinemaHallDao.get(id).orElseThrow(
-                () -> new RuntimeException("Can't get a movie. "
-                        + "Movie can't be null"));
+                () -> new RuntimeException("Can't get a cinemaHall. "
+                        + "CinemaHall can't be null"));
     }
 
     @Override

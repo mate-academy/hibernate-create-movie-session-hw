@@ -50,9 +50,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getAllCommentsQuery = session.createQuery(
-                    "from MovieSession", MovieSession.class);
-            return getAllCommentsQuery.getResultList();
+            Query<MovieSession> getAllMovieSessionsQuery = session.createQuery(
+                    "FROM MovieSession", MovieSession.class);
+            return getAllMovieSessionsQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movie sessions", e);
         }
     }
 
@@ -61,10 +63,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllMovieSessions = session.createQuery(
                     "FROM MovieSession m "
-                            + "JOIN FETCH m.movieOfSession "
-                            + "JOIN FETCH m.hallOfSession "
-                            + "WHERE m.movieOfSession.id = :id "
-                            + "AND " + "m.dateOfSession BETWEEN :startOfDay AND :endOfDay",
+                            + "JOIN FETCH m.movie "
+                            + "JOIN FETCH m.cinemaHall "
+                            + "WHERE m.movie.id = :id "
+                            + "AND " + "m.showTime BETWEEN :startOfDay AND :endOfDay",
                     MovieSession.class);
             getAllMovieSessions.setParameter("id", movieId);
             getAllMovieSessions.setParameter("startOfDay", LocalDateTime.of(date, LocalTime.MIN));
