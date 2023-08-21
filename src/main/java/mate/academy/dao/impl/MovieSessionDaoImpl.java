@@ -60,7 +60,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllMovieSessionQuery.setParameter("endDate", date.plusDays(ONE_DAY).atStartOfDay());
             return getAllMovieSessionQuery.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all MovieSessions!", e);
+            throw new RuntimeException("Can't get all MovieSessions with movie id: " + movieId
+                    + " on required date: " + date, e);
         }
     }
 }
