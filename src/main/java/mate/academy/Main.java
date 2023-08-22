@@ -50,17 +50,17 @@ public class Main {
         cinemaHallService.add(cinemaHall3);
 
         MovieSession movieSession = new MovieSession();
-        movieSession.setMovieOfSession(movieService.get(fastAndFurious.getId()));
-        movieSession.setHallOfSession(cinemaHallService.get(cinemaHall.getId()));
+        movieSession.setMovie(movieService.get(fastAndFurious.getId()));
+        movieSession.setCinemaHall(cinemaHallService.get(cinemaHall.getId()));
         LocalDateTime localDateTime = LocalDateTime.of(LocalDate.of(2022, 12, 2), LocalTime.now());
-        movieSession.setDateOfSession(localDateTime);
+        movieSession.setShowTime(localDateTime);
         movieSessionService.add(movieSession);
 
         MovieSession movieSession1 = new MovieSession();
-        movieSession1.setMovieOfSession(movieService.get(avatar.getId()));
-        movieSession1.setHallOfSession(cinemaHallService.get(cinemaHall2.getId()));
+        movieSession1.setMovie(movieService.get(avatar.getId()));
+        movieSession1.setCinemaHall(cinemaHallService.get(cinemaHall2.getId()));
         LocalDateTime localDateTime1 = LocalDateTime.of(LocalDate.of(2022, 12, 3), LocalTime.now());
-        movieSession1.setDateOfSession(localDateTime1);
+        movieSession1.setShowTime(localDateTime1);
         movieSessionService.add(movieSession1);
 
         List<MovieSession> availableSessions =
