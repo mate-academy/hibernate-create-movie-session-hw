@@ -8,11 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movieSession")
+@Table(name = "movie_session")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +23,7 @@ public class MovieSession {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hall_id")
     private CinemaHall cinemaHall;
 
@@ -36,27 +35,27 @@ public class MovieSession {
         this.id = id;
     }
 
-    public LocalDateTime getDateOfSession() {
+    public LocalDateTime getShowTime() {
         return showTime;
     }
 
-    public void setDateOfSession(LocalDateTime showTime) {
+    public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
     }
 
-    public Movie getMovieOfSession() {
+    public Movie getMovie() {
         return movie;
     }
 
-    public void setMovieOfSession(Movie movie) {
+    public void setMovie(Movie movie) {
         this.movie = movie;
     }
 
-    public CinemaHall getHallOfSession() {
+    public CinemaHall getCinemaHall() {
         return cinemaHall;
     }
 
-    public void setHallOfSession(CinemaHall cinemaHall) {
+    public void setCinemaHall(CinemaHall cinemaHall) {
         this.cinemaHall = cinemaHall;
     }
 
@@ -64,9 +63,9 @@ public class MovieSession {
     public String toString() {
         return "MovieSession{"
                 + "id=" + id
-                + ", dateOfSession=" + showTime
-                + ", movieOfSession=" + movie
-                + ", hallOfSession=" + cinemaHall
+                + ", showTime=" + showTime
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
                 + '}';
     }
 }

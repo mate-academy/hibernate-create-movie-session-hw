@@ -21,8 +21,7 @@ public class MovieServiceImpl implements MovieService {
     public Movie get(Long id) {
         return movieDao.get(id)
                 .orElseThrow(
-                        () -> new RuntimeException("Can't get a movie. "
-                                + "Movie can't be null"));
+                        () -> new RuntimeException("Can't get a movie by id = " + id));
     }
 
     @Override
