@@ -2,7 +2,6 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -25,22 +24,18 @@ public class Main {
 
         CinemaHallService cinemaHallService =
                 (CinemaHallService) INJECTOR.getInstance(CinemaHallService.class);
-
         CinemaHall firstCinemaHall = new CinemaHall();
         firstCinemaHall.setCapacity(242);
         firstCinemaHall.setDescription("Sad store");
         System.out.println(cinemaHallService.add(firstCinemaHall));
         System.out.println(cinemaHallService.get(firstCinemaHall.getId()));
         System.out.println(cinemaHallService.getAll());
-
-        MovieSessionService movieSessionService =
-                (MovieSessionService) INJECTOR.getInstance(MovieSessionService.class);
-
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(firstCinemaHall);
         movieSession.setShowTime(LocalDateTime.now());
-
+        MovieSessionService movieSessionService =
+                (MovieSessionService) INJECTOR.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
         movieSessionService.get(movieSession.getId());
         movieSessionService.findAvailableSessions(movieSession.getId(), LocalDate.now());
