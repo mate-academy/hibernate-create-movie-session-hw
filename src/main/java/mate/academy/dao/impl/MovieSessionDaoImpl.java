@@ -19,6 +19,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     private static final String MOVIE_ID = "movieId";
     private static final String START_OF_DAY = "startOfDay";
     private static final String END_OF_DAY = "endOfDay";
+    private static final String ID = "id";
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -45,12 +46,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("FROM MovieSession ms "
+            Query<MovieSession> getMovieSessionById = session.createQuery("FROM MovieSession ms "
                     + "JOIN FETCH ms.movie m "
                     + "JOIN FETCH ms.cinemaHall ch "
                     + "WHERE ms.id = :id", MovieSession.class);
-            query.setParameter("id", id);
-            return query.uniqueResultOptional();
+            getMovieSessionById.setParameter(ID, id);
+            return getMovieSessionById.uniqueResultOptional();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
