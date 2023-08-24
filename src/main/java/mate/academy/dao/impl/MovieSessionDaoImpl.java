@@ -61,5 +61,4 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + movieId + " AND date: " + date, e);
         }
     }
-
 }
