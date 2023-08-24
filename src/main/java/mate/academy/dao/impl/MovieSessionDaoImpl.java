@@ -27,7 +27,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movieSession);
+            session.persist(movieSession);
             transaction.commit();
             return movieSession;
         } catch (Exception e) {
@@ -45,9 +45,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> query = session.createQuery("FROM MovieSession ms "
+                    + "JOIN FETCH ms.movie m "
+                    + "JOIN FETCH ms.cinemaHall ch "
+                    + "WHERE ms.id = :id", MovieSession.class);
+            query.setParameter("id", id);
+            return query.uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get movie session by id: " + id, e);
+            throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
     }
 
@@ -55,8 +60,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSession(Long movieId, LocalDate localDate) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> findAvailableMovieSession =
-                    session.createQuery("FROM MovieSession m WHERE m.movie.id = :movieId"
-                            + "AND m.showTime BETWEEN :startOfDay AND :endOfDay",
+                    session.createQuery("FROM MovieSession m "
+                                    + "LEFT JOIN FETCH m.movie "
+                                    + "LEFT JOIN FETCH m.cinemaHall "
+                                    + "WHERE m.movie.id = :movieId "
+                                    + "AND m.showTime BETWEEN :startOfDay AND :endOfDay ",
                             MovieSession.class);
             findAvailableMovieSession.setParameter(MOVIE_ID, movieId);
             findAvailableMovieSession.setParameter(START_OF_DAY,
@@ -66,7 +74,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return findAvailableMovieSession.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available session at: " + localDate
-            + "by movie id" + movieId, e);
+                    + "by movie id" + movieId, e);
         }
     }
 }
