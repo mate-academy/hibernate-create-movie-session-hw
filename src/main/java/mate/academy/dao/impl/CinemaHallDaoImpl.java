@@ -41,7 +41,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Query<CinemaHall> query =
                     session.createQuery("from CinemaHall where id = :id", CinemaHall.class);
             query.setParameter("id", id);
-            return Optional.ofNullable(query.getSingleResult());
+            return query.uniqueResultOptional();
         } catch (Exception e) {
             throw new RuntimeException("Can`t find cinema hall id:" + id, e);
         }
