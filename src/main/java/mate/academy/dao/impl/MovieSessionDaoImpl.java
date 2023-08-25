@@ -63,7 +63,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             }
             return availableMovieSessions;
         } catch (Exception e) {
-            throw new RuntimeException("Can't get available movie sessions from DB", e);
+            throw new DataProcessingException("Can't get available movie sessions from DB", e);
         }
     }
 }
