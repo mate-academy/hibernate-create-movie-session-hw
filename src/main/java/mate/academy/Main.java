@@ -50,17 +50,18 @@ public class Main {
         todayMovieSession.setCinemaHall(cinemaHall);
         todayMovieSession.setShowTime(LocalDateTime.now());
 
-        MovieSession anotherMovieSession = new MovieSession();
-        anotherMovieSession.setMovie(wrongTurn);
-        anotherMovieSession.setMovie(wrongTurn2);
-        anotherMovieSession.setMovie(barbie);
-        anotherMovieSession.setCinemaHall(cinemaHall);
-        anotherMovieSession.setShowTime(LocalDateTime.of(2023, 8, 27, 19, 30));
+        MovieSession weekendMovieSession = new MovieSession();
+        weekendMovieSession.setMovie(wrongTurn);
+        weekendMovieSession.setMovie(wrongTurn2);
+        weekendMovieSession.setMovie(barbie);
+        weekendMovieSession.setCinemaHall(cinemaHall);
+        weekendMovieSession.setShowTime(LocalDateTime.of(2023, 8, 27, 19, 30));
 
         MovieSessionService movieSessionService = (MovieSessionService) INJECTOR
                 .getInstance(MovieSessionService.class);
         movieSessionService.add(todayMovieSession);
-        movieSessionService.add(anotherMovieSession);
-        movieSessionService.findAvailableSessions(1L, LocalDate.now()).forEach(System.out::println);
+        movieSessionService.add(weekendMovieSession);
+        movieSessionService.findAvailableSessions(todayMovieSession.getId(), LocalDate.from(todayMovieSession.getShowTime())).forEach(System.out::println);
+        movieSessionService.get(1L);
     }
 }
