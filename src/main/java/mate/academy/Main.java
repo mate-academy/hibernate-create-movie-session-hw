@@ -61,7 +61,8 @@ public class Main {
                 .getInstance(MovieSessionService.class);
         movieSessionService.add(todayMovieSession);
         movieSessionService.add(weekendMovieSession);
-        movieSessionService.findAvailableSessions(todayMovieSession.getId(), LocalDate.from(todayMovieSession.getShowTime())).forEach(System.out::println);
+        movieSessionService.findAvailableSessions(todayMovieSession.getId(),
+                LocalDate.from(todayMovieSession.getShowTime())).forEach(System.out::println);
         movieSessionService.get(1L);
     }
 }
