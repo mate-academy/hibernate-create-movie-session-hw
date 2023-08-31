@@ -20,7 +20,6 @@ public class Main {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
-        System.out.println("*** getId = " + movieService.get(fastAndFurious.getId()));
 
         Movie fromDuskTillDown = new Movie("From Dusk Till Down");
         fromDuskTillDown.setDescription("Awesome movie!");
@@ -29,8 +28,7 @@ public class Main {
         Movie nextMovie = new Movie("Unknown Movie");
         nextMovie.setDescription("Nobody knows what this movie about");
         movieService.add(nextMovie);
-
-        System.out.println("*** getAll ***");
+        System.out.println(movieService.get(2L));
         movieService.getAll().forEach(System.out::println);
 
         CinemaHallService cinemaHallService
@@ -49,6 +47,9 @@ public class Main {
         cinemaHallNext.setCapacity(40);
         cinemaHallNext.setDescription("Magic Hall");
         cinemaHallService.add(cinemaHallNext);
+
+        System.out.println(cinemaHallService.get(1L));
+        cinemaHallService.getAll().forEach(System.out::println);
 
         MovieSession movieSessionOne = new MovieSession();
         movieSessionOne.setMovie(fastAndFurious);
@@ -81,7 +82,8 @@ public class Main {
         movieSessionThree.setCinemaHall(cinemaHallNext);
         movieSessionThree.setShowTime(LocalDateTime.now().plusDays(3));
         movieSessionService.add(movieSessionThree);
-
-        System.out.println(movieSessionService.findAvailableSessions(1L, LocalDate.now()));
+        System.out.println(movieSessionService.get(3L));
+        movieSessionService.findAvailableSessions(1L, LocalDate.now())
+                .forEach(System.out::println);
     }
 }

@@ -52,10 +52,10 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = factory.openSession()) {
             Query<CinemaHall> getAllCinemaHalls
-                    = session.createQuery("FROM CinemaHall ", CinemaHall.class);
+                    = session.createQuery("FROM CinemaHall", CinemaHall.class);
             return getAllCinemaHalls.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get All Cinema Halls = ", e);
+            throw new RuntimeException("Can't get All Cinema Halls - ", e);
         }
     }
 }
