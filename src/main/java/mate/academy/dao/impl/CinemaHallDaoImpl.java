@@ -14,7 +14,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private static final SessionFactory factory
+    private static SessionFactory factory
             = HibernateUtil.getSessionFactory();
 
     @Override
@@ -55,7 +55,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     = session.createQuery("FROM CinemaHall", CinemaHall.class);
             return getAllCinemaHalls.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get All Cinema Halls - ", e);
+            throw new DataProcessingException("Can't get All Cinema Halls - ", e);
         }
     }
 }

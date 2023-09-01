@@ -15,7 +15,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    private static final SessionFactory factory
+    private static SessionFactory factory
             = HibernateUtil.getSessionFactory();
 
     @Override
@@ -50,7 +50,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     + "WHERE ms.movie.id = :movieId ", MovieSession.class);
             getMovieSessionById.setParameter("movieId", id);
             return getMovieSessionById.uniqueResultOptional();
-            //return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a Movie Session by id: " + id, e);
         }
@@ -69,7 +68,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllAvailableSessions.setParameter("dateTime", date);
             return getAllAvailableSessions.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get available Movie Sessions at the date: "
+            throw new DataProcessingException("Can't get available Movie Sessions at the date: "
                     + date, e);
         }
     }

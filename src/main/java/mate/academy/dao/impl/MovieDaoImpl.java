@@ -14,7 +14,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-    private static final SessionFactory factory
+    private static SessionFactory factory
             = HibernateUtil.getSessionFactory();
 
     @Override
@@ -54,7 +54,7 @@ public class MovieDaoImpl implements MovieDao {
             Query<Movie> getAllMovies = session.createQuery("FROM Movie", Movie.class);
             return getAllMovies.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get All Movies - ", e);
+            throw new DataProcessingException("Can't get All Movies - ", e);
         }
     }
 }
