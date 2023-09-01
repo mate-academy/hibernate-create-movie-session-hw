@@ -43,7 +43,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = factory.openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            Query<MovieSession> getMovieSessionById
+                    = session.createQuery("FROM MovieSession ms "
+                    + "LEFT JOIN FETCH ms.movie "
+                    + "LEFT JOIN FETCH ms.cinemaHall "
+                    + "WHERE ms.movie.id = :movieId ", MovieSession.class);
+            getMovieSessionById.setParameter("movieId", id);
+            return getMovieSessionById.uniqueResultOptional();
+            //return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a Movie Session by id: " + id, e);
         }
@@ -54,6 +61,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = factory.openSession()) {
             Query<MovieSession> getAllAvailableSessions
                     = session.createQuery("FROM MovieSession ms "
+                    + "LEFT JOIN FETCH ms.movie "
+                    + "LEFT JOIN FETCH ms.cinemaHall "
                     + "WHERE ms.movie.id = :movieId "
                     + "AND DATE(ms.showTime) = :dateTime", MovieSession.class);
             getAllAvailableSessions.setParameter("movieId", movieId);
