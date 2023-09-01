@@ -58,6 +58,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getAllProductsQuery.setParameter("value1", movieId);
             getAllProductsQuery.setParameter("value2", date);
             return getAllProductsQuery.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find Available Sessions: ", e);
         }
     }
 }
