@@ -38,7 +38,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(MovieSession.class, id);
+            Query<MovieSession> findAllMovieSessions = session.createQuery(
+                    "from MovieSession ms"
+                            + " left join fetch ms.movie"
+                            + " left join fetch ms.cinemaHall",
+                    MovieSession.class);
+            return findAllMovieSessions.getResultList().get(0);
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movieSession by id: " + id, e);
         }
@@ -47,13 +52,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> findAllMovieSessions = session.createQuery(
-                    "from MovieSession ms where ms.showTime >= :startTime"
+            Query<MovieSession> findAllMovieSessionsByDate = session.createQuery(
+                    "from MovieSession ms "
+                            + " left join fetch ms.movie"
+                            + " left join fetch ms.cinemaHall"
+                            + " where ms.showTime >= :startTime"
                             + " and ms.showTime < :finishTime",
                      MovieSession.class);
-            findAllMovieSessions.setParameter("startTime", date.atStartOfDay());
-            findAllMovieSessions.setParameter("finishTime", date.plusDays(1).atStartOfDay());
-            return findAllMovieSessions.getResultList();
+            findAllMovieSessionsByDate.setParameter("startTime", date.atStartOfDay());
+            findAllMovieSessionsByDate.setParameter("finishTime", date.plusDays(1).atStartOfDay());
+            return findAllMovieSessionsByDate.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get available sessions", e);
         }
