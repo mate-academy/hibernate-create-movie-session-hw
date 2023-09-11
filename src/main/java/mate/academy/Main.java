@@ -58,7 +58,7 @@ public class Main {
         hobbitSession.setShowTime(LocalDateTime.now());
         System.out.println("_______________________");
         movieSessionService.add(hobbitSession);
-        System.out.println(movieSessionService.get(hobbitSession.getId()));
+        System.out.println(movieSessionService.get(hobbit.getId()));
         System.out.println("_______________________");
         movieSessionService.findAvailableSessions(hobbit.getId(), LocalDate.now())
                 .forEach(System.out::println);
