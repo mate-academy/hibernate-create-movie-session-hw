@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -45,6 +46,13 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaQuery<Movie> criteriaQuery = session.getCriteriaBuilder()
+                    .createQuery(Movie.class);
+            criteriaQuery.from(Movie.class);
+            return session.createQuery(criteriaQuery).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movie from DB", e);
+        }
     }
 }
