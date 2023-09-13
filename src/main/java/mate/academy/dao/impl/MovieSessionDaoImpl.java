@@ -1,18 +1,19 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
+@Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -54,9 +55,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             transaction = session.beginTransaction();
             LocalDateTime start = date.atStartOfDay();
             LocalDateTime end = date.atTime(23, 59, 59);
-            Query<MovieSession> query = session.createQuery("FROM MovieSession m" +
-                    "WHERE m.id = :id " +
-                    "AND m.showTime BETWEEN :firstDate AND :secondDate", MovieSession.class);
+            Query<MovieSession> query = session.createQuery("FROM MovieSession m "
+                    + "JOIN FETCH m.movie md "
+                    + "WHERE m.movie.id = :id "
+                    + "AND m.showTime BETWEEN :firstDate AND :secondDate", MovieSession.class);
             query.setParameter("id", movieId);
             query.setParameter("firstDate", start);
             query.setParameter("secondDate", end);
@@ -67,7 +69,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't get available sessions by movie id: " + movieId, e);
+            throw new DataProcessingException("Can't get available sessions by movie id: "
+                    + movieId, e);
         } finally {
             if (session != null) {
                 session.close();
