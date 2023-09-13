@@ -52,7 +52,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            List<CinemaHall> cinemaHalls = session.createQuery("FROM CinemaHall ", CinemaHall.class).list();
+            List<CinemaHall> cinemaHalls = session.createQuery("FROM CinemaHall", CinemaHall.class).list();
             transaction.commit();
             return cinemaHalls;
         } catch (Exception e) {
