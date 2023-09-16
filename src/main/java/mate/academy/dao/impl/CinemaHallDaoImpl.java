@@ -22,6 +22,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
+            return cinemaHall;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -32,7 +33,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                 session.close();
             }
         }
-        return cinemaHall;
     }
 
     @Override

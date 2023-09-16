@@ -23,6 +23,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
+            return movieSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -33,7 +34,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 session.close();
             }
         }
-        return movieSession;
     }
 
     @Override
