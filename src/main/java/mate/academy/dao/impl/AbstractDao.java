@@ -4,29 +4,18 @@ import java.util.Optional;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public abstract class AbstractDao {
     protected <T> T add(T entity) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.persist(entity);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
+        HibernateUtil.getSessionFactory().inTransaction(session -> {
+            try {
+                session.persist(entity);
+            } catch (RuntimeException e) {
+                throw new DataProcessingException(
+                        "Can't add %s entity to DB".formatted(entity.getClass().getSimpleName()), e
+                );
             }
-            throw new DataProcessingException(
-                    "Can't add %s entity to DB".formatted(entity.getClass().getSimpleName()), e
-            );
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        });
         return entity;
     }
 
