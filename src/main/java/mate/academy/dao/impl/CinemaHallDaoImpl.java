@@ -13,7 +13,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         try {
-            HibernateUtil.getSessionFactory().inTransaction(session -> session.persist(cinemaHall));
+            HibernateUtil.getFactory().inTransaction(session -> session.persist(cinemaHall));
             return cinemaHall;
         } catch (Exception e) {
             throw new DataProcessingException("Can't add cinemaHall " + cinemaHall, e);
@@ -23,7 +23,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public Optional<CinemaHall> get(Long id) {
         try {
-            return HibernateUtil.getSessionFactory()
+            return HibernateUtil.getFactory()
                     .fromSession(session -> Optional.ofNullable(session.get(CinemaHall.class, id)));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get CinemaHall by id: " + id, e);
@@ -33,7 +33,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try {
-            return HibernateUtil.getSessionFactory()
+            return HibernateUtil.getFactory()
                     .fromSession(session -> session.createQuery("FROM CinemaHall", CinemaHall.class)
                     .getResultList());
         } catch (Exception e) {

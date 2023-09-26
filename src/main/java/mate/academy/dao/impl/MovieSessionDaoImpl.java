@@ -14,7 +14,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         try {
-            return HibernateUtil.getSessionFactory().fromTransaction(session -> {
+            return HibernateUtil.getFactory().fromTransaction(session -> {
                 session.persist(movieSession);
                 return movieSession;
             });
@@ -26,7 +26,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try {
-            return HibernateUtil.getSessionFactory().fromSession(session ->
+            return HibernateUtil.getFactory().fromSession(session ->
                     Optional.ofNullable(session.get(MovieSession.class, id)));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movieSession by id: " + id, e);
@@ -36,7 +36,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try {
-            return HibernateUtil.getSessionFactory()
+            return HibernateUtil.getFactory()
                     .fromSession(session -> session.createQuery("FROM MovieSession ms "
             + "WHERE ms.movie.id = :movieId AND DATE(showTime) = :date", MovieSession.class)
                     .setParameter("movieId", movieId).setParameter("date", date).getResultList());
