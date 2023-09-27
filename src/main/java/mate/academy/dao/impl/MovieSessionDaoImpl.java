@@ -14,10 +14,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         try {
-            return HibernateUtil.getFactory().fromTransaction(session -> {
-                session.persist(movieSession);
-                return movieSession;
-            });
+            HibernateUtil.getFactory().inTransaction(session ->
+                    session.persist(movieSession));
+            return movieSession;
         } catch (Exception e) {
             throw new DataProcessingException("Can't add movieSession " + movieSession, e);
         }
