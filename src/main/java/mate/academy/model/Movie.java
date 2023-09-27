@@ -17,7 +17,6 @@ public class Movie {
     private Long id;
     private String title;
     private String description;
-
     @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
     private List<MovieSession> movieSessions;
 
