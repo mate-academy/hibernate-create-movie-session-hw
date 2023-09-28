@@ -4,7 +4,6 @@ import java.util.Optional;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public abstract class AbstractDao {
     protected <T> T add(T entity) {
