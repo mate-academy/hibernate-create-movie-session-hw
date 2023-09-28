@@ -8,29 +8,20 @@ import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.SessionFactory;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
-        Transaction transaction = null;
-        Session session = null;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.persist(movie);
-            transaction.commit();
-            return movie;
+            return sessionFactory.fromTransaction(session -> {
+                session.persist(movie);
+                return movie;
+            });
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+            throw new DataProcessingException("Can't save movie to DB: " + movie.getId(), e);
         }
     }
 
@@ -45,6 +36,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Movie ", Movie.class)
+                    .getResultList();
+        }
     }
 }
