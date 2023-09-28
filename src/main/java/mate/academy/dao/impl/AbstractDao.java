@@ -8,26 +8,14 @@ import org.hibernate.Transaction;
 
 public abstract class AbstractDao {
     protected <T> T add(T entity) {
-        Session session = null;
-        Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.persist(entity);
-            transaction.commit();
+            HibernateUtil.getSessionFactory().inTransaction(s -> s.persist(entity));
+            return entity;
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             throw new DataProcessingException(
                     "Can't add %s entity to DB".formatted(entity.getClass().getSimpleName()), e
             );
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
-        return entity;
     }
 
     protected <T> Optional<T> get(Class<T> type, Long id) {

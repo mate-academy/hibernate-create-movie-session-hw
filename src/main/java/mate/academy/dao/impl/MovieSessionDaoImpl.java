@@ -20,21 +20,42 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        return super.get(MovieSession.class, id);
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return getByIdQuery(session)
+                    .setParameter("id", id)
+                    .uniqueResultOptional();
+        } catch (Exception e) {
+            throw new DataProcessingException("The search for movie sessions was failed", e);
+        }
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> moviesByDateQuery = session.createQuery(
-                    "from MovieSession s where s.movie.id = :movieId and Date(showTime) = :date",
-                    MovieSession.class
-            );
-            moviesByDateQuery.setParameter("movieId", movieId);
-            moviesByDateQuery.setParameter("date", date);
-            return moviesByDateQuery.getResultList();
+            return getSessionsByDateQuery(session)
+                    .setParameter("movieId", movieId)
+                    .setParameter("date", date)
+                    .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("The search for movie sessions was failed", e);
         }
+    }
+
+    private static Query<MovieSession> getByIdQuery(Session session) {
+        return session.createQuery("""
+                    from MovieSession m
+                    join fetch m.cinemaHall join fetch m.movie
+                    where m.id = :id""", MovieSession.class
+        );
+    }
+
+    private Query<MovieSession> getSessionsByDateQuery(Session session) {
+        return session.createQuery("""
+                        from MovieSession s
+                        join fetch s.movie
+                        join fetch s.cinemaHall
+                        where s.movie.id = :movieId and Date(showTime) = :date""",
+                MovieSession.class
+        );
     }
 }
