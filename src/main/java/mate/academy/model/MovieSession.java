@@ -24,7 +24,7 @@ public class MovieSession {
     private CinemaHall cinemaHalls;
     private LocalDateTime showTime;
 
-    private MovieSession() {
+    public MovieSession() {
     }
 
     public MovieSession(Movie movies, CinemaHall cinemaHalls, LocalDateTime showTime) {
