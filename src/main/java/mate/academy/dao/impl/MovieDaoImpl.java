@@ -14,9 +14,8 @@ import org.hibernate.SessionFactory;
 public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try {
-            return sessionFactory.fromTransaction(session -> {
+            return HibernateUtil.getSessionFactory().fromTransaction(session -> {
                 session.persist(movie);
                 return movie;
             });

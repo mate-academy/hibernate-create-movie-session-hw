@@ -8,15 +8,13 @@ import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try {
-            return sessionFactory.fromTransaction(session -> {
+            return HibernateUtil.getSessionFactory().fromTransaction(session -> {
                 session.persist(cinemaHall);
                 return cinemaHall;
             });

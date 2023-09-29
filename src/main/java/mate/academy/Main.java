@@ -56,6 +56,6 @@ public class Main {
 
         System.out.println(movieSessionService.get(3L));
         System.out.println(movieSessionService.findAvailableSessions(
-                3L, LocalDate.parse("2023-10-05")));
+                1L, LocalDate.parse("2023-10-01")));
     }
 }

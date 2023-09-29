@@ -18,18 +18,18 @@ public class MovieSession {
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    private Movie movies;
+    private Movie movie;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_hall_id")
-    private CinemaHall cinemaHalls;
+    private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
     public MovieSession() {
     }
 
     public MovieSession(Movie movies, CinemaHall cinemaHalls, LocalDateTime showTime) {
-        this.movies = movies;
-        this.cinemaHalls = cinemaHalls;
+        this.movie = movies;
+        this.cinemaHall = cinemaHalls;
         this.showTime = showTime;
     }
 
@@ -41,20 +41,20 @@ public class MovieSession {
         this.id = id;
     }
 
-    public Movie getMovies() {
-        return movies;
+    public Movie getMovie() {
+        return movie;
     }
 
-    public void setMovies(Movie movies) {
-        this.movies = movies;
+    public void setMovie(Movie movies) {
+        this.movie = movies;
     }
 
-    public CinemaHall getCinemaHalls() {
-        return cinemaHalls;
+    public CinemaHall getCinemaHall() {
+        return cinemaHall;
     }
 
-    public void setCinemaHalls(CinemaHall cinemaHalls) {
-        this.cinemaHalls = cinemaHalls;
+    public void setCinemaHall(CinemaHall cinemaHalls) {
+        this.cinemaHall = cinemaHalls;
     }
 
     public LocalDateTime getShowTime() {
@@ -69,8 +69,8 @@ public class MovieSession {
     public String toString() {
         return "MovieSession{"
                 + "id=" + id
-                + ", movies=" + movies
-                + ", cinemaHalls=" + cinemaHalls
+                + ", movies=" + movie
+                + ", cinemaHalls=" + cinemaHall
                 + ", showTime=" + showTime
                 + '}';
     }
