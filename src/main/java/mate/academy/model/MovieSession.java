@@ -1,5 +1,6 @@
 package mate.academy.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ public class MovieSession {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
+    @Column(name = "show_time")
     private LocalDateTime showTime;
 
     public MovieSession() {
@@ -69,9 +71,7 @@ public class MovieSession {
     public String toString() {
         return "MovieSession{"
                 + "id=" + id
-                + ", movies=" + movie
-                + ", cinemaHalls=" + cinemaHall
-                + ", showTime=" + showTime
+                + ", movie=" + movie
                 + '}';
     }
 }
