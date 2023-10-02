@@ -1,7 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
@@ -46,15 +45,11 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("SELECT a FROM CinemaHall a", CinemaHall.class)
                     .getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get all cinema halls from db", e);
-        } finally {
-            Objects.requireNonNull(session).close();
+            throw new DataProcessingException("Can't get all cinema halls from db", e);
         }
     }
 }

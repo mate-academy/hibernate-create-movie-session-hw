@@ -17,17 +17,17 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
     private Movie movie;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cinema_hall_id", referencedColumnName = "id")
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
+
     @Column(name = "show_time")
     private LocalDateTime showTime;
-
-    public MovieSession() {
-    }
 
     public Long getId() {
         return id;

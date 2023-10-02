@@ -57,7 +57,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             );
             return session.createQuery(availableSessionsQuery, MovieSession.class).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get movie sessions by movie and date from db", e);
+            throw new DataProcessingException(
+                    "Can't get movie sessions by movie and date from db", e
+            );
         }
     }
 }
