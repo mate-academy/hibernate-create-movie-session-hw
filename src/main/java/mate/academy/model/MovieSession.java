@@ -1,6 +1,8 @@
 package mate.academy.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,11 +17,13 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne (fetch = FetchType.LAZY)
     private Movie movie;
 
-    @OneToOne
+    @OneToOne (fetch = FetchType.LAZY)
     private CinemaHall cinemaHall;
+
+    @Column (name = "show_time")
     private LocalDateTime time;
 
     public MovieSession() {
