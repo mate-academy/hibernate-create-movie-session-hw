@@ -40,7 +40,7 @@ public class Main {
                 LocalDate.of(2023, 9, 16)));
         movieService.getAll().forEach(System.out::println);
         cinemaHallService.getAll().forEach(System.out::println);
-        movieSessionService.findAvailableSessions(middleTimeMovieSession.getId(),
+        movieSessionService.findAvailableSessions(1L,
                 LocalDate.of(2023, 9, 16)).forEach(System.out::println);
     }
 }

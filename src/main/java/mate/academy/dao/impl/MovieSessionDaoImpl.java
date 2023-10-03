@@ -40,8 +40,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public MovieSession get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getMovieSessions = session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.cinemaHall "
-                    + "left join fetch ms.movie "
+                    + "join fetch ms.cinemaHall "
+                    + "join fetch ms.movie "
                     + "where ms.id = :id", MovieSession.class);
             getMovieSessions.setParameter("id", id);
             return getMovieSessions.getSingleResult();
@@ -54,18 +54,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAvailableSessions = session.createQuery("from MovieSession ms "
-                    + "left join fetch ms.cinemaHall "
-                    + "left join fetch ms.movie "
-                    + "where ms.time >= :time1 and ms.time < :time2", MovieSession.class);
-            getAvailableSessions.setParameter("time1",
-                    LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(),
-                            00,00,00));
-            getAvailableSessions.setParameter("time2",
-                    LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth() + 1,
-                            00,00,00));
+                    + "join fetch ms.cinemaHall "
+                    + "join fetch ms.movie "
+                    + "where ms.movie.id = :movieId and ms.time >= :time1 and ms.time < :time2",
+                    MovieSession.class);
+            getAvailableSessions.setParameter("movieId", movieId);
+            getAvailableSessions.setParameter("time1", createLocalDateTime(date));
+            getAvailableSessions.setParameter("time2", createLocalDateTime(date.plusDays(1L)));
             return getAvailableSessions.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get list of available movie sessions", e);
         }
+    }
+
+    private LocalDateTime createLocalDateTime(LocalDate date) {
+        return LocalDateTime.of(date.getYear(), date.getMonth(), date.getDayOfMonth(),
+                00,00,00);
     }
 }
