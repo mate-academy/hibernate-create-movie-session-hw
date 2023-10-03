@@ -44,8 +44,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         String query = """
                 from MovieSession ms
-                left join fetch ms.cinemaHall
-                left join fetch ms.movie
+                join fetch ms.cinemaHall
+                join fetch ms.movie
                 where ms.id = :id
                 """;
         try (Session session = factory.openSession()) {
@@ -61,8 +61,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         String query = """
                 from MovieSession ms
-                left join fetch ms.cinemaHall
-                left join fetch ms.movie
+                join fetch ms.cinemaHall
+                join fetch ms.movie
                 where ms.movie.id = :movieId and Date(ms.showTime) = :date
                 """;
         try (Session session = factory.openSession()) {

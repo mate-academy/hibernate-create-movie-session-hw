@@ -37,7 +37,7 @@ public class Main {
         CinemaHall premierHall = new CinemaHall(250, "Hall for premiers");
         cinemaHallService.add(premierHall);
 
-        System.out.println(cinemaHallService.get(2L));
+        System.out.println(premierHall.getId());
         System.out.println(cinemaHallService.getAll());
 
         MovieSessionService movieSessionService =
@@ -54,7 +54,7 @@ public class Main {
                 cinemaHallService.get(2L), LocalDateTime.parse("2023-10-05T12:30"));
         movieSessionService.add(thirdMovieSession);
 
-        System.out.println(movieSessionService.get(3L));
+        System.out.println(thirdMovieSession.getId());
         System.out.println(movieSessionService.findAvailableSessions(
                 1L, LocalDate.parse("2023-10-01")));
     }
