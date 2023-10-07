@@ -6,10 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import mate.academy.lib.Inject;
 
 @Entity
-@Inject
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -2,6 +2,9 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
+import jakarta.persistence.EntityNotFoundException;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.model.MovieSession;
@@ -37,9 +40,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(MovieSession.class, id);
+            return Optional.ofNullable(session.get(MovieSession.class, id)).orElseThrow(() ->
+                    new EntityNotFoundException("Can`t get MovieSession by ID:" + id));
+
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a CinemaHall by id: " + id, e);
+            throw new DataProcessingException("Can't get a MovieSession by id: " + id, e);
         }
     }
 

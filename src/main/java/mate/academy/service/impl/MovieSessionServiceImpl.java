@@ -39,8 +39,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
-            Query<MovieSession> getSessionQuery = session.createQuery("from Movie с where с.id = "
-                    + ":id and current_date = :date", MovieSession.class);
+            Query<MovieSession> getSessionQuery = session.createQuery("FROM Movie с WHERE с.id = "
+                    + ":id AND current_date = :date", MovieSession.class);
             getSessionQuery.setParameter("id", movieId).setParameter("date", date);
             return getSessionQuery.getResultList();
         } catch (Exception e) {
