@@ -32,10 +32,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(MovieSession.class, id);
-        }
+        return movieSessionDao.get(id);
     }
 
     @Override

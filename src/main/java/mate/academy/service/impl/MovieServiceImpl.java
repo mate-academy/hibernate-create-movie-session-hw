@@ -15,7 +15,11 @@ import org.hibernate.query.Query;
 @Service
 public class MovieServiceImpl implements MovieService {
     @Inject
-    private MovieDao movieDao = new MovieDaoImpl();
+    private MovieDao movieDao;
+
+    public MovieServiceImpl(MovieDao movieDao) {
+        this.movieDao = movieDao;
+    }
 
     @Override
     public Movie add(Movie movie) {
@@ -29,10 +33,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getAll() {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            Query<Movie> getAllMovie = session.createQuery("from Movie ", Movie.class);
-            return getAllMovie.getResultList();
-        }
+        return movieDao.getAll();
     }
 }
