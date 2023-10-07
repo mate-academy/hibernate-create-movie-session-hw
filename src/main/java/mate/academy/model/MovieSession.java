@@ -17,6 +17,9 @@ public class MovieSession {
     @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private CinemaHall cinemaHall;
+
     public Long getId() {
         return id;
     }
@@ -43,14 +46,13 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                '}';
+        return "MovieSession{"
+                + "id="
+                + id
+                + ", movie="
+                + movie
+                + ", cinemaHall="
+                + cinemaHall
+                + '}';
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    private CinemaHall cinemaHall;
-
 }
