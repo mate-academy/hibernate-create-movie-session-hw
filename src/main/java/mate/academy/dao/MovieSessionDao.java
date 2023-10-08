@@ -11,5 +11,5 @@ public interface MovieSessionDao {
 
     Optional<MovieSession> get(Long id);
 
-    MovieSession add(MovieSession session);
+    MovieSession add(MovieSession movieSessionsession);
 }
