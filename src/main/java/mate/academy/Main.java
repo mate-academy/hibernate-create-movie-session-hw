@@ -16,8 +16,8 @@ public class Main {
     public static void main(String[] args) {
         MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
 
-        Movie fastAndFurious = new Movie("Fast and Furious 4");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies 4.");
+        Movie fastAndFurious = new Movie("Fast and Furious 3");
+        fastAndFurious.setDescription("An action film about street racing, heists, and spies 3.");
         fastAndFurious = movieService.add(fastAndFurious);
 
         CinemaHallService cinemaHallService = (CinemaHallService) INJECTOR
