@@ -10,17 +10,17 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String availableSessionsQueryFormat = """
-                    from MovieSession ms
-                    join fetch ms.movie
-                    join fetch ms.cinemaHall
+                    FROM MovieSession ms
+                    JOIN FETCH ms.movie
+                    JOIN FETCH ms.cinemaHall
                     WHERE ms.movie.id = %s AND ms.showTime BETWEEN '%s' AND '%s'""";
             String availableSessionsQuery = String.format(
                     availableSessionsQueryFormat, movieId, date, date.plusDays(1)
