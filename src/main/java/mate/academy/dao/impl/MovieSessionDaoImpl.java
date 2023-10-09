@@ -1,5 +1,8 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -7,9 +10,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
 
@@ -18,9 +18,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String availableSessionsQueryFormat = """
-                    from MovieSession ms
-                    join fetch ms.movie
-                    join fetch ms.cinemaHall
+                    FROM MovieSession ms
+                    JOIN FETCH ms.movie
+                    JOIN FETCH ms.cinemaHall
                     WHERE ms.movie.id = %s AND ms.showTime BETWEEN '%s' AND '%s'""";
             String availableSessionsQuery = String.format(
                     availableSessionsQueryFormat, movieId, date, date.plusDays(1)
