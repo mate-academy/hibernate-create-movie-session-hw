@@ -2,7 +2,6 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -37,22 +36,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public Optional<MovieSession> get(Long id) {
+    public MovieSession get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            return session.get(MovieSession.class, id);
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
-        }
-    }
-
-    @Override
-    public List<MovieSession> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> movieSessionsQuery = session.createQuery("from MovieSession ",
-                    MovieSession.class);
-            return movieSessionsQuery.getResultList();
-        } catch (Exception e) {
-            throw new DataProcessingException("Can`t get List of all movies: ", e);
         }
     }
 
