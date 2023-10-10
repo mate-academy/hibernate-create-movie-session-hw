@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -35,9 +36,9 @@ public class MovieDaoImpl implements MovieDao {
     }
 
     @Override
-    public Movie get(Long id) {
+    public Optional<Movie> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(Movie.class, id);
+            return Optional.ofNullable(session.get(Movie.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie by id: " + id, e);
         }
