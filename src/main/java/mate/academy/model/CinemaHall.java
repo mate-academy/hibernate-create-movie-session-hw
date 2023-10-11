@@ -47,10 +47,10 @@ public class CinemaHall {
 
     @Override
     public String toString() {
-        return "CinemaHall{" +
-                "id=" + id +
-                ", capacity=" + capacity +
-                ", description='" + description + '\'' +
+        return "CinemaHall{"
+                + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description + '\'' +
                 '}';
     }
 }
