@@ -11,7 +11,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
-
 @Entity
 @Table(name = "movieSessions")
 public class MovieSession {
@@ -29,7 +28,7 @@ public class MovieSession {
 
     private LocalDateTime showTime;
 
-    public MovieSession () {
+    public MovieSession() {
     }
 
     public Long getId() {

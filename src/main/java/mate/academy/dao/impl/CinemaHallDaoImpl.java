@@ -1,5 +1,7 @@
 package mate.academy.dao.impl;
 
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,8 +10,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import java.util.List;
-import java.util.Optional;
 import org.hibernate.query.Query;
 
 @Dao
