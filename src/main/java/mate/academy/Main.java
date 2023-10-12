@@ -43,13 +43,19 @@ public class Main {
         movieSession1.setCinemaHall(hall1);
         final LocalDateTime localDateTime1 = LocalDateTime.parse("2023-10-25T12:00:00");
         final LocalDateTime localDateTime2 = LocalDateTime.parse("2023-10-26T10:00:00");
+        final LocalDateTime localDateTime3 = LocalDateTime.parse("2023-10-26T14:00:00");
         movieSession1.setShowTime(localDateTime1);
         final MovieSession movieSession2 = new MovieSession();
         movieSession2.setMovie(fastAndFurious);
         movieSession2.setCinemaHall(hall2);
         movieSession2.setShowTime(localDateTime2);
+        final MovieSession movieSession3 = new MovieSession();
+        movieSession3.setMovie(fastAndFurious);
+        movieSession3.setCinemaHall(hall2);
+        movieSession3.setShowTime(localDateTime3);
         movieSessionService.add(movieSession1);
         movieSessionService.add(movieSession2);
+        movieSessionService.add(movieSession3);
         System.out.println(movieSessionService.get(movieSession1.getId()));
         System.out.println(movieSessionService.get(movieSession2.getId()));
         final List<MovieSession> availableSessions

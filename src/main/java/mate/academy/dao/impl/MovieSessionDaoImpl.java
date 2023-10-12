@@ -17,9 +17,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -29,10 +27,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert movie session " + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
@@ -48,8 +42,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getAvailableSessions = session.createQuery("FROM MovieSession ms "
-                            + "LEFT JOIN ms.movie "
+            final Query<MovieSession> getAvailableSessions =
+                    session.createQuery("FROM MovieSession ms " + "LEFT JOIN ms.movie "
                             + "LEFT JOIN ms.cinemaHall "
                             + "WHERE ms.movie.id = :id and DATE(ms.showTime) = :showTime",
                     MovieSession.class);
