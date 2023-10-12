@@ -50,7 +50,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             Query<CinemaHall> getAllMoviesQuery = session
-                    .createQuery("from CinemaHall", CinemaHall.class);
+                    .createQuery("FROM CinemaHall", CinemaHall.class);
             return getAllMoviesQuery.getResultList();
         }
     }
