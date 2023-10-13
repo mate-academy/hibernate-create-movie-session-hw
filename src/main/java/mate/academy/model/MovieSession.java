@@ -8,28 +8,36 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "movies")
-public class Movie {
+@Table(name = "movieSession")
+public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
     @ManyToOne
     @JoinTable(
-            name = "movie_cinemaHall",
-            joinColumns = @JoinColumn(name = "movie_id"),
+            name = "movieSession_cinemaHall",
+            joinColumns = @JoinColumn(name = "movieSession_id"),
             inverseJoinColumns = @JoinColumn(name = "cinemaHall_id")
     )
     private CinemaHall cinemaHall;
+    @ManyToOne
+    @JoinTable(
+            name = "movieSession_movie",
+            joinColumns = @JoinColumn(name = "movieSession_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id")
+    )
+    private Movie movie;
+    private LocalDateTime showTime;
 
-    public Movie() {
+    public LocalDateTime getShowTime() {
+        return showTime;
     }
 
-    public Movie(String title) {
-        this.title = title;
+    public void setShowTime(LocalDateTime showTime) {
+        this.showTime = showTime;
     }
 
     public Long getId() {
@@ -40,22 +48,6 @@ public class Movie {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public CinemaHall getCinemaHall() {
         return cinemaHall;
     }
@@ -64,12 +56,11 @@ public class Movie {
         this.cinemaHall = cinemaHall;
     }
 
-    @Override
-    public String toString() {
-        return "Movie{"
-                + "id=" + id
-                + ", title='" + title + '\''
-                + ", description='" + description + '\''
-                + '}';
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }
