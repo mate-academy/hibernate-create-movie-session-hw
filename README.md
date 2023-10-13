@@ -25,14 +25,14 @@ The service layer should have the following methods:
 
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
 ```
-Keep in mind that method `findAvailableSessions()` expects a `LocalDate` that represents the day 
+Keep in mind that the method `findAvailableSessions()` expects a `LocalDate` that represents the day 
 chosen by a customer to visit our cinema, so your task here is to return all MovieSessions 
 that will be running between 00:00 and 23:59:59 on that particular day.
 - in the `mate/academy/Main.main()` method create instances of new services 
 using injector and test all their methods
 - use annotations and the annotation injector located in the `lib` folder
 
-#### [Try to avoid these common mistakes, while solving task](https://mate-academy.github.io/jv-program-common-mistakes/hibernate/add-movie-session/add_movie_session_checklist)
+#### [Try to avoid these common mistakes, while solving task](./checklist.md)
 
 ### Model structure 
 ![pic](Hibernate_Cinema_Uml.png)
