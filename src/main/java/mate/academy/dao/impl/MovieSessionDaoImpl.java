@@ -49,10 +49,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAll(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "from MovieSession ms "
-                    + "where ms.showTime = :date";
-            Query getAllMovieSessions = session.createQuery(hql, MovieSession.class);
-            getAllMovieSessions.setParameter("date", date);
-            return getAllMovieSessions.getResultList();
+                    + "where ms.movie.id = :movieId "
+                    + "and ms.showTime BETWEEN :startTime AND :endTime";
+            Query getAllMovieSessionsByMovieAndDate = session.createQuery(hql, MovieSession.class);
+            getAllMovieSessionsByMovieAndDate.setParameter("movieId", movieId);
+            getAllMovieSessionsByMovieAndDate.setParameter("startTime", date.atStartOfDay());
+            getAllMovieSessionsByMovieAndDate.setParameter("endTime", date.atTime(23,59,59));
+            return getAllMovieSessionsByMovieAndDate.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all movies from DB", e);
         }
