@@ -5,8 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import mate.academy.lib.Inject;
 
 @Entity
+@Inject
 @Table(name = "movies")
 public class Movie {
     @Id
