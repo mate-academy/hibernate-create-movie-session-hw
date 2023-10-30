@@ -13,7 +13,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-    private static final String EXCEPTION_GET_ALL = "Can't get all cinemaHalls";
+    private static final String EXCEPTION_GET_ALL = "Can't get all movies";
 
     @Override
     public Movie add(Movie movie) {
