@@ -16,7 +16,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession cinemaHall) {
         Transaction transaction = null;
@@ -70,7 +69,5 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             throw new DataProcessingException(
                     "Can't get available MovieSessions for movie with id: " + movieId, e);
         }
-
     }
-
 }

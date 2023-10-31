@@ -52,7 +52,7 @@ public class MovieDaoImpl implements MovieDao {
             Query<Movie> query = session.createQuery(hql, Movie.class);
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can not get All object ", e);
+            throw new DataProcessingException("Can not get all movies ", e);
         }
     }
 }
