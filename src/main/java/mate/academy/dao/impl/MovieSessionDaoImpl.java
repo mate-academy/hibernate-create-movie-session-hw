@@ -29,9 +29,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query getMovieSessions = session.createQuery("from MovieSession m "
+            Query<MovieSession> getMovieSessions = session.createQuery("from MovieSession m "
                     + "where day(m.localDateTime) = :date"
-                    + " and m.movie.id = :id");
+                    + " and m.movie.id = :id", MovieSession.class);
             getMovieSessions.setParameter("date", date.getDayOfMonth());
             getMovieSessions.setParameter("id", movieId);
             return getMovieSessions.getResultList();
@@ -43,10 +43,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -56,10 +54,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException(EXCEPTION_ADD + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 }
