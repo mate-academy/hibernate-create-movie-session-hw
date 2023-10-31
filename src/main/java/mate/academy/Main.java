@@ -34,8 +34,7 @@ public class Main {
         cinemaHallService.add(royalCinema);
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSession firstMovieSession
-                = new MovieSession();
+        MovieSession firstMovieSession = new MovieSession();
         firstMovieSession.setMovie(fastAndFurious);
         firstMovieSession.setCinemaHall(hallOfAnnaUzhvenko);
         firstMovieSession.setLocalDateTime(LocalDateTime.now());
