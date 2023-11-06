@@ -1,5 +1,10 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,12 +13,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -52,21 +51,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery(
-                    "FROM MovieSession MS WHERE MS.movie.id = :movie_id AND"
-                    + " MS.localDateTime BETWEEN :startDate and :endDate",
+                    "FROM MovieSession MS WHERE MS.id = :id AND "
+                    + "MS.localDateTime BETWEEN :dayStart AND :dayEnd",
                     MovieSession.class
             );
-            query.setParameter("movieId", movieId);
-            LocalDateTime startDay = date.atStartOfDay();
-            LocalDateTime endDay = date.atTime(LocalTime.MAX);
-            query.setParameter("startDate", startDay);
-            query.setParameter("endDate", endDay);
+            query.setParameter("id", movieId);
+            query.setParameter("dayStart", date.atStartOfDay());
+            query.setParameter("dayEnd", LocalDateTime.of(date, LocalTime.MAX));
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available session for movie with id: "
                     + movieId
-                    + ". Date: " +
-                    date.toString(), e);
+                    + ". Date: "
+                    + date.toString(), e);
         }
     }
 }

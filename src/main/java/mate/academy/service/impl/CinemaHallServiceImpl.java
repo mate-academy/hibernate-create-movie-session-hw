@@ -1,18 +1,17 @@
 package mate.academy.service.impl;
 
+import java.util.List;
 import mate.academy.dao.CinemaHallDao;
-import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
 
-import java.util.List;
-
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
     private CinemaHallDao cinemaHallDao;
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         return cinemaHallDao.add(cinemaHall);
@@ -20,7 +19,8 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id).orElseThrow(() -> new RuntimeException("Can't get a cinema hall with id: " + id));
+        return cinemaHallDao.get(id)
+                .orElseThrow(() -> new RuntimeException("Can't get a cinema hall with id: " + id));
     }
 
     @Override
