@@ -19,7 +19,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id).orElse(null);
+        return cinemaHallDao.get(id).orElseThrow(RuntimeException::new);
     }
 
     @Override
