@@ -14,8 +14,6 @@ public class Main {
     private static final Injector injector
             = Injector.getInstance("mate.academy");
     private static final LocalDate FIRST_DATE = LocalDate.of(2023, 11, 10);
-    private static final LocalDate SECOND_DATE = LocalDate.of(2020, 5, 8);
-    private static final LocalDate THIRD_DATE = LocalDate.of(2019, 12, 9);
     private static final LocalDate FOURTH_DATE = LocalDate.of(2004, 3, 17);
     private static final LocalDateTime FIRST_DATE_TIME = LocalDateTime.now();
     private static final LocalDateTime SECOND_DATE_TIME
