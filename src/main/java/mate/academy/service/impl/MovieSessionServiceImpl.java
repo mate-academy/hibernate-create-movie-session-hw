@@ -19,7 +19,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(final Long id) {
-        return movieSessionDao.get(id).get();
+        return movieSessionDao.get(id)
+                .orElseThrow(() -> new RuntimeException("Can't get a movieSession by id: " + id));
     }
 
     @Override

@@ -10,7 +10,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -47,24 +46,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(final Long movieId, final LocalDate date) {
-        Transaction transaction = null;
-        List<MovieSession> result;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String sqlText = """
                     FROM MovieSession AS ms WHERE ms.movie.id = :movie_Id AND 
                     EXTRACT(DATE FROM ms.showTime) = :session_date""";
-            transaction = session.beginTransaction();
-            final Query<MovieSession> query = session.createQuery(sqlText, MovieSession.class);
-            query.setParameter("movie_Id", movieId);
-            query.setParameter("session_date", date);
-            result = query.list();
-            transaction.commit();
+            return session.createQuery(sqlText, MovieSession.class)
+                    .setParameter("movie_Id", movieId)
+                    .setParameter("session_date", date)
+                    .list();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             throw new DataProcessingException("Can't get a list of movie sessions.", e);
         }
-        return result;
     }
 }
