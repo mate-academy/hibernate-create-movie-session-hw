@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import java.util.List;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -10,14 +11,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.util.List;
-
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
+    //is it good to do "try (session ...) { try { ...."?
     @Override
-    public CinemaHall add(CinemaHall cinemaHall) { //is it good to do "try (session ...) { try { ...."
+    public CinemaHall add(CinemaHall cinemaHall) {
         Session session = null;
         Transaction transaction = null;
 

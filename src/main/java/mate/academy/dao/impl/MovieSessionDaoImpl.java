@@ -1,6 +1,8 @@
 package mate.academy.dao.impl;
 
-import mate.academy.dao.MovieDao;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -8,16 +10,11 @@ import mate.academy.lib.Inject;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieService;
-import mate.academy.service.impl.MovieServiceImpl;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {

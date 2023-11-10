@@ -1,6 +1,7 @@
 package mate.academy;
 
-import mate.academy.lib.Inject;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -8,11 +9,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     private static final Injector injector
@@ -31,11 +27,6 @@ public class Main {
 
     public static void main(String[] args) {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-        MovieSessionService movieSessionService
-                = (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        CinemaHallService cinemaHallService
-                = (CinemaHallService) injector.getInstance(CinemaHallService.class);
-
         //----------------------------------------------------
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
@@ -59,6 +50,9 @@ public class Main {
 
         System.out.println(movieService.getAll());
         //---------------------------------------------------
+        CinemaHallService cinemaHallService
+                = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        //---------------------------------------------------
         CinemaHall firstCinemaHall = new CinemaHall(30, "Hall with 30 places");
         cinemaHallService.add(firstCinemaHall);
         System.out.println(cinemaHallService.get(1L));
@@ -76,6 +70,9 @@ public class Main {
         System.out.println(cinemaHallService.get(4L));
 
         System.out.println(cinemaHallService.getAll());
+        //----------------------------------------------------
+        MovieSessionService movieSessionService
+                = (MovieSessionService) injector.getInstance(MovieSessionService.class);
         //-----------------------------------------------------
         MovieSession firstSession
                 = new MovieSession(fastAndFurious, firstCinemaHall, FIRST_DATE_TIME);
