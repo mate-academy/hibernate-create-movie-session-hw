@@ -46,8 +46,8 @@ public class DaoOperation<T> {
 
     public List<T> getAll(String query, Class<T> cls) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<T> allMoviesQuery = session.createQuery(query, cls);
-            return allMoviesQuery.getResultList();
+            Query<T> allEntitiesQuery = session.createQuery(query, cls);
+            return allEntitiesQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get list of all " + entityName + "s.", e);
         }
