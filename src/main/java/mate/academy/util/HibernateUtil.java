@@ -1,9 +1,11 @@
 package mate.academy.util;
 
+import mate.academy.lib.Inject;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
+    @Inject
     private static final SessionFactory sessionFactory = initSessionFactory();
 
     private HibernateUtil() {
