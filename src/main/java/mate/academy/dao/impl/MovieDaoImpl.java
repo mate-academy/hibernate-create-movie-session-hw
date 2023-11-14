@@ -14,9 +14,9 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-    private final SessionFactory factory = HibernateUtil.getSessionFactory();
     private static final String CANT_GET_ALL_MOVIES_EXCEPTION_MESSAGE =
             "Can't get list of all Movies";
+    private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
     @Override
     public Movie add(Movie movie) {

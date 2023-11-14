@@ -15,9 +15,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    private final SessionFactory factory = HibernateUtil.getSessionFactory();
-
-    public static final String SELECT_AVAILABLE_MOVIE_SESSIONS_QUERY =
+    private static final String SELECT_AVAILABLE_MOVIE_SESSIONS_QUERY =
             "from MovieSession ms where ms.id = :movieId "
                     + "AND DATE(ms.showTime) = :date ";
     private static final String CANT_GET_MOVIE_SESSION_EXCEPTION_MESSAGE =
@@ -26,6 +24,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             "Can't add MovieSession ";
     private static final String CANT_GET_ALL_MOVIE_SESSIONS_EXCEPTION_MESSAGE =
             "Can't get all available MovieSessions";
+    private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
     @Override
     public MovieSession add(MovieSession movieSession) {

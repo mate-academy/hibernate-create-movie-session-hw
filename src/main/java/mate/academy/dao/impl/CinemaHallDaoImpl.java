@@ -14,9 +14,7 @@ import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    private final SessionFactory factory = HibernateUtil.getSessionFactory();
-
-    public static final String GET_ALL_CINEMA_HALLS_QUERY =
+    private static final String GET_ALL_CINEMA_HALLS_QUERY =
             "from CinemaHall";
     private static final String CANT_ADD_CINEMA_HALLS_EXCEPTION_MESSAGE =
             "Can't add CinemaHalls: ";
@@ -24,6 +22,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             "Can't get list of CinemaHalls";
     private static final String CANT_GET_CINEMA_HALL_EXCEPTION_MESSAGE =
             "Can't get CinemaHall by id: ";
+    private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
