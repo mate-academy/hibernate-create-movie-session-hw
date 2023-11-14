@@ -41,7 +41,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public Optional<CinemaHall> get(Long id) {
         try (Session session = factory.openSession()) {
-            return Optional.of(session.get(CinemaHall.class, id));
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get "
                     + "cinema hall with id: " + id, e);
@@ -55,7 +55,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     = session.createQuery("from CinemaHall", CinemaHall.class);
             return getAllCinemaHallQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("DB is empty", e);
+            throw new DataProcessingException("Can't get all cinema halls from DB", e);
         }
     }
 }
