@@ -83,7 +83,7 @@ public class Main {
         System.out.println(movieSessionService.get(2L));
 
         MovieSession thirdSession
-                = new MovieSession(attackOnTitan, thirdCinemaHall, THIRD_DATE_TIME);
+                = new MovieSession(attackOnTitan, thirdCinemaHall, SECOND_DATE_TIME);
         movieSessionService.add(thirdSession);
         System.out.println(movieSessionService.get(3L));
 
@@ -92,7 +92,6 @@ public class Main {
         movieSessionService.add(fourthSession);
         System.out.println(movieSessionService.get(4L));
 
-        System.out.println(movieSessionService.findAvailableSessions(2L, FOURTH_DATE));
-        System.out.println(movieSessionService.findAvailableSessions(3L, FIRST_DATE));
+        System.out.println(movieSessionService.findAvailableSessions(3L, FOURTH_DATE));
     }
 }

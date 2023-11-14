@@ -2,11 +2,10 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
@@ -45,30 +44,29 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession get(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = factory.openSession()) {
-            return session.get(MovieSession.class, id);
+            return Optional.of(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get "
                     + "movie session with id: " + id, e);
         }
     }
 
+    //join fetch
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = factory.openSession()) {
-            Movie checkMovie = session.get(Movie.class, movieId);
-
             Query<MovieSession> getAllAvailableSessions = session.createQuery(
-                    "from MovieSession ms where ms.movie = :movie",
+                    "from MovieSession session "
+                            + "join fetch session.movie "
+                            + "where session.movie.id = :id "
+                            + "and DATE(session.showTime) = :date",
                     MovieSession.class);
-            getAllAvailableSessions.setParameter("movie", checkMovie);
+            getAllAvailableSessions.setParameter("date", date);
+            getAllAvailableSessions.setParameter("id", movieId);
 
-            List<MovieSession> sessionByMovieId = getAllAvailableSessions.getResultList();
-
-            return sessionByMovieId.stream()
-                    .filter(ms -> ms.getShowTime().toLocalDate().isEqual(date))
-                    .collect(Collectors.toList());
+            return getAllAvailableSessions.getResultList();
         }
     }
 }

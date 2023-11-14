@@ -13,13 +13,6 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Inject
     private MovieSessionDao movieSessionDao;
 
-    public MovieSessionServiceImpl() {
-    }
-
-    public MovieSessionServiceImpl(MovieSessionDao movieSessionDao) {
-        this.movieSessionDao = movieSessionDao;
-    }
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         return movieSessionDao.add(movieSession);
@@ -27,7 +20,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id);
+        return movieSessionDao.get(id).get();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -15,27 +16,22 @@ import org.hibernate.query.Query;
 public class CinemaHallDaoImpl implements CinemaHallDao {
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
-    //is it good to do "try (session ...) { try { ...."?
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        Session session = null;
         Transaction transaction = null;
 
-        try {
-            session = factory.openSession();
-            transaction = session.beginTransaction();
-            session.persist(cinemaHall);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
+        try (Session session = factory.openSession()) {
+            try {
+                transaction = session.beginTransaction();
+                session.persist(cinemaHall);
+                transaction.commit();
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
 
-            throw new DataProcessingException(String.format("Can't add "
-                    + "cinema hall: %s to DB", cinemaHall), e);
-        } finally {
-            if (session != null) {
-                session.close();
+                throw new DataProcessingException(String.format("Can't add "
+                        + "cinema hall: %s to DB", cinemaHall), e);
             }
         }
 
@@ -43,9 +39,9 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     }
 
     @Override
-    public CinemaHall get(Long id) {
+    public Optional<CinemaHall> get(Long id) {
         try (Session session = factory.openSession()) {
-            return session.get(CinemaHall.class, id);
+            return Optional.of(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get "
                     + "cinema hall with id: " + id, e);
