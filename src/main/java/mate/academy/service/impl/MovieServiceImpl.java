@@ -9,6 +9,7 @@ import mate.academy.service.MovieService;
 
 @Service
 public class MovieServiceImpl implements MovieService {
+
     @Inject
     private MovieDao movieDao;
 
@@ -19,11 +20,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).get();
+        return movieDao.get(id)
+                .get();
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
