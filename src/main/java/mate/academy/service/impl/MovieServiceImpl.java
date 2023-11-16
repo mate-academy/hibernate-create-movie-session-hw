@@ -9,6 +9,8 @@ import mate.academy.service.MovieService;
 
 @Service
 public class MovieServiceImpl implements MovieService {
+    private static final String CANT_GET_MOVIE_EXCEPTION_MESSAGE =
+            "Can't get Movie with id: ";
     @Inject
     private MovieDao movieDao;
 
@@ -19,11 +21,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).get();
+        return movieDao.get(id).orElseThrow(() ->
+                new RuntimeException(CANT_GET_MOVIE_EXCEPTION_MESSAGE + id));
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
