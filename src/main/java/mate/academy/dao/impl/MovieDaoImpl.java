@@ -16,6 +16,7 @@ import org.hibernate.query.Query;
 public class MovieDaoImpl implements MovieDao {
     private static final String CANT_GET_ALL_MOVIES_EXCEPTION_MESSAGE =
             "Can't get list of all Movies";
+    private static final String SELECT_ALL_FROM_MOVIE_QUERY = "from Movie";
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
     @Override
@@ -53,7 +54,7 @@ public class MovieDaoImpl implements MovieDao {
     public List<Movie> getAll() {
         try (Session session = factory.openSession()) {
             Query<Movie> getAllMoviesQuery = session.createQuery(
-                    "from Movie", Movie.class);
+                    SELECT_ALL_FROM_MOVIE_QUERY, Movie.class);
             return getAllMoviesQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(CANT_GET_ALL_MOVIES_EXCEPTION_MESSAGE, e);

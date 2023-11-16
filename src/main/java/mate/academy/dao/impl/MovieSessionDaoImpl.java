@@ -24,6 +24,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             "Can't add MovieSession ";
     private static final String CANT_GET_ALL_MOVIE_SESSIONS_EXCEPTION_MESSAGE =
             "Can't get all available MovieSessions";
+    private static final String MOVIE_ID_PARAMETER = "movieId";
+    private static final String DATE_PARAMETER = "date";
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
     @Override
@@ -63,8 +65,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = factory.openSession()) {
             Query<MovieSession> getAllMovieSessionsQuery = session.createQuery(
                     SELECT_AVAILABLE_MOVIE_SESSIONS_QUERY, MovieSession.class);
-            getAllMovieSessionsQuery.setParameter("movieId", movieId);
-            getAllMovieSessionsQuery.setParameter("date", date);
+            getAllMovieSessionsQuery.setParameter(MOVIE_ID_PARAMETER, movieId);
+            getAllMovieSessionsQuery.setParameter(DATE_PARAMETER, date);
             return getAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(CANT_GET_ALL_MOVIE_SESSIONS_EXCEPTION_MESSAGE, e);

@@ -1,5 +1,6 @@
 package mate.academy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
@@ -46,5 +47,7 @@ public class Main {
                 .getInstance(MovieSessionService.class);
         movieSessionService.add(mondayMovieSession1);
         System.out.println(movieSessionService.get(mondayMovieSession1.getId()));
+        System.out.println(movieSessionService.findAvailableSessions(
+                1L, LocalDate.parse("2023-11-23")));
     }
 }

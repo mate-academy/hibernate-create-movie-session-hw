@@ -16,7 +16,7 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "movies_id")
+    @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id")
@@ -56,5 +56,15 @@ public class MovieSession {
 
     public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieSession{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showTime=" + showTime
+                + '}';
     }
 }
