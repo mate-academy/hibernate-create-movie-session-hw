@@ -2,6 +2,7 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -41,7 +42,8 @@ public class Main {
         movieSession.setShowTime(localDateTime);
         movieSessionService.add(movieSession);
         movieSessionService.get(1L);
-        movieSessionService.findAvailableSessions(1L,
+        List<MovieSession> availableSessions = movieSessionService.findAvailableSessions(1L,
                 LocalDate.of(2023, 11, 13));
+        System.out.println(availableSessions);
     }
 }
