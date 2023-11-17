@@ -15,6 +15,7 @@ import org.hibernate.query.Query;
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
     private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
