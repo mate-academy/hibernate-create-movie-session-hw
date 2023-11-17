@@ -1,8 +1,7 @@
 package mate.academy.dao.impl;
 
+import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -25,7 +24,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             transaction = session.beginTransaction();
             session.save(movieSession);
             transaction.commit();
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -38,13 +37,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         return movieSession;
     }
 
-    @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory()
-                .openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get movieSession with id: " + id, e);
+            throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
     }
 
@@ -52,12 +49,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory()
                 .openSession()) {
-            String hql = "FROM MovieSession m"
-                    + "WHERE m.movie.id = :movieId AND m.showTime = :chosenDate";
+            String hql = "FROM MovieSession m WHERE DATE(m.showTime) = :date";
             return session.createQuery(hql, MovieSession.class)
-                    .setParameter("movieId", movieId)
-                    .setParameter("chosenDate", LocalDateTime.of(date, LocalTime.MIN))
+                    .setParameter("date", Date.valueOf(date))
                     .getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get available sessions from db with movieId: "
+                    + movieId + " on date: " + date, e);
         }
     }
 }
