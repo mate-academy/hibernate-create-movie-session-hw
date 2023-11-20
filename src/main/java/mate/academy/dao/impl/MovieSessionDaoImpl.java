@@ -56,8 +56,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "left join fetch ms.movie "
                             + "left join fetch ms.cinemaHall "
                             + "where date(ms.showTime) = :dayFromDateSqlQuery "
-                            + "and ms.showTime >= :startOfDay "
-                            + "and ms.showTime <= :endOfDay "
                             + "and ms.id = :movieID", MovieSession.class);
             getAllMovieSessionsQuery.setParameter("dayFromDateSqlQuery", date);
             getAllMovieSessionsQuery.setParameter("startOfDay", date.atStartOfDay());
