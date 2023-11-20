@@ -10,12 +10,15 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
+import mate.academy.service.impl.CinemaHallServiceImpl;
+import mate.academy.service.impl.MovieServiceImpl;
+import mate.academy.service.impl.MovieSessionServiceImpl;
 
 public class Main {
     private static final Injector INJECTOR = Injector.getInstance("mate.academy");
 
     public static void main(String[] args) {
-        MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
+        MovieService movieService = (MovieService) INJECTOR.getInstance(MovieServiceImpl.class);
 
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
@@ -24,7 +27,7 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
 
         CinemaHallService cinemaHallService
-                = (CinemaHallService) INJECTOR.getInstance(CinemaHallService.class);
+                = (CinemaHallService) INJECTOR.getInstance(CinemaHallServiceImpl.class);
 
         CinemaHall hall = new CinemaHall();
         hall.setCapacity(300);
@@ -44,7 +47,7 @@ public class Main {
         session1.setCinemaHall(hall);
 
         MovieSessionService movieSessionService
-                = (MovieSessionService) INJECTOR.getInstance(MovieSessionService.class);
+                = (MovieSessionService) INJECTOR.getInstance(MovieSessionServiceImpl.class);
         movieSessionService.add(session);
         movieSessionService.add(session1);
         System.out.println(movieSessionService.get(session.getId()));
