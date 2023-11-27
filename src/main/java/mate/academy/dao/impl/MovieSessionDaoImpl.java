@@ -52,7 +52,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     = session.createQuery("FROM MovieSession sessions "
                     + "JOIN FETCH sessions.movie "
                     + "WHERE sessions.movie.id = :id "
-
                     + "AND DATE(sessions.showTime) = :date", MovieSession.class);
             findAvailableSessionsQuery.setParameter("id", movieId);
             findAvailableSessionsQuery.setParameter("date", date);

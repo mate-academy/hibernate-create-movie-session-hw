@@ -20,7 +20,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        return Optional.of(cinemaHallDao.get(id).get());
+        return cinemaHallDao.get(id);
     }
 
     @Override
