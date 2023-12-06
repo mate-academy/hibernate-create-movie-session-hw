@@ -15,9 +15,6 @@ public class CinemaHall {
     private int capacity;
     private String descriptions;
 
-    public CinemaHall() {
-    }
-
     public Long getId() {
         return id;
     }

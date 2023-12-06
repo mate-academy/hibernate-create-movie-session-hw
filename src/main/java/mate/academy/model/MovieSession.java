@@ -23,9 +23,6 @@ public class MovieSession {
     private CinemaHall cinemaHall;
     private LocalDateTime localDateTime;
 
-    public MovieSession() {
-    }
-
     public Long getId() {
         return id;
     }
