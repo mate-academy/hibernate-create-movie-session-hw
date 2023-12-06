@@ -1,4 +1,4 @@
-package mate.academy.dao;
+package mate.academy.dao.impl;
 
 import java.util.List;
 import java.util.Optional;
