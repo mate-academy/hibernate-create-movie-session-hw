@@ -33,8 +33,7 @@ public class Main {
         MovieSession movieSession = new MovieSession(djangoMovie, cinemaHall,
                 LocalDateTime.parse("2023-12-12T12:00:00", DateTimeFormatter.ISO_DATE_TIME));
         movieSessionService.add(movieSession);
-
         System.out.println(movieSessionService
-                .findAvailableSession(1l, LocalDate.of(2023, 12, 12)));
+                .findAvailableSession(1L, LocalDate.of(2023, 12, 12)));
     }
 }
