@@ -17,9 +17,12 @@ public class Main {
         Injector injector = Injector.getInstance("mate.academy");
         CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
+
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
+
         CinemaHall cinemaHall = new CinemaHall(40, "Cinema Galactic");
         cinemaHallService.add(cinemaHall);
         Movie djangoMovie = new Movie("Django Unchained");
