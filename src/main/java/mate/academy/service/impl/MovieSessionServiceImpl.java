@@ -2,8 +2,6 @@ package mate.academy.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -27,9 +25,6 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return movieSessionDao.getAll().stream()
-                .filter(session -> Objects.equals(session.getMovie().getId(), movieId)
-                        && session.getShowTime().toLocalDate().equals(date))
-                .collect(Collectors.toList());
+        return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }

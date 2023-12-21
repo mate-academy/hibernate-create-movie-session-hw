@@ -48,6 +48,7 @@ public class Main {
         movieSessionService.add(newMovieSession);
         movieSessionService.get(newMovieSession.getId());
         LocalDate localDate = LocalDate.now();
-        movieSessionService.findAvailableSessions(fastAndFurious.getId(), localDate);
+        movieSessionService.findAvailableSessions(fastAndFurious.getId(), localDate)
+                .forEach(System.out::println);
     }
 }

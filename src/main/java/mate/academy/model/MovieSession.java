@@ -1,11 +1,10 @@
 package mate.academy.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -15,9 +14,9 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Movie movie;
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 

@@ -1,5 +1,7 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -9,6 +11,7 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -46,9 +49,20 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public List<MovieSession> getAll() {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        LocalDateTime from = date.atStartOfDay();
+        LocalDateTime to = date.plusDays(1L).atStartOfDay();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM MovieSession", MovieSession.class).list();
+            Query<MovieSession> query =
+                    session.createQuery("FROM MovieSession ms "
+                            + "LEFT JOIN FETCH ms.movie m "
+                            + "WHERE m.id = :movieId "
+                            + "AND ms.showTime BETWEEN :from AND :to",
+                            MovieSession.class);
+            query.setParameter("movieId", movieId);
+            query.setParameter("from", from);
+            query.setParameter("to", to);
+            return query.list();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get list of movie sessions", e);
         }
