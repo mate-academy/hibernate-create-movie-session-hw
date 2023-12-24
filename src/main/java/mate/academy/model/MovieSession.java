@@ -2,28 +2,35 @@ package mate.academy.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "movieServices")
+@Table(name = "movieSessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne
+    @ManyToOne
     private Movie movie;
-
     @ManyToOne
     private CinemaHall cinemaHall;
-    private LocalDateTime showTime;
+    private LocalDate localDate;
 
-    public Long getId() {
-        return id;
+    public MovieSession() {
+    }
+
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDate localDate) {
+        this.movie = movie;
+        this.cinemaHall = cinemaHall;
+        this.localDate = localDate;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Movie getMovie() {
@@ -42,21 +49,26 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getShowTime() {
-        return showTime;
+    public LocalDate getLocalDate() {
+        return localDate;
     }
 
-    public void setShowTime(LocalDateTime showTime) {
-        this.showTime = showTime;
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", showTime=" + showTime +
+        return "MovieSession{"
+                +
+                "id=" + id
+                +
+                ", movie=" + movie
+                +
+                ", cinemaHall=" + cinemaHall
+                +
+                ", dateTime=" + localDate
+                +
                 '}';
     }
 }
