@@ -12,6 +12,7 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
+
     public static void main(String[] args) {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         Movie fastAndFurious = new Movie("Fast and Furious");
@@ -29,7 +30,8 @@ public class Main {
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
-        List<MovieSession> availableSessions = movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
+        List<MovieSession> availableSessions =
+                movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
         System.out.println("------------");
         availableSessions.forEach(System.out::println);
         System.out.println("------------");
