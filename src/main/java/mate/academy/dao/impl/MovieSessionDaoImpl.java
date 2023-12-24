@@ -14,21 +14,22 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+
     @Override
     public MovieSession add(MovieSession movieSession) {
-        Session session = null;
         Transaction transaction = null;
+        Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.save(movieSession);
+            session.persist(movieSession);
             transaction.commit();
             return movieSession;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can`t add movieSession to DB ", e);
+            throw new DataProcessingException("Cannot add MovieSession: " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -41,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can`t get movieSession id: " + id, e);
+            throw new DataProcessingException("Cannot get MovieSession by id: " + id, e);
         }
     }
 
@@ -49,15 +50,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "from MovieSession ms "
-                    + "left join ms.movie m"
+                    + "left join ms.movie m "
                     + "where ms.localDate = :date AND m.id = :movieId ";
-            Query<MovieSession> getMovieSessionQuery =
+            Query<MovieSession> getMovieSessionsQuery =
                     session.createQuery(hql, MovieSession.class);
-            getMovieSessionQuery.setParameter("date", date);
-            getMovieSessionQuery.setParameter("movieId", movieId);
-            return getMovieSessionQuery.getResultList();
+            getMovieSessionsQuery.setParameter("date", date);
+            getMovieSessionsQuery.setParameter("movieId", movieId);
+            return getMovieSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can`t get MovieSession by movieId and date: "
+            throw new DataProcessingException("Cannot get MovieSession by movieId and date: "
                     + movieId + " " + date, e);
         }
     }
