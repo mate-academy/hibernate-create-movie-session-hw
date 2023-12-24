@@ -47,7 +47,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hql = "from MovieSession ms "
                     + "left join ms.movie m"
                     + "where ms.localDate = :date AND m.id = :movieId ";
