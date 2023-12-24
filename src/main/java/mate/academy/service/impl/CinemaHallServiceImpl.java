@@ -1,7 +1,6 @@
 package mate.academy.service.impl;
 
 import java.util.List;
-
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
