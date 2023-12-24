@@ -15,23 +15,30 @@ public class Main {
 
     public static void main(String[] args) {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
+
         CinemaHallService cinemaHallService = (CinemaHallService)
                 injector.getInstance(CinemaHallService.class);
+
         CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setName("Hall Red");
+        cinemaHall.setName("Hall 1");
         cinemaHallService.add(cinemaHall);
+
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setLocalDate(LocalDate.now());
-        MovieSessionService movieSessionService =
-                (MovieSessionService) injector.getInstance(MovieSessionService.class);
+
+        MovieSessionService movieSessionService = (MovieSessionService)
+                injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
-        List<MovieSession> availableSessions =
-                movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
+
+        List<MovieSession> availableSessions = movieSessionService.findAvailableSessions(
+                fastAndFurious.getId(), LocalDate.now());
+
         System.out.println("------------");
         availableSessions.forEach(System.out::println);
         System.out.println("------------");
