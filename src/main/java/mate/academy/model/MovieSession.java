@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class MovieSession {
@@ -16,15 +16,15 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne
     private CinemaHall cinemaHall;
-    private LocalDate localDate;
+    private LocalDateTime localDateTime;
 
     public MovieSession() {
     }
 
-    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDate localDate) {
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime localDateTime) {
         this.movie = movie;
         this.cinemaHall = cinemaHall;
-        this.localDate = localDate;
+        this.localDateTime = localDateTime;
     }
 
     public void setId(Long id) {
@@ -51,12 +51,12 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDate getLocalDate() {
-        return localDate;
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setLocalDate(LocalDate localDate) {
-        this.localDate = localDate;
+    public void setLocalDate(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MovieSession {
                 +
                 ", cinemaHall=" + cinemaHall
                 +
-                ", dateTime=" + localDate
+                ", dateTime=" + localDateTime
                 +
                 '}';
     }
