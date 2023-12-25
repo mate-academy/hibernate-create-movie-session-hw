@@ -16,15 +16,15 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne
     private CinemaHall cinemaHall;
-    private LocalDateTime localDateTime;
+    private LocalDateTime showTime;
 
     public MovieSession() {
     }
 
-    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime localDateTime) {
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
         this.movie = movie;
         this.cinemaHall = cinemaHall;
-        this.localDateTime = localDateTime;
+        this.showTime = showTime;
     }
 
     public void setId(Long id) {
@@ -52,11 +52,11 @@ public class MovieSession {
     }
 
     public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+        return showTime;
     }
 
-    public void setLocalDate(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setLocalDate(LocalDateTime showTime) {
+        this.showTime = showTime;
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MovieSession {
                 +
                 ", cinemaHall=" + cinemaHall
                 +
-                ", dateTime=" + localDateTime
+                ", dateTime=" + showTime
                 +
                 '}';
     }
