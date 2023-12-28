@@ -36,20 +36,21 @@ public class Main {
         System.out.println(cinemaHallService.get(firstHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSession session_2023_12_28 = new MovieSession();
-        session_2023_12_28.setMovie(fastAndFurious);
-        session_2023_12_28.setCinemaHall(firstHall);
-        LocalDateTime localDate2023_12_28 = LocalDateTime.of(2023, 12, 28, 17, 0);
-        session_2023_12_28.setShowTime(localDate2023_12_28);
-        movieSessionService.add(session_2023_12_28);
+        MovieSession session12_28 = new MovieSession();
+        session12_28.setMovie(fastAndFurious);
+        session12_28.setCinemaHall(firstHall);
+        LocalDateTime localDate12_28 = LocalDateTime.of(2023, 12, 28, 17, 0);
+        session12_28.setShowTime(localDate12_28);
+        movieSessionService.add(session12_28);
 
-        MovieSession session_2023_12_25 = new MovieSession();
-        session_2023_12_25.setMovie(batman);
-        session_2023_12_25.setCinemaHall(firstHall);
-        LocalDateTime localDate2023_12_25 = LocalDateTime.of(2023, 12, 25, 19, 0);
-        session_2023_12_25.setShowTime(localDate2023_12_25);
-        movieSessionService.add(session_2023_12_25);
-        System.out.println(movieSessionService.get(session_2023_12_25.getId()));
-        movieSessionService.findAvailableSessions(1L, localDate2023_12_25.toLocalDate()).forEach(System.out::println);
+        MovieSession session12_25 = new MovieSession();
+        session12_25.setMovie(batman);
+        session12_25.setCinemaHall(firstHall);
+        LocalDateTime localDate12_25 = LocalDateTime.of(2023, 12, 25, 19, 0);
+        session12_25.setShowTime(localDate12_25);
+        movieSessionService.add(session12_25);
+        System.out.println(movieSessionService.get(session12_25.getId()));
+        movieSessionService.findAvailableSessions(1L, localDate12_25.toLocalDate())
+                .forEach(System.out::println);
     }
 }
