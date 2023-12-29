@@ -1,8 +1,6 @@
 package mate.academy.service.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
@@ -27,7 +25,6 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return dao.findMovieSessionsByMovieIdAndTime(movieId, LocalDateTime.of(date, LocalTime.MIN),
-                LocalDateTime.of(date, LocalTime.MAX));
+        return dao.findMovieSessionsByMovieIdAndDate(movieId, date);
     }
 }
