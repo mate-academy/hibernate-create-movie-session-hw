@@ -2,6 +2,7 @@ package mate.academy.service.impl;
 
 import java.util.List;
 import mate.academy.dao.MovieDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.Movie;
@@ -19,11 +20,16 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).get();
+        return movieDao.get(id).orElseThrow(() ->
+                new DataProcessingException("Can't find movie by id: " + id));
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        List<Movie> movies = movieDao.getAll();
+        if (movies.isEmpty()) {
+            throw new DataProcessingException("Can't find any movie");
+        }
+        return movies;
     }
 }
