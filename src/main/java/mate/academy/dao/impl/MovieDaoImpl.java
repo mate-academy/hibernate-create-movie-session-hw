@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -8,10 +9,13 @@ import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -45,6 +49,14 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            Query<Movie> getAllMoviesQuery = session.createQuery("from Movie", Movie.class);
+            List<Movie> resultList = getAllMoviesQuery.getResultList();
+            resultList.sort(Comparator.comparing(Movie::getTitle));
+            return resultList;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get All Movies from DB", e);
+        }
     }
 }
