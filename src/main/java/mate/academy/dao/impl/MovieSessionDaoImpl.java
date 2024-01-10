@@ -2,7 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -23,8 +23,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         Session session = null;
         Transaction transaction = null;
         try {
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            session = sessionFactory.openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -48,7 +47,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     "from MovieSession m "
                             + "left join fetch m.cinemaHall "
                             + "left join fetch m.movie "
-                            + "where m.id = :id");
+                            + "where m.id = :id",
+                    MovieSession.class);
             getMovieSessionQuery.setParameter("id", id);
             return getMovieSessionQuery.uniqueResultOptional();
         } catch (Exception e) {
@@ -58,21 +58,18 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-                Session session = sessionFactory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             LocalDateTime startOfDay = date.atStartOfDay();
-            LocalDateTime endOfDay = date.atTime(23, 59, 59);
+            LocalTime endOfDay = LocalTime.MAX;
             Query<MovieSession> findAvailableSessionsQuery = session.createQuery(
                     "from MovieSession m "
-                            + "where m.showTime >= :startOfDay "
-                            + "and m.showTime <= :endOfDay "
+                            + "where m.showTime between :startOfDay AND :endOfDay "
                             + "and m.movie.id = :movieId",
                     MovieSession.class);
             findAvailableSessionsQuery.setParameter("startOfDay", startOfDay);
             findAvailableSessionsQuery.setParameter("endOfDay", endOfDay);
             findAvailableSessionsQuery.setParameter("movieId", movieId);
             List<MovieSession> resultList = findAvailableSessionsQuery.getResultList();
-            resultList.sort(Comparator.comparing(MovieSession::getShowTime));
             return resultList;
         } catch (Exception e) {
             throw new RuntimeException("Can't find available sessions for movieId: " + movieId, e);

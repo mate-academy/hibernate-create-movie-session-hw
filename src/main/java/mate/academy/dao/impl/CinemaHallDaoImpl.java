@@ -1,6 +1,5 @@
 package mate.academy.dao.impl;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
@@ -21,8 +20,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         Session session = null;
         Transaction transaction = null;
         try {
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            session = sessionFactory.openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
@@ -50,12 +48,10 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        try (SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-                Session session = sessionFactory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> getAllCinemaHallsQuery = session
                     .createQuery("from CinemaHall", CinemaHall.class);
             List<CinemaHall> resultList = getAllCinemaHallsQuery.getResultList();
-            resultList.sort(Comparator.comparing(CinemaHall::getCapacity));
             return resultList;
         } catch (Exception e) {
             throw new RuntimeException("Cannot get All CinemaHalls ", e);
