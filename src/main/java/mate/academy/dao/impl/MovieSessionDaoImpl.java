@@ -11,7 +11,6 @@ import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
@@ -69,8 +68,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             findAvailableSessionsQuery.setParameter("startOfDay", startOfDay);
             findAvailableSessionsQuery.setParameter("endOfDay", endOfDay);
             findAvailableSessionsQuery.setParameter("movieId", movieId);
-            List<MovieSession> resultList = findAvailableSessionsQuery.getResultList();
-            return resultList;
+            return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't find available sessions for movieId: " + movieId, e);
         }
