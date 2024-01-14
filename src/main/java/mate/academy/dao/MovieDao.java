@@ -10,4 +10,7 @@ public interface MovieDao {
     Optional<Movie> get(Long id);
 
     List<Movie> getAll();
+
+    class CinemaHallDao {
+    }
 }
