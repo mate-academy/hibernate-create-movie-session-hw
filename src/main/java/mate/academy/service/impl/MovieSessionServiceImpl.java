@@ -1,8 +1,8 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.NoSuchElementException;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -21,7 +21,10 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id).orElseThrow(NoSuchElementException::new);
+        return movieSessionDao
+                .get(id)
+                .orElseThrow(() -> new EntityNotFoundException("Movie Session with id: "
+                + id + " was not found"));
     }
 
     @Override
@@ -29,3 +32,4 @@ public class MovieSessionServiceImpl implements MovieSessionService {
         return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }
+

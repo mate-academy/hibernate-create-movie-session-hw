@@ -1,7 +1,7 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import mate.academy.dao.MovieDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -20,7 +20,10 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).orElseThrow(NoSuchElementException::new);
+        return movieDao
+                .get(id)
+                .orElseThrow(() -> new EntityNotFoundException("Movie with id: "
+                + id + " was not found"));
     }
 
     @Override
@@ -28,3 +31,4 @@ public class MovieServiceImpl implements MovieService {
         return movieDao.getAll();
     }
 }
+
