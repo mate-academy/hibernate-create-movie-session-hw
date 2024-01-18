@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -12,7 +13,6 @@ import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDate;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
