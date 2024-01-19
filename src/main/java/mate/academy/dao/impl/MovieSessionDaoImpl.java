@@ -54,7 +54,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> movieSessionList = session.createQuery("from MovieSession ms "
                     + "left join fetch ms.cinemaHall "
                     + "where ms.id = :id "
-                    + "and ms.showTime > :timeMin and ms.showTime < :timeMax", MovieSession.class);
+                    + "and ms.showTime >= :timeMin and ms.showTime <= :timeMax", MovieSession.class);
             movieSessionList.setParameter("id",movieId)
                     .setParameter("timeMin", date.atTime(LocalTime.MIN))
                     .setParameter("timeMax",date.atTime(LocalTime.MAX));
