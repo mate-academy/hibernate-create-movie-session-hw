@@ -32,7 +32,7 @@ that will be running between 00:00 and 23:59:59 on that particular day.
 using injector and test all their methods
 - use annotations and the annotation injector located in the `lib` folder
 
-#### [Try to avoid these common mistakes, while solving task](./checklist.md)
+#### [Try to avoid these common mistakes, while solving task](checklist.md)
 
 ### Model structure 
 ![pic](Hibernate_Cinema_Uml.png)
