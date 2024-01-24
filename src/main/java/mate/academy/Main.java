@@ -123,7 +123,7 @@ public class Main {
         System.out.println(movieSessionService.get(movieSessionDayAfterTomorrow18.getId()));
         System.out.println(
                 movieSessionService.findAvailableSessions(
-                    lordOfRingsFirstPart.getId(),
+                    knockinOnHeavensDoor.getId(),
                     LocalDate.now().plusDays(1)
                     ));
     }
