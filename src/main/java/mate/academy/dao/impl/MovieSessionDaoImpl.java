@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
@@ -39,9 +40,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession get(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = SESSION_FACTORY.openSession()) {
-            return session.get(MovieSession.class, id);
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -64,6 +65,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             movieSession.getShowTime().getDayOfMonth()
                                     == date.getDayOfMonth())
                     .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new DataProcessingException(
+                    "Can't find available sessions by id and date: " + movieId + " " + date, e);
         }
     }
 }
