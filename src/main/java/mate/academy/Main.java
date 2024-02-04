@@ -39,7 +39,8 @@ public class Main {
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(mondaymovieSession);
         System.out.println(mondaymovieSession.getId());
-        movieSessionService.findAvailableSessions(1L, LocalDate.now().minusDays(1))
+        movieSessionService.findAvailableSessions(mondaymovieSession.getId(),
+                        LocalDate.now().minusDays(1))
                 .forEach(System.out::println);
     }
 }
