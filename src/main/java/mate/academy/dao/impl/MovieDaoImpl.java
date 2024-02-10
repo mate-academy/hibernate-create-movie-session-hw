@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
 import mate.academy.exception.DataProcessingException;
@@ -40,7 +41,7 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(Movie.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new NoSuchElementException("Can't get a movie by id: " + id, e);
         }
     }
 
@@ -50,7 +51,7 @@ public class MovieDaoImpl implements MovieDao {
             Query<Movie> getAllProducts = session.createQuery("from Movie", Movie.class);
             return getAllProducts.getResultList();
         } catch (DataProcessingException e) {
-            throw new DataProcessingException("Cant get all Movie", e);
+            throw new NoSuchElementException("Cant get all Movies", e);
         }
     }
 }

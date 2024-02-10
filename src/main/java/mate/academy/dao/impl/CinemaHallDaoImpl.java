@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
@@ -41,7 +42,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a CinemaHall by id: " + id, e);
+            throw new NoSuchElementException("Can't get a CinemaHall by id: " + id, e);
         }
     }
 
@@ -52,7 +53,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                     .createQuery("from CinemaHall", CinemaHall.class);
             return getAllProducts.getResultList();
         } catch (DataProcessingException e) {
-            throw new DataProcessingException("Cant get all CinemaHall", e);
+            throw new NoSuchElementException("Cant get all CinemaHall", e);
         }
     }
 }

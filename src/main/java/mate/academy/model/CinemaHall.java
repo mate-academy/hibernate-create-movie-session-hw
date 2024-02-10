@@ -42,5 +42,4 @@ public class CinemaHall {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
