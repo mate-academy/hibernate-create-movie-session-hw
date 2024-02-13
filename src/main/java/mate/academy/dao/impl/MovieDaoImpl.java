@@ -1,7 +1,5 @@
 package mate.academy.dao.impl;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -11,6 +9,7 @@ import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
@@ -48,10 +47,11 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Movie> criteria = builder.createQuery(Movie.class);
-            criteria.from(Movie.class);
-            return session.createQuery(criteria).getResultList();
+            Query<Movie> getAllMoviesByQuery = session.createQuery(
+                    "from Movie",
+                    Movie.class
+            );
+            return getAllMoviesByQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all movies.", e);
         }

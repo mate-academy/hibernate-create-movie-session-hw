@@ -4,6 +4,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -60,7 +61,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             builder.between(
                                     root.get("showTime"),
                                     date.atStartOfDay(),
-                                    date.atTime(23, 59, 59)
+                                    date.atTime(LocalTime.MAX)
                             )
                     );
 

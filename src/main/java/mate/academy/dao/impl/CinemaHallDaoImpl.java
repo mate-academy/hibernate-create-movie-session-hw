@@ -1,7 +1,5 @@
 package mate.academy.dao.impl;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
@@ -11,6 +9,7 @@ import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
@@ -48,10 +47,11 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<CinemaHall> criteria = builder.createQuery(CinemaHall.class);
-            criteria.from(CinemaHall.class);
-            return session.createQuery(criteria).getResultList();
+            Query<CinemaHall> getAllCinemaHallsByQuery = session.createQuery(
+                    "from CinemaHall",
+                    CinemaHall.class
+            );
+            return getAllCinemaHallsByQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all cinema halls.", e);
         }
