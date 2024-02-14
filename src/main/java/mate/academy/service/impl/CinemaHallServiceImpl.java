@@ -20,11 +20,19 @@ public class CinemaHallServiceImpl implements mate.academy.service.CinemaHallSer
     @Override
     public CinemaHall get(Long id) {
         Optional<CinemaHall> optionalCinemaHall = cinemaHallDao.get(id);
-        return optionalCinemaHall.orElseThrow(() -> new RuntimeException("CinemaHall not found"));
+        return optionalCinemaHall.orElseThrow(()
+                -> new CinemaHallNotFoundException("CinemaHall not found with id: " + id));
     }
 
     @Override
     public List<CinemaHall> getAll() {
         return cinemaHallDao.getAll();
+    }
+
+    // Доданий клас CinemaHallNotFoundException
+    public static class CinemaHallNotFoundException extends RuntimeException {
+        public CinemaHallNotFoundException(String message) {
+            super(message);
+        }
     }
 }
