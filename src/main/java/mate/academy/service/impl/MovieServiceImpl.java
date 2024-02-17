@@ -7,6 +7,7 @@ import mate.academy.lib.Service;
 import mate.academy.model.Movie;
 import mate.academy.service.MovieService;
 
+@Inject
 @Service
 public class MovieServiceImpl implements MovieService {
     @Inject
