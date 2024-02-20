@@ -11,7 +11,7 @@ import mate.academy.service.MovieService;
 @Service
 public class MovieServiceImpl implements MovieService {
     @Inject
-    private MovieDao movieDao = new MovieDaoImpl();
+    private MovieDao movieDao;
 
     @Override
     public Movie add(Movie movie) {
