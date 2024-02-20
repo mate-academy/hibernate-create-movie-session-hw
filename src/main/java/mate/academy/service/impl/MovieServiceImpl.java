@@ -2,6 +2,7 @@ package mate.academy.service.impl;
 
 import java.util.List;
 import mate.academy.dao.MovieDao;
+import mate.academy.dao.impl.MovieDaoImpl;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.Movie;
@@ -10,7 +11,7 @@ import mate.academy.service.MovieService;
 @Service
 public class MovieServiceImpl implements MovieService {
     @Inject
-    private MovieDao movieDao;
+    private MovieDao movieDao = new MovieDaoImpl();
 
     @Override
     public Movie add(Movie movie) {
@@ -19,11 +20,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).get();
+        return movieDao.get(id).orElseThrow(()
+                -> new RuntimeException("Can't get a movie by id: " + id));
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
