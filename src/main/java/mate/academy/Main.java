@@ -39,5 +39,4 @@ public class Main {
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.of(2024, 2, 18)).forEach(System.out::println);
     }
-
 }
