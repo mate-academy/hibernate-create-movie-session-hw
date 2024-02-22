@@ -17,9 +17,14 @@ public class CinemaHallServiceImpl implements CinemaHallService {
         return cinemaHallDao.add(cinemaHall);
     }
 
+    /**As I understand, NoSuchElementException works well enough
+     * for us here since probable problem occurring when trying to fetch
+     * info from DB will be caught on DAO layer
+     */
+
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id).get();
+        return cinemaHallDao.get(id).orElseThrow();
     }
 
     @Override
