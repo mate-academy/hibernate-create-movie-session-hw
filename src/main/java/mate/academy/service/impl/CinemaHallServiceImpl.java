@@ -1,5 +1,6 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
@@ -17,14 +18,10 @@ public class CinemaHallServiceImpl implements CinemaHallService {
         return cinemaHallDao.add(cinemaHall);
     }
 
-    /**As I understand, NoSuchElementException works well enough
-     * for us here since probable problem occurring when trying to fetch
-     * info from DB will be caught on DAO layer
-     */
-
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id).orElseThrow();
+        return cinemaHallDao.get(id).orElseThrow(
+                () -> new EntityNotFoundException("Entity not found for id: " + id));
     }
 
     @Override
