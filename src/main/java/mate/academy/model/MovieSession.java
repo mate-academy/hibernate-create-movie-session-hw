@@ -21,7 +21,6 @@ public class MovieSession {
     private LocalDateTime showTime;
 
     public MovieSession() {
-
     }
 
     public Long getId() {
