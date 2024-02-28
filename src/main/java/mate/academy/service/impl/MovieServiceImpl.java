@@ -21,7 +21,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie get(Long id) {
         return movieDao.get(id).orElseThrow(() ->
-                new NoSuchElementException("Movie with this id doesn't exist"));
+                new NoSuchElementException("Movie with this id doesn't exist. Id: " + id));
     }
 
     @Override

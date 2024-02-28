@@ -21,7 +21,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     @Override
     public CinemaHall get(Long id) {
         return cinemaHallDao.get(id).orElseThrow(() ->
-                new NoSuchElementException("Cinema hall with this id doesn't exist"));
+                new NoSuchElementException("Cinema hall with this id doesn't exist. Id: " + id));
     }
 
     @Override
