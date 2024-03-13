@@ -1,10 +1,10 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
-import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
@@ -22,7 +22,7 @@ public class MovieSessionServiceImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         return Optional.of(movieSessionDao.get(id).orElseThrow(
-                () -> new DataProcessingException("Cant get movieSession by id: " + id)));
+                () -> new EntityNotFoundException("Cant get movieSession by id: " + id)));
     }
 
     @Override

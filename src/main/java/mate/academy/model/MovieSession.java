@@ -21,9 +21,9 @@ public class MovieSession {
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
-    @JoinTable(name = "cinemaHall_Sessions",
+    @JoinTable(name = "cinema_hall_sessions",
             joinColumns = @JoinColumn(name = "hall_id"),
-            inverseJoinColumns = @JoinColumn(name = "cinemaHall_id")
+            inverseJoinColumns = @JoinColumn(name = "cinema_hall_id")
     )
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
