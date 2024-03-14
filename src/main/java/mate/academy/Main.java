@@ -4,15 +4,15 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import mate.academy.dao.CinemaHallDao;
-import mate.academy.dao.MovieSessionDao;
 import mate.academy.dao.impl.CinemaHallDaoImpl;
-import mate.academy.dao.impl.MovieSessionDaoImpl;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieService;
+import mate.academy.service.MovieSessionService;
 import mate.academy.service.impl.MovieServiceImpl;
+import mate.academy.service.impl.MovieSessionServiceImpl;
 
 public class Main {
     private static final String PATH = "mate.academy";
@@ -37,8 +37,8 @@ public class Main {
         movieSession1.setMovie(fastAndFurious);
         movieSession1.setCinemaHall(cinemaHall);
         movieSession1.setShowTime(showDateTime);
-        MovieSessionDao movieSessionService = (MovieSessionDaoImpl) injector
-                .getInstance(MovieSessionDao.class);
+        MovieSessionService movieSessionService = (MovieSessionServiceImpl) injector
+                .getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession1);
 
         System.out.println(movieSessionService.get(movieSession1.getId()));

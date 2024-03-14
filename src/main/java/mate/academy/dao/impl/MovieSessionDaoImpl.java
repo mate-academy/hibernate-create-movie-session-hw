@@ -2,6 +2,7 @@ package mate.academy.dao.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -14,6 +15,9 @@ import org.hibernate.Transaction;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final LocalTime START_OF_DAY = LocalTime.of(0, 0, 0);
+    private static final LocalTime END_OF_DAY = LocalTime.of(23, 59, 59);
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
@@ -48,8 +52,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            LocalDateTime startDateTime = date.atStartOfDay();
-            LocalDateTime endDateTime = date.atTime(23, 59, 59);
+            LocalDateTime startDateTime = LocalDateTime.of(date, START_OF_DAY);
+            LocalDateTime endDateTime = LocalDateTime.of(date, END_OF_DAY);
             return session.createQuery("SELECT a FROM MovieSession a "
                                     + "WHERE a.showTime BETWEEN :startDateTime AND :endDateTime",
                             MovieSession.class)
