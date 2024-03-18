@@ -38,7 +38,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public Optional<Movie> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> movieQuery = session.createQuery("from Movie where id = :id", Movie.class);
+            Query<Movie> movieQuery = session.createQuery("FROM Movie WHERE id = :id", Movie.class);
             movieQuery.setParameter("id", id);
             return movieQuery.uniqueResultOptional();
         } catch (Exception e) {
@@ -49,7 +49,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Movie> allMovies = session.createQuery("from Movie", Movie.class);
+            Query<Movie> allMovies = session.createQuery("FROM Movie", Movie.class);
             return allMovies.getResultList();
         } catch (Exception ex) {
             throw new DataProcessingException("Can't get all entities from table 'movies'", ex);

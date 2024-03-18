@@ -39,7 +39,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> cinemaHallQuery = session
-                    .createQuery("from CinemaHall where id = :id",
+                    .createQuery("FROM CinemaHall WHERE id = :id",
                     CinemaHall.class);
             cinemaHallQuery.setParameter("id", id);
             return cinemaHallQuery.uniqueResultOptional();
@@ -52,7 +52,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<CinemaHall> allCinemaHalls = session
-                    .createQuery("from CinemaHall", CinemaHall.class);
+                    .createQuery("FROM CinemaHall", CinemaHall.class);
             return allCinemaHalls.getResultList();
         } catch (Exception ex) {
             throw new DataProcessingException("Can't get all entities from table cinema_halls", ex);

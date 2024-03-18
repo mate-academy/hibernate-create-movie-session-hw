@@ -43,7 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessionQuery = session
-                    .createQuery("from MovieSession where id = :id", MovieSession.class);
+                    .createQuery("FROM MovieSession WHERE id = :id", MovieSession.class);
             movieSessionQuery.setParameter("id", id);
             return movieSessionQuery.uniqueResultOptional();
         } catch (Exception e) {
