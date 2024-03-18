@@ -12,6 +12,15 @@ public class MovieServiceImpl implements MovieService {
     @Inject
     private MovieDao movieDao;
 
+    @Inject
+    public MovieServiceImpl(MovieDao movieDao) {
+        this.movieDao = movieDao;
+    }
+
+    public MovieServiceImpl() {
+
+    }
+
     @Override
     public Movie add(Movie movie) {
         return movieDao.add(movie);
@@ -24,6 +33,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
