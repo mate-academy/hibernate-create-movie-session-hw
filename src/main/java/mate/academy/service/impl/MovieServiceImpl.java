@@ -12,6 +12,13 @@ public class MovieServiceImpl implements MovieService {
     @Inject
     private MovieDao movieDao;
 
+    public MovieServiceImpl() {
+    }
+
+    public MovieServiceImpl(MovieDao movieDao) {
+        this.movieDao = movieDao;
+    }
+
     @Override
     public Movie add(Movie movie) {
         return movieDao.add(movie);
@@ -19,11 +26,11 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).get();
+        return movieDao.get(id).orElseThrow(() -> new RuntimeException("Movie not found"));
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
