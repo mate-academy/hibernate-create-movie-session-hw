@@ -13,7 +13,6 @@ public class MovieServiceImpl implements MovieService {
     private MovieDao movieDao;
 
     public MovieServiceImpl() {
-
     }
 
     public MovieServiceImpl(MovieDao movieDao) {
