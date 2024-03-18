@@ -13,23 +13,3 @@
         <mapping class="mate.academy.model.CinemaHall"/>
     </session-factory>
 </hibernate-configuration>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<property name="hibernate.connection.password">oiY39Pnq#H71gJ&amp;</property>-->
