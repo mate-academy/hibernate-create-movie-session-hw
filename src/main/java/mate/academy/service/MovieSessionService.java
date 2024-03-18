@@ -11,4 +11,3 @@ public interface MovieSessionService {
 
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
 }
-
