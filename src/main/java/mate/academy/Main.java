@@ -33,7 +33,6 @@ public class Main {
             System.out.println(movieService.get(movie.getId()));
         }
         movieService.getAll().forEach(System.out::println);
-        Movie movieForSession = movieService.get(1L);
 
         for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
             int capacity = DEF_CAPACITY + (i * 10);
@@ -43,13 +42,14 @@ public class Main {
         }
         cinemaHallService.getAll().forEach(System.out::println);
 
+        Movie movieForSession = movieService.get(1L);
         for (int i = 0; i < NUMBER_OF_ITERATIONS; i++) {
             CinemaHall cinemaHallForSession = cinemaHallService.get((long) i + 1);
             MovieSession movieSession = createMovieSession(movieForSession,
                     cinemaHallForSession, LocalDateTime.now());
             movieSessionService.add(movieSession);
         }
-        movieSessionService.findAvailableSessions(1L,
+        movieSessionService.findAvailableSessions(movieForSession.getId(),
                 LocalDate.from(LocalDateTime.now())).forEach(System.out::println);
     }
 
