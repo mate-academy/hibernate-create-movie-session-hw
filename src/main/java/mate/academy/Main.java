@@ -50,7 +50,7 @@ public class Main {
             movieSessionService.add(movieSession);
         }
         movieSessionService.findAvailableSessions(movieForSession.getId(),
-                LocalDate.from(LocalDateTime.now())).forEach(System.out::println);
+                LocalDate.now()).forEach(System.out::println);
     }
 
     private static Movie createMovie(String title) {
