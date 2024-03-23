@@ -52,9 +52,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (var session = factory.openSession()) {
             var query = session.createQuery(
                     "FROM MovieSession m WHERE m.movie.id = :movieId "
-                            + "AND DATE_FORMAT(showTime, '%Y-%m-%d') = :date", MovieSession.class);
+                            + "AND DATE(m.showTime) = :date", MovieSession.class);
             query.setParameter("movieId", movieId);
-            query.setParameter("date", date.toString());
+            query.setParameter("date", date);
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available sessions for movie with id "

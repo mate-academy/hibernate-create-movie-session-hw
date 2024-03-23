@@ -38,7 +38,7 @@ public class Main {
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
-        LocalDate dateOfShow = LocalDate.now().minusDays(0);
+        LocalDate dateOfShow = LocalDate.now().plusDays(1);
         movieSessionService.findAvailableSessions(fastAndFurious.getId(), dateOfShow)
                            .forEach(System.out::println);
 
