@@ -1,8 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -46,26 +44,25 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = factory.openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get movie sesssion wirth id: " + id);
         }
     }
 
     @Override
     public List<MovieSessionsByMovieAndDate> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = factory.openSession()) {
-            LocalDateTime prevLocalDateTime = LocalDateTime.of(date,
-                    LocalTime.of(0,0)).minusDays(1L);
-            LocalDateTime nextLocalDateTime = LocalDateTime.of(date,
-                    LocalTime.of(0,0)).plusDays(1L);
             Query<MovieSessionsByMovieAndDate> movies = session.createQuery(
                     "select new mate.academy.dto.MovieSessionsByMovieAndDate(ms) "
                     + "from MovieSession ms "
                     + "left join ms.movie m "
-                    + "where m.id = :movieId and ms.dateTime between :prevDay and :nextDay",
+                    + "where m.id = :movieId and date(ms.dateTime) = :date",
                     MovieSessionsByMovieAndDate.class);
             movies.setParameter("movieId", movieId);
-            movies.setParameter("prevDay", prevLocalDateTime);
-            movies.setParameter("nextDay", nextLocalDateTime);
+            movies.setParameter("date", date);
             return movies.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("No available sessions. ", e);
         }
     }
 }

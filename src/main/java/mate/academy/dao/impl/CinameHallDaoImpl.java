@@ -50,6 +50,8 @@ public class CinameHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = factory.openSession()) {
             return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get any halls.", e);
         }
     }
 }
