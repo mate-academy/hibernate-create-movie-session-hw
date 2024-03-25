@@ -38,7 +38,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public Optional<MovieSession> get(Long id) {
+    public Optional<MovieSession> getById(Long id) {
         try (var session = factory.openSession()) {
             var movieSession = session.get(MovieSession.class, id);
             return Optional.ofNullable(movieSession);

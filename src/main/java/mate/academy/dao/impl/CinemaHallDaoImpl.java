@@ -38,7 +38,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     }
 
     @Override
-    public Optional<CinemaHall> get(Long id) {
+    public Optional<CinemaHall> getById(Long id) {
         try (var session = factory.openSession()) {
             var cinemaHall = session.get(CinemaHall.class, id);
             return Optional.ofNullable(cinemaHall);
