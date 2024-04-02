@@ -15,6 +15,8 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final String MOVIE_ID = "movieId";
+    private static final String DATE = "date";
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
@@ -55,8 +57,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> query = session.createQuery(
                     "FROM MovieSession m WHERE m.movie.id = :movieId "
                             + "AND DATE(m.showTime) = :date", MovieSession.class);
-            query.setParameter("movieId", movieId);
-            query.setParameter("date", date);
+            query.setParameter(MOVIE_ID, movieId);
+            query.setParameter(DATE, date);
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(

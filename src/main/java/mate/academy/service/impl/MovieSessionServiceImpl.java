@@ -20,7 +20,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionDao.get(id).get();
+        return movieSessionDao.get(id).orElseThrow(()
+                -> new RuntimeException("CinemaHall with id " + id + " not found"));
     }
 
     @Override
