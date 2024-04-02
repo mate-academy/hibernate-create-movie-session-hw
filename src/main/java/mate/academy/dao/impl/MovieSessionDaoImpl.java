@@ -13,6 +13,9 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final String MOVIE_ID = "movieId";
+    private static final String CURRENT_DAY = "data";
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
@@ -50,8 +53,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> findAvaliableSessionQuery = session.createQuery(
                     "FROM MovieSession m WHERE m.movie.id = :movieId AND"
                     + " m.localDate = :data ",MovieSession.class);
-            findAvaliableSessionQuery.setParameter("movieId", movieId);
-            findAvaliableSessionQuery.setParameter("data", date);
+            findAvaliableSessionQuery.setParameter(MOVIE_ID, movieId);
+            findAvaliableSessionQuery.setParameter(CURRENT_DAY, date);
             return findAvaliableSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't return all movie session list", e);
