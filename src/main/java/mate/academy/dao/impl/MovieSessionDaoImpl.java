@@ -18,6 +18,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     private static final String MOVIE_ID = "movieId";
     private static final String DATE = "date";
     private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
@@ -49,8 +50,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> findMovieSessions = session.createQuery(
-                    "FROM MovieSession ms WHERE ms.movie.id = :movieId " +
-                    "AND DATE(ms.showTime) = :date", MovieSession.class);
+                    "FROM MovieSession ms WHERE ms.movie.id = :movieId "
+                    + "AND DATE(ms.showTime) = :date", MovieSession.class);
             findMovieSessions.setParameter(MOVIE_ID, movieId);
             findMovieSessions.setParameter(DATE, date);
             return findMovieSessions.getResultList();
