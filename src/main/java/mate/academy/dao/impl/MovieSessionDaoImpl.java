@@ -56,8 +56,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery(
-                    "FROM MovieSession ms LEFT JOIN FETCH ms.movie " +
-                            "LEFT JOIN FETCH ms.cinemaHall "
+                    "FROM MovieSession ms LEFT JOIN FETCH ms.movie "
+                            + "LEFT JOIN FETCH ms.cinemaHall "
                             + "WHERE ms.movie.id = :movieId "
                             + "AND DATE(ms.showTime) = DATE(:date)", MovieSession.class)
                     .setParameter("movieId", movieId)
