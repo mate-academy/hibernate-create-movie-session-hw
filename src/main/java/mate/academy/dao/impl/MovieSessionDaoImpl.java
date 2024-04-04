@@ -9,16 +9,19 @@ import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -37,8 +40,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.ofNullable(
+                    session.createQuery("FROM MovieSession ms LEFT JOIN FETCH ms.movie "
+                            + "LEFT JOIN FETCH ms.cinemaHall "
+                            + "WHERE ms.id = :id", MovieSession.class)
+                    .setParameter("id", id)
+                    .getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -46,9 +54,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return session.createQuery(
-                    "FROM MovieSession ms WHERE ms.movie.id = :movieId "
+                    "FROM MovieSession ms LEFT JOIN FETCH ms.movie " +
+                            "LEFT JOIN FETCH ms.cinemaHall "
+                            + "WHERE ms.movie.id = :movieId "
                             + "AND DATE(ms.showTime) = DATE(:date)", MovieSession.class)
                     .setParameter("movieId", movieId)
                     .setParameter("date", date)
