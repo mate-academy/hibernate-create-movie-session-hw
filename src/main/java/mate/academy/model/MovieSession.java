@@ -19,22 +19,22 @@ public class MovieSession {
     @ManyToOne
     @JoinColumn(name = "movie_id",
             referencedColumnName = "id")
-    private Movie movies;
+    private Movie movie;
 
     @ManyToOne
     @JoinColumn(name = "cinema_hall_id",
             referencedColumnName = "id")
     private CinemaHall cinemaHall;
 
-    private LocalDateTime sessionTime;
+    private LocalDateTime sessionDateTime;
 
     public MovieSession() {
     }
 
-    public MovieSession(Movie movies, CinemaHall cinemaHall, LocalDateTime sessionTime) {
-        this.movies = movies;
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime sessionDateTime) {
+        this.movie = movie;
         this.cinemaHall = cinemaHall;
-        this.sessionTime = sessionTime;
+        this.sessionDateTime = sessionDateTime;
     }
 
     public Long getId() {
@@ -45,12 +45,12 @@ public class MovieSession {
         this.id = id;
     }
 
-    public Movie getMovies() {
-        return movies;
+    public Movie getMovie() {
+        return movie;
     }
 
-    public void setMovies(Movie movies) {
-        this.movies = movies;
+    public void setMovie(Movie movies) {
+        this.movie = movies;
     }
 
     public CinemaHall getCinemaHall() {
@@ -61,21 +61,21 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getSessionTime() {
-        return sessionTime;
+    public LocalDateTime getSessionDateTime() {
+        return sessionDateTime;
     }
 
-    public void setSessionTime(LocalDateTime sessionTime) {
-        this.sessionTime = sessionTime;
+    public void setSessionDateTime(LocalDateTime sessionTime) {
+        this.sessionDateTime = sessionTime;
     }
 
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movies=" + movies +
-                ", cinemaHall=" + cinemaHall +
-                ", sessionTime=" + sessionTime +
-                '}';
+        return "MovieSession{"
+                + "id=" + id
+                + ", movies=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", sessionTime=" + sessionDateTime
+                + '}';
     }
 }
