@@ -13,6 +13,7 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
 public class Main {
+    private static Injector injector = Injector.getInstance("mate.academy");
     private static final int THIRD_ELEMENT = 2;
     private static final List<Movie> movies = List.of(
             new Movie("Avatar", "Alien world, human conflict"),
@@ -31,7 +32,6 @@ public class Main {
     );
 
     public static void main(String[] args) {
-        Injector injector = Injector.getInstance("mate.academy");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
