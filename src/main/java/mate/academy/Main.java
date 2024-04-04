@@ -39,7 +39,7 @@ public class Main {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(superLux);
         movieSession.setMovie(fastAndFurious);
-        movieSession.setShowTime(LocalDate.now());
+        movieSession.setShowTime(LocalDate.now().atTime(13, 0));
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
         movieSessionService.findAvailableSessions(movieSession.getId(),
