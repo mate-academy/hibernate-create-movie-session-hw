@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    int capacity;
-    String description;
+    private Long id;
+    private int capacity;
+    private String description;
 }
