@@ -10,18 +10,20 @@ import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
+    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -41,7 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception exception) {
             throw new DataProcessingException("Can't get a MovieSession with id: " + id, exception);
@@ -50,12 +52,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             LocalDateTime startOfDay = date.atStartOfDay();
             LocalDateTime endOfDay = startOfDay.plusDays(1).minusSeconds(1);
-            String getAllQuery =
-                    "FROM MovieSession AS ms " + "WHERE ms.movie.id = :movieId "
-                            + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay";
+            String getAllQuery = "FROM MovieSession AS ms " + "WHERE ms.movie.id = :movieId "
+                    + "AND ms.showTime BETWEEN :startOfDay AND :endOfDay";
             Query<MovieSession> query = session.createQuery(getAllQuery, MovieSession.class);
             query.setParameter("movieId", movieId);
             query.setParameter("startOfDay", startOfDay);
