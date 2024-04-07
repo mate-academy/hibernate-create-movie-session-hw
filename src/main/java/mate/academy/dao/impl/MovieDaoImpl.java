@@ -1,5 +1,7 @@
 package mate.academy.dao.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -7,11 +9,13 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
+    private static final String GET_ALL_QUERY = "SELECT * FROM movie";
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -45,6 +49,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createNamedQuery(GET_ALL_QUERY, Movie.class).getResultList();
+        } catch (HibernateException e) {
+            throw new DataProcessingException("Failed to fetch all the movies from DB ", e);
+        }
     }
 }
