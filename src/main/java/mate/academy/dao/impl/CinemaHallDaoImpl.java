@@ -1,7 +1,7 @@
 package mate.academy.dao.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -30,18 +30,12 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     }
 
     @Override
-    public CinemaHall get(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Id cannot be null");
-        }
+    public Optional<CinemaHall> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            CinemaHall cinemaHall = session.get(CinemaHall.class, id);
-            if (cinemaHall == null) {
-                throw new EntityNotFoundException("CinemaHall with id " + id + " not found");
-            }
-            return cinemaHall;
+            return Optional.ofNullable(session.get(CinemaHall.class, id));
+
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a cinemaHall by id: " + id, e);
+            throw new DataProcessingException("Can't get a cinema hall with id " + id, e);
         }
     }
 
