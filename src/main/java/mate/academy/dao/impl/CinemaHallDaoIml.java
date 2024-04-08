@@ -9,16 +9,18 @@ import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoIml implements CinemaHallDao {
+    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private static final String GET_ALL_QUERY = "SELECT * FROM cinemahall";
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
@@ -33,7 +35,7 @@ public class CinemaHallDaoIml implements CinemaHallDao {
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (HibernateException e) {
             throw new DataProcessingException("Failed to get CinemaHall by id " + id, e);
@@ -41,10 +43,10 @@ public class CinemaHallDaoIml implements CinemaHallDao {
     }
 
     @Override
-    public Optional<List<CinemaHall>> getAll() {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.createNativeQuery(GET_ALL_QUERY, CinemaHall.class)
-                    .getResultList());
+    public List<CinemaHall> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createNativeQuery(GET_ALL_QUERY, CinemaHall.class)
+                    .getResultList();
         } catch (HibernateException e) {
             throw new DataProcessingException("Failed to fetch all the CinemaHalls from BD", e);
         }

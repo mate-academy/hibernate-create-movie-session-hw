@@ -24,6 +24,6 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public List<CinemaHall> getAll() {
-        return cinemaHallDao.getAll().get();
+        return cinemaHallDao.getAll();
     }
 }

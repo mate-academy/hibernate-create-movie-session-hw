@@ -9,5 +9,5 @@ public interface CinemaHallDao {
 
     Optional<CinemaHall> get(Long id);
 
-    Optional<List<CinemaHall>> getAll();
+    List<CinemaHall> getAll();
 }
