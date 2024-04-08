@@ -7,16 +7,13 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-
-    private static final String GET_ALL_QUERY = "SELECT * FROM movies";
+    private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 
     @Override
     public Movie add(Movie movie) {
@@ -52,8 +49,8 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createNativeQuery(GET_ALL_QUERY, Movie.class).getResultList();
-        } catch (HibernateException e) {
+            return session.createNativeQuery("SELECT * FROM movies", Movie.class).getResultList();
+        } catch (Exception e) {
             throw new DataProcessingException("Failed to fetch all the movies from DB ", e);
         }
     }
