@@ -15,7 +15,7 @@ import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
-    private static final String GET_ALL_QUERY = "SELECT * FROM movie";
+    private static final String GET_ALL_QUERY = "SELECT * FROM movies";
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -50,7 +50,7 @@ public class MovieDaoImpl implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createNamedQuery(GET_ALL_QUERY, Movie.class).getResultList();
+            return session.createNativeQuery(GET_ALL_QUERY, Movie.class).getResultList();
         } catch (HibernateException e) {
             throw new DataProcessingException("Failed to fetch all the movies from DB ", e);
         }

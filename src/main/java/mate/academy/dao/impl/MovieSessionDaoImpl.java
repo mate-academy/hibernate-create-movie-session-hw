@@ -1,7 +1,12 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -9,10 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
+@Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -27,7 +29,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Failed to add MovieSession to DB "
-                                                                        + movieSession, e);
+                    + movieSession, e);
         }
     }
 
@@ -44,11 +46,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             String hqlQuery = "FROM MovieSession WHERE movie.id = :movieId "
-                    + "AND showTime >= :startTime AND showTime <= :endTime";
+                        + "AND showTime >= :startTime AND showTime <= :endTime";
             Query<MovieSession> query = session.createQuery(hqlQuery, MovieSession.class);
 
-            LocalDate startTime = date.atStartOfDay().toLocalDate();
-            LocalDate endTime = date.plusDays(1).atStartOfDay().toLocalDate();
+            LocalDateTime startTime = date.atStartOfDay();
+            LocalDateTime endTime = date.plusDays(1).atStartOfDay();
 
             query.setParameter("movieId", movieId);
             query.setParameter("startTime", startTime);
@@ -57,7 +59,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Failed to retrieve available MovieSessions "
-                                        + "for movieId: " + movieId + " and date: " + date, e);
+                        + "for movieId: " + movieId + " and date: " + date, e);
         }
     }
 }
