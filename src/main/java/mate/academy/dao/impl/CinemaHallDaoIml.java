@@ -1,5 +1,7 @@
 package mate.academy.dao.impl;
 
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
@@ -9,12 +11,10 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.List;
-import java.util.Optional;
-
 @Dao
 public class CinemaHallDaoIml implements CinemaHallDao {
     private static final String GET_ALL_QUERY = "SELECT * FROM cinemahall";
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
@@ -41,7 +41,7 @@ public class CinemaHallDaoIml implements CinemaHallDao {
     }
 
     @Override
-    public Optional <List<CinemaHall>> getAll() {
+    public Optional<List<CinemaHall>> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.createNativeQuery(GET_ALL_QUERY, CinemaHall.class)
                     .getResultList());

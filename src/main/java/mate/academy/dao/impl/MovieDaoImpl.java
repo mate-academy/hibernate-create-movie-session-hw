@@ -1,7 +1,5 @@
 package mate.academy.dao.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -16,6 +14,7 @@ import org.hibernate.Transaction;
 @Dao
 public class MovieDaoImpl implements MovieDao {
     private static final String GET_ALL_QUERY = "SELECT * FROM movies";
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;

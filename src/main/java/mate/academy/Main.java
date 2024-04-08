@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -11,16 +13,16 @@ import mate.academy.service.impl.CinemaHallServiceImpl;
 import mate.academy.service.impl.MovieServiceImpl;
 import mate.academy.service.impl.MovieSessionServiceImpl;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 public class Main {
-    private static final Injector injector =Injector.getInstance("mate.academy");
-    public static void main(String[] args) {
-        MovieService movieService = (MovieServiceImpl) injector.getInstance(MovieService.class);
-        CinemaHallService cinemaHallService = (CinemaHallServiceImpl) injector.getInstance(CinemaHallService.class);
-        MovieSessionService movieSessionService = (MovieSessionServiceImpl) injector.getInstance(MovieSessionService.class);
+    private static final Injector injector = Injector.getInstance("mate.academy");
+    private static final MovieService movieService = (MovieServiceImpl)
+                                        injector.getInstance(MovieService.class);
+    private static final CinemaHallService cinemaHallService = (CinemaHallServiceImpl)
+                                        injector.getInstance(CinemaHallService.class);
+    private static final MovieSessionService movieSessionService = (MovieSessionServiceImpl)
+                                         injector.getInstance(MovieSessionService.class);
 
+    public static void main(String[] args) {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
 
