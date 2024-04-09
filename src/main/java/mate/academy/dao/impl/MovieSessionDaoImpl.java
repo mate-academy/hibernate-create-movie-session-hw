@@ -33,7 +33,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             }
             throw new DataProcessingException("Can't insert MovieSession " + movieSession, e);
         } finally {
-            session.close();
+            if (session != null) {
+                session.close();
+            }
         }
     }
 

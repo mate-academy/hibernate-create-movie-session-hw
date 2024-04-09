@@ -32,7 +32,10 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             }
             throw new DataProcessingException("Can't insert CinemaHall " + cinemaHall, e);
         } finally {
-            session.close();
+            if (session != null) {
+                session.close();
+            }
+
         }
     }
 
