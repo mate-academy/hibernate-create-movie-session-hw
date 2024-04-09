@@ -22,11 +22,11 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public MovieSession get(Long id) {
         return movieSessionDao.get(id).orElseThrow(
-                () -> new NoSuchElementException("Can't get a movie session with id " + id));
+                () -> new NoSuchElementException("Can't get a MovieSession with id " + id));
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return movieSessionDao.findAvailableSessions(1L,LocalDate.now());
+        return movieSessionDao.findAvailableSessions(movieId,date);
     }
 }
