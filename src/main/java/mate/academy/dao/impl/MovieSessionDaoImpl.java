@@ -52,9 +52,13 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .createQuery("from MovieSession ms "
                     + "left join fetch ms.movie m "
                     + "where m.id = :id "
-                    + "and ms.showTime = :date", MovieSession.class);
+                    + "and extract(year from ms.showTime) = :year "
+                    + "and extract(month from ms.showTime) = :month "
+                    + "and extract(day from ms.showTime) = :day", MovieSession.class);
             findAvailableSessionsQuery.setParameter("id", movieId);
-            findAvailableSessionsQuery.setParameter("date", date);
+            findAvailableSessionsQuery.setParameter("year", date.getYear());
+            findAvailableSessionsQuery.setParameter("month", date.getMonthValue());
+            findAvailableSessionsQuery.setParameter("day", date.getDayOfMonth());
             return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find available sessions on: " + date, e);
