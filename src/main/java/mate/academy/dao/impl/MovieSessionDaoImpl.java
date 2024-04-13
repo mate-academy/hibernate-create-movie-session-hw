@@ -31,18 +31,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             }
             throw new DataProcessingException(
                     "Can't save movie session: " + movieSession + " to the DB", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
-        return null;
+        return movieSession;
     }
 
     @Override
     public MovieSession get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            MovieSession movieSession = session.get(MovieSession.class, id);
+            return session.get(MovieSession.class, id);
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie session: " + id, e);
         }
-        return null;
     }
 
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
