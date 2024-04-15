@@ -26,7 +26,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException(ex);
+            throw new DataProcessingException("Can't add new cinema hall: " + cinemaHall, ex);
         } finally {
             if (session != null) {
                 session.close();
@@ -49,7 +49,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             return session.createQuery("from CinemaHall", CinemaHall.class)
                     .getResultList();
         } catch (Exception ex) {
-            throw new RuntimeException("Can't get all cinema halls", ex);
+            throw new DataProcessingException("Can't get all cinema halls", ex);
         }
     }
 }

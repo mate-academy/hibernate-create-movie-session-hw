@@ -3,11 +3,11 @@
 Let's continue working on our Cinema project.
 
 Your task is to implement the following steps:
-- create + `src/main/resources/hibernate.cfg.xml`
-- create + `CinemaHall` class
-- create + `MovieSession` class - be careful adding relations with `Movie` and `CinemaHall`
-- add + implementations of `getAll()` method to `MovieDaoImpl` and `MovieServiceImpl`
-- create + `CinemaHallDaoImpl` and `CinemaHallServiceImpl`.
+- create `src/main/resources/hibernate.cfg.xml`
+- create `CinemaHall` class
+- create `MovieSession` class - be careful adding relations with `Movie` and `CinemaHall`
+- add implementations of `getAll()` method to `MovieDaoImpl` and `MovieServiceImpl`
+- create `CinemaHallDaoImpl` and `CinemaHallServiceImpl`.
 The service layer should have the following methods:
 ```java
     CinemaHall add(CinemaHall cinemaHall);

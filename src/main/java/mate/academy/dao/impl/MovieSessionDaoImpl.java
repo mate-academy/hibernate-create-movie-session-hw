@@ -28,7 +28,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can't create Movie Session", ex);
+            throw new DataProcessingException("Can't create Movie Session", ex);
         } finally {
             if (session != null) {
                 session.close();
@@ -55,7 +55,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("date", date);
             return query.getResultList();
         } catch (Exception ex) {
-            throw new RuntimeException("can't find movie session", ex);
+            throw new DataProcessingException("can't find movie session", ex);
         }
     }
 }

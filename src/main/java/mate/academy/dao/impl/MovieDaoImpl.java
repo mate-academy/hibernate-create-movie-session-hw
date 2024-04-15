@@ -49,7 +49,7 @@ public class MovieDaoImpl implements MovieDao {
             return session.createQuery("FROM Movie",
                     Movie.class).getResultList();
         } catch (Exception ex) {
-            throw new RuntimeException("can't select from movies", ex);
+            throw new DataProcessingException("Can't select from movies", ex);
         }
     }
 }
