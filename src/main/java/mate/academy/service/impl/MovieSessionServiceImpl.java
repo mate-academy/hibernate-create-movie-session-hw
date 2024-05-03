@@ -22,7 +22,8 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public MovieSession get(Long id) {
         return movieSessionDao.get(id).orElseThrow(
-                () -> new NoSuchElementException("There is no movie session with such id")
+                () -> new NoSuchElementException("There is no movie session with id: "
+                + id)
         );
     }
 

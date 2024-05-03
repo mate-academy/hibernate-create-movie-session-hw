@@ -22,7 +22,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     public CinemaHall get(Long id) {
         return cinemaHallDao.get(id).orElseThrow(
                 () -> new NoSuchElementException("There is no cinema hall"
-                        + " with such id")
+                        + " with id: " + id)
         );
     }
 
