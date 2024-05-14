@@ -7,7 +7,7 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
@@ -44,7 +44,7 @@ public class Main {
         MovieSessionService movieSessionService = (MovieSessionService) instance.getInstance(MovieSessionService.class);
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHall1);
-        movieSession.setShowTime(LocalDateTime.now());
+        movieSession.setShowTime(LocalDate.now());
         movieSession.setMovie(fastAndFurious2);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
