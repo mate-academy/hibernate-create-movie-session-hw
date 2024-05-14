@@ -1,17 +1,16 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -20,8 +19,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         Session session = null;
         Transaction transaction = null;
         try {
-            SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-            session = sessionFactory.openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -58,7 +56,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             getQueryMovieService.setParameter("date", date);
             return getQueryMovieService.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Cannot find MovieSession with id: " + movieId + " and date: " + date, e);
+            throw new DataProcessingException("Cannot find MovieSession with id: "
+                    + movieId + " and date: " + date, e);
         }
     }
 }
