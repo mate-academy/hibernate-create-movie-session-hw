@@ -8,37 +8,26 @@ import jakarta.persistence.Table;
 import mate.academy.lib.Inject;
 
 @Entity
-@Table(name = "movies")
-public class Movie {
+@Table(name = "cinema_hall")
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     @Inject
-    private String title;
+    private int capacity;
     @Inject
     private String description;
 
-    public Movie() {
-    }
-
-    public Movie(String title) {
-        this.title = title;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public String getDescription() {
@@ -51,9 +40,8 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{"
-                + "id=" + id
-                + ", title='" + title + '\''
+        return "CinemaHall{"
+                + "capacity=" + capacity
                 + ", description='" + description + '\''
                 + '}';
     }
