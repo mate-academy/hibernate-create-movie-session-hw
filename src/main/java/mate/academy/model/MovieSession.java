@@ -9,7 +9,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import mate.academy.lib.Inject;
 
 @Entity
 @Table(name = "movie_session")
@@ -22,7 +21,6 @@ public class MovieSession {
     private Movie movie;
     @ManyToOne
     private CinemaHall cinemaHall;
-    @Inject
     private LocalDateTime localDateTime;
 
     public long getId() {

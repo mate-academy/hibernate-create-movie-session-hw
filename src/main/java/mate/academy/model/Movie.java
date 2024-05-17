@@ -5,7 +5,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import mate.academy.lib.Inject;
 
 @Entity
 @Table(name = "movies")
@@ -13,9 +12,7 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Inject
     private String title;
-    @Inject
     private String description;
 
     public Movie() {
