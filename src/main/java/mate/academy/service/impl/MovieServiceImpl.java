@@ -10,7 +10,11 @@ import mate.academy.service.MovieService;
 @Service
 public class MovieServiceImpl implements MovieService {
     @Inject
-    private MovieDao movieDao;
+    final MovieDao movieDao;
+
+    public MovieServiceImpl(MovieDao movieDao) {
+        this.movieDao = movieDao;
+    }
 
     @Override
     public Movie add(Movie movie) {
@@ -24,6 +28,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
