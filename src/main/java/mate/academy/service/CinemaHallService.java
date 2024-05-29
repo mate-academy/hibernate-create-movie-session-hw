@@ -5,7 +5,6 @@ import java.util.Optional;
 import mate.academy.model.CinemaHall;
 
 public interface CinemaHallService {
-
     CinemaHall add(CinemaHall cinemaHall);
 
     Optional<CinemaHall> get(Long id);
