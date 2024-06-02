@@ -1,11 +1,12 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.model.CinemaHall;
+import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
@@ -13,18 +14,25 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession movieSession) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            final Transaction transaction = session.beginTransaction();
-            session.persist(movieSession.getCinemaHall());
-            session.persist(movieSession.getMovie());
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
             return movieSession;
         } catch (Exception e) {
-            throw new DataProcessingException("Can't add movieSession " + movieSession, e);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can't add movie session " + movieSession, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
@@ -39,20 +47,68 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> getAllCinemaHalls = session.createQuery(
-                    "from MovieSession ", MovieSession.class);
-            List<MovieSession> allSessions = getAllCinemaHalls.getResultList();
-            List<MovieSession> availableSessions = new ArrayList<>();
-            for (MovieSession movieSession : allSessions) {
-                if (movieId.equals(movieSession.getMovie().getId())
-                        && date.equals(movieSession.getShowTime().toLocalDate())) {
-                    availableSessions.add(movieSession);
-                }
-            }
-            return availableSessions;
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            String hql = "from MovieSession ms "
+                    + "join fetch ms.movie m "
+                    + "join fetch ms.cinemaHall ch "
+                    + "where m.id = :movieId and date(ms.showTime) = :date";
+            Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
+            query.setParameter("movieId", movieId);
+            query.setParameter("date", date);
+            return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get cinema halls", e);
+            throw new DataProcessingException("Can't find available sessions for movieId "
+                    + movieId
+                    + " on date "
+                    + date, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public CinemaHall addCinemaHall(CinemaHall cinemaHall) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.persist(cinemaHall);
+            transaction.commit();
+            return cinemaHall;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can't add cinema hall " + cinemaHall, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    public Movie addMovie(Movie movie) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.persist(movie);
+            transaction.commit();
+            return movie;
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            throw new DataProcessingException("Can't add movie " + movie, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 }

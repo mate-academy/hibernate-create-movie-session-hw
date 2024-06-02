@@ -1,22 +1,31 @@
 package mate.academy.service.impl;
 
 import java.util.List;
+import mate.academy.dao.CinemaHallDao;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
 
 public class CinemaHallServiceImpl implements CinemaHallService {
+    private final CinemaHallDao cinemaHallDao;
+
+    public CinemaHallServiceImpl(CinemaHallDao cinemaHallDao) {
+        this.cinemaHallDao = cinemaHallDao;
+    }
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        return null;
+        return cinemaHallDao.add(cinemaHall);
     }
 
     @Override
     public CinemaHall get(Long id) {
-        return null;
+        return cinemaHallDao.get(id)
+                .orElseThrow(() -> new RuntimeException(
+                        "Cinema hall with id " + id + " not found"));
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        return null;
+        return cinemaHallDao.getAll();
     }
 }

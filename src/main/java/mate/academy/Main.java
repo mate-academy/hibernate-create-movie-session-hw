@@ -12,24 +12,28 @@ import mate.academy.service.impl.MovieSessionServiceImpl;
 
 public class Main {
     public static void main(String[] args) {
-        final MovieSessionService movieSessionService = new MovieSessionServiceImpl(
-                new MovieSessionDaoImpl());
+        final MovieSessionDaoImpl movieSessionDao = new MovieSessionDaoImpl();
 
-        Movie fastAndFurious = new Movie("Fast and Furious");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
-
-        CinemaHall cinemaHall = new CinemaHall();
+        final CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(100);
         cinemaHall.setDescription("big hall");
+        final CinemaHall persistedCinemaHall = movieSessionDao.addCinemaHall(cinemaHall);
+
+        final Movie fastAndFurious = new Movie("Fast and Furious");
+        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
+        final Movie persistedMovie = movieSessionDao.addMovie(fastAndFurious);
+
+        final MovieSessionService movieSessionService = new
+                MovieSessionServiceImpl(movieSessionDao);
 
         MovieSession movieSession = new MovieSession();
-        movieSession.setCinemaHall(cinemaHall);
-        movieSession.setMovie(fastAndFurious);
+        movieSession.setCinemaHall(persistedCinemaHall);
+        movieSession.setMovie(persistedMovie);
         movieSession.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSession);
 
         List<MovieSession> availableSessions = movieSessionService
-                .findAvailableSessions(fastAndFurious.getId(), LocalDate.now());
+                .findAvailableSessions(persistedMovie.getId(), LocalDate.now());
         availableSessions.forEach(
                 x -> System.out.println("\n***Now we have available sessions with movie: '"
                         + x.getMovie().getTitle()
