@@ -9,19 +9,17 @@ import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
-import mate.academy.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 
 @Dao
 public class CinemaHallDaoImpl extends AbstractDao<CinemaHall> implements CinemaHallDao {
-
-    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
-        super(sessionFactory);
+    public CinemaHallDaoImpl(SessionFactory factory) {
+        super(factory);
     }
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        return executeInsideTransaction(session -> {
+        return executeTransaction(session -> {
             session.persist(cinemaHall);
             return cinemaHall;
         });
@@ -29,7 +27,7 @@ public class CinemaHallDaoImpl extends AbstractDao<CinemaHall> implements Cinema
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+        try (var session = factory.openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Unable to get a cinema hall by id: " + id, e);
@@ -38,7 +36,7 @@ public class CinemaHallDaoImpl extends AbstractDao<CinemaHall> implements Cinema
 
     @Override
     public List<CinemaHall> getAll() {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+        try (var session = factory.openSession()) {
             var cinemaHallList = session.createQuery(GET_ALL_CINEMA_HALLS, CinemaHall.class).list();
             return cinemaHallList != null ? cinemaHallList : new ArrayList<>();
         } catch (Exception e) {

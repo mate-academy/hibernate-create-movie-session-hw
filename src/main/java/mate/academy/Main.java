@@ -15,7 +15,6 @@ public class Main {
     private static final Injector injector = Injector.getInstance(PACKAGE_NAME);
 
     public static void main(String[] args) {
-
         var movieService = (MovieService) injector.getInstance(MovieService.class);
         var fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");

@@ -5,6 +5,5 @@ import java.util.List;
 import mate.academy.model.MovieSession;
 
 public interface MovieSessionService extends GenericService<MovieSession> {
-
     List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
 }

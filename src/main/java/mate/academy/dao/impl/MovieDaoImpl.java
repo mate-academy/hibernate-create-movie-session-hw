@@ -14,14 +14,13 @@ import org.hibernate.SessionFactory;
 
 @Dao
 public class MovieDaoImpl extends AbstractDao<Movie> implements MovieDao {
-
     public MovieDaoImpl(SessionFactory factory) {
         super(factory);
     }
 
     @Override
     public Movie add(Movie movie) {
-        return executeInsideTransaction(session -> {
+        return executeTransaction(session -> {
             session.persist(movie);
             return movie;
         });

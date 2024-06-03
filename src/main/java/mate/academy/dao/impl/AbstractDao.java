@@ -16,7 +16,7 @@ public class AbstractDao<T> {
         this.factory = factory;
     }
 
-    protected <T> T executeInsideTransaction(Function<Session, T> function) {
+    protected <T> T executeTransaction(Function<Session, T> function) {
         Session session = null;
         Transaction transaction = null;
         try {
@@ -37,7 +37,7 @@ public class AbstractDao<T> {
         }
     }
 
-    protected void executeInsideTransaction(Consumer<Session> consumer) {
+    protected void executeTransaction(Consumer<Session> consumer) {
         Session session = null;
         Transaction transaction = null;
         try {
