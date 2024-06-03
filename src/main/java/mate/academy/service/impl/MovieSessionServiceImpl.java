@@ -2,8 +2,9 @@ package mate.academy.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import mate.academy.dao.MovieSessionDao;
-import mate.academy.exception.DataProcessingException;
+import mate.academy.exception.EntityNotFoundException;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
@@ -24,8 +25,10 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public MovieSession get(Long id) {
         return movieSessionDao.get(id)
-                .orElseThrow(() -> new DataProcessingException("Movie session with id "
-                        + id + " not found", null));
+                .orElseThrow(() -> new EntityNotFoundException("Movie session with id "
+                        + id + " not found",
+                        new NoSuchElementException("No such element found with id "
+                                + id)));
     }
 
     @Override

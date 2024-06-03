@@ -1,7 +1,9 @@
 package mate.academy.service.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import mate.academy.dao.CinemaHallDao;
+import mate.academy.exception.EntityNotFoundException;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
 
@@ -20,8 +22,9 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     @Override
     public CinemaHall get(Long id) {
         return cinemaHallDao.get(id)
-                .orElseThrow(() -> new RuntimeException(
-                        "Cinema hall with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Cinema hall with id " + id + " not found",
+                        new NoSuchElementException("No such element found with id " + id)));
     }
 
     @Override
