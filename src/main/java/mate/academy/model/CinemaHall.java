@@ -2,11 +2,13 @@ package mate.academy.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import jakarta.persistence.Entity;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "cinemahall")
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -7,19 +7,22 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "movie_sessions")
+@Table(name = "movie_session")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToMany
+    @JoinColumn(name = "cinemahall_id")
     private List<CinemaHall> cinemaHallList;
     private LocalDate date;
 

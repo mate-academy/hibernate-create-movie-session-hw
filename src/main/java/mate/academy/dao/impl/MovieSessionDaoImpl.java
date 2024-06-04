@@ -44,7 +44,7 @@ public class MovieSessionDaoImpl extends AbstractDao<MovieSession> implements Mo
                     .setParameter("moveId", movieId)
                     .setParameter("startOfDay", startOfDay)
                     .setParameter("endOfDay", endOfDay)
-                    .list();
+                    .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException(
                     "Can't find available sessions for movie id: " + movieId

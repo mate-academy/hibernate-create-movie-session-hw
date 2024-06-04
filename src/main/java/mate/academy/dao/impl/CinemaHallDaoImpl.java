@@ -2,7 +2,6 @@ package mate.academy.dao.impl;
 
 import static mate.academy.util.HqlQueries.GET_ALL_CINEMA_HALLS;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
@@ -37,8 +36,7 @@ public class CinemaHallDaoImpl extends AbstractDao<CinemaHall> implements Cinema
     @Override
     public List<CinemaHall> getAll() {
         try (var session = factory.openSession()) {
-            var cinemaHallList = session.createQuery(GET_ALL_CINEMA_HALLS, CinemaHall.class).list();
-            return cinemaHallList != null ? cinemaHallList : new ArrayList<>();
+            return session.createQuery(GET_ALL_CINEMA_HALLS, CinemaHall.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Unable to get all cinema halls: ", e);
         }

@@ -2,7 +2,6 @@ package mate.academy.dao.impl;
 
 import static mate.academy.util.HqlQueries.GET_ALL_MOVIES;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -38,8 +37,7 @@ public class MovieDaoImpl extends AbstractDao<Movie> implements MovieDao {
     @Override
     public List<Movie> getAll() {
         try (var session = factory.openSession()) {
-            var movieList = session.createQuery(GET_ALL_MOVIES, Movie.class).list();
-            return movieList != null ? movieList : new ArrayList<>();
+            return session.createQuery(GET_ALL_MOVIES, Movie.class).getResultList();
         } catch (Exception e) {
             throw new RuntimeException("Can't get all movies", e);
         }
