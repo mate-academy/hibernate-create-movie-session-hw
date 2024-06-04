@@ -12,10 +12,6 @@ public class MovieServiceImpl implements MovieService {
     @Inject
     private MovieDao movieDao;
 
-    public MovieServiceImpl(MovieDao movieDao) {
-        this.movieDao = movieDao;
-    }
-
     @Override
     public Movie add(Movie movie) {
         return movieDao.add(movie);
@@ -23,7 +19,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).orElse(null); // Improved to handle null value safely
+        return movieDao.get(id).orElse(null);
     }
 
     @Override

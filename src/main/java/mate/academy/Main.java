@@ -3,8 +3,9 @@ package mate.academy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import mate.academy.dao.CinemaHallDao;
+import mate.academy.dao.MovieDao;
 import mate.academy.dao.MovieSessionDao;
-import mate.academy.dao.impl.MovieSessionDaoImpl;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
@@ -17,17 +18,21 @@ public class Main {
     public static void main(String[] args) {
         final MovieSessionService movieSessionService = (
                 MovieSessionService) injector.getInstance(MovieSessionService.class);
-        final MovieSessionDaoImpl movieSessionDao = (
-                MovieSessionDaoImpl) injector.getInstance(MovieSessionDao.class);
+        final CinemaHallDao cinemaHallDao = (
+                CinemaHallDao) injector.getInstance(CinemaHallDao.class);
+        final MovieDao movieDao = (
+                MovieDao) injector.getInstance(MovieDao.class);
+        final MovieSessionDao movieSessionDao = (
+                MovieSessionDao) injector.getInstance(MovieSessionDao.class);
 
         final CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(100);
         cinemaHall.setDescription("big hall");
-        final CinemaHall persistedCinemaHall = movieSessionDao.addCinemaHall(cinemaHall);
+        final CinemaHall persistedCinemaHall = cinemaHallDao.add(cinemaHall);
 
         final Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
-        final Movie persistedMovie = movieSessionDao.addMovie(fastAndFurious);
+        final Movie persistedMovie = movieDao.add(fastAndFurious);
 
         final MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(persistedCinemaHall);
@@ -38,10 +43,10 @@ public class Main {
         final List<MovieSession> availableSessions = movieSessionService
                 .findAvailableSessions(persistedMovie.getId(), LocalDate.now());
         availableSessions.forEach(
-                x -> System.out.println("\n***Now we have available sessions with movie: '"
-                        + x.getMovie().getTitle()
+                session -> System.out.println("\n***Now we have available sessions with movie: '"
+                        + session.getMovie().getTitle()
                         + "' at "
-                        + x.getShowTime() + "***")
+                        + session.getShowTime() + "***")
         );
     }
 }
