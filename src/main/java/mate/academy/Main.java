@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -7,9 +9,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
@@ -23,7 +22,8 @@ public class Main {
 
         CinemaHall bigCinemaHall = new CinemaHall(350, "Big hall");
         CinemaHall smallCinemaHall = new CinemaHall(80, "Small hall");
-        CinemaHallService cinemaHallService = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         cinemaHallService.add(bigCinemaHall);
         cinemaHallService.add(smallCinemaHall);
 
@@ -31,10 +31,11 @@ public class Main {
                 LocalDateTime.of(2024, 12, 12, 12, 0));
         MovieSession lateMovieSession = new MovieSession(shawshank, bigCinemaHall,
                 LocalDateTime.of(2024, 12, 12, 20, 0));
-        MovieSessionService movieSessionService = (MovieSessionService) injector.getInstance(MovieSessionService.class);
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(earlyMovieSession);
         movieSessionService.add(lateMovieSession);
-        System.out.println(movieSessionService.findAvailableSessions
-                (2L, LocalDate.of(2024, 12, 12)));
+        System.out.println(movieSessionService.findAvailableSessions(
+                2L, LocalDate.of(2024, 12, 12)));
     }
 }

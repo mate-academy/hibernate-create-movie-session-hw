@@ -1,9 +1,8 @@
 package mate.academy.service;
 
-import mate.academy.model.*;
-
-import java.time.*;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.List;
+import mate.academy.model.MovieSession;
 
 public interface MovieSessionService {
     MovieSession add(MovieSession movieSession);

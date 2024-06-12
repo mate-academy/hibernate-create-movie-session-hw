@@ -1,14 +1,12 @@
 package mate.academy.service.impl;
 
-import mate.academy.dao.*;
-import mate.academy.dao.impl.*;
+import java.util.List;
+import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
-import mate.academy.model.*;
-import mate.academy.service.*;
-
-import java.util.*;
+import mate.academy.model.CinemaHall;
+import mate.academy.service.CinemaHallService;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
