@@ -50,8 +50,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getAllAvailableSessionsQuery =
                     session.createQuery("from MovieSession ms "
-                            + "where ms.id = movieId"
-                            + "and ms.date = date", MovieSession.class);
+                            + "where ms.movieId = :movieId "
+                            + "and ms.showTime = :date", MovieSession.class);
             getAllAvailableSessionsQuery.setParameter("movieId", movieId);
             getAllAvailableSessionsQuery.setParameter("date", date);
             return getAllAvailableSessionsQuery.getResultList();

@@ -4,9 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "MovieSessions")
@@ -14,16 +15,18 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDateTime showTime;
-    @OneToOne
+    private LocalDate showTime;
+    @ManyToOne
+    @JoinColumn(name = "movieId")
     private Movie movie;
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "cinemaHallId")
     private CinemaHall cinemaHall;
 
     public MovieSession() {
     }
 
-    public MovieSession(LocalDateTime showTime, Movie movie, CinemaHall cinemaHall) {
+    public MovieSession(LocalDate showTime, Movie movie, CinemaHall cinemaHall) {
         this.showTime = showTime;
         this.movie = movie;
         this.cinemaHall = cinemaHall;
@@ -37,11 +40,11 @@ public class MovieSession {
         this.id = id;
     }
 
-    public LocalDateTime getShowTime() {
+    public LocalDate getShowTime() {
         return showTime;
     }
 
-    public void setShowTime(LocalDateTime showTime) {
+    public void setShowTime(LocalDate showTime) {
         this.showTime = showTime;
     }
 
@@ -59,5 +62,15 @@ public class MovieSession {
 
     public void setCinemaHall(CinemaHall cinemaHall) {
         this.cinemaHall = cinemaHall;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieSession{"
+                + "id=" + id
+                + ", showTime=" + showTime
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + '}';
     }
 }
