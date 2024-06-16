@@ -24,7 +24,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     public MovieSession get(Long id) {
         return movieSessionDao.get(id).orElseThrow(()
                 -> new DataProcessingException("Can't get a movie session with id: " + id,
-                new HibernateException("")));
+                        new HibernateException("")));
     }
 
     @Override

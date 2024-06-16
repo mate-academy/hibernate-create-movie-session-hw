@@ -23,7 +23,7 @@ public class MovieServiceImpl implements MovieService {
     public Movie get(Long id) {
         return movieDao.get(id).orElseThrow(()
                 -> new DataProcessingException("Can't get a movie with id: " + id,
-                new HibernateException("")));
+                        new HibernateException("")));
     }
 
     @Override
