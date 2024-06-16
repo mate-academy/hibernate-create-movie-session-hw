@@ -17,10 +17,10 @@ public class MovieSession {
     private Long id;
     private LocalDate showTime;
     @ManyToOne
-    @JoinColumn(name = "movieId")
+    @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
-    @JoinColumn(name = "cinemaHallId")
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
 
     public MovieSession() {
