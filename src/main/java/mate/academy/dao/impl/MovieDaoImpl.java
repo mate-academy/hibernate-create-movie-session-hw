@@ -45,14 +45,12 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        List<Movie> allMovies;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            allMovies = session
+            return session
                     .createQuery("from Movie", Movie.class)
                     .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get any movies", e);
         }
-        return allMovies;
     }
 }

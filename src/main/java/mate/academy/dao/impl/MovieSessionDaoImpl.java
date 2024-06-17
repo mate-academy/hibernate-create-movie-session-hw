@@ -56,7 +56,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        List<MovieSession> availableSessions;
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
         String hql = "from MovieSession ms "
@@ -68,11 +67,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             movieSessionQuery.setParameter("startOfDay", startOfDay);
             movieSessionQuery.setParameter("endOfDay", endOfDay);
             movieSessionQuery.setParameter("movieId", movieId);
-            availableSessions = movieSessionQuery.getResultList();
+            return movieSessionQuery.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find any movies with parameters date: "
             + date + " and movie ID: " + movieId, e);
         }
-        return availableSessions;
     }
 }
