@@ -19,9 +19,9 @@ public class Movie {
     private String description;
     @ManyToOne
     @JoinTable(
-            name = "movie_cinemaHall",
+            name = "movie_cinema_hall",
             joinColumns = @JoinColumn(name = "movie_id"),
-            inverseJoinColumns = @JoinColumn(name = "cinemaHall_id")
+            inverseJoinColumns = @JoinColumn(name = "cinema_hall_id")
     )
     private CinemaHall cinemaHall;
 

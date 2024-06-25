@@ -28,7 +28,6 @@ public class Main {
 
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setNumberOfHall(4);
-        cinemaHall.setMovies(fastAndFurious);
 
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);

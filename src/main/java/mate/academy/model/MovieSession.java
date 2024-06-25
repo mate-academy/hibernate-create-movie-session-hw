@@ -5,30 +5,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "movieSession")
+@Table(name = "movie_session")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinTable(
-            name = "movieSession_cinemaHall",
-            joinColumns = @JoinColumn(name = "movieSession_id"),
-            inverseJoinColumns = @JoinColumn(name = "cinemaHall_id")
-    )
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
     @ManyToOne
-    @JoinTable(
-            name = "movieSession_movie",
-            joinColumns = @JoinColumn(name = "movieSession_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id")
-    )
+    @JoinColumn(name = "movie_id")
     private Movie movie;
     private LocalDateTime showTime;
 
