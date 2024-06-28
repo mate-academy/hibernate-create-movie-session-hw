@@ -1,5 +1,8 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
+import mate.academy.dao.CinemaHallDao;
+import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
@@ -8,18 +11,22 @@ import java.util.List;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
+    @Inject
+    private CinemaHallDao cinemaHallDao;
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        return null;
+        return cinemaHallDao.add(cinemaHall);
     }
 
     @Override
     public CinemaHall get(Long id) {
-        return null;
+        return cinemaHallDao.get(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't get cinema hall by id: " + id));
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        return null;
+        return cinemaHallDao.getAll();
     }
 }
