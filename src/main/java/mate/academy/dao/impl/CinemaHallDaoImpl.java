@@ -1,26 +1,25 @@
 package mate.academy.dao.impl;
 
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
+import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import java.util.List;
-import java.util.Optional;
-
-public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
-    protected CinemaHallDaoImpl(SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
+@Dao
+public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
+        Transaction transaction = null;
         Session session = null;
-        Transaction transaction =null;
         try {
-            session = factory.openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
@@ -39,7 +38,7 @@ public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
 
     @Override
     public Optional<CinemaHall> get(Long id) {
-        try (Session session = factory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class,id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get cinema hall by id: " + id, e);
@@ -48,7 +47,7 @@ public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        try (Session session = factory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from CinemaHall", CinemaHall.class)
                     .getResultList();
         } catch (Exception e) {

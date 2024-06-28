@@ -1,7 +1,12 @@
 package mate.academy.model;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
@@ -17,6 +22,15 @@ public class MovieSession {
     @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
+
+    public MovieSession() {
+    }
+
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
+        this.movie = movie;
+        this.cinemaHall = cinemaHall;
+        this.showTime = showTime;
+    }
 
     public long getId() {
         return id;

@@ -15,6 +15,13 @@ public class CinemaHall {
     private int capacity;
     private String description;
 
+    public CinemaHall() {
+    }
+
+    public CinemaHall(int capacity, String description) {
+        this.capacity = capacity;
+        this.description = description;
+    }
 
     public long getId() {
         return id;
@@ -44,7 +51,7 @@ public class CinemaHall {
     public String toString() {
         return "Cinema Hall{"
                 + "id = " + id
-                +", capacity = " + capacity
+                + ", capacity = " + capacity
                 + ", description = " + description + '\''
                 + '}';
     }

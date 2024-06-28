@@ -1,29 +1,29 @@
 package mate.academy.dao.impl;
 
-import mate.academy.dao.MovieSessionDao;
-import mate.academy.exception.DataProcessingException;
-import mate.academy.model.MovieSession;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import mate.academy.dao.MovieSessionDao;
+import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
+import mate.academy.model.MovieSession;
+import mate.academy.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
-public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao {
+@Dao
+public class MovieSessionDaoImpl implements MovieSessionDao {
 
-    protected MovieSessionDaoImpl (SessionFactory sessionFactory) {
-        super(sessionFactory);
-    }
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = factory.openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
@@ -42,7 +42,7 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = factory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get movie session by id: " + id, e);
@@ -57,7 +57,7 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
                 + "left join fetch ms.movie msm "
                 + "where ms.showTime between :beginningOfDay and :endOfDay "
                 + "and msm.id = :movieId";
-        try (Session session = factory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> movieSessionQuery = session.createQuery(hql, MovieSession.class);
             movieSessionQuery.setParameter("beginningOfDay", beginningOfDay);
             movieSessionQuery.setParameter("endOfDay", endOfDay);
