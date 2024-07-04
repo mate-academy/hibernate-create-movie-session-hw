@@ -1,17 +1,19 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
-import mate.academy.model.CinemaHall;
+import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
+@Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -46,9 +48,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        LocalDateTime localDateTime = date.atStartOfDay();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<MovieSession> fromMovieSession = session.createQuery("from MovieSession ", MovieSession.class).list();
-            return fromMovieSession;//TODO - fix this method
+            Query<MovieSession> query = session
+                    .createQuery("from MovieSession ms "
+                                    + "left join fetch ms.movie m "
+                                    + "where m.id = :movieID "
+                                    + "AND ms.showTime = :showTime",
+                            MovieSession.class);
+            query.setParameter("movieID", movieId);
+            query.setParameter("showTime", localDateTime);
+            return query.getResultList();
         }
     }
 }
