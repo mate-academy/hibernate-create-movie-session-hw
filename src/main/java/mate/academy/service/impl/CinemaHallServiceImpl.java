@@ -1,6 +1,7 @@
 package mate.academy.service.impl;
 
 import mate.academy.dao.CinemaHallDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
@@ -18,7 +19,9 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id);
+        return cinemaHallDao.get(id).orElseThrow(
+                () -> new DataProcessingException("CinemaHall not found")
+        );
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
@@ -35,9 +36,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     }
 
     @Override
-    public MovieSession get(Long id) {
+    public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.get(MovieSession.class, id);
+            return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a MovieSession by id: " + id, e);
         }
