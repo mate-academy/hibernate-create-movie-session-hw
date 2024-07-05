@@ -12,9 +12,6 @@ import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-    public CinemaHallDaoImpl() {
-    }
-
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
@@ -49,9 +46,10 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<CinemaHall> cinemaHall = session
+            return session
                     .createQuery("from CinemaHall", CinemaHall.class).getResultList();
-            return cinemaHall;
+        } catch (Exception ex) {
+            throw new DataProcessingException("Can't get all cinema halls from DB", ex);
         }
     }
 }
