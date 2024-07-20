@@ -9,6 +9,7 @@ import mate.academy.model.ShoppingCart;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
@@ -37,7 +38,11 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public Optional<ShoppingCart> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(ShoppingCart.class, id));
+            Query<ShoppingCart> shoppingCartQuery = session.createQuery(
+                    "from ShoppingCart shc left join fetch shc.tickets"
+                    + " where shc.id = :id", ShoppingCart.class);
+            shoppingCartQuery.setParameter("id", id);
+            return Optional.ofNullable(shoppingCartQuery.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a shopping cart by id: " + id, e);
         }
@@ -46,7 +51,8 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public List<ShoppingCart> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from ShoppingCart", ShoppingCart.class).getResultList();
+            return session.createQuery("from ShoppingCart shc left join fetch shc.tickets",
+                    ShoppingCart.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a list of shopping carts.", e);
         }

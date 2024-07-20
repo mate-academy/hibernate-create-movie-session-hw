@@ -38,8 +38,8 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Optional<Order> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<Order> orderQuery = session.createQuery("from Order o LEFT JOIN FETCH o.tickets" +
-                    "where o.id = :id", Order.class);
+            Query<Order> orderQuery = session.createQuery("from Order o LEFT JOIN FETCH o.tickets"
+                    + " where o.id = :id", Order.class);
             orderQuery.setParameter("id", id);
             return Optional.ofNullable(orderQuery.getSingleResult());
         } catch (Exception e) {
@@ -50,7 +50,8 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Order o left join fetch o.tickets", Order.class).getResultList();
+            return session.createQuery("from Order o left join fetch o.tickets",
+                    Order.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a list of orders.", e);
         }

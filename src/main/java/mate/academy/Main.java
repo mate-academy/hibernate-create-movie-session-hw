@@ -1,5 +1,6 @@
 package mate.academy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import mate.academy.lib.Injector;
@@ -46,7 +47,7 @@ public class Main {
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(fastAndFuriousSession);
         System.out.println(movieSessionService.get(1L));
-        //System.out.println(movieSessionService.findAvailableSessions(1l, LocalDate.now()));
+        System.out.println(movieSessionService.findAvailableSessions(1L, LocalDate.now()));
 
         UserService userService = (UserService) injector.getInstance(UserService.class);
         User bob = new User();
@@ -70,8 +71,8 @@ public class Main {
         bobShoppingCart.setUser(bob);
         bobShoppingCart.setTickets(List.of(fastAndFuriousTicket));
         cartService.add(bobShoppingCart);
-        //System.out.println(cartService.get(1L));
-        //System.out.println(cartService.getAll());
+        System.out.println(cartService.get(1L));
+        System.out.println(cartService.getAll());
 
         Order bobOrder = new Order();
         bobOrder.setTickets(List.of(fastAndFuriousTicket));
