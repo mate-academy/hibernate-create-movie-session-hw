@@ -35,6 +35,8 @@ public class Main {
         middleCinemaHall.setCapacity(100);
         middleCinemaHall.setDescription("Middle");
         cinemaHallService.add(middleCinemaHall);
+        System.out.println(cinemaHallService.get(1L));
+        System.out.println(cinemaHallService.getAll());
 
         MovieSession fastAndFuriousSession = new MovieSession();
         fastAndFuriousSession.setMovie(fastAndFurious);
@@ -43,18 +45,24 @@ public class Main {
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(fastAndFuriousSession);
+        System.out.println(movieSessionService.get(1L));
+        //System.out.println(movieSessionService.findAvailableSessions(1l, LocalDate.now()));
 
         UserService userService = (UserService) injector.getInstance(UserService.class);
         User bob = new User();
         bob.setEmail("bob@mail.com");
         bob.setPassword("bob_password");
         userService.add(bob);
+        System.out.println(userService.get(1L));
+        System.out.println(userService.getAll());
 
         TicketService ticketService = (TicketService) injector.getInstance(TicketService.class);
         Ticket fastAndFuriousTicket = new Ticket();
         fastAndFuriousTicket.setMovieSession(fastAndFuriousSession);
         fastAndFuriousTicket.setUser(bob);
         ticketService.add(fastAndFuriousTicket);
+        System.out.println(ticketService.get(1L));
+        System.out.println(ticketService.getAll());
 
         ShoppingCartService cartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
@@ -62,6 +70,8 @@ public class Main {
         bobShoppingCart.setUser(bob);
         bobShoppingCart.setTickets(List.of(fastAndFuriousTicket));
         cartService.add(bobShoppingCart);
+        //System.out.println(cartService.get(1L));
+        //System.out.println(cartService.getAll());
 
         Order bobOrder = new Order();
         bobOrder.setTickets(List.of(fastAndFuriousTicket));
@@ -69,5 +79,7 @@ public class Main {
         bobOrder.setOrderDate(LocalDateTime.now());
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
         orderService.add(bobOrder);
+        System.out.println(orderService.get(1L));
+        System.out.println(orderService.getAll());
     }
 }

@@ -9,6 +9,7 @@ import mate.academy.model.Order;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
@@ -37,7 +38,10 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Optional<Order> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(Order.class, id));
+            Query<Order> orderQuery = session.createQuery("from Order o LEFT JOIN FETCH o.tickets" +
+                    "where o.id = :id", Order.class);
+            orderQuery.setParameter("id", id);
+            return Optional.ofNullable(orderQuery.getSingleResult());
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a order by id: " + id, e);
         }
@@ -46,7 +50,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Order", Order.class).getResultList();
+            return session.createQuery("from Order o left join fetch o.tickets", Order.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a list of orders.", e);
         }
