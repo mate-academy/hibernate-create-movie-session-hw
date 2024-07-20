@@ -2,53 +2,53 @@ package mate.academy.dao.impl;
 
 import java.util.List;
 import java.util.Optional;
-import mate.academy.dao.CinemaHallDao;
+import mate.academy.dao.ShoppingCartDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
-import mate.academy.model.CinemaHall;
+import mate.academy.model.ShoppingCart;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
-public class CinemaHallDaoImpl implements CinemaHallDao {
+public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
-    public CinemaHall add(CinemaHall cinemaHall) {
-        Session session = null;
+    public ShoppingCart add(ShoppingCart shoppingCart) {
         Transaction transaction = null;
+        Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
-            session.persist(cinemaHall);
+            session.persist(shoppingCart);
             transaction.commit();
+            return shoppingCart;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert cinema hall: " + cinemaHall, e);
+            throw new DataProcessingException("Can't insert shopping cart " + shoppingCart, e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return cinemaHall;
     }
 
     @Override
-    public Optional<CinemaHall> get(Long id) {
+    public Optional<ShoppingCart> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.get(CinemaHall.class, id));
+            return Optional.ofNullable(session.get(ShoppingCart.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a cinema hall by id = " + id, e);
+            throw new DataProcessingException("Can't get a shopping cart by id: " + id, e);
         }
     }
 
     @Override
-    public List<CinemaHall> getAll() {
+    public List<ShoppingCart> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
+            return session.createQuery("from ShoppingCart", ShoppingCart.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a list of cinema halls. ", e);
+            throw new DataProcessingException("Can't get a list of shopping carts.", e);
         }
     }
 }

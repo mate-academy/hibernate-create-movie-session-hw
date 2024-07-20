@@ -15,6 +15,7 @@ public class Ticket {
     private Long id;
     @ManyToOne
     private MovieSession movieSession;
+    @ManyToOne
     private User user;
 
     public Ticket() {
