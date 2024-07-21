@@ -7,8 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "movie_sessions")
@@ -17,10 +15,8 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @Cascade(CascadeType.REFRESH)
     private Movie movie;
     @ManyToOne
-    @Cascade(CascadeType.REFRESH)
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
