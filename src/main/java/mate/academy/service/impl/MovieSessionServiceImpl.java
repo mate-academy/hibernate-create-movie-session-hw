@@ -1,8 +1,8 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
-import jakarta.persistence.EntityNotFoundException;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
