@@ -18,10 +18,10 @@ public class MovieSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @Cascade({CascadeType.MERGE, CascadeType.REFRESH})
+    @Cascade(CascadeType.REFRESH)
     private Movie movie;
     @ManyToOne
-    @Cascade({CascadeType.MERGE, CascadeType.REFRESH})
+    @Cascade(CascadeType.REFRESH)
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 

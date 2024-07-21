@@ -19,7 +19,7 @@ public class Ticket {
     @Cascade(CascadeType.REFRESH)
     private MovieSession movieSession;
     @ManyToOne
-    @Cascade({CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @Cascade({CascadeType.PERSIST})
     private User user;
 
     public Ticket() {
