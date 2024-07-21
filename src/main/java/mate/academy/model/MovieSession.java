@@ -5,8 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,9 +17,11 @@ public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @ManyToOne
+    @Cascade({CascadeType.MERGE, CascadeType.REFRESH})
     private Movie movie;
     @ManyToOne
+    @Cascade({CascadeType.MERGE, CascadeType.REFRESH})
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 

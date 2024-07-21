@@ -9,6 +9,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import java.util.List;
 
 @Entity
@@ -21,8 +24,10 @@ public class ShoppingCart {
     @JoinTable(name = "carts_tickets",
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<Ticket> tickets;
     @OneToOne
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private User user;
 
     public ShoppingCart() {

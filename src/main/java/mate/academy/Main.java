@@ -53,34 +53,34 @@ public class Main {
         User bob = new User();
         bob.setEmail("bob@mail.com");
         bob.setPassword("bob_password");
-        userService.add(bob);
-        System.out.println(userService.get(1L));
-        System.out.println(userService.getAll());
+        //userService.add(bob);
+        //System.out.println(userService.get(1L));
+        //System.out.println(userService.getAll());
 
         TicketService ticketService = (TicketService) injector.getInstance(TicketService.class);
         Ticket fastAndFuriousTicket = new Ticket();
         fastAndFuriousTicket.setMovieSession(fastAndFuriousSession);
         fastAndFuriousTicket.setUser(bob);
-        ticketService.add(fastAndFuriousTicket);
-        System.out.println(ticketService.get(1L));
-        System.out.println(ticketService.getAll());
+        //ticketService.add(fastAndFuriousTicket);
+        //System.out.println(ticketService.get(1L));
+        //System.out.println(ticketService.getAll());
 
         ShoppingCartService cartService =
                 (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
         ShoppingCart bobShoppingCart = new ShoppingCart();
         bobShoppingCart.setUser(bob);
         bobShoppingCart.setTickets(List.of(fastAndFuriousTicket));
-        cartService.add(bobShoppingCart);
-        System.out.println(cartService.get(1L));
-        System.out.println(cartService.getAll());
+        //cartService.add(bobShoppingCart);
+        //System.out.println(cartService.get(1L));
+        //System.out.println(cartService.getAll());
 
         Order bobOrder = new Order();
         bobOrder.setTickets(List.of(fastAndFuriousTicket));
         bobOrder.setUser(bob);
         bobOrder.setOrderDate(LocalDateTime.now());
         OrderService orderService = (OrderService) injector.getInstance(OrderService.class);
-        orderService.add(bobOrder);
-        System.out.println(orderService.get(1L));
-        System.out.println(orderService.getAll());
+        //orderService.add(bobOrder);
+        //System.out.println(orderService.get(1L));
+        //System.out.println(orderService.getAll());
     }
 }

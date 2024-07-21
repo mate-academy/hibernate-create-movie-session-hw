@@ -9,6 +9,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,8 +25,10 @@ public class Order {
     @JoinTable(name = "orders_tickets",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "ticket_id"))
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private List<Ticket> tickets;
     @ManyToOne
+    @Cascade({CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     private User user;
     private LocalDateTime orderDate;
 
