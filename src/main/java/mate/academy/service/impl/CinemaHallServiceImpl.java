@@ -1,6 +1,7 @@
 package mate.academy.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -19,7 +20,11 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id).get();
+        Optional<CinemaHall> cinemaHall = cinemaHallDao.get(id);
+        if (cinemaHall.isPresent()) {
+            return cinemaHall.get();
+        }
+        throw new RuntimeException("CinemaHall with id: " + id + " was not found");
     }
 
     @Override
