@@ -1,25 +1,20 @@
 package mate.academy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
-import mate.academy.lib.Inject;
 
 @Entity
-@Table(name = "sessions")
+@Table(name = "movie_sessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Inject
     @ManyToOne
+    @JoinColumn(name = "movie_id")
     private Movie movie;
-    @Inject
     @ManyToOne
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
