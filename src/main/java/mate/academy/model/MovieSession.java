@@ -11,16 +11,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "movie_sessions")
 public class MovieSession {
-    @Override
-    public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                ", showTime=" + showTime +
-                '}';
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -71,5 +61,15 @@ public class MovieSession {
 
     public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieSession{"
+                + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showTime=" + showTime
+                + '}';
     }
 }
