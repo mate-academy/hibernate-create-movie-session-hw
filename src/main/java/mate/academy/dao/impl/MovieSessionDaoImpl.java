@@ -42,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get MovieSession entity", e);
+            throw new DataProcessingException("Can't get MovieSession entity by id - " + id, e);
         }
     }
 
@@ -61,7 +61,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find available MovieSessions", e);
+            throw new DataProcessingException("Can't find available MovieSessions by id - "
+                    + movieId
+                    + " and date - "
+                    + date, e);
         }
     }
 }
