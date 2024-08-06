@@ -1,9 +1,9 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
-import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
@@ -16,27 +16,17 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-        if (movieSession != null) {
-            return movieSessionDao.add(movieSession);
-        }
-        throw new DataProcessingException("The argument (movie session) is null.");
+        return movieSessionDao.add(movieSession);
     }
 
     @Override
     public MovieSession get(Long id) {
-        if (id != null) {
-            return movieSessionDao.get(id).orElseThrow(()
-                    -> new DataProcessingException("Can't get movie session by id: " + id));
-        }
-        throw new DataProcessingException("The argument (id) is null.");
+        return movieSessionDao.get(id).orElseThrow(()
+                -> new EntityNotFoundException("Can't get movie session by id: " + id));
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        if (movieId != null && date != null) {
-            return movieSessionDao.findAvailableSessions(movieId, date);
-        }
-        throw new DataProcessingException("The argument (movieID: " + movieId + " or date: "
-                + date + ") is null.");
+        return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }

@@ -11,7 +11,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -50,16 +49,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         final LocalDateTime startOfDayDay = date.atStartOfDay();
-        final LocalDateTime endOfDay = date.atTime(23,59,59);
+        final LocalDateTime endOfDay = date.atTime(23, 59, 59);
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> movieSessionsquery = session.createQuery("from MovieSession m "
-                    + "WHERE m.movie.id = :id "
-                    + "AND m.showTime BETWEEN :start AND :end", MovieSession.class);
-            movieSessionsquery.setParameter("id", movieId)
+            return session.createQuery("from MovieSession m "
+                            + "WHERE m.movie.id = :id "
+                            + "AND m.showTime BETWEEN :start AND :end", MovieSession.class)
+                    .setParameter("id", movieId)
                     .setParameter("start", startOfDayDay)
-                    .setParameter("end", endOfDay);
-            return movieSessionsquery.getResultList();
+                    .setParameter("end", endOfDay)
+                    .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get list of all movie sessions by id "
                     + movieId + " for this date: " + date, e);

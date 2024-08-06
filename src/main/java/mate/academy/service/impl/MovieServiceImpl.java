@@ -1,8 +1,8 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import mate.academy.dao.MovieDao;
-import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.Movie;
@@ -15,27 +15,17 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie add(Movie movie) {
-        if (movie != null) {
-            return movieDao.add(movie);
-        }
-        throw new DataProcessingException("The argument (movie) is null.");
+        return movieDao.add(movie);
     }
 
     @Override
     public Movie get(Long id) {
-        if (id != null) {
-            return movieDao.get(id).orElseThrow(() ->
-                    new DataProcessingException("Can't get movie by id, result is null. " + id));
-        }
-        throw new DataProcessingException("The argument (id) is null.");
+        return movieDao.get(id).orElseThrow(() ->
+                new EntityNotFoundException("Can't get movie by id, result is null. " + id));
     }
 
     @Override
     public List<Movie> getAll() {
-        List<Movie> movies = movieDao.getAll();
-        if (!movies.isEmpty()) {
-            return movies;
-        }
-        throw new DataProcessingException("Can't get list of all movies, list is empty.");
+        return movieDao.getAll();
     }
 }
