@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "sessions")
@@ -22,7 +22,7 @@ public class MovieSession {
     @JoinColumn(name = "hall_id")
     private CinemaHall cinemaHall;
 
-    private LocalDate showTime;
+    private LocalDateTime showTime;
 
     public Long getId() {
         return id;
@@ -48,11 +48,11 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDate getShowTime() {
+    public LocalDateTime getShowTime() {
         return showTime;
     }
 
-    public void setShowTime(LocalDate showTime) {
+    public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
     }
 
@@ -62,6 +62,7 @@ public class MovieSession {
                 + "id=" + id
                 + ", movie=" + movie
                 + ", cinemaHall=" + cinemaHall
+                + ", showTime=" + showTime
                 + '}';
     }
 }
