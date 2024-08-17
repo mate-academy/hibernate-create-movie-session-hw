@@ -127,7 +127,6 @@ public class Injector {
             throw new RuntimeException("Class loader is null");
         }
         String path = packageName.replace('.', '/');
-        System.out.println(path);
         Enumeration<URL> resources = classLoader.getResources(path);
         List<File> dirs = new ArrayList<>();
         while (resources.hasMoreElements()) {
