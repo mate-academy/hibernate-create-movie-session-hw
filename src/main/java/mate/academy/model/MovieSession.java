@@ -69,7 +69,7 @@ public class MovieSession {
         return "MovieSession{"
                 + "id=" + id
                 + ", movie=" + movie
-                + ", cinemaHall1=" + cinemaHall
+                + ", cinemaHall=" + cinemaHall
                 + ", showTime=" + showTime
                 + '}';
     }
