@@ -2,7 +2,6 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import mate.academy.lib.Inject;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -13,9 +12,7 @@ import mate.academy.service.MovieSessionService;
 
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
-    private static final String separator = System.lineSeparator();
 
-    @Inject
     public static void main(String[] args) {
         Movie movie = new Movie();
         movie.setTitle("First Movie");
@@ -31,7 +28,7 @@ public class Main {
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
 
-        System.out.println(separator + cinemaHallService.add(cinemaHall));
+        System.out.println(System.lineSeparator() + cinemaHallService.add(cinemaHall));
         System.out.println(cinemaHallService.get(1L));
         cinemaHallService.getAll().forEach(System.out::println);
 
@@ -41,7 +38,7 @@ public class Main {
         movieSession.setShowTime(LocalDateTime.now());
         MovieSessionService movieSessionService = (MovieSessionService) injector
                 .getInstance(MovieSessionService.class);
-        System.out.println(separator + movieSessionService.add(movieSession));
+        System.out.println(System.lineSeparator() + movieSessionService.add(movieSession));
         System.out.println(movieSessionService.get(1L));
         movieSessionService.findAvailableSession(1L, LocalDate.now()).forEach(System.out::println);
     }
