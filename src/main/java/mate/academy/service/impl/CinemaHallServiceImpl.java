@@ -14,8 +14,8 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     private CinemaHallDao cinemaHallDao;
 
     @Override
-    public CinemaHall add(CinemaHall movie) {
-        return cinemaHallDao.add(movie);
+    public CinemaHall add(CinemaHall cinemaHall) {
+        return cinemaHallDao.add(cinemaHall);
     }
 
     @Override

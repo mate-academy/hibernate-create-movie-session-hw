@@ -15,10 +15,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao {
-    public MovieSessionDaoImpl() {
-        super(HibernateUtil.getSessionFactory());
-    }
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         return super.create(movieSession);

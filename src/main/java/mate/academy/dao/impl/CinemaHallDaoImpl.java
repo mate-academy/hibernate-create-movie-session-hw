@@ -5,14 +5,9 @@ import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
-import mate.academy.util.HibernateUtil;
 
 @Dao
 public class CinemaHallDaoImpl extends AbstractDao implements CinemaHallDao {
-    public CinemaHallDaoImpl() {
-        super(HibernateUtil.getSessionFactory());
-    }
-
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         return super.create(cinemaHall);

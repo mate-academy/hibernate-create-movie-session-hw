@@ -5,14 +5,9 @@ import java.util.Optional;
 import mate.academy.dao.MovieDao;
 import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
-import mate.academy.util.HibernateUtil;
 
 @Dao
 public class MovieDaoImpl extends AbstractDao implements MovieDao {
-    public MovieDaoImpl() {
-        super(HibernateUtil.getSessionFactory());
-    }
-
     @Override
     public Movie add(Movie movie) {
         return super.create(movie);

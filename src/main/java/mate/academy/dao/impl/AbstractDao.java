@@ -9,17 +9,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public abstract class AbstractDao {
-    protected final SessionFactory factory;
-
-    public AbstractDao(SessionFactory factory) {
-        this.factory = factory;
-    }
+    protected final SessionFactory factory = HibernateUtil.getSessionFactory();
 
     protected <T> T create(T entity) {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = factory.openSession();
             transaction = session.beginTransaction();
             session.persist(entity);
             transaction.commit();
@@ -38,7 +34,7 @@ public abstract class AbstractDao {
     }
 
     protected <T> Optional<T> get(Class<T> entityClass, Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             return Optional.ofNullable(session.get(entityClass, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a "
@@ -47,7 +43,7 @@ public abstract class AbstractDao {
     }
 
     protected <T> List<T> getAll(Class<T> entityClass, String className) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = factory.openSession()) {
             return session.createQuery("from " + className, entityClass).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all " + className + "s", e);
