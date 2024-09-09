@@ -13,7 +13,6 @@ import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
-
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -27,7 +26,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
-                throw new DataProcessingException("Can't add cinemaHall", e);
+                throw new DataProcessingException("Can't add cinemaHall to DB", e);
             }
         } finally {
             if (session != null) {
@@ -42,7 +41,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get cinemaHall", e);
+            throw new DataProcessingException("Can't get cinemaHall from DB by id:" + id, e);
         }
     }
 

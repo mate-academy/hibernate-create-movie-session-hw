@@ -48,7 +48,7 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from Movie").getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Error getting all Movie entities", e);
+            throw new DataProcessingException("Error getting all Movie entities", e);
         }
     }
 }

@@ -15,7 +15,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -44,23 +43,24 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get cinemaHall", e);
+            throw new DataProcessingException("Can't get movie session by id:" + id, e);
         }
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         String hql = "FROM MovieSession ms "
                 + "WHERE ms.movie.id = :movie_id "
                 + "AND DATE (ms.showTime) = :date";
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
             query.setParameter("movie_id", movieId);
             query.setParameter("date", date);
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find available movies in database", e);
+            throw new DataProcessingException("Can't find available movie sessions "
+                    + "with movie id:" + movieId
+                    + ", and date: " + date, e);
         }
     }
 }
