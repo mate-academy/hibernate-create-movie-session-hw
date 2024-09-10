@@ -7,6 +7,7 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -23,7 +24,7 @@ public class MovieDaoImpl implements MovieDao {
             session.persist(movie);
             transaction.commit();
             return movie;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -39,7 +40,7 @@ public class MovieDaoImpl implements MovieDao {
     public Optional<Movie> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(Movie.class, id));
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             throw new DataProcessingException("Can't get a movie by id: " + id, e);
         }
     }
@@ -49,7 +50,7 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<Movie> query = session.createQuery("SELECT m FROM Movie m", Movie.class);
             return query.getResultList();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             throw new DataProcessingException("Can't get all movies from DB", e);
         }
     }

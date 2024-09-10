@@ -8,6 +8,7 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -25,7 +26,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             session.persist(movieSession);
             transaction.commit();
             return movieSession;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -41,7 +42,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             throw new DataProcessingException("Can't get a Movie Session by id: " + id, e);
         }
     }
@@ -49,12 +50,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("SELECT ms FROM MovieSession "
-                    + "ms WHERE ms.id = :movieId AND ms.dateTime = :date", MovieSession.class);
+            Query<MovieSession> query = session.createQuery("SELECT ms FROM MovieSession ms "
+                            + "WHERE ms.movie.id = :movieId AND ms.dateTime "
+                            + "BETWEEN :startOfDay AND :endOfDay",
+                    MovieSession.class);
+
             query.setParameter("movieId", movieId);
-            query.setParameter("date", date);
+            query.setParameter("startOfDay", date.atStartOfDay()); // Початок дня
+            query.setParameter("endOfDay", date.atTime(23, 59, 59)); // Кінець дня
+
             return query.getResultList();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             throw new DataProcessingException("Can't get all Movie Sessions from DB", e);
         }
     }
