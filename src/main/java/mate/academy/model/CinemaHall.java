@@ -15,6 +15,9 @@ public class CinemaHall {
     private int capacity;
     private String description;
 
+    public CinemaHall() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -37,5 +40,14 @@ public class CinemaHall {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "CinemaHall{"
+                + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description + '\''
+                + '}';
     }
 }
