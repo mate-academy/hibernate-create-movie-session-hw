@@ -53,17 +53,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = sessionFactory.openSession()) {
             LocalDateTime startOfDay = date.atStartOfDay();
             LocalDateTime endOfDay = date.atTime(23, 59, 59);
-            Query<MovieSession> getAllCinemaHallQuery = session.createQuery(
+            Query<MovieSession> findAvailableSessionsQuery = session.createQuery(
                     "from MovieSession s where s.showTime between :startOfDay "
                             + "and :endOfDay and s.movie.id = :movieId",
                     MovieSession.class);
-            getAllCinemaHallQuery.setParameter("startOfDay", startOfDay);
-            getAllCinemaHallQuery.setParameter("endOfDay", endOfDay);
-            getAllCinemaHallQuery.setParameter("movieId", movieId);
-            return getAllCinemaHallQuery.getResultList();
+            findAvailableSessionsQuery.setParameter("startOfDay", startOfDay);
+            findAvailableSessionsQuery.setParameter("endOfDay", endOfDay);
+            findAvailableSessionsQuery.setParameter("movieId", movieId);
+            return findAvailableSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find available movie session at this day "
-                    + date, e);
+            throw new DataProcessingException("Can't find available movie sessions for movie id: "
+                    + movieId + " on date: " + date, e);
         }
     }
 }
