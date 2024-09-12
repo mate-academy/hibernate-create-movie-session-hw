@@ -28,8 +28,8 @@ public class MovieSessionServiceImpl implements mate.academy.service.MovieSessio
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime beginningOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
-        return movieSessionDao.findAvailableSessions(movieId, startOfDay, endOfDay);
+        return movieSessionDao.findAvailableSessions(movieId, beginningOfDay, endOfDay);
     }
 }
