@@ -15,7 +15,6 @@ import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
-
     @Override
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
@@ -56,8 +55,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     MovieSession.class);
 
             query.setParameter("movieId", movieId);
-            query.setParameter("startOfDay", date.atStartOfDay()); // Початок дня
-            query.setParameter("endOfDay", date.atTime(23, 59, 59)); // Кінець дня
+            query.setParameter("startOfDay", date.atStartOfDay());
+            query.setParameter("endOfDay", date.atTime(23, 59, 59));
 
             return query.getResultList();
         } catch (HibernateException e) {

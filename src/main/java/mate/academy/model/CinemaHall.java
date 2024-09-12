@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "cinemahall")
+@Table(name = "cinema_halls")
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,9 +60,9 @@ public class CinemaHall {
     @Override
     public String toString() {
         return "CinemaHall{"
-                + "id=" + id
-                + ", capacity=" + capacity
-                + ", description='"
+                + "id = " + id
+                + ", capacity = " + capacity
+                + ", description = '"
                 + description + '\''
                 + '}';
     }
