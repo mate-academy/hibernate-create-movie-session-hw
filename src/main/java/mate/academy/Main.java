@@ -28,8 +28,6 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
 
         CinemaHall superMax = new CinemaHall();
-        superMax.setCapacity(200);
-        superMax.setDescription("Modern IMax screen and comortable seats.");
         cinemaHallService.add(superMax);
         System.out.println(cinemaHallService.get(superMax.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
