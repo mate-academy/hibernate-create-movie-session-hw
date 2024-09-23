@@ -6,9 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "movie_session")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +24,14 @@ public class MovieSession {
 
     private LocalDateTime showTime;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
     public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
 
@@ -31,8 +41,20 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public Long getId() {
+        return id;
+    }
+
+    public CinemaHall getCinemaHall() {
+        return cinemaHall;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public LocalDateTime getShowTime() {
+        return showTime;
     }
 
     @Override

@@ -7,13 +7,9 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">ko4erhin</property>
         <property name="show_sql">true</property>
-        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.auto">create-drop</property>
         <mapping class="mate.academy.model.MovieSession"/>
         <mapping class="mate.academy.model.Movie"/>
-        <mapping class="mate.academy.model.Order"/>
-        <mapping class="mate.academy.model.ShoppingCart"/>
-        <mapping class="mate.academy.model.Ticket"/>
-        <mapping class="mate.academy.model.User"/>
         <mapping class="mate.academy.model.CinemaHall"/>
     </session-factory>
 </hibernate-configuration>
