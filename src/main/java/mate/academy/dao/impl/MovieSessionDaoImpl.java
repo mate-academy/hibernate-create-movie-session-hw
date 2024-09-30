@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -46,13 +47,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+        LocalDateTime startDate = LocalDateTime.of(date.getYear(), date.getMonth(),
+                date.getDayOfMonth(), 0, 0, 0);
+        LocalDateTime endDate = LocalDateTime.of(date.getYear(), date.getMonth(),
+                date.getDayOfMonth(), 23, 59, 59);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<MovieSession> movies = session.createQuery("from MovieSession where id = :movieId",
+            return session.createQuery("from MovieSession ms"
+                                    + " left join ms.movie where ms.id =: movieId"
+                                    + " and showTime between :startDate and :endDate",
                             MovieSession.class)
-                    .setParameter("movieId", movieId)
+                            .setParameter("movieId", movieId)
+                            .setParameter("startDate", startDate)
+                            .setParameter("endDate", endDate)
                     .getResultList();
-            movies.removeIf(movie -> !movie.getShowTime().toLocalDate().equals(date));
-            return movies;
         } catch (Exception ex) {
             throw new DataProcessingException("Could not get available movie sessions ", ex);
         }
