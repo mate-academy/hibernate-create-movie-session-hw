@@ -52,9 +52,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime endDate = LocalDateTime.of(date.getYear(), date.getMonth(),
                 date.getDayOfMonth(), 23, 59, 59);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from MovieSession ms"
-                                    + " left join ms.movie where ms.id =: movieId"
-                                    + " and showTime between :startDate and :endDate",
+            return session.createQuery("from MovieSession ms join fetch ms.movie m "
+                                    + "where m.id = :movieId and ms.showTime "
+                                    + "between :startDate and :endDate",
                             MovieSession.class)
                             .setParameter("movieId", movieId)
                             .setParameter("startDate", startDate)
