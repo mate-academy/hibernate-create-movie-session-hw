@@ -14,16 +14,23 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie add(Movie movie) {
+        boolean isMovieExist = movieDao.getAll()
+                .stream()
+                .anyMatch(m -> m.getTitle().equals(movie.getTitle()));
+        if (isMovieExist) {
+            throw new RuntimeException("Movie already exists");
+        }
         return movieDao.add(movie);
     }
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).get();
+        return movieDao.get(id).orElseThrow(() ->
+                new RuntimeException("Movie not found"));
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
