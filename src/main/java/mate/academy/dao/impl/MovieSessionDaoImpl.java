@@ -28,7 +28,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't add movie to db", e);
+            throw new DataProcessingException(
+                    "Can't insert movie session entity to the database", e);
         } finally {
             if (session != null) {
                 session.close();
@@ -42,7 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get movie session by id-> " + id, e);
+            throw new DataProcessingException("Can't retrieve movie session by id: " + id, e);
         }
     }
 
@@ -53,14 +54,15 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             LocalDateTime endOfDay = date.atTime(23, 59, 59);
             Query<MovieSession> findSessionQuery = session.createQuery(
                     "from MovieSession ms where ms.movie.id = :id"
-                            + " AND ms.startTime BETWEEN :startOfDay AND :endTime", MovieSession.class);
+                            + " AND ms.startTime "
+                            + "BETWEEN :startOfDay AND :endTime", MovieSession.class);
             findSessionQuery.setParameter("id", movieId);
             findSessionQuery.setParameter("startOfDay", startOfDay);
             findSessionQuery.setParameter("endTime", endOfDay);
             return findSessionQuery.list();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find available sessions by id-> "
-                    + movieId, e);
+            throw new DataProcessingException(
+                    "Can't retrieve all movie sessions from the database", e);
         }
     }
 }
