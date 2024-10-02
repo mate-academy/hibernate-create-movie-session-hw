@@ -14,12 +14,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie add(Movie movie) {
-        boolean isMovieExist = movieDao.getAll()
-                .stream()
-                .anyMatch(m -> m.getTitle().equals(movie.getTitle()));
-        if (isMovieExist) {
-            throw new RuntimeException("Movie already exists");
-        }
         return movieDao.add(movie);
     }
 

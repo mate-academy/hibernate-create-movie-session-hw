@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "movie_sessions")
@@ -93,9 +94,9 @@ public class MovieSession {
                 + ", cinemaHall="
                 + cinemaHall
                 + ", startTime="
-                + startTime
+                + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(startTime)
                 + ", endTime="
-                + endTime
+                + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(endTime)
                 + '}';
     }
 }
