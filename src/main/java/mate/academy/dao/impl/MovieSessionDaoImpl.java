@@ -27,7 +27,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie session" + movieSession);
+            throw new DataProcessingException("Can't insert movie session" + movieSession, e);
         }
     }
 
@@ -36,7 +36,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie session by id: " + id);
+            throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
     }
 
@@ -54,7 +54,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return query.getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Could not retrieve available sessions for movie ID "
-                    + movieId + " on date " + date);
+                    + movieId + " on date " + date, e);
         }
     }
 }
