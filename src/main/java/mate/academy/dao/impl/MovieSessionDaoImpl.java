@@ -39,7 +39,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a Cinema Hall by id: " + id, e);
+            throw new DataProcessingException("Can't get a Movie Session by id: " + id, e);
         }
     }
 
@@ -48,7 +48,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM MovieSession ", MovieSession.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can`t get all movies from DB", e);
+            throw new DataProcessingException("Can`t get all Movie Sessions from DB", e);
         }
     }
 }

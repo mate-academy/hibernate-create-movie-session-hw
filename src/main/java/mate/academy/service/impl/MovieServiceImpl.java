@@ -21,7 +21,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie get(Long id) {
         return movieDao.get(id).orElseThrow(() ->
-                new NoSuchElementException("Cinema Hall not found."));
+                new NoSuchElementException("Movie not found."));
     }
 
     @Override
