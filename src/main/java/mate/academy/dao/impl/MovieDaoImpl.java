@@ -49,7 +49,7 @@ public class MovieDaoImpl implements MovieDao {
         try {
             return session.createQuery("From Movie", Movie.class).getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't get list of comments", e);
+            throw new RuntimeException("Can't get list of movies", e);
         } finally {
             session.close();
         }

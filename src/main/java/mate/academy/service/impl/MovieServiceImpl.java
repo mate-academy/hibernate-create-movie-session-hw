@@ -6,8 +6,6 @@ import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.Movie;
 import mate.academy.service.MovieService;
-import mate.academy.util.HibernateUtil;
-import org.hibernate.Session;
 
 @Service
 public class MovieServiceImpl implements MovieService {
@@ -26,13 +24,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            return session.createQuery("From Movie", Movie.class).getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException("Can't get list of comments", e);
-        } finally {
-            session.close();
-        }
+        return movieDao.getAll();
     }
 }

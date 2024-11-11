@@ -16,4 +16,3 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
     }
 }
-

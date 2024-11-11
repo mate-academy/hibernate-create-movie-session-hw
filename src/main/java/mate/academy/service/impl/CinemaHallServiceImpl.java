@@ -5,8 +5,6 @@ import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
-import mate.academy.util.HibernateUtil;
-import org.hibernate.Session;
 
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
@@ -24,13 +22,6 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public List<CinemaHall> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
-            return session.createQuery("From CinemaHall", CinemaHall.class).getResultList();
-        } catch (Exception e) {
-            throw new RuntimeException("Can't get list of comments", e);
-        } finally {
-            session.close();
-        }
+        return cinemaHallDao.getAll();
     }
 }
