@@ -48,8 +48,7 @@ public class Main {
         MovieSession session3 = new MovieSession();
         session3.setCinemaHall(cinemaHallService.get(2L));
         session3.setMovie(movieService.get(3L));
-        session3.setShowTime(LocalDate.now().minusDays(1).atTime(17, 0));
-        movieSessionService.add(session3);
+        session3.setShowTime(LocalDate.now().plusDays(1).atTime(17, 0));
     }
 
     private static void insertCinemaHalls(CinemaHallService cinemaHallService) {
@@ -60,7 +59,7 @@ public class Main {
 
         CinemaHall blueCinemaHall = new CinemaHall();
         blueCinemaHall.setCapacity(70);
-        blueCinemaHall.setDescription("Best colling cinema hall");
+        blueCinemaHall.setDescription("Best cooling cinema hall");
         cinemaHallService.add(blueCinemaHall);
 
         CinemaHall yellowCinemaHall = new CinemaHall();
