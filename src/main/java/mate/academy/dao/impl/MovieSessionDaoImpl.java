@@ -1,20 +1,18 @@
 package mate.academy.dao.impl;
 
-import mate.academy.dao.MovieSessionDao;
-import mate.academy.exception.DataProcessingException;
-import mate.academy.lib.Dao;
-import mate.academy.model.Movie;
-import mate.academy.model.MovieSession;
-import mate.academy.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
+import mate.academy.dao.MovieSessionDao;
+import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
+import mate.academy.model.MovieSession;
+import mate.academy.util.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 @Dao
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -55,9 +53,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         LocalDateTime endDateTime = date.atTime(LocalTime.MAX);
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> getSpecificSessions = session.createQuery(
-                    "from MovieSession ms " +
-                            "where ms.movie.id = :id " +
-                            "and ms.showTime between :beginningOfDay and :endOfDay",
+                    "from MovieSession ms "
+                           + "where ms.movie.id = :id "
+                           + "and ms.showTime between :beginningOfDay and :endOfDay",
                     MovieSession.class
             );
             getSpecificSessions.setParameter("id", movieId);

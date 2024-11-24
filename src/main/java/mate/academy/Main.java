@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -8,19 +10,16 @@ import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
     private static final String DATE = "2019-09-10";
 
     public static void main(String[] args) {
-        MovieService movieService =
+        final MovieService movieService =
                 (MovieService) injector.getInstance(MovieService.class);
-        CinemaHallService cinemaHallService =
+        final CinemaHallService cinemaHallService =
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
-        MovieSessionService movieSessionService =
+        final MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         Movie fastAndFurious = new Movie("Fast and Furious");
@@ -38,9 +37,6 @@ public class Main {
         Movie endOfWatch = new Movie("End of Watch");
         endOfWatch.setDescription("An action film about Los Angeles Police Department officers.");
         movieService.add(endOfWatch);
-
-        Movie spotlight = new Movie("Spotlight");
-        spotlight.setDescription("A biographical drama film about investigative journalist unit.");
 
         CinemaHall firstHall = new CinemaHall();
         cinemaHallService.add(firstHall);
@@ -80,7 +76,7 @@ public class Main {
         System.out.println(cinemaHallService.get(1L));
         cinemaHallService.getAll().forEach(System.out::println);
 
-        movieSessionService.get(4L);
+        System.out.println(movieSessionService.get(4L));
         LocalDate date = LocalDate.parse(DATE);
         movieSessionService.findAvailableSessions(4L, date)
                 .forEach(System.out::println);

@@ -1,12 +1,12 @@
 package mate.academy.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
-import java.util.List;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
