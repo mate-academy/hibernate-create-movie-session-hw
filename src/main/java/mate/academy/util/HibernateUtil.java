@@ -1,13 +1,12 @@
 package mate.academy.util;
 
+import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
+    @Getter
     private static final SessionFactory sessionFactory = initSessionFactory();
-
-    private HibernateUtil() {
-    }
 
     private static SessionFactory initSessionFactory() {
         try {
@@ -15,9 +14,5 @@ public class HibernateUtil {
         } catch (Exception e) {
             throw new RuntimeException("Error creating SessionFactory", e);
         }
-    }
-
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
     }
 }

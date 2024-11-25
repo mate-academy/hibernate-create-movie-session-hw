@@ -18,10 +18,10 @@ import lombok.ToString;
 @ToString
 @Builder
 @AllArgsConstructor
-public class Movie {
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private int capacity;
     private String description;
 }
