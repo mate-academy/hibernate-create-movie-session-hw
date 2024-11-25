@@ -25,7 +25,7 @@ public class Main {
                 .build();
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         movieService.add(harryPotter);
-        final Movie starWarsDB = movieService.add(starWars); //final to avoid checkstyle error
+        movieService.add(starWars); //final to avoid checkstyle error
 
         CinemaHall redCinemaHall = CinemaHall.builder()
                 .capacity(50)
@@ -70,7 +70,7 @@ public class Main {
         movieSessionService.save(harryPotterRedSession101011);
 
         List<MovieSession> availableSessions = movieSessionService
-                .findAvailableSessions(starWarsDB.getId(), LocalDate.parse("2024-10-10"));
+                .findAvailableSessions(starWars.getId(), LocalDate.parse("2024-10-10"));
         System.out.println(availableSessions);
     }
 }

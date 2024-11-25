@@ -23,7 +23,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             session = factory.openSession();
             transaction = session.beginTransaction();
             session.persist(cinemaHall);
-            cinemaHall.setId((Long) session.getIdentifier(cinemaHall));
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {

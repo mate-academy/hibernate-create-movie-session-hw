@@ -29,7 +29,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             session = factory.openSession();
             transaction = session.beginTransaction();
             session.persist(movieSession);
-            movieSession.setId((Long) session.getIdentifier(movieSession));
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
