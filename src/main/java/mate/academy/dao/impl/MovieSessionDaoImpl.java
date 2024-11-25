@@ -27,7 +27,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (tx != null) {
                 tx.rollback();
             }
-            throw new DataProcessingException("Could not add movie session", e);
+            throw new DataProcessingException("Could not add movie session "
+                    + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -43,7 +44,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             session.getTransaction().commit();
             return Optional.ofNullable(movieSession);
         } catch (Exception e) {
-            throw new DataProcessingException("Could not get movie session", e);
+            throw new DataProcessingException("Could not get movie session with ID: "
+                    + id, e);
         }
     }
 
