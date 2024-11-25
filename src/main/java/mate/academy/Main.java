@@ -23,6 +23,9 @@ public class Main {
                 .title("Harry Potter")
                 .description("Fantasy movie about magic")
                 .build();
+        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
+        movieService.add(harryPotter);
+        final Movie starWarsDB = movieService.add(starWars); //final to avoid checkstyle error
 
         CinemaHall redCinemaHall = CinemaHall.builder()
                 .capacity(50)
@@ -32,44 +35,39 @@ public class Main {
                 .capacity(100)
                 .description("Blue cinema hall")
                 .build();
+        CinemaHallService cinemaHallService = (CinemaHallService) injector
+                .getInstance(CinemaHallService.class);
+        cinemaHallService.save(blueCinemaHall);
+        cinemaHallService.save(redCinemaHall);
 
-        MovieSession starWarsRedSession10_10_10 = MovieSession.builder()
+        MovieSession starWarsRedSession101010 = MovieSession.builder()
                 .cinemaHall(redCinemaHall)
                 .movie(starWars)
                 .showTime(LocalDateTime.parse("2024-10-10T10:00:00"))
                 .build();
-        MovieSession starWarsBlueSession10_10_11 = MovieSession.builder()
+        MovieSession starWarsBlueSession101011 = MovieSession.builder()
                 .cinemaHall(blueCinemaHall)
                 .movie(starWars)
                 .showTime(LocalDateTime.parse("2024-10-10T11:00:00"))
                 .build();
-        MovieSession starWarsBlueSession10_11_11 = MovieSession.builder()
+        MovieSession starWarsBlueSession101111 = MovieSession.builder()
                 .cinemaHall(blueCinemaHall)
                 .movie(starWars)
                 .showTime(LocalDateTime.parse("2024-10-11T11:00:00"))
                 .build();
-        MovieSession harryPotterRedSession10_10_11 = MovieSession.builder()
+        MovieSession harryPotterRedSession101011 = MovieSession.builder()
                 .cinemaHall(redCinemaHall)
                 .movie(harryPotter)
                 .showTime(LocalDateTime.parse("2024-10-10T11:00:00"))
                 .build();
 
-        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
-        CinemaHallService cinemaHallService = (CinemaHallService) injector
-                .getInstance(CinemaHallService.class);
 
-        Movie starWarsDB = movieService.add(starWars);
-        Movie harryPotterDB = movieService.add(harryPotter);
-
-        CinemaHall blueCinemaHallDB = cinemaHallService.save(blueCinemaHall);
-        CinemaHall redCinemaHallDB = cinemaHallService.save(redCinemaHall);
-
-        movieSessionService.save(starWarsRedSession10_10_10);
-        movieSessionService.save(starWarsBlueSession10_10_11);
-        movieSessionService.save(starWarsBlueSession10_11_11);
-        movieSessionService.save(harryPotterRedSession10_10_11);
+        movieSessionService.save(starWarsRedSession101010);
+        movieSessionService.save(starWarsBlueSession101011);
+        movieSessionService.save(starWarsBlueSession101111);
+        movieSessionService.save(harryPotterRedSession101011);
 
         List<MovieSession> availableSessions = movieSessionService
                 .findAvailableSessions(starWarsDB.getId(), LocalDate.parse("2024-10-10"));

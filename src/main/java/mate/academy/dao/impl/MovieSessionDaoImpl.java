@@ -62,8 +62,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             + "where m.id = :movieId "
                             + "and extract(day from ms.showTime) = :day "
                             + "and extract(month from ms.showTime) = :month "
-                            + "and extract(year from ms.showTime) = :year "
-                            , MovieSession.class)
+                            + "and extract(year from ms.showTime) = :year ",
+                            MovieSession.class)
                     .setParameter(MOVIE_ID_PARAMETER, movieId)
                     .setParameter(DAY_PARAMETER, date.getDayOfMonth())
                     .setParameter(MONTH_PARAMETER, date.getMonthValue())
