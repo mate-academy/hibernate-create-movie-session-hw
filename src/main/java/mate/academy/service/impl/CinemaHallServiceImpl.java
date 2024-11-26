@@ -20,10 +20,9 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id).orElseThrow(() -> new DataProcessingException
-                ("Cinema hall not found for id: " + id, new Throwable("Entity not found")));
+        return cinemaHallDao.get(id).orElseThrow(() -> new DataProcessingException(
+                "Cinema hall not found for id: " + id, new Throwable("Entity not found")));
     }
-
 
     @Override
     public List<CinemaHall> getAll() {
