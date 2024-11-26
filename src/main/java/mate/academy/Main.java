@@ -19,7 +19,6 @@ public class Main {
                 "Sci-fi movie about Jedi");
         Movie harryPotter = new Movie("Harry Potter",
                 "Fantasy movie about magic");
-
         MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
         movieService.add(harryPotter);
         movieService.add(starWars); //final to avoid checkstyle error
