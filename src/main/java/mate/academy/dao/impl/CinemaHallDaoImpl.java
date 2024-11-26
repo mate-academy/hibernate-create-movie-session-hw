@@ -51,7 +51,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Query<CinemaHall> query = session.createQuery(hql, CinemaHall.class);
             return query.list();
         } catch (Exception e) {
-            throw new RuntimeException("Error getting all CinemaHall objects", e);
+            throw new DataProcessingException("Error getting all CinemaHall objects", e);
         }
     }
 }

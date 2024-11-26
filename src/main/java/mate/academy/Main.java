@@ -2,6 +2,7 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -31,7 +32,9 @@ public class Main {
 
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(movieService.get(fastAndFurious.getId()));
-        movieSession.setShowTime(LocalDateTime.parse("2007-12-03T10:15:30"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        LocalDateTime showTime = LocalDateTime.parse("2007-12-03T10:15:30", formatter);
+        movieSession.setShowTime(showTime);
         movieSession.setCinemaHall(cinemaHallService.get(kyiv.getId()));
 
         MovieSessionService movieSessionService = (MovieSessionService) injector
