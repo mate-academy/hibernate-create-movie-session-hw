@@ -10,7 +10,9 @@
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
         <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.cache.use_second_level_cache">false</property>
 
         <mapping class="mate.academy.model.CinemaHall"/>
         <mapping class="mate.academy.model.Movie"/>
