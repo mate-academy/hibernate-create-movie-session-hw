@@ -2,7 +2,8 @@ package mate.academy.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
-import mate.academy.dao.MovieSessionDao;
+import mate.academy.dao.cinema.MovieSessionDao;
+import mate.academy.exception.MovieSessionNotFoundException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
@@ -21,11 +22,11 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     @Override
     public MovieSession get(Long id) {
         return movieSessionDao.get(id).orElseThrow(()
-                -> new RuntimeException("Movie session with id " + id + " not found"));
+                -> new MovieSessionNotFoundException("Movie session with id " + id + " not found"));
     }
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return movieSessionDao.findAvailableSessions(movieId, date);
+        return movieSessionDao.findAvailableMovieSessions(movieId, date);
     }
 }

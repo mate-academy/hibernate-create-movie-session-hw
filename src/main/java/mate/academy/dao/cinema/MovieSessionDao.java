@@ -1,4 +1,4 @@
-package mate.academy.dao;
+package mate.academy.dao.cinema;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,5 +10,5 @@ public interface MovieSessionDao {
 
     Optional<MovieSession> get(Long id);
 
-    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+    List<MovieSession> findAvailableMovieSessions(Long movieId, LocalDate date);
 }

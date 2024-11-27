@@ -1,9 +1,9 @@
-package mate.academy.dao.impl;
+package mate.academy.dao.cinema.impl;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import mate.academy.dao.MovieSessionDao;
+import mate.academy.dao.cinema.MovieSessionDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
@@ -15,10 +15,8 @@ import org.hibernate.Transaction;
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public MovieSession add(MovieSession movieSession) {
-        Session session = null;
         Transaction tx = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
             session.persist(movieSession);
             tx.commit();
@@ -29,10 +27,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             }
             throw new DataProcessingException("Could not add movie session "
                     + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
@@ -49,8 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         }
     }
 
-    @Override
-    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
+    public List<MovieSession> findAvailableMovieSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM MovieSession ms "
                             + "WHERE ms.movie.id = :movieID and "
