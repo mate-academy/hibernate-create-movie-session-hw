@@ -18,6 +18,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     private static final String DAY_PARAMETER = "day";
     private static final String MONTH_PARAMETER = "month";
     private static final String YEAR_PARAMETER = "year";
+    private static final String ID_PARAMETER = "id";
 
     private final SessionFactory factory = HibernateUtil.getSessionFactory();
 
@@ -47,7 +48,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public Optional<MovieSession> get(Long id) {
         try (Session session = factory.openSession()) {
-            return Optional.ofNullable(session.get(MovieSession.class, id));
+            return (Optional<MovieSession>) session.createQuery("from MovieSession ms "
+                    + "inner join fetch ms.cinemaHall "
+                    + "inner join fetch ms.movie "
+                    + "where ms.id = :id")
+                    .setParameter(ID_PARAMETER, id)
+                    .uniqueResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get a movie session by id: " + id, e);
         }
@@ -57,11 +63,12 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = factory.openSession()) {
             return session.createQuery("from MovieSession ms "
-                            + "left join fetch ms.movie m "
-                            + "where m.id = :movieId "
-                            + "and extract(day from ms.showTime) = :day "
-                            + "and extract(month from ms.showTime) = :month "
-                            + "and extract(year from ms.showTime) = :year ",
+                                    + "inner join fetch ms.cinemaHall "
+                                    + "inner join fetch ms.movie m "
+                                    + "where m.id = :movieId "
+                                    + "and extract(day from ms.showTime) = :day "
+                                    + "and extract(month from ms.showTime) = :month "
+                                    + "and extract(year from ms.showTime) = :year ",
                             MovieSession.class)
                     .setParameter(MOVIE_ID_PARAMETER, movieId)
                     .setParameter(DAY_PARAMETER, date.getDayOfMonth())
