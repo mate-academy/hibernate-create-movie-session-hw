@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "CinemaHalls")
@@ -50,5 +51,21 @@ public class CinemaHall {
                 + ", description='"
                 + description + '\''
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CinemaHall that = (CinemaHall) o;
+        return capacity == that.capacity
+                && Objects.equals(id, that.id)
+                && Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, capacity, description);
     }
 }

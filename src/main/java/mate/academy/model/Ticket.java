@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Tickets")
@@ -15,7 +16,6 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "movie_session_id")
     private MovieSession movieSession;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -58,5 +58,21 @@ public class Ticket {
                 + ", user="
                 + user
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Ticket ticket = (Ticket) o;
+        return Objects.equals(id, ticket.id)
+                && Objects.equals(movieSession, ticket.movieSession)
+                && Objects.equals(user, ticket.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, movieSession, user);
     }
 }

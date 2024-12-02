@@ -10,6 +10,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Orders")
@@ -18,7 +19,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToMany
-    @JoinColumn(name = "ticket_id")
     private List<Ticket> tickets;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -69,5 +69,22 @@ public class Order {
                 + ", user=" + user
                 + ", showTime=" + showTime
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Order order = (Order) o;
+        return Objects.equals(id, order.id)
+                && Objects.equals(tickets, order.tickets)
+                && Objects.equals(user, order.user)
+                && Objects.equals(showTime, order.showTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, tickets, user, showTime);
     }
 }

@@ -66,14 +66,14 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("adding " + movie + " into database failed", e);
+            throw new DataProcessingException("updating " + movie + " failed", e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
 
-        return true;
+        return get(movie.getId()).get().equals(movie);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class MovieDaoImpl implements MovieDao {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.delete(get(id)
-                    .orElseThrow(() -> new RuntimeException("now object with id " + id)));
+                    .orElseThrow(() -> new RuntimeException("no object with id " + id)));
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -99,7 +99,6 @@ public class MovieDaoImpl implements MovieDao {
                 session.close();
             }
         }
-
-        return true;
+        return get(id).isEmpty();
     }
 }

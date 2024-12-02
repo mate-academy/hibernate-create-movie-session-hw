@@ -80,15 +80,14 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("adding "
-                    + movieSession + " into database failed", e);
+            throw new DataProcessingException("updating " + movieSession + " failed", e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
 
-        return true;
+        return get(movieSession.getId()).get().equals(movieSession);
     }
 
     @Override
@@ -101,19 +100,19 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             session.delete(get(id)
-                    .orElseThrow(() -> new RuntimeException("no object with id " + id)));
+                    .orElseThrow(() -> new RuntimeException("no movie session with id " + id)));
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("removing movie with id: "
+            throw new DataProcessingException("removing movie session with id: "
                     + id + " from database failed", e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
-        return true;
+        return get(id).isEmpty();
     }
 }

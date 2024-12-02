@@ -66,14 +66,14 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("adding " + cinemaHall + " into database failed", e);
+            throw new DataProcessingException("update " + cinemaHall + " failed", e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
 
-        return true;
+        return get(cinemaHall.getId()).get().equals(cinemaHall);
     }
 
     @Override
@@ -99,7 +99,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                 session.close();
             }
         }
-
-        return true;
+        return get(id).isEmpty();
     }
 }

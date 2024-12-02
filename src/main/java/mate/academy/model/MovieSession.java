@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "MovieSessions")
@@ -69,5 +70,22 @@ public class MovieSession {
                 + ", showTime="
                 + showTime
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        MovieSession that = (MovieSession) o;
+        return Objects.equals(id, that.id)
+                && Objects.equals(movie, that.movie)
+                && Objects.equals(cinemaHall, that.cinemaHall)
+                && Objects.equals(showTime, that.showTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, movie, cinemaHall, showTime);
     }
 }
