@@ -5,9 +5,9 @@ import mate.academy.model.CinemaHall;
 
 public interface CinemaHallService {
 
-    public CinemaHall add(CinemaHall cinemaHall);
+    CinemaHall add(CinemaHall cinemaHall);
 
-    public CinemaHall get(Long id);
+    CinemaHall get(Long id);
 
-    public List<CinemaHall> getAll();
+    List<CinemaHall> getAll();
 }
