@@ -1,6 +1,7 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -55,7 +56,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
             getAllMovieSessionsQuery.setParameter("movieId", movieId);
             getAllMovieSessionsQuery.setParameter("startOfDay", date.atStartOfDay());
-            getAllMovieSessionsQuery.setParameter("endOfDay", date.atTime(23, 59, 59));
+            getAllMovieSessionsQuery.setParameter("endOfDay", date.atTime(LocalTime.MAX));
 
             return getAllMovieSessionsQuery.getResultList();
         } catch (Exception e) {

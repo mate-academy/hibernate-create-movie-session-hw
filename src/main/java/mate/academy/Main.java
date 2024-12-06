@@ -105,5 +105,9 @@ public class Main {
         List<MovieSession> sessionsOn12 = movieSessionService.findAvailableSessions(
                 inception.getId(), LocalDate.of(2024, 12, 12));
         sessionsOn12.forEach(System.out::println);
+
+        // Test LazyInitializationException presence
+        MovieSession movieSessionFromDB = movieSessionService.get(fastAndFurious.getId());
+        System.out.println(movieSessionFromDB.getMovie().getDescription());
     }
 }
