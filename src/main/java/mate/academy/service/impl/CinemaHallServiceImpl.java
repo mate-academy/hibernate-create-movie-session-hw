@@ -20,9 +20,6 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        if (id == null || id <= 0) {
-            throw new IllegalArgumentException("Invalid cinema hall ID: " + id);
-        }
         return cinemaHallDao
                 .get(id)
                 .orElseThrow(() ->

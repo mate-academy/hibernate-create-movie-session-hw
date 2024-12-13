@@ -1,7 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -42,19 +41,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get a movie session by id:" + id, e);
         }
     }
 
     @Override
     public List<MovieSession> availableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> allMovieSessions = session.createQuery("from MovieSessions ms"
-                    + "left join fetch ms.cinemaHall"
-                    + "left join fetch ms.movie "
-                    + "where msLocalDateTime between :beginDateTime and :endDateTime"
+            Query<MovieSession> allMovieSessions = session.createQuery(
+                    "FROM MovieSessions ms "
+                    + "LEFT JOIN FETCH ms.cinemaHall "
+                    + "LEFT JOIN FETCH ms.movie "
+                    + "WHERE msCAST(ms.showTime AS DATE) = :date"
                     + " and ms.movie.id = :movieId", MovieSession.class);
-            allMovieSessions.setParameter("beginDateTime", date.atStartOfDay());
-            allMovieSessions.setParameter("endDateTime", date.atTime(LocalTime.MAX));
+            allMovieSessions.setParameter("date", date);
             allMovieSessions.setParameter("movieId", movieId);
             return allMovieSessions.getResultList();
         } catch (Exception e) {

@@ -20,9 +20,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        if (id == null || id < 0) {
-            throw new IllegalArgumentException("Invalid cinema hall ID: " + id);
-        }
         return movieDao
                 .get(id)
                 .orElseThrow(() ->
