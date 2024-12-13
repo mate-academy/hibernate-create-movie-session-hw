@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "MovieSession")
+@Table(name = "movie_sessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,7 @@ public class MovieSession {
     @JoinColumn(name = "movie_id")
     private Movie movie;
     @ManyToOne
-    @JoinColumn(name = "cinemaHall_id")
+    @JoinColumn(name = "cinema_hall_id")
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
