@@ -14,10 +14,6 @@ public class Main {
 
     public static void main(String[] args) {
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
-        MovieSessionService movieSessionService = (MovieSessionService) injector
-                .getInstance(MovieSessionService.class);
-        CinemaHallService cinemaHallService = (CinemaHallService) injector
-                .getInstance(CinemaHallService.class);
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
@@ -31,16 +27,18 @@ public class Main {
         System.out.println(movieService.get(venom.getId()));
         movieService.getAll().forEach(System.out::println);
 
+        CinemaHallService cinemaHallService = (CinemaHallService) injector
+                .getInstance(CinemaHallService.class);
         CinemaHall yourChoice = new CinemaHall("Your choice");
         yourChoice.setCapacity(1000);
         yourChoice.setDescription("The most innovation cinema hall in the city");
         cinemaHallService.add(yourChoice);
         System.out.println(cinemaHallService.get(yourChoice.getId()));
 
-        MovieSession inYourChoice = new MovieSession();
-        inYourChoice.setMovie(venom);
-        inYourChoice.setCinemaHall(yourChoice);
-        inYourChoice.setShowTime(LocalDateTime.of(2023, 7, 24, 5, 30));
+        MovieSessionService movieSessionService = (MovieSessionService) injector
+                .getInstance(MovieSessionService.class);
+        MovieSession inYourChoice = new MovieSession(venom, yourChoice, LocalDateTime
+                .of(2023, 7, 24, 5, 30));
         movieSessionService.add(inYourChoice);
         System.out.println(movieSessionService.get(inYourChoice.getId()));
     }
