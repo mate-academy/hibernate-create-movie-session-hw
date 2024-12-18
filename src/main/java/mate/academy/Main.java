@@ -36,7 +36,7 @@ public class Main {
                 injector.getInstance(MovieSessionService.class);
 
         MovieSession movieSession = new MovieSession();
-        movieSession.setId(movieSession.getId());
+        movieSession.setCinemaHall(cinemaHall);
         movieSessionService.add(movieSession);
     }
 }
