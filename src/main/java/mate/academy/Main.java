@@ -24,21 +24,10 @@ public class Main {
         movieService.add(fastAndFurious);
         System.out.println(movieService.get(fastAndFurious.getId()));
 
-        Movie movie = new Movie("movie1");
-        movie.setDescription("movie");
-        movieService.add(movie);
-        System.out.println(movieService.get(movie.getId()));
-        movieService.getAll().forEach(System.out::println);
-
-        CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setCapacity(10);
-        cinemaHall.setDescription("cinemaHall");
+        CinemaHall cinemaHall = new CinemaHall(10, "cinemaHall");
         cinemaHallService.add(cinemaHall);
 
-        MovieSession movieSession = new MovieSession();
-        movieSession.setMovie(fastAndFurious);
-        movieSession.setCinemaHall(cinemaHall);
-        movieSession.setShowTime(
+        MovieSession movieSession = new MovieSession(fastAndFurious, cinemaHall,
                 LocalDateTime.of(2024, 10, 10, 10, 10));
         movieSessionService.add(movieSession);
 
