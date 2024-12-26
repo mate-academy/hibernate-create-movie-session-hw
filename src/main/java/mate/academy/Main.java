@@ -13,7 +13,7 @@ import mate.academy.service.MovieSessionService;
 public class Main {
     private static final Injector injector = Injector.getInstance("mate.academy");
     private static final int CINEMA_HALL_CAPACITY = 50;
-    private static final int FATS_AND_FURIOUS_MOVIE = 0;
+    private static final int FAST_AND_FURIOUS_MOVIE = 0;
     private static final int THE_GODFATHER_MOVIE = 1;
     private static final int THE_DARK_KNIGHT_MOVIE = 2;
     private static final int CINEMA_HALL_NUMBER_ONE = 0;
@@ -33,7 +33,7 @@ public class Main {
             movieService.add(movie);
         }
 
-        System.out.println(movieService.get(movies.get(FATS_AND_FURIOUS_MOVIE).getId()));
+        System.out.println(movieService.get(movies.get(FAST_AND_FURIOUS_MOVIE).getId()));
         movieService.getAll().forEach(System.out::println);
 
         //2. CinemaHallService realisations (add, get, getAll).
@@ -53,11 +53,11 @@ public class Main {
                 MovieSessionService.class);
 
         List<MovieSession> movieSessions = List.of(
-                new MovieSession(movies.get(FATS_AND_FURIOUS_MOVIE),
+                new MovieSession(movies.get(FAST_AND_FURIOUS_MOVIE),
                         cinemaHalls.get(CINEMA_HALL_NUMBER_ONE), DATE_24_12_25),
                 new MovieSession(movies.get(THE_GODFATHER_MOVIE),
                         cinemaHalls.get(CINEMA_HALL_NUMBER_ONE), DATE_24_12_25),
-                new MovieSession(movies.get(FATS_AND_FURIOUS_MOVIE),
+                new MovieSession(movies.get(FAST_AND_FURIOUS_MOVIE),
                         cinemaHalls.get(CINEMA_HALL_NUMBER_THREE), DATE_24_12_25),
                 new MovieSession(movies.get(THE_DARK_KNIGHT_MOVIE),
                         cinemaHalls.get(CINEMA_HALL_NUMBER_TWO), DATE_24_12_27),
@@ -71,7 +71,7 @@ public class Main {
         }
 
         System.out.println(movieSessionService.get(movieSessions.get(MOVIE_SESSION_ONE).getId()));
-        movieSessionService.findAvailableSessions(movies.get(FATS_AND_FURIOUS_MOVIE).getId(),
+        movieSessionService.findAvailableSessions(movies.get(FAST_AND_FURIOUS_MOVIE).getId(),
                 DATE_24_12_25).forEach(System.out::println);
 
     }
