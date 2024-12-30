@@ -1,7 +1,6 @@
 package mate.academy.dao.impl;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
@@ -47,8 +46,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> query =
                     session.createQuery("SELECT ms FROM MovieSession ms "
                                     + "LEFT JOIN FETCH ms.movie m "
-                                    + "LEFT JOIN FETCH ms.cinemaHall cnh",
+                                    + "LEFT JOIN FETCH ms.cinemaHall cnh "
+                                    + "WHERE ms.id = :id",
                             MovieSession.class);
+            query.setParameter("id", id);
             return Optional.of(query.getSingleResult());
         } catch (RuntimeException e) {
             throw new DataProcessingException(CAN_T_GET_MOVIE_SESSION_BY_ID_MSG + id, e);
@@ -57,9 +58,21 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        return get(movieId).filter(movieSession ->
-                        movieSession.getLocalDateTime().toLocalDate().equals(date))
-                .map(List::of)
-                .orElseGet(ArrayList::new);
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<MovieSession> query = session.createQuery(
+                    "SELECT ms FROM MovieSession ms "
+                            + "LEFT JOIN FETCH ms.movie m "
+                            + "LEFT JOIN FETCH ms.cinemaHall ch "
+                            + "WHERE ms.movie.id = :movieId "
+                            + "AND DATE(ms.localDateTime) = :date",
+                    MovieSession.class);
+            query.setParameter("movieId", movieId);
+            query.setParameter("date", date);
+
+            return query.getResultList();
+        } catch (RuntimeException e) {
+            throw new DataProcessingException("Can't find available movie sessions by movie ID "
+                    + movieId + " and date " + date, e);
+        }
     }
 }

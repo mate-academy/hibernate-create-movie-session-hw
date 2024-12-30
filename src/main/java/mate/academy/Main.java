@@ -2,7 +2,6 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -18,7 +17,8 @@ public class Main {
     private static final String TITLE = "Fast and Furious";
     private static final String DESCRIPTION_OF_MOVIE = "An action film about street racing, "
             + "heists, and spies.";
-    private static final String AVAILABLE_MOVIE_SESSIONS_MSG = "Available movie sessions ";
+    private static final long MOVIE_ID_ONE = 1L;
+    private static final int CAPACITY_ONE_HUNDRED = 100;
 
     public static void main(String[] args) {
         MovieService movieService = (MovieService)
@@ -34,11 +34,9 @@ public class Main {
                 INJECTOR.getInstance(CinemaHallService.class);
 
         CinemaHall cinemaHall = new CinemaHall();
-        cinemaHall.setCapacity(100);
+        cinemaHall.setCapacity(CAPACITY_ONE_HUNDRED);
         cinemaHall.setDescription(fastAndFurious.getDescription());
         cinemaHallService.add(cinemaHall);
-
-        System.out.println(cinemaHallService.getAll());
 
         final MovieSessionService movieSessionService = (MovieSessionService)
                 INJECTOR.getInstance(MovieSessionService.class);
@@ -48,10 +46,8 @@ public class Main {
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setLocalDateTime(LocalDateTime.now());
         movieSessionService.add(movieSession);
+        movieSessionService.findAvailableSessions(MOVIE_ID_ONE, LocalDate.now());
 
-        List<MovieSession> availableSessions =
-                movieSessionService.findAvailableSessions(1L, LocalDate.now());
-
-        System.out.println(availableSessions + AVAILABLE_MOVIE_SESSIONS_MSG);
+        movieSessionService.findAvailableSessions(MOVIE_ID_ONE, LocalDate.now());
     }
 }
