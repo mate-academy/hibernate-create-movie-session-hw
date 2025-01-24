@@ -9,9 +9,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-import mate.academy.service.impl.CinemaHallServiceImpl;
-import mate.academy.service.impl.MovieServiceImpl;
-import mate.academy.service.impl.MovieSessionServiceImpl;
 
 public class Main {
     public static void main(String[] args) {
