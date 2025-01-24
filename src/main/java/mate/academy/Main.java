@@ -17,16 +17,17 @@ public class Main {
     public static void main(String[] args) {
         Injector injector = Injector.getInstance("mate.academy");
 
-        MovieService movieService = (MovieServiceImpl) injector.getInstance(MovieService.class);
+        MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
+        System.out.println();
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
         System.out.println();
 
         CinemaHallService cinemaHallService =
-                (CinemaHallServiceImpl) injector.getInstance(CinemaHallService.class);
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall cinemaHall = new CinemaHall();
         cinemaHall.setCapacity(250);
         cinemaHall.setDescription("Big IMAX hall");
@@ -40,7 +41,7 @@ public class Main {
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setStartTime(LocalDateTime.now());
         MovieSessionService movieSessionService =
-                (MovieSessionServiceImpl) injector.getInstance(MovieSessionService.class);
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(movieSession);
         System.out.println(movieSessionService.get(movieSession.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.now())
