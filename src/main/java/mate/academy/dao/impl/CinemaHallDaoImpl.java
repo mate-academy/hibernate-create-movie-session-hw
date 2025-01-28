@@ -47,7 +47,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from CinemaHall", CinemaHall.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Failed to retrieve all movies " + e);
+            throw new DataProcessingException("Failed to retrieve all cinema halls " + e);
         }
     }
 }
