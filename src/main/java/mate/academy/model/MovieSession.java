@@ -18,14 +18,17 @@ public class MovieSession {
     @OneToOne
     private CinemaHall cinemaHall;
 
+    public MovieSession() {
+    }
+
     @Override
     public String toString() {
-        return "MovieSession{" +
-                "id=" + id +
-                ", showTime=" + showTime +
-                ", movie=" + movie +
-                ", cinemaHall=" + cinemaHall +
-                '}';
+        return "MovieSession{"
+                + "id=" + id
+                + ", showTime=" + showTime
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + '}';
     }
 
     public Long getId() {
@@ -62,8 +65,5 @@ public class MovieSession {
     public MovieSession setCinemaHall(CinemaHall cinemaHall) {
         this.cinemaHall = cinemaHall;
         return this;
-    }
-
-    public MovieSession() {
     }
 }
