@@ -2,6 +2,7 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -22,7 +23,7 @@ public class Main {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setMovie(fastAndFurious);
-        movieSession.setDate(LocalDateTime.now());
+        movieSession.setShowTime(LocalDateTime.now(ZoneOffset.UTC));
 
         Injector injector = Injector.getInstance("mate.academy");
 

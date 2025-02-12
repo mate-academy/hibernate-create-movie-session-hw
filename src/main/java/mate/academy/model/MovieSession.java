@@ -18,7 +18,7 @@ public class MovieSession {
     private CinemaHall cinemaHall;
     private LocalDateTime showTime;
 
-    public void setDate(LocalDateTime showTime) {
+    public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
     }
 
@@ -38,7 +38,7 @@ public class MovieSession {
         this.cinemaHall = cinemaHall;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDateTime getShowTime() {
         return showTime;
     }
 
