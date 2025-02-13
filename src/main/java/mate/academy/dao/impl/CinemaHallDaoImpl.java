@@ -1,16 +1,14 @@
 package mate.academy.dao.impl;
 
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.CinemaHallDao;
 import mate.academy.exception.DataProcessingException;
 import mate.academy.model.CinemaHall;
-import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.util.List;
-import java.util.Optional;
 
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
@@ -23,7 +21,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             session.persist(cinemaHall);
             transaction.commit();
             return cinemaHall;
-        }catch (Exception e){
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -47,7 +45,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<CinemaHall> getCinemaHallQuery = session.createQuery("from Cinema Hall", CinemaHall.class);
+            Query<CinemaHall> getCinemaHallQuery = session.createQuery(
+                    "from Cinema Hall", CinemaHall.class);
             return getCinemaHallQuery.getResultList();
 
         }

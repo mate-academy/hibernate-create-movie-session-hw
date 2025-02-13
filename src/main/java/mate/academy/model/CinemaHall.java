@@ -1,6 +1,11 @@
 package mate.academy.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
@@ -39,8 +44,12 @@ public class CinemaHall {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CinemaHall that = (CinemaHall) o;
         return capacity == that.capacity && Objects.equals(id, that.id)
                 && Objects.equals(description, that.description);
@@ -49,10 +58,10 @@ public class CinemaHall {
     @Override
     public String toString() {
         return "CinemaHall{"
-                +"id=" + id
-                +", capacity=" + capacity
-                +", description='" + description + '\''
-                +'}';
+                + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description + '\''
+                + '}';
     }
 
 }
