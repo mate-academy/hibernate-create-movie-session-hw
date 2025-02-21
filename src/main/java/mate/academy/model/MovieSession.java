@@ -1,7 +1,10 @@
 package mate.academy.model;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,6 +19,12 @@ public class MovieSession {
     private LocalDateTime dateAndTime;
 
     public MovieSession() {
+    }
+
+    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime dateAndTime) {
+        this.movie = movie;
+        this.cinemaHall = cinemaHall;
+        this.dateAndTime = dateAndTime;
     }
 
     public Long getId() {
