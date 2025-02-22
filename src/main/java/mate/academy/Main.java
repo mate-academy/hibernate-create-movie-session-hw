@@ -38,7 +38,6 @@ public class Main {
         System.out.println(cinemaHallService.get(familyCinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
-
         MovieSession fastAndFuriousSession = new MovieSession();
         fastAndFuriousSession.setMovie(fastAndFurious);
         fastAndFuriousSession.setCinemaHall(familyCinemaHall);
