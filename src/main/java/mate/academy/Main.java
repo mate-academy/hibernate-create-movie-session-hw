@@ -38,13 +38,14 @@ public class Main {
         System.out.println(cinemaHallService.get(familyCinemaHall.getId()));
         cinemaHallService.getAll().forEach(System.out::println);
 
-        MovieSessionService movieSessionService = (MovieSessionService) injector
-                .getInstance(MovieSessionService.class);
+
         MovieSession fastAndFuriousSession = new MovieSession();
         fastAndFuriousSession.setMovie(fastAndFurious);
         fastAndFuriousSession.setCinemaHall(familyCinemaHall);
         Period period = Period.ofDays(1);
         fastAndFuriousSession.setShowTime(LocalDateTime.now().plus(period));
+        MovieSessionService movieSessionService = (MovieSessionService) injector
+                .getInstance(MovieSessionService.class);
         movieSessionService.add(fastAndFuriousSession);
         System.out.println(movieSessionService.get(fastAndFuriousSession.getId()));
 
