@@ -8,7 +8,7 @@ import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
 
 @Service
-public class CinemaHallServiceImpl implements CinemaHallServicel {
+public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
     private CinemaHallDao cinemaHallDao;
 

@@ -22,11 +22,11 @@ public class MovieSessionServiceImpl implements MovieSessionService {
     public MovieSession get(Long id) {
         Optional<MovieSession> movieSession = movieSessionDao.get(id);
         return movieSession.orElseThrow(() -> new RuntimeException(
-                "Cannot find a movie sessio with id: " + id));
+                "Cannot find a movie session with id: " + id));
     }
 
     @Override
-    public List<MovieSession> findAvaibleSessions(Long movieId, LocalDate date) {
+    public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         return movieSessionDao.findAvailableSessions(movieId, date);
     }
 }
