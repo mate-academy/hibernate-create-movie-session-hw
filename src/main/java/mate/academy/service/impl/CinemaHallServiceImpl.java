@@ -20,11 +20,7 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        Optional<CinemaHall> cinemaHall = dao.get(id);
-        if (cinemaHall.isPresent()) {
-            return cinemaHall.get();
-        }
-        throw new RuntimeException("CinemaHall with id " + id + " not is not present");
+        return dao.get(id).orElseThrow();
     }
 
     @Override

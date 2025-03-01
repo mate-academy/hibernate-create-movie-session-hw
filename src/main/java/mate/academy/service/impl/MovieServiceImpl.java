@@ -20,11 +20,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        Optional<Movie> movie = movieDao.get(id);
-        if (movie.isPresent()) {
-            return movie.get();
-        }
-        throw new RuntimeException("Movie with id " + id + " is not present");
+        return movieDao.get(id).orElseThrow();
     }
 
     @Override
