@@ -10,7 +10,8 @@ import mate.academy.service.MovieService;
 
 @Service
 public class MovieServiceImpl implements MovieService {
-    public static final String THERE_IS_NO_MOVIE_WITH_SUCH_ID = "There is no movie with such id -> %d";
+    public static final String THERE_IS_NO_MOVIE_WITH_SUCH_ID =
+            "There is no movie with such id -> %d";
     @Inject
     private MovieDao movieDao;
 

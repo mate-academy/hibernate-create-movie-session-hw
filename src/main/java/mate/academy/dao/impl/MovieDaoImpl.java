@@ -11,7 +11,8 @@ import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl extends AbstractDao implements MovieDao {
-    public static final String ERROR_DURING_RETRIEVING_ALL_MOVIES = "Error during retrieving all movies.";
+    public static final String ERROR_DURING_RETRIEVING_ALL_MOVIES =
+            "Error during retrieving all movies.";
 
     @Override
     public Movie add(Movie movie) {

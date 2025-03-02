@@ -66,12 +66,11 @@ public class MovieSession {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("MovieSession{");
-        sb.append("id=").append(id);
-        sb.append(", movie=").append(movie);
-        sb.append(", cinemaHall=").append(cinemaHall);
-        sb.append(", showTime=").append(showTime);
-        sb.append('}');
-        return sb.toString();
+        String sb = "MovieSession{" + "id=" + id
+                + ", movie=" + movie
+                + ", cinemaHall=" + cinemaHall
+                + ", showTime=" + showTime
+                + '}';
+        return sb;
     }
 }
