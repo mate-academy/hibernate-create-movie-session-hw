@@ -10,8 +10,8 @@ import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl extends AbstractDao implements mate.academy.dao.CinemaHallDao {
-    public static final String ERROR_DURING_CREATING_MOVIE =
-            "Error during creating movie -> %s";
+    public static final String ERROR_DURING_CREATING_CINEMA_HALL =
+            "Error during creating cinema hall -> %s";
     public static final String ERROR_DURING_RETRIEVING_CINEMA_HALL_WITH_ID =
             "Error during retrieving cinema hall with id -> %d";
     public static final String ERROR_DURING_RETRIEVING_ALL_CINEMA_HALLS =
@@ -33,7 +33,7 @@ public class CinemaHallDaoImpl extends AbstractDao implements mate.academy.dao.C
                 transaction.rollback();
             }
             throw new DataProcessingException(
-                    ERROR_DURING_CREATING_MOVIE.formatted(cinemaHall), e);
+                    ERROR_DURING_CREATING_CINEMA_HALL.formatted(cinemaHall), e);
         } finally {
             if (session != null) {
                 session.close();

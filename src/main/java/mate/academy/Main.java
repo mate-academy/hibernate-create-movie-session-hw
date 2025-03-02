@@ -18,19 +18,14 @@ public class Main {
         Random random = new Random();
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         Movie fastAndFurious = new Movie("Fast and Furious 1");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
         Movie fastAndFurious2 = new Movie("Fast and Furious 2");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious2);
         Movie fastAndFurious3 = new Movie("Fast and Furious 3");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious3);
         Movie fastAndFurious4 = new Movie("Fast and Furious 4");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious4);
         Movie fastAndFuriousTD = new Movie("Fast and Furious: Tokyo Drift");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFuriousTD);
         CinemaHallService cinemaHallService = (CinemaHallService) injector.getInstance(
                 CinemaHallService.class);
@@ -56,12 +51,11 @@ public class Main {
                 today = today.minusHours(j);
                 for (Movie movie : movies) {
                     movieSessionService.add(
-                            new MovieSession(movie, cinemaHalls[random.nextInt(cinemaHalls.length)],
+                            new MovieSession(movie, cinemaHalls[j],
                                     today));
                 }
             }
         }
-
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
         System.out.println(cinemaHallService.getAll());

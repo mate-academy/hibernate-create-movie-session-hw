@@ -24,6 +24,8 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
                     WHERE ms.showTime BETWEEN :startDay AND :endDay 
                     AND ms.movie.id = :movieId
                     """;
+    public static final String WITH_ID_D_AND_SUCH_DATE =
+            "Error during retrieving movie session for movie with id -> %d, and such date -> %s.";
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -68,6 +70,10 @@ public class MovieSessionDaoImpl extends AbstractDao implements MovieSessionDao 
                     ).setParameter("startDay", date.atStartOfDay())
                     .setParameter("endDay", date.atTime(LocalTime.MAX))
                     .setParameter("movieId", movieId).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException(
+                    WITH_ID_D_AND_SUCH_DATE
+                            .formatted(movieId, date), e);
         }
     }
 }
