@@ -2,12 +2,16 @@ package mate.academy.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import mate.academy.dao.MovieSessionDao;
+import mate.academy.lib.Inject;
+import mate.academy.lib.Service;
 import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
 
+@Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-
-    private MovieSessionService movieSessionServiceService;
+    @Inject
+    private MovieSessionDao movieSessionServiceService;
 
     @Override
     public MovieSession add(MovieSession movieSession) {
@@ -16,7 +20,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public MovieSession get(Long id) {
-        return movieSessionServiceService.get(id);
+        return movieSessionServiceService.get(id).get();
     }
 
     @Override
