@@ -21,7 +21,7 @@ public class MovieSessionServiceImpl implements MovieSessionService {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        return movieSessionDao.get(id);
+        return Optional.ofNullable(movieSessionDao.get(id).orElseThrow(null));
     }
 
     @Override
