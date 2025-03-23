@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private int capacity;
     private String description;
 
