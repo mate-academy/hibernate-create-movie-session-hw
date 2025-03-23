@@ -50,9 +50,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             LocalDateTime endOfDay = date.atTime(23, 59, 59);
 
             Query query = session.createQuery("FROM MovieSession ms "
-                            + "WHERE ms.movie_id = :movie_id AND ms.showTime "
+                            + "WHERE ms.movie = :movie AND ms.showTime "
                             + "BETWEEN :startOfDay AND :endOfDay")
-                    .setParameter("movie_id", movieId)
+                    .setParameter("movie", movieId)
                     .setParameter("startOfDay", startOfDay)
                     .setParameter("endOfDay", endOfDay);
             return query.getResultList();
