@@ -3,12 +3,14 @@ package mate.academy.dao.impl;
 import jakarta.persistence.Query;
 import java.util.List;
 import mate.academy.exception.DataProcessingException;
+import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+@Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
@@ -43,8 +45,11 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
 
     @Override
     public List<CinemaHall> getAll() {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query = session.createQuery("from CinemaHall", Movie.class);
-        return query.getResultList();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query query = session.createQuery("from CinemaHall", Movie.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all cinemaHalls", e);
+        }
     }
 }

@@ -9,7 +9,6 @@ import mate.academy.model.MovieSession;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-
     @Inject
     private MovieSessionDao movieSessionDao;
 
