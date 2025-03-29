@@ -49,7 +49,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             Query<CinemaHall> query = session.createQuery("from CinemaHall");
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a list of Movies for Cinema hall. "
+            throw new DataProcessingException("Can't get a list of Cinema halls. "
                     + "Check the incoming data fot method please.", e);
         }
     }
