@@ -1,0 +1,21 @@
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ticket_app</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">Qq123456</property>
+
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+
+        <mapping class="mate.academy.model.CinemaHall"/>
+        <mapping class="mate.academy.model.Movie"/>
+        <mapping class="mate.academy.model.MovieSession"/>
+
+    </session-factory>
+</hibernate-configuration>
