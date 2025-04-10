@@ -22,7 +22,7 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
 
         Movie ironMan = new Movie("Iron Man");
-        fastAndFurious.setDescription("Film about rich man who become superhero");
+        ironMan.setDescription("Film about rich man who become superhero");
         movieService.add(ironMan);
         System.out.println(movieService.get(ironMan.getId()));
         movieService.getAll().forEach(System.out::println);
@@ -52,7 +52,7 @@ public class Main {
 
         System.out.println("=======================");
 
-        cinemaHallService.get(one.getId());
+        System.out.println(cinemaHallService.get(one.getId()));
 
         final MovieSessionService movieSessionService = (MovieSessionService) Injector
                 .getInstance("mate.academy")
@@ -80,7 +80,7 @@ public class Main {
 
         System.out.println("=========================");
 
-        movieSessionService.get(movieSessionOne.getId());
+        System.out.println(movieSessionService.get(movieSessionOne.getId()));
 
         System.out.println("=========================");
 

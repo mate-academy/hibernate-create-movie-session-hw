@@ -41,7 +41,10 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         CinemaHall cinemaHall = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            cinemaHall = session.get(CinemaHall.class, id);
+            Query<CinemaHall> query = session.createQuery(
+                    "from CinemaHall where id = :id", CinemaHall.class);
+            query.setParameter("id", id);
+            cinemaHall = query.getSingleResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get cinema hall" + id.toString(), e);
         }
