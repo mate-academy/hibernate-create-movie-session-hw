@@ -85,7 +85,7 @@ public class Main {
         System.out.println("=========================");
 
         movieSessionService
-                .findAvailableSessions(one.getId(), findFilm)
+                .findAvailableSessions(ironMan.getId(), findFilm)
                 .forEach(System.out::println);
     }
 }
