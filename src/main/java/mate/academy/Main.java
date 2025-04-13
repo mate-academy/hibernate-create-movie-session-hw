@@ -35,11 +35,11 @@ public class Main {
         MovieSession firstMovieSession = new MovieSession();
         firstMovieSession.setMovie(fastAndFurious);
         firstMovieSession.setCinemaHall(cinemaHallBig);
-        firstMovieSession.setShowTime(LocalDateTime.of(2025, 4, 12, 21, 54));
+        firstMovieSession.setShowTime(LocalDateTime.of(2025, 4, 11, 21, 54));
         MovieSession secondMovieSession = new MovieSession();
         secondMovieSession.setMovie(theDeparted);
         secondMovieSession.setCinemaHall(cinemaHallMedium);
-        secondMovieSession.setShowTime(LocalDateTime.of(2025, 4, 11, 21, 55));
+        secondMovieSession.setShowTime(LocalDateTime.of(2025, 4, 12, 21, 55));
 
         movieService.add(fastAndFurious);
         movieService.add(theDeparted);
@@ -56,6 +56,5 @@ public class Main {
         cinemaHallService.getAll().forEach(System.out::println);
         movieSessionService.findAvailableSessions(theDeparted.getId(),
                 LocalDate.of(2025, 04, 12)).forEach(System.out::println);
-
     }
 }
