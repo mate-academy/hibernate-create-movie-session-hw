@@ -28,7 +28,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Unable to add movieSession", e);
+            throw new DataProcessingException("Unable to add movieSession " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -41,7 +41,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Unable to retrieve movieSession", e);
+            throw new DataProcessingException("Unable to retrieve movieSession with id: " + id, e);
         }
     }
 
@@ -50,7 +50,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query query = session.createQuery(
                     "from MovieSession ms "
-                            + "left join fetch ms.movie " + "left join fetch ms.cinemaHall "
+                            + "inner join fetch ms.movie " + "inner join fetch ms.cinemaHall "
                             + "where ms.movie.id = :movieId " + "and ms.showTime >= :startOfDay "
                             + "and ms.showTime < :endOfDay", MovieSession.class);
             query.setParameter("movieId", movieId);
