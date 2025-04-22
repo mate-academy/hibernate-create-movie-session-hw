@@ -3,6 +3,7 @@ package mate.academy.dao.impl;
 import java.time.LocalDate;
 import java.util.List;
 import mate.academy.dao.MovieSessionDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
@@ -13,21 +14,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public MovieSession add(MovieSession movieSession) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(movieSession);
+            session.persist(movieSession);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+            throw new DataProcessingException("Cannot save movie session", e);
         }
         return movieSession;
     }

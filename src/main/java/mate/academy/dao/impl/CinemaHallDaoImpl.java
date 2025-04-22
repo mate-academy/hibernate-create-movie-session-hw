@@ -11,22 +11,16 @@ import org.hibernate.Transaction;
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(cinemaHall);
+            session.persist(cinemaHall);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             throw new DataProcessingException("Cannot save cinema hall", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return cinemaHall;
     }
