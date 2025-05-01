@@ -9,7 +9,6 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 public class MovieSessionDaoImpl implements MovieSessionDao {
@@ -38,8 +37,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-                 Session session = sessionFactory.openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
             throw new DataProcessingException("Can not get CinemaHall object with id: "
