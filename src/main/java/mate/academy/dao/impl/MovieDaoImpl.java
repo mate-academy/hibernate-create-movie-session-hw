@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
 import mate.academy.exception.DataProcessingException;
-import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-@Dao
 public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
@@ -45,6 +44,12 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from Movie", Movie.class).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Failed to retrieve all movies", e);
+        }
     }
+
 }
