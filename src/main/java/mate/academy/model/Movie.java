@@ -4,7 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Table(name = "movies")
@@ -14,6 +18,11 @@ public class Movie {
     private Long id;
     private String title;
     private String description;
+    @ManyToMany
+    @JoinTable(name = "movie_cinema_hall",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "cinema_hall_id"))
+    private Set<CinemaHall> cinemaHalls;
 
     public Movie() {
     }
