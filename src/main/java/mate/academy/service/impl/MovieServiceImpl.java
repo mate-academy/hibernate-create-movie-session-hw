@@ -1,6 +1,8 @@
 package mate.academy.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import mate.academy.Main;
 import mate.academy.dao.MovieDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -10,7 +12,7 @@ import mate.academy.service.MovieService;
 @Service
 public class MovieServiceImpl implements MovieService {
     @Inject
-    private MovieDao movieDao;
+    private MovieDao movieDao = (MovieDao) Main.injector.getInstance(MovieDao.class);
 
     @Override
     public Movie add(Movie movie) {
@@ -19,11 +21,12 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie get(Long id) {
-        return movieDao.get(id).get();
+        return movieDao.get(id).orElseThrow(
+                () -> new EntityNotFoundException("Not found in DB movie with id = " + id));
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
