@@ -24,6 +24,10 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try {
+            return movieDao.getAll();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
