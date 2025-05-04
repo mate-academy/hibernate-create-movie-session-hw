@@ -15,16 +15,16 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name = "movies")
-public class Movie {
+@Table(name = "cinema_halls")
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private int capacity;
     private String description;
 
-    public Movie(String title, String description) {
-        this.title = title;
+    public CinemaHall(int capacity, String description) {
+        this.capacity = capacity;
         this.description = description;
     }
 }
