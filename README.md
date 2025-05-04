@@ -9,7 +9,7 @@ Your task is to implement the following steps:
 - add implementations of `getAll()` method to `MovieDaoImpl` and `MovieServiceImpl`
 - create `CinemaHallDaoImpl` and `CinemaHallServiceImpl`.
 The service layer should have the following methods:
-```java
+```java 
     CinemaHall add(CinemaHall cinemaHall);
 
     CinemaHall get(Long id);
