@@ -1,6 +1,7 @@
 package mate.academy.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieDao;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
@@ -18,12 +19,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie get(Long id) {
-        return movieDao.get(id).get();
+    public Optional<Movie> get(Long id) {
+        return Optional.of(movieDao.get(id).get());
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
     }
 }
