@@ -7,20 +7,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "movies")
-public class Movie {
+@Table(name = "cinema_halls")
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private int capicacity;
     private String description;
 
-    public Movie() {
+    public CinemaHall(int capicacity, String description) {
+        this.capicacity = capicacity;
+        this.description = description;
     }
 
-    public Movie(String title, String description) {
-        this.title = title;
-        this.description = description;
+    public CinemaHall() {
     }
 
     public Long getId() {
@@ -31,12 +31,12 @@ public class Movie {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getCapicacity() {
+        return capicacity;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCapicacity(int capicacity) {
+        this.capicacity = capicacity;
     }
 
     public String getDescription() {
@@ -49,10 +49,9 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{"
+        return "CinemaHall{"
                 + "id=" + id
-                + ", title='" + title + '\''
-                + ", description='" + description + '\''
-                + '}';
+                + ", capicacity=" + capicacity
+                + ", description='" + description + '\'' + '}';
     }
 }
