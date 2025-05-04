@@ -12,6 +12,8 @@ import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
+    public static final String GET_ALL_MOVIES = "FROM Movie";
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -45,6 +47,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(GET_ALL_MOVIES, Movie.class).list();
+        } catch (Exception e) {
+            throw new DataProcessingException("Error retrieving movies", e);
+        }
     }
 }
