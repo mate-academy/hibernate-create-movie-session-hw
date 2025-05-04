@@ -11,7 +11,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
-public class MovieDaoImpl implements MovieDao {
+public class MovieDaoImpl extends AbstractDao implements MovieDao {
+
+    public MovieDaoImpl() {
+        super(HibernateUtil.getSessionFactory());
+    }
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -45,6 +50,9 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = factory.openSession()) {
+            return session.createQuery("FROM Movie").getResultList();
+        }
+
     }
 }
