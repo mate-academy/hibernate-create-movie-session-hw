@@ -23,7 +23,7 @@ The service layer should have the following methods:
 
     MovieSession get(Long id);
 
-    List<MovieSession> findAvailableSessions(Long movieId, LocalDate date);
+    List<MovieSession> findAvailableSessions(Long movieId, LocalDate dateTime);
 ```
 Keep in mind that the method `findAvailableSessions()` expects a `LocalDate` that represents the day 
 chosen by a customer to visit our cinema, so your task here is to return all MovieSessions 
