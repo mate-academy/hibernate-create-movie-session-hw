@@ -10,25 +10,21 @@ import jakarta.persistence.Table;
 import java.util.List;
 
 @Entity
-@Table(name = "movies")
-public class Movie {
+@Table(name = "cinema_halls")
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private Integer capacity;
     private String description;
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "cinemaHall", cascade = CascadeType.REMOVE)
     private List<MovieSession> movieSessions;
 
-    public Movie() {
+    public CinemaHall() {
     }
 
-    public Movie(String title) {
-        this.title = title;
-    }
-
-    public Movie(String title, String description) {
-        this.title = title;
+    public CinemaHall(Integer capacity, String description) {
+        this.capacity = capacity;
         this.description = description;
     }
 
@@ -40,12 +36,12 @@ public class Movie {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public Integer getCapacity() {
+        return capacity;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 
     public String getDescription() {
@@ -58,9 +54,9 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{"
+        return "CinemaHall{"
                 + "id=" + id
-                + ", title='" + title + '\''
+                + ", capacity=" + capacity
                 + ", description='" + description + '\''
                 + '}';
     }
