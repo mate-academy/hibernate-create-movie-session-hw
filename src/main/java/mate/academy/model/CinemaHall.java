@@ -8,51 +8,48 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Movies")
-public class Movie {
+@Table(name = "CinemaHalls")
+public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private int capacity;
     private String description;
-
-    public Movie() {
-    }
-
-    public Movie(String title) {
-        this.title = title;
-    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public CinemaHall setId(Long id) {
         this.id = id;
+        return this;
     }
 
-    public String getTitle() {
-        return title;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public CinemaHall setCapacity(int capacity) {
+        this.capacity = capacity;
+        return this;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public CinemaHall setDescription(String description) {
         this.description = description;
+        return this;
     }
 
     @Override
     public String toString() {
-        return "Movie{"
+        return "CinemaHall{"
                 + "id=" + id
-                + ", title='" + title + '\''
-                + ", description='" + description + '\''
+                + ", capacity=" + capacity
+                + ", description='"
+                + description + '\''
                 + '}';
     }
 
@@ -61,14 +58,14 @@ public class Movie {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Movie movie = (Movie) o;
-        return Objects.equals(id, movie.id)
-                && Objects.equals(title, movie.title)
-                && Objects.equals(description, movie.description);
+        CinemaHall that = (CinemaHall) o;
+        return capacity == that.capacity
+                && Objects.equals(id, that.id)
+                && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description);
+        return Objects.hash(id, capacity, description);
     }
 }

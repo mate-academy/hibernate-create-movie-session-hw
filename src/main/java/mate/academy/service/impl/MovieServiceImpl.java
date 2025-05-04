@@ -12,6 +12,13 @@ public class MovieServiceImpl implements MovieService {
     @Inject
     private MovieDao movieDao;
 
+    public MovieServiceImpl(MovieDao moveDao) {
+        this.movieDao = moveDao;
+    }
+
+    public MovieServiceImpl() {
+    }
+
     @Override
     public Movie add(Movie movie) {
         return movieDao.add(movie);
@@ -24,6 +31,18 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        return movieDao.getAll();
+    }
+
+    @Override
+    public Boolean update(Movie movie) {
+        Movie currentMovie = get(movie.getId());
+        movieDao.update(movie);
+        return currentMovie.equals(get(movie.getId()));
+    }
+
+    @Override
+    public Boolean delete(Long id) {
+        return movieDao.delete(id);
     }
 }
