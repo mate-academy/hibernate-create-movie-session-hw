@@ -1,16 +1,26 @@
 package mate.academy;
 
-import mate.academy.model.Movie;
-import mate.academy.service.MovieService;
+import java.time.LocalDate;
+import java.util.List;
+import mate.academy.lib.Injector;
+import mate.academy.model.MovieSession;
+import mate.academy.service.MovieSessionService;
 
 public class Main {
-    public static void main(String[] args) {
-        MovieService movieService = null;
+    private static final Injector injector = Injector.getInstance("mate.academy");
 
-        Movie fastAndFurious = new Movie("Fast and Furious");
-        fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
-        movieService.add(fastAndFurious);
-        System.out.println(movieService.get(fastAndFurious.getId()));
-        movieService.getAll().forEach(System.out::println);
+    public static void main(String[] args) {
+        MovieSessionService movieSessionService = (MovieSessionService) injector
+                .getInstance(MovieSessionService.class);
+
+        MovieSession movieSession = new MovieSession();
+        movieSessionService.add(movieSession);
+
+        MovieSession retrievedMovieSession = movieSessionService.get(movieSession.getId());
+        System.out.println(retrievedMovieSession);
+
+        List<MovieSession> availableSessions = movieSessionService
+                .findAvailableSessions(movieSession.getMovie().getId(), LocalDate.now());
+        availableSessions.forEach(System.out::println);
     }
 }
