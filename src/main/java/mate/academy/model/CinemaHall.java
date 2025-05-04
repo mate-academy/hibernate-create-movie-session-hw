@@ -1,25 +1,21 @@
 package mate.academy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "movies")
-public class Movie implements Cloneable {
+@Table(name = "cinema_halls")
+public class CinemaHall implements Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private int capacity;
     private String description;
 
-    public Movie() {
-    }
-
-    public Movie(String title) {
-        this.title = title;
+    public CinemaHall() {
     }
 
     public Long getId() {
@@ -30,12 +26,12 @@ public class Movie implements Cloneable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public String getDescription() {
@@ -47,19 +43,19 @@ public class Movie implements Cloneable {
     }
 
     @Override
-    protected Movie clone() {
+    protected CinemaHall clone() {
         try {
-            return (Movie) super.clone();
+            return (CinemaHall) super.clone();
         } catch (CloneNotSupportedException e) {
-            throw new RuntimeException("Can`t make clone " + this, e);
+            throw new RuntimeException("Can`t make clone of " + this, e);
         }
     }
 
     @Override
     public String toString() {
-        return "Movie{"
+        return "CinemaHall{"
                 + "id=" + id
-                + ", title='" + title + '\''
+                + ", capacity=" + capacity
                 + ", description='" + description + '\''
                 + '}';
     }
