@@ -22,12 +22,13 @@ public class Movie {
         this.title = title;
     }
 
-    public Long getId() {
-        return id;
+    public Movie(String title, String description) {
+        this.title = title;
+        this.description = description;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {
