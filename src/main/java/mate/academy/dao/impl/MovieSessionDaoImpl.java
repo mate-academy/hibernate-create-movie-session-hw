@@ -62,11 +62,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             LocalDateTime startOfDay = date.atStartOfDay();
             LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
             Query<MovieSession> query = session.createQuery(
-                    "FROM MovieSession ms"
-                            + "WHERE ms.movie.id = :movieID "
+                    "FROM MovieSession ms "
+                            + "WHERE ms.movie.id = :movieId "
                             + "AND ms.showTime >= :startOfDay "
-                            + "AND ms.showTime >= :endOfDay", MovieSession.class);
-            query.setParameter("movieID", movieId);
+                            + "AND ms.showTime <= :endOfDay", MovieSession.class);
+            query.setParameter("movieId", movieId);
             query.setParameter("startOfDay", startOfDay);
             query.setParameter("endOfDay", endOfDay);
             return query.getResultList();

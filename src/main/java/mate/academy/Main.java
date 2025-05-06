@@ -1,8 +1,10 @@
 package mate.academy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -58,8 +60,7 @@ public class Main {
                 Hibernate.initialize(retrievedCinemaHall.getMovieSessions());
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            retrievedCinemaHall = null; // Set to null in case of exception to avoid further issues
+            throw new DataProcessingException("Error to avoid CinemaHall", e);
         }
 
         if (retrievedCinemaHall != null) {
@@ -72,8 +73,6 @@ public class Main {
         System.out.println("------------------------");
 
         // MovieSession testing
-        MovieSessionService movieSessionService = (MovieSessionService) injector
-                .getInstance(MovieSessionService.class);
 
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(retrievedMovie);
@@ -81,10 +80,20 @@ public class Main {
         String showTimeStr = "2023-12-25 10:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime showTime = LocalDateTime.parse(showTimeStr, formatter);
-        movieSessionService.add(movieSession);
+        MovieSessionService movieSessionService = (MovieSessionService) injector
+                .getInstance(MovieSessionService.class);
         movieSession.setShowTime(showTime);
+        movieSessionService.add(movieSession);
 
         System.out.println("\nTesting MovieSessionService and MovieSessionDao:");
         System.out.println("Added movie session: " + movieSession);
+
+        LocalDate date = LocalDate.parse("2023-12-25");
+        List<MovieSession> availableSessions = movieSessionService
+                .findAvailableSessions(retrievedMovie.getId(), date);
+        //        System.out.println("Available sessions for movie "
+        //        + retrievedMovie.getTitle() + " on "
+        //                + date + ": " + availableSessions);
+        System.out.println("------------------------");
     }
 }

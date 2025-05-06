@@ -12,11 +12,9 @@ public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
     private CinemaHallDao cinemaHallDao;
 
-    @Inject
     public CinemaHallServiceImpl() {
     }
 
-    @Inject
     public CinemaHallServiceImpl(CinemaHallDao cinemaHallDao) {
         this.cinemaHallDao = cinemaHallDao;
     }
