@@ -12,6 +12,15 @@ public class MovieServiceImpl implements MovieService {
     @Inject
     private MovieDao movieDao;
 
+    @Inject
+    public MovieServiceImpl() {
+    }
+
+    @Inject
+    public MovieServiceImpl(MovieDao movieDao) {
+        this.movieDao = movieDao;
+    }
+
     @Override
     public Movie add(Movie movie) {
         return movieDao.add(movie);
