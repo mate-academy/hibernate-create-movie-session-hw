@@ -56,7 +56,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM CinemaHall ch left join fetch ch.movieSessions";
+            String hql = "SELECT DISTINCT ch FROM CinemaHall ch left join fetch ch.movieSessions";
             Query<CinemaHall> query = session.createQuery(hql, CinemaHall.class);
             return query.getResultList();
         } catch (Exception e) {

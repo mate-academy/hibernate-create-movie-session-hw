@@ -18,7 +18,7 @@ public class Movie {
     @Column(name = "name")
     private String title;
 
-    @JoinColumn(name = "description")
+    @Column(name = "description")
     private String description;
 
     public Movie() {

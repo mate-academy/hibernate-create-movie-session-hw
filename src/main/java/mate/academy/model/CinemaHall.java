@@ -21,7 +21,7 @@ public class CinemaHall {
     @Column(name = "name")
     private String name;
 
-    @JoinColumn(name = "capacity")
+    @Column(name = "capacity")
     private int capacity;
 
     @OneToMany(mappedBy = "cinemaHall")
