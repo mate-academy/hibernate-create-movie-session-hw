@@ -26,6 +26,9 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             session.persist(movieSession);
             transaction.commit();
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             throw new DataProcessingException("Can't add movieSession to "
                     + "the DB: " + movieSession, e);
         }
