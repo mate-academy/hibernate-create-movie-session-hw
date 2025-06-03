@@ -1,5 +1,6 @@
 package mate.academy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
@@ -38,6 +39,7 @@ public class Main {
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         movieSessionService.add(movieSession);
+        movieSessionService.findAvailableSessions(1L, LocalDate.parse("2004-01-23"));
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
