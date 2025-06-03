@@ -34,12 +34,13 @@ public class Main {
         MovieSession movieSession = new MovieSession();
         movieSession.setCinemaHall(hallFromDb);
         movieSession.setMovie(movieFromDb);
+
         movieSession.setShowTime(LocalDateTime.now());
         MovieSessionService movieSessionService =
                 (MovieSessionService) injector.getInstance(MovieSessionService.class);
 
         movieSessionService.add(movieSession);
-        movieSessionService.findAvailableSessions(1L, LocalDate.parse("2004-01-23"));
+        movieSessionService.findAvailableSessions(1L, LocalDate.now());
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
