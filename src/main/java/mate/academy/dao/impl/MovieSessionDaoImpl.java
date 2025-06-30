@@ -52,7 +52,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                             MovieSession.class)
                     .setParameter("movieId", movieId)
                     .setParameter("startOfDay", date.atStartOfDay())
-                    .setParameter("endOfDay", date.atTime(23,59,59))
+                    .setParameter("endOfDay", date.atTime(23, 59, 59))
                     .getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't retrieve the list of available movie sessions",
