@@ -2,10 +2,10 @@ package mate.academy.service.impl;
 
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.dao.impl.MovieSessionDaoImpl;
-import mate.academy.model.MovieSession;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import mate.academy.model.MovieSession;
 import mate.academy.service.MovieSessionService;
 
 public class MovieSessionServiceImpl implements MovieSessionService {
