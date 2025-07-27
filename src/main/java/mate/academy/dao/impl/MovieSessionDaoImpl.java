@@ -1,11 +1,11 @@
 package mate.academy.dao.impl;
 
-import mate.academy.dao.MovieSessionDao;
-import mate.academy.exception.DataProcessingException;
-import mate.academy.model.MovieSession;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import mate.academy.dao.MovieSessionDao;
+import mate.academy.exception.DataProcessingException;
+import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
