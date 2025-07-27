@@ -1,9 +1,9 @@
 package mate.academy.service.impl;
 
-import mate.academy.dao.CinemaHallDao;
-import mate.academy.dao.impl.CinemaHallDaoImpl;
 import java.util.List;
 import java.util.Optional;
+import mate.academy.dao.CinemaHallDao;
+import mate.academy.dao.impl.CinemaHallDaoImpl;
 import mate.academy.model.CinemaHall;
 import mate.academy.service.CinemaHallService;
 
