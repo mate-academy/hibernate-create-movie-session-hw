@@ -6,10 +6,10 @@ import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import org.hibernate.query.Query;
 
 public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
@@ -36,7 +36,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public Optional<MovieSession> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()){
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         }
     }
@@ -44,12 +44,11 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<MovieSession> query = session.createQuery("select ms.id, ms.showtime" +
-                    "from MovieSession ms" +
-                    "where ms.showtime = :dateShowMovie ");
+            Query<MovieSession> query = session.createQuery("select ms.id, ms.showtime"
+                    + "from MovieSession ms"
+                    + "where ms.showtime = :dateShowMovie ");
             query.setParameter("dateShowMovie", date);
             return query.getResultList();
-
         }
     }
 }

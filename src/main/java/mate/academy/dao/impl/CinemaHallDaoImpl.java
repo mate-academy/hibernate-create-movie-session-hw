@@ -6,9 +6,9 @@ import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import java.util.List;
 import java.util.Optional;
+import org.hibernate.query.Query;
 
 public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
@@ -43,7 +43,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     @Override
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query<CinemaHall> cinemaHallFromDB = session.createQuery("from CinemaHall", CinemaHall.class);
+            Query<CinemaHall> cinemaHallFromDB
+                    = session.createQuery("from CinemaHall", CinemaHall.class);
             return cinemaHallFromDB.getResultList();
         }
     }
