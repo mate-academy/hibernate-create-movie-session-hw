@@ -55,4 +55,12 @@ public class CinemaHall {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+
+    @Override
+    public String toString() {
+        return "Id: " + id
+                + ", Title: " + title
+                + ", Description: " + description
+                + ", Capacity: " + capacity;
+    }
 }
