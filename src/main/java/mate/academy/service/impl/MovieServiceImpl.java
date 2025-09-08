@@ -2,7 +2,6 @@ package mate.academy.service.impl;
 
 import java.util.List;
 import mate.academy.dao.MovieDao;
-import mate.academy.dao.impl.MovieDaoImpl;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.Movie;
@@ -13,7 +12,7 @@ public class MovieServiceImpl implements MovieService {
     @Inject
     private final MovieDao movieDao;
 
-    public MovieServiceImpl(MovieDaoImpl movieDao) {
+    public MovieServiceImpl(MovieDao movieDao) {
         this.movieDao = movieDao;
     }
 
