@@ -5,8 +5,7 @@ import java.util.List;
 import mate.academy.model.MovieSession;
 
 public interface MovieSessionService {
-
-    MovieSession add(MovieSession movie);
+    MovieSession add(MovieSession movieSession);
 
     MovieSession get(Long id);
 

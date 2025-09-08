@@ -1,7 +1,9 @@
+
 package mate.academy.service.impl;
 
 import java.util.List;
 import mate.academy.dao.CinemaHallDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Inject;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
@@ -10,24 +12,24 @@ import mate.academy.service.CinemaHallService;
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
     @Inject
-    private final CinemaHallDao cinemaDao;
-
-    public CinemaHallServiceImpl(CinemaHallDao cinemaDao) {
-        this.cinemaDao = cinemaDao;
-    }
+    private CinemaHallDao cinemaHallDao;
 
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
-        return cinemaDao.add(cinemaHall);
+        return cinemaHallDao.add(cinemaHall);
     }
 
     @Override
     public CinemaHall get(Long id) {
-        return cinemaDao.get(id).orElseThrow();
+        if (cinemaHallDao.get(id).isPresent()) {
+            return cinemaHallDao.get(id).get();
+        }
+        throw new DataProcessingException("Can't get cinema hall by " + id
+                + " from DB");
     }
 
     @Override
     public List<CinemaHall> getAll() {
-        return cinemaDao.getAll();
+        return cinemaHallDao.getAll();
     }
 }
