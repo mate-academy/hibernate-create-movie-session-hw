@@ -40,7 +40,6 @@ public abstract class AbstractDao<T, I> implements GenericDao<T, I> {
 
     public Optional<T> findById(I id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            session.beginTransaction();
             return Optional.ofNullable(session.get(entityClass, id));
         } catch (Exception e) {
             throw new DataProcessingException("Cant get entity " + id, e);
@@ -51,8 +50,8 @@ public abstract class AbstractDao<T, I> implements GenericDao<T, I> {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<T> cq = cb.createQuery(entityClass);
-            Root<T> cinemaHallRoot = cq.from(entityClass);
-            CriteriaQuery<T> all = cq.select(cinemaHallRoot);
+            Root<T> entityRoot = cq.from(entityClass);
+            CriteriaQuery<T> all = cq.select(entityRoot);
             TypedQuery<T> allQuery = session.createQuery(all);
             return allQuery.getResultList();
         } catch (Exception e) {
