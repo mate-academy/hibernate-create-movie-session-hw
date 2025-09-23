@@ -56,7 +56,7 @@ public abstract class AbstractDao<T, I> implements GenericDao<T, I> {
             TypedQuery<T> allQuery = session.createQuery(all);
             return allQuery.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new DataProcessingException("Cant get all " + entityClass, e);
         }
     }
 }

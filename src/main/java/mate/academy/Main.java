@@ -34,6 +34,7 @@ public class Main {
         CinemaHall cinemaHall2 = new CinemaHall(100, "2D");
         cinemaHallService.add(cinemaHall2);
         cinemaHallService.getAll().forEach(System.out::println);
+        System.out.println(cinemaHallService.get(1L));
 
         MovieSession movieSession = new MovieSession();
         movieSession.setMovie(fastAndFurious);
@@ -49,8 +50,8 @@ public class Main {
         movieSession2.setCinemaHall(cinemaHall2);
         movieSession2.setShowTime(LocalDateTime.now());
         movieSessionService.add(movieSession2);
+        movieSessionService.get(movieSession2.getId());
 
-        System.out.println("Пошук сесій");
         movieSessionService
                 .findAvailableSessions(fastAndFurious.getId(), LocalDate.now())
                 .forEach(System.out::println);
