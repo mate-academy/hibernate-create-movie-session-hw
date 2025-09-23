@@ -22,7 +22,7 @@ public class MovieSessionDaoImpl
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery(
                     "SELECT ms FROM MovieSession ms "
                             + "JOIN FETCH ms.movie "
