@@ -11,10 +11,11 @@ import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
 
 public class Main {
-    public static void main(String[] args) {
-        Injector injector = Injector.getInstance("mate.academy");
+    private static final Injector INJECTOR = Injector.getInstance("mate.academy");
 
-        MovieService movieService = (MovieService) injector
+    public static void main(String[] args) {
+
+        MovieService movieService = (MovieService) INJECTOR
                 .getInstance(MovieService.class);
 
         Movie fastAndFurious = new Movie("Fast and Furious");
@@ -23,7 +24,7 @@ public class Main {
         System.out.println(movieService.get(fastAndFurious.getId()));
         movieService.getAll().forEach(System.out::println);
 
-        CinemaHallService cinemaHallService = (CinemaHallService) injector
+        CinemaHallService cinemaHallService = (CinemaHallService) INJECTOR
                 .getInstance(CinemaHallService.class);
 
         CinemaHall cinemaHall = new CinemaHall(120, "3D");
@@ -31,8 +32,8 @@ public class Main {
         cinemaHallService.getAll().forEach(System.out::println);
         System.out.println(movieService.get(1L));
 
-        CinemaHall cinemaHall2 = new CinemaHall(100, "2D");
-        cinemaHallService.add(cinemaHall2);
+        CinemaHall cinemaHallSecond = new CinemaHall(100, "2D");
+        cinemaHallService.add(cinemaHallSecond);
         cinemaHallService.getAll().forEach(System.out::println);
         System.out.println(cinemaHallService.get(1L));
 
@@ -40,17 +41,17 @@ public class Main {
         movieSession.setMovie(fastAndFurious);
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setShowTime(LocalDateTime.now());
-        MovieSessionService movieSessionService = (MovieSessionService) injector
+        MovieSessionService movieSessionService = (MovieSessionService) INJECTOR
                 .getInstance(MovieSessionService.class);
 
         movieSessionService.add(movieSession);
 
-        MovieSession movieSession2 = new MovieSession();
-        movieSession2.setMovie(fastAndFurious);
-        movieSession2.setCinemaHall(cinemaHall2);
-        movieSession2.setShowTime(LocalDateTime.now());
-        movieSessionService.add(movieSession2);
-        movieSessionService.get(movieSession2.getId());
+        MovieSession movieSessionSecond = new MovieSession();
+        movieSessionSecond.setMovie(fastAndFurious);
+        movieSessionSecond.setCinemaHall(cinemaHallSecond);
+        movieSessionSecond.setShowTime(LocalDateTime.now());
+        movieSessionService.add(movieSessionSecond);
+        movieSessionService.get(movieSessionSecond.getId());
 
         movieSessionService
                 .findAvailableSessions(fastAndFurious.getId(), LocalDate.now())
