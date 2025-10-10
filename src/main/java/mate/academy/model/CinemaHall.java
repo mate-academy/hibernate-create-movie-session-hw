@@ -3,7 +3,7 @@ package mate.academy.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "cinema_halls")
+@Table(name = "cinema_hall")
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
