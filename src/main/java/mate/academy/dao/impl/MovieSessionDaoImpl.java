@@ -20,7 +20,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public MovieSession add(MovieSession movieSession) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.getTransaction();
+            transaction = session.beginTransaction();
             session.persist(movieSession);
             transaction.commit();
             return movieSession;
