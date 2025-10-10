@@ -1,5 +1,7 @@
 package mate.academy;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -7,9 +9,6 @@ import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
 import mate.academy.service.MovieSessionService;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,7 +23,8 @@ public class Main {
         movieService.getAll().forEach(System.out::println);
 
         // CinemaHallService
-        CinemaHallService cinemaHallService = (CinemaHallService) injector.getInstance(CinemaHallService.class);
+        CinemaHallService cinemaHallService =
+                (CinemaHallService) injector.getInstance(CinemaHallService.class);
         CinemaHall hall = new CinemaHall();
         hall.setCapacity(150);
         hall.setDescription("Hall with comfortable seats");
@@ -32,11 +32,12 @@ public class Main {
         System.out.println("CinemaHall added: " + cinemaHallService.get(hall.getId()));
 
         // MovieSessionService
-        MovieSessionService movieSessionService = (MovieSessionService) injector.getInstance(MovieSessionService.class);
         MovieSession session = new MovieSession();
         session.setMovie(fastAndFurious);
         session.setCinemaHall(hall);
         session.setShowTime(LocalDateTime.of(2025, 10, 7, 18, 30));
+        MovieSessionService movieSessionService =
+                (MovieSessionService) injector.getInstance(MovieSessionService.class);
         movieSessionService.add(session);
         System.out.println("MovieSession added: " + movieSessionService.get(session.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(), LocalDate.of(2025, 10, 7))

@@ -1,9 +1,8 @@
 package mate.academy.service;
 
+import java.util.List;
 import mate.academy.lib.Service;
 import mate.academy.model.CinemaHall;
-
-import java.util.List;
 
 @Service
 public interface CinemaHallService {

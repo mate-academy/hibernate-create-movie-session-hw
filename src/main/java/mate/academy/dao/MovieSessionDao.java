@@ -1,10 +1,9 @@
 package mate.academy.dao;
 
-import mate.academy.lib.Dao;
-import mate.academy.model.MovieSession;
-
 import java.time.LocalDate;
 import java.util.List;
+import mate.academy.lib.Dao;
+import mate.academy.model.MovieSession;
 
 @Dao
 public interface MovieSessionDao {
