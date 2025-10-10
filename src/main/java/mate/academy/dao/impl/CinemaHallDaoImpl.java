@@ -16,7 +16,7 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.getTransaction();
+            transaction = session.beginTransaction();
             session.persist(cinemaHall);
             transaction.commit();
             return cinemaHall;
