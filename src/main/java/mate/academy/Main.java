@@ -30,6 +30,7 @@ public class Main {
         hall.setDescription("Hall with comfortable seats");
         cinemaHallService.add(hall);
         System.out.println("CinemaHall added: " + cinemaHallService.get(hall.getId()));
+        cinemaHallService.getAll().forEach(System.out::println);
 
         // MovieSessionService
         MovieSession session = new MovieSession();
