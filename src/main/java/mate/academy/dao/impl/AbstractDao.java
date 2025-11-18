@@ -1,14 +1,12 @@
 package mate.academy.dao.impl;
 
+import java.util.List;
+import java.util.Optional;
 import mate.academy.exception.DataProcessingException;
-import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import java.util.List;
-import java.util.Optional;
 
 public abstract class AbstractDao<T> {
 

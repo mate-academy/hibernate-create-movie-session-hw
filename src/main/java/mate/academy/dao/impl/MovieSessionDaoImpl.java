@@ -1,14 +1,13 @@
 package mate.academy.dao.impl;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
 public class MovieSessionDaoImpl extends AbstractDao<MovieSession> implements MovieSessionDao {
     public MovieSessionDaoImpl() {
