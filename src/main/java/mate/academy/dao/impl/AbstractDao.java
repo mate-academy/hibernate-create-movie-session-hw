@@ -40,7 +40,7 @@ public abstract class AbstractDao<T> {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(entityType, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException("Can't get an entity by id: " + id, e);
         }
     }
 
