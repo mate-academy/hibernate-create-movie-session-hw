@@ -31,7 +31,8 @@ public class MovieSessionDaoImpl extends AbstractDao<MovieSession> implements Mo
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            String hql = "FROM MovieSession ms WHERE ms.movie.id = :id AND DATE(ms.showTime) = :date";
+            String hql = "FROM MovieSession ms WHERE ms.movie.id = :id " +
+                    "AND DATE(ms.showTime) = :date";
             Query<MovieSession> query = session.createQuery(hql, MovieSession.class);
             query.setParameter("id", movieId);
             query.setParameter("date", date);
