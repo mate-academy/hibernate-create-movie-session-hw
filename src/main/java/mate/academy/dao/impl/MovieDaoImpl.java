@@ -12,6 +12,7 @@ import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -45,6 +46,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Movie", Movie.class).list();
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Can't get data from Movies" + e);
+        }
     }
 }
