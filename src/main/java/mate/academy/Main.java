@@ -32,7 +32,7 @@ public class Main {
         cinemaHall.setDescription("Fast and Furious Cinema Hall");
 
         cinemaHallService.add(cinemaHall);
-        cinemaHallService.get(cinemaHall.getId());
+        System.out.println(cinemaHallService.get(cinemaHall.getId()));
         System.out.println(cinemaHallService.getAll());
 
         final MovieSessionService movieSessionService

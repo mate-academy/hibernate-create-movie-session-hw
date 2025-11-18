@@ -53,7 +53,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             Query<MovieSession> query = session.createQuery("from MovieSession m "
-                            + "join fetch movie "
+                            + "join fetch m.movie "
                             + "where m.movie.id = :movieId "
                             + "and m.showTime between :startDateTime and :endOfTheDay",
                             MovieSession.class
