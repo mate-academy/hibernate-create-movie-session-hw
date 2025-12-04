@@ -2,6 +2,7 @@ package mate.academy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
@@ -32,7 +33,8 @@ public class Main {
         cinemaHall.setCapacity(32);
         cinemaHall.setDescription("Small hall");
         cinemaHallService.add(cinemaHall);
-        System.out.println(cinemaHallService.get(1L));
+
+        System.out.println(cinemaHallService.get(cinemaHall.getId()));
         System.out.println(cinemaHallService.getAll());
 
         MovieSession movieSession = new MovieSession();
@@ -41,8 +43,18 @@ public class Main {
         movieSession.setShowTime(LocalDateTime.now().withHour(18).withMinute(0).withSecond(0));
 
         movieSessionService.add(movieSession);
-        System.out.println(movieSessionService.get(1L));
-        movieSessionService.findAvailableSessions(1L,
-                LocalDate.from(LocalDateTime.now().withHour(17).withMinute(0).withSecond(0)));
+
+        System.out.println(movieSessionService.get(movieSession.getId()));
+
+        LocalDate sessionDate = movieSession.getShowTime().toLocalDate();
+
+        List<MovieSession> availableSessions = movieSessionService.findAvailableSessions(
+                fastAndFurious.getId(),
+                sessionDate
+        );
+
+        System.out.println("Available movie sessions for " + fastAndFurious.getTitle()
+                + " on " + sessionDate + ":");
+        availableSessions.forEach(System.out::println);
     }
 }
