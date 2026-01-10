@@ -41,6 +41,6 @@ public class Main {
         movieSessionService.add(movieSessionNumber10);
         System.out.println(movieSessionService.get(movieSessionNumber10.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
-                LocalDate.of(2026, Month.JANUARY, 11));
+                LocalDate.of(2026, Month.JANUARY, 11)).forEach(System.out::println);
     }
 }
