@@ -28,35 +28,6 @@ public class MovieSession {
         this.movie = movie;
     }
 
-    public MovieSession(Movie movie, CinemaHall cinemaHall) {
-        this.movie = movie;
-        this.cinemaHall = cinemaHall;
-    }
-
-    public MovieSession(Movie movie, CinemaHall cinemaHall, LocalDateTime showTime) {
-        this.movie = movie;
-        this.cinemaHall = cinemaHall;
-        this.showTime = showTime;
-    }
-
-    public MovieSession(CinemaHall cinemaHall) {
-        this.cinemaHall = cinemaHall;
-    }
-
-    public MovieSession(LocalDateTime showTime) {
-        this.showTime = showTime;
-    }
-
-    public MovieSession(CinemaHall cinemaHall, LocalDateTime showTime) {
-        this.cinemaHall = cinemaHall;
-        this.showTime = showTime;
-    }
-
-    public MovieSession(Movie movie, LocalDateTime showTime) {
-        this.movie = movie;
-        this.showTime = showTime;
-    }
-
     public Long getId() {
         return id;
     }

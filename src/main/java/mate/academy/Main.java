@@ -38,7 +38,7 @@ public class Main {
         movieSessionNumber10.setCinemaHall(cinemaHallNumber5);
         movieSessionNumber10.setShowTime(LocalDateTime.of(2026, Month.JANUARY,
                 11, 17, 30));
-        movieSessionService.create(movieSessionNumber10);
+        movieSessionService.add(movieSessionNumber10);
         System.out.println(movieSessionService.get(movieSessionNumber10.getId()));
         movieSessionService.findAvailableSessions(fastAndFurious.getId(),
                 LocalDate.of(2026, Month.JANUARY, 11));
