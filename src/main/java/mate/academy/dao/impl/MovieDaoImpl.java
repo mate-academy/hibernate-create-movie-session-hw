@@ -1,5 +1,6 @@
 package mate.academy.dao.impl;
 
+import jakarta.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -21,17 +22,17 @@ public class MovieDaoImpl implements MovieDao {
             transaction = session.beginTransaction();
             session.persist(movie);
             transaction.commit();
-            return movie;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException("Can't insert movie " + movie);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+        return movie;
     }
 
     @Override
@@ -39,12 +40,17 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(Movie.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException("Can't get a movie by id: " + id);
         }
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query query = session.createQuery("FROM Movie", Movie.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movies");
+        }
     }
 }
