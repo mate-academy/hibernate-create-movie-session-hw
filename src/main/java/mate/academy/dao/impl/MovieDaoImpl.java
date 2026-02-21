@@ -14,24 +14,24 @@ import org.hibernate.Transaction;
 public class MovieDaoImpl implements MovieDao {
     @Override
     public Movie add(Movie movie) {
-        Transaction transaction = null;
         Session session = null;
+        Transaction transaction = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.persist(movie);
             transaction.commit();
-            return movie;
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException("Can't insert movie: " + movie, e);
         } finally {
             if (session != null) {
                 session.close();
             }
         }
+        return movie;
     }
 
     @Override
@@ -45,6 +45,10 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Movie ", Movie.class).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movies from DB.", e);
+        }
     }
 }
