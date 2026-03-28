@@ -24,7 +24,7 @@ public class Main {
         CinemaHallService cinemaHallService = (CinemaHallService) injector
                 .getInstance(CinemaHallService.class);
         CinemaHall hallOne = new CinemaHall();
-        hallOne.setDescriptions("Premium hall");
+        hallOne.setDescription("Premium hall");
         hallOne.setCapacity(12);
         cinemaHallService.add(hallOne);
         System.out.println(cinemaHallService.get(hallOne.getId()));
@@ -35,9 +35,10 @@ public class Main {
         MovieSession firstSession = new MovieSession();
         firstSession.setMovie(fastAndFurious);
         firstSession.setCinemaHall(hallOne);
+        firstSession.setShowTime(LocalDate.now().atTime(18,30));
         movieSessionService.add(firstSession);
         System.out.println(movieSessionService.get(firstSession.getId()));
         System.out.println(movieSessionService.findAvailableSessions(fastAndFurious.getId(),
-                LocalDate.now().plusDays(1)));
+                LocalDate.now()));
     }
 }

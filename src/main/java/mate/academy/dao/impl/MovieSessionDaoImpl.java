@@ -34,7 +34,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException(
-                    "Can't add movie session session to db" + movieSession, e);
+                    "Can't add movie session session to db " + movieSession, e);
         }
     }
 
@@ -42,6 +42,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     public Optional<MovieSession> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
+        }catch (Exception e) {
+            throw new DataProcessingException("Can't get movie session by id " + id, e);
         }
     }
 
