@@ -18,6 +18,8 @@ public class Main {
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
         movieService.add(fastAndFurious);
+        List<Movie> allMoviesFromDb = movieService.getAll();
+        System.out.println(allMoviesFromDb);
 
         CinemaHall oldHall = new CinemaHall();
         oldHall.setCapacity(100);
@@ -27,6 +29,8 @@ public class Main {
                 (CinemaHallService) injector.getInstance(CinemaHallService.class);
         cinemaHallService.add(oldHall);
         CinemaHall cinemaHallFromDb = cinemaHallService.get(1L);
+        List<CinemaHall> allFromDb = cinemaHallService.getAll();
+        System.out.println(allFromDb);
 
         MovieSession movieSession = new MovieSession();
         Movie movieFromDb = movieService.get(fastAndFurious.getId());

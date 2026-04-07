@@ -49,7 +49,7 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("SELECT DISTINCT m FROM Movie m", Movie.class).list();
         } catch (HibernateException e) {
-            throw new RuntimeException("Can't get all Movies", e);
+            throw new DataProcessingException("Can't get all Movies", e);
         }
     }
 }

@@ -57,7 +57,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     .setParameter("nextStart", date.plusDays(1).atStartOfDay())
                     .list();
         } catch (HibernateException e) {
-            throw new RuntimeException(
+            throw new DataProcessingException(
                     "Can't find available session by movieID " + movieId + " and date " + date, e);
         }
     }
