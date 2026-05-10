@@ -27,12 +27,12 @@ public class Main {
 
         MovieService movieService = (MovieService)
                 injector.getInstance(MovieService.class);
-        movieService.add(firstMovie);
-        movieService.add(secondMovie);
-        movieService.add(thirdMovie);
-        System.out.println(movieService.get(firstMovie.getId()));
-        System.out.println(movieService.get(secondMovie.getId()));
-        System.out.println(movieService.get(thirdMovie.getId()));
+        Movie firstMovieId = movieService.add(firstMovie);
+        Movie secondMovieId = movieService.add(secondMovie);
+        Movie thirdMovieId = movieService.add(thirdMovie);
+        System.out.println(movieService.get(firstMovieId.getId()));
+        System.out.println(movieService.get(secondMovieId.getId()));
+        System.out.println(movieService.get(thirdMovieId.getId()));
         System.out.println(movieService.getAll());
 
         CinemaHall firstCinemaHall = new CinemaHall();
@@ -88,11 +88,11 @@ public class Main {
         LocalDate checkDate1 = LocalDate.now();
         LocalDate checkDate2 = LocalDate.now().plusDays(1);
         System.out.println(movieSessionService
-                .findAvailableSessions(firstMovieSession.getId(), checkDate1));
+                .findAvailableSessions(firstMovieId.getId(), checkDate1));
         System.out.println(movieSessionService
-                .findAvailableSessions(secondMovieSession.getId(), checkDate2));
+                .findAvailableSessions(secondMovieId.getId(), checkDate2));
         System.out.println(movieSessionService
-                .findAvailableSessions(thirdMovieSession.getId(), checkDate2));
+                .findAvailableSessions(thirdMovieId.getId(), checkDate2));
 
         Movie fastAndFurious = new Movie("Fast and Furious");
         fastAndFurious.setDescription("An action film about street racing, heists, and spies.");
