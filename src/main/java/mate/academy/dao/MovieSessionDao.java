@@ -11,5 +11,5 @@ public interface MovieSessionDao {
 
     Optional<MovieSession> get(Long id);
 
-    List<MovieSession> getAllAvalibleSessions(Long id, LocalDate date);
+    List<MovieSession> getAllAvailableSessions(Long id, LocalDate date);
 }
