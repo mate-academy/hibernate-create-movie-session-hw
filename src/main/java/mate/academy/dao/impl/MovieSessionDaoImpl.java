@@ -69,4 +69,5 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             throw new DataProcessingException("Can't find available movies: ", e);
         }
     }
+
 }

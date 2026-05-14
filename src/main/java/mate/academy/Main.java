@@ -1,5 +1,6 @@
 package mate.academy;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
@@ -7,7 +8,7 @@ import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
 import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieService;
-import mate.academy.service.MovieSessionServive;
+import mate.academy.service.MovieSessionService;
 import mate.academy.service.impl.CinemaHallServiceImpl;
 import mate.academy.service.impl.MovieServiceImpl;
 
@@ -37,10 +38,11 @@ public class Main {
         movieSession.setCinemaHall(cinemaHall);
         movieSession.setShowTime(LocalDateTime.now());
 
-        MovieSessionServive movieSessionServive = (MovieSessionServive) injector
-                .getInstance(MovieSessionServive.class);
-        movieSessionServive.add(movieSession);
-        System.out.println(movieSessionServive.get(movieSession.getId()));
-        cinemaHallService.getAll().forEach(System.out::println);
+        MovieSessionService movieSessionService = (MovieSessionService) injector
+                .getInstance(MovieSessionService.class);
+        movieSessionService.add(movieSession);
+        System.out.println(movieSessionService.get(movieSession.getId()));
+        System.out.println(movieSessionService
+                .findAvailableSessions(fastAndFurious.getId(), LocalDate.now()));
     }
 }
