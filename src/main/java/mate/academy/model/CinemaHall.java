@@ -9,18 +9,16 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "cinema_hall")
 public class CinemaHall {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private int capacity;
     private String description;
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public int getCapacity() {

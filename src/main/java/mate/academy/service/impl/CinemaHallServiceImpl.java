@@ -9,6 +9,7 @@ import mate.academy.service.CinemaHallService;
 
 @Service
 public class CinemaHallServiceImpl implements CinemaHallService {
+
     @Inject
     private CinemaHallDao cinemaHallDao;
 
@@ -19,7 +20,10 @@ public class CinemaHallServiceImpl implements CinemaHallService {
 
     @Override
     public CinemaHall get(Long id) {
-        return cinemaHallDao.get(id).orElseThrow();
+        return cinemaHallDao.get(id).orElseThrow(
+                () -> new RuntimeException(
+                        "Can't get cinema hall by id: " + id)
+        );
     }
 
     @Override

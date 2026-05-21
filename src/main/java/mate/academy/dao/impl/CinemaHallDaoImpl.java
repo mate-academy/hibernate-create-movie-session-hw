@@ -7,12 +7,12 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.CinemaHall;
 import mate.academy.util.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class CinemaHallDaoImpl implements CinemaHallDao {
+
     @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
@@ -27,7 +27,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert a cinema hall " + cinemaHall, e);
+            throw new DataProcessingException(
+                    "Can't insert a cinema hall " + cinemaHall, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -40,7 +41,8 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(CinemaHall.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a cinema hall by id: " + id, e);
+            throw new DataProcessingException(
+                    "Can't get a cinema hall by id: " + id, e);
         }
     }
 
@@ -48,9 +50,12 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
     public List<CinemaHall> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery(
-                    "SELECT DISTINCT c FROM CinemaHall c", CinemaHall.class).list();
-        } catch (HibernateException e) {
-            throw new RuntimeException("Can't get all cinema halls", e);
+                    "FROM CinemaHall",
+                    CinemaHall.class
+            ).list();
+        } catch (Exception e) {
+            throw new DataProcessingException(
+                    "Can't get all cinema halls", e);
         }
     }
 }

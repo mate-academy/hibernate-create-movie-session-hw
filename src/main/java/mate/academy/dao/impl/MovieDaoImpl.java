@@ -7,12 +7,12 @@ import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.Movie;
 import mate.academy.util.HibernateUtil;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 @Dao
 public class MovieDaoImpl implements MovieDao {
+
     @Override
     public Movie add(Movie movie) {
         Transaction transaction = null;
@@ -27,7 +27,8 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            throw new DataProcessingException(
+                    "Can't insert movie " + movie, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -40,16 +41,21 @@ public class MovieDaoImpl implements MovieDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(Movie.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException(
+                    "Can't get a movie by id: " + id, e);
         }
     }
 
     @Override
     public List<Movie> getAll() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("SELECT DISTINCT m FROM Movie m", Movie.class).list();
-        } catch (HibernateException e) {
-            throw new RuntimeException("Can't get all Movies", e);
+            return session.createQuery(
+                    "FROM Movie",
+                    Movie.class
+            ).list();
+        } catch (Exception e) {
+            throw new DataProcessingException(
+                    "Can't get all movies", e);
         }
     }
 }
