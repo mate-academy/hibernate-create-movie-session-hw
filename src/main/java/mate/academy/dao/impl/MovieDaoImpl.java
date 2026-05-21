@@ -17,34 +17,51 @@ public class MovieDaoImpl implements MovieDao {
         Transaction transaction = null;
         Session session = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = openSession();
             transaction = session.beginTransaction();
             session.persist(movie);
             transaction.commit();
             return movie;
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new DataProcessingException("Can't insert movie " + movie, e);
+            transactionNullCheck(transaction);
+            throw new DataProcessingException("Could not insert movie " + movie, e);
         } finally {
-            if (session != null) {
-                session.close();
-            }
+            sessionNullCheck(session);
         }
     }
 
     @Override
     public Optional<Movie> get(Long id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = openSession()) {
             return Optional.ofNullable(session.get(Movie.class, id));
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a movie by id: " + id, e);
+            throw new DataProcessingException("Could not get a movie by id: " + id, e);
         }
     }
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = openSession()) {
+            List<Movie> movieList = session.createQuery("from Movie", Movie.class).getResultList();
+            return movieList;
+        } catch (Exception e) {
+            throw new DataProcessingException("Could not get movie list from DB", e);
+        }
+    }
+
+    private Session openSession() {
+        return HibernateUtil.getSessionFactory().openSession();
+    }
+
+    private void transactionNullCheck(Transaction transaction) {
+        if (transaction != null) {
+            transaction.rollback();
+        }
+    }
+
+    private void sessionNullCheck(Session session) {
+        if (session != null) {
+            session.close();
+        }
     }
 }
