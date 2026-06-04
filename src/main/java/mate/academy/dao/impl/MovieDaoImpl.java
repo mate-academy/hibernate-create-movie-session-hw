@@ -1,5 +1,8 @@
 package mate.academy.dao.impl;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieDao;
@@ -45,6 +48,21 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        EntityTransaction entityTransaction = null;
+
+        try (EntityManager entityManager = HibernateUtil.getSessionFactory().openSession()) {
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            TypedQuery<Movie> movies = entityManager
+                    .createQuery("from Movie", Movie.class);
+            entityTransaction.commit();
+            return movies.getResultList();
+        } catch (Exception e) {
+            if (entityTransaction != null && entityTransaction.isActive()) {
+                entityTransaction.rollback();
+            }
+
+            throw new DataProcessingException("Can't get all movies", e);
+        }
     }
 }
