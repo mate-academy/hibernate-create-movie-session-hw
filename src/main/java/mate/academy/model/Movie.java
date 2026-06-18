@@ -14,6 +14,7 @@ public class Movie {
     private Long id;
     private String title;
     private String description;
+    private Double duration;
 
     public Long getId() {
         return id;
@@ -39,12 +40,21 @@ public class Movie {
         this.description = description;
     }
 
+    public Double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Double duration) {
+        this.duration = duration;
+    }
+
     @Override
     public String toString() {
         return "Movie{"
                 + "id=" + id
                 + ", title='" + title + '\''
                 + ", description='" + description + '\''
+                + ", duration=" + duration
                 + '}';
     }
 }

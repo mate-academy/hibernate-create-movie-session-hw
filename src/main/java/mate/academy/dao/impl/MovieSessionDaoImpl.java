@@ -48,14 +48,17 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query availableSessionsQuery = session.createQuery("FROM MovieSession ms"
-                    + " WHERE ms.showTime >= :date"
-                    + " AND ms.movie.id = :movieId");
+            Query availableSessionsQuery = session.createQuery(
+                    "FROM MovieSession ms"
+                    + " JOIN ms.movie m"
+                    + " WHERE DAY(ms.showTime + m.duration second) = DAY(:date)"
+                    + " AND ms.movie.id = :movieId"
+            );
             availableSessionsQuery.setParameter("date", date);
             availableSessionsQuery.setParameter("movieId", movieId);
             return availableSessionsQuery.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find available movie sessions for movieId: "
+            throw new DataProcessingException("Can't find available movie sessions for movieId: " 
                     + movieId + ", and date: " + date, e);
         }
     }
