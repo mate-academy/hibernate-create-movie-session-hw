@@ -22,7 +22,7 @@ public class MovieSessionImpl implements MovieSessionService {
     @Override
     public MovieSession get(Long id) {
         return movieSessionDao.get(id)
-                .orElseThrow(() -> new DataProcessingException("Cant get " 
+                .orElseThrow(() -> new DataProcessingException("Can't get " 
                         + "Movie Session by id: " + id, null));
     }
 

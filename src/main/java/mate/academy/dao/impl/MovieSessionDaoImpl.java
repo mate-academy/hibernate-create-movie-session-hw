@@ -54,7 +54,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             Query<MovieSession> query = session.createQuery("FROM MovieSession ms" 
                     + " WHERE ms.showTime >= :dateFrom " 
                     + " AND ms.showTime <= :dateTo "
-                    + " AND ms.id = :movieId");
+                    + " AND ms.movie.id = :movieId");
             query.setParameter("dateFrom", date.atStartOfDay());
             query.setParameter("dateTo", date.atStartOfDay()
                     .plusHours(23)

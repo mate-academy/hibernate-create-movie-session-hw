@@ -73,7 +73,7 @@ public class Main {
         movieSessionService.add(movieSessionTwo);
         movieSessionService.add(movieSessionThree);
         System.out.println(movieSessionService.get(movieSessionOne.getId()));
-        System.out.println(movieSessionService.findAvailableSessions(movieSessionOne.getId(),
-                LocalDate.now()));
+        System.out.println(movieSessionService.findAvailableSessions(theGodfather.getId(),
+                LocalDate.now()));  
     }
 }
