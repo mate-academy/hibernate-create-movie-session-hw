@@ -16,6 +16,7 @@ public class MovieDaoImpl implements MovieDao {
     public Movie add(Movie movie) {
         Transaction transaction = null;
         Session session = null;
+        
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
@@ -45,6 +46,12 @@ public class MovieDaoImpl implements MovieDao {
 
     @Override
     public List<Movie> getAll() {
-        return null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("from Movie order by id desc", Movie.class)
+                    .getResultList();
+            
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't get all movies", e);
+        }
     }
 }
