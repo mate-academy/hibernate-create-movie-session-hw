@@ -6,7 +6,7 @@ import mate.academy.model.Movie;
 
 public interface MovieDao {
     Movie add(Movie movie);
-vfdkclfbbmlflblmf
+
     Optional<Movie> get(Long id);
 
     List<Movie> getAll();
