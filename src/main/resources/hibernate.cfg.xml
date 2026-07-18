@@ -14,5 +14,7 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="mate.academy.model.Movie"/>
+        <mapping class="mate.academy.model.MovieSession"/>
+        <mapping class="mate.academy.model.CinemaHall"/>
     </session-factory>
 </hibernate-configuration>
