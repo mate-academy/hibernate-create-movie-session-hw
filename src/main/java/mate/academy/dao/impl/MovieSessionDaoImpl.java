@@ -52,7 +52,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                     session.createQuery("FROM MovieSession", MovieSession.class);
             return query.getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get the list of movies", e);
+            throw new DataProcessingException("Can't get the list of movie sessions", e);
         }
     }
 
