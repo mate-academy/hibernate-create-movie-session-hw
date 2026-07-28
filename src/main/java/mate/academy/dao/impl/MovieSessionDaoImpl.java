@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.dao.MovieSessionDao;
+import mate.academy.exception.DataProcessingException;
 import mate.academy.lib.Dao;
 import mate.academy.model.MovieSession;
 import mate.academy.util.HibernateUtil;
@@ -29,7 +30,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new RuntimeException("Can`t insert movie session: " + movieSession, e);
+            throw new DataProcessingException("Can`t insert movie session: " + movieSession, e);
         } finally {
             if (session != null) {
                 session.close();
@@ -42,7 +43,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return Optional.ofNullable(session.get(MovieSession.class, id));
         } catch (Exception e) {
-            throw new RuntimeException("Can`t get movie session by id: " + id, e);
+            throw new DataProcessingException("Can`t get movie session by id: " + id, e);
         }
     }
 
@@ -62,7 +63,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("endOfDay", endOfDay);
             return query.getResultList();
         } catch (Exception e) {
-            throw new RuntimeException("Can't find available sessions for movie id: "
+            throw new DataProcessingException("Can't find available sessions for movie id: "
                     + movieId + " on date: " + date, e);
         }
     }
