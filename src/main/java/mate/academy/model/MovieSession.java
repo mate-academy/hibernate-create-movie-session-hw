@@ -60,8 +60,8 @@ public class MovieSession {
         return "MovieSession{"
                 + "id=" + id
                 + ", movie=" + movie + '\''
-                + ", cinemaHall" + cinemaHall + '\''
-                + ", showTime" + showTime + '\''
+                + ", cinemaHall" + cinemaHall
+                + ", showTime" + showTime
                 + "}";
     }
 }
