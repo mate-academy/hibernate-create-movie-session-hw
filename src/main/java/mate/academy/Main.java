@@ -6,6 +6,7 @@ import mate.academy.lib.Injector;
 import mate.academy.model.CinemaHall;
 import mate.academy.model.Movie;
 import mate.academy.model.MovieSession;
+import mate.academy.service.CinemaHallService;
 import mate.academy.service.MovieSessionService;
 
 public class Main {
@@ -14,10 +15,15 @@ public class Main {
     public static void main(String[] args) {
         final MovieSessionService sessionService = (MovieSessionService)
                 injector.getInstance(MovieSessionService.class);
+        final CinemaHallService cinemaHallService = (CinemaHallService)
+                injector.getInstance(CinemaHallService.class);
 
-        Movie fastAndFurious = new Movie("Fast and Furious",
+        final Movie fastAndFurious = new Movie("Fast and Furious",
                 "An action film about street racing, heists, and spies.");
         CinemaHall hall1 = new CinemaHall(12, "Hall 1, 3D is available");
+        cinemaHallService.add(hall1);
+        cinemaHallService.get(hall1.getId());
+        cinemaHallService.getAll();
 
         MovieSession session = new MovieSession();
 
