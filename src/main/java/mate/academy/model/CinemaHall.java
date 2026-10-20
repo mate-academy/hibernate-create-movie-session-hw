@@ -4,8 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "halls")
 public class CinemaHall {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +20,11 @@ public class CinemaHall {
 
     public CinemaHall(int capacity) {
         this.capacity = capacity;
+    }
+
+    public CinemaHall(int capacity, String description) {
+        this.capacity = capacity;
+        this.description = description;
     }
 
     public int getCapacity() {
@@ -42,5 +49,14 @@ public class CinemaHall {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "CinemaHall{"
+                + "id=" + id
+                + ", capacity=" + capacity
+                + ", description='" + description
+                + '\'' + '}';
     }
 }

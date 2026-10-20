@@ -1,21 +1,36 @@
 package mate.academy.model;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "sessions")
 public class MovieSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Movie movie;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private CinemaHall cinemaHall;
+
     private LocalDateTime showTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Movie getMovie() {
         return movie;
@@ -39,5 +54,14 @@ public class MovieSession {
 
     public void setShowTime(LocalDateTime showTime) {
         this.showTime = showTime;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieSession{" + "id="
+                + id + ", movie="
+                + movie + ", cinemaHall="
+                + cinemaHall + ", showTime="
+                + showTime + '}';
     }
 }
